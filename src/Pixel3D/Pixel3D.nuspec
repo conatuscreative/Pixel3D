@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Pixel3D</id>
+    <version>1.0.0</version>
+    <title>Pixel3D</title>
+    <authors>Conatus Creative Inc.</authors>
+    <owners>Conatus Creative Inc.</owners>
+    <licenseUrl>https://github.com/conatuscreative/Pixel3D/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/conatuscreative/Pixel3D</projectUrl>    
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Isometric/2.5D pixel game engine built on FNA.</description>
+    <releaseNotes>Initial public release</releaseNotes>
+    <copyright>(c) 2017 Conatus Creative Inc.</copyright>
+    <tags>pixel3d xna monogame fna</tags>
+  </metadata>
+</package>

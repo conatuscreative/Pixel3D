@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1036D647-A388-4166-8FF0-D271A0D80853}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pixel3D</RootNamespace>
+    <AssemblyName>Pixel3D</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Pixel3D.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pixel3D.Serialization.1.0.0\lib\net40-client\Pixel3D.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AABB.cs" />
+    <Compile Include="Animations\Animation.cs" />
+    <Compile Include="Animations\AnimationDeserializeContext.cs" />
+    <Compile Include="Animations\AnimationFrame.cs" />
+    <Compile Include="Animations\AnimationPlayer.cs" />
+    <Compile Include="Animations\AnimationSerializeContext.cs" />
+    <Compile Include="Animations\AnimationSet.cs" />
+    <Compile Include="Animations\Asserts.cs" />
+    <Compile Include="Animations\Cel.cs" />
+    <Compile Include="Animations\DepthBounds.cs" />
+    <Compile Include="Animations\DrawContext.cs" />
+    <Compile Include="Animations\ICustomMaskDataReader.cs" />
+    <Compile Include="Animations\LayersList.cs" />
+    <Compile Include="Animations\Mask.cs" />
+    <Compile Include="Animations\OutgoingAttachment.cs" />
+    <Compile Include="Animations\OutgoingAttachmentView.cs" />
+    <Compile Include="Animations\Serialization\ComparableImageData.cs" />
+    <Compile Include="Animations\Serialization\ImageBundle.cs" />
+    <Compile Include="Animations\Serialization\ImageBundleManager.cs" />
+    <Compile Include="Animations\Serialization\ImageKey.cs" />
+    <Compile Include="Animations\Serialization\ImageWriter.cs" />
+    <Compile Include="Animations\Serialization\ITextureLoadHelper.cs" />
+    <Compile Include="Animations\Serialization\RCRURLEReader.cs" />
+    <Compile Include="Animations\Serialization\RCRURLEWriter.cs" />
+    <Compile Include="Animations\Serialization\SimpleTextureLoadHelper.cs" />
+    <Compile Include="Animations\Serialization\TextureData.cs" />
+    <Compile Include="Animations\ShadowCasterList.cs" />
+    <Compile Include="Animations\ShadowLayer.cs" />
+    <Compile Include="Bounds.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="ColorDataExtensions.cs" />
+    <Compile Include="ColorGradient.cs" />
+    <Compile Include="CombinedHeightmap.cs" />
+    <Compile Include="Common\FunctionalTweening\FloatEaseExtensions.cs" />
+    <Compile Include="Common\FunctionalTweening\FloatMapExtensions.cs" />
+    <Compile Include="Common\FunctionalTweening\FloatMapXNAExtensions.cs" />
+    <Compile Include="Common\Input.cs" />
+    <Compile Include="CubeCornerColors.cs" />
+    <Compile Include="Data2D.cs" />
+    <Compile Include="Data2DExtensions.cs" />
+    <Compile Include="DebugRenderingExtensions.cs" />
+    <Compile Include="DrawableFrame.cs" />
+    <Compile Include="Extensions\PointExtensions.cs" />
+    <Compile Include="Extensions\RectangleExtensions.cs" />
+    <Compile Include="FadeEffect.cs" />
+    <Compile Include="FadePitchPan.cs" />
+    <Compile Include="Common\FrameworkExtensions\BinaryReadWriteExtensions.cs" />
+    <Compile Include="Common\FrameworkExtensions\BinaryReadWriteXNA.cs" />
+    <Compile Include="Common\FrameworkExtensions\IntegerExtensions.cs" />
+    <Compile Include="Common\FrameworkExtensions\ListExtensions.cs" />
+    <Compile Include="Common\FrameworkExtensions\RandomExtensions.cs" />
+    <Compile Include="Common\FrameworkExtensions\ReferenceEqualityComparer.cs" />
+    <Compile Include="GifWriter.cs" />
+    <Compile Include="Heightmap.cs" />
+    <Compile Include="HeightmapInstruction.cs" />
+    <Compile Include="HeightmapView.cs" />
+    <Compile Include="IDrawObject.cs" />
+    <Compile Include="IEditorNameProvider.cs" />
+    <Compile Include="IHasDrawableFrame.cs" />
+    <Compile Include="IntMatrix2.cs" />
+    <Compile Include="ISmoothProvider.cs" />
+    <Compile Include="MaskData.cs" />
+    <Compile Include="Oblique.cs" />
+    <Compile Include="PanCamera.cs" />
+    <Compile Include="Physics\CharacterPhysics.cs" />
+    <Compile Include="Physics\WorldPhysics.cs" />
+    <Compile Include="Position.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Range.cs" />
+    <Compile Include="ShadowReceiver.cs" />
+    <Compile Include="Sorting\DrawOrdering.cs" />
+    <Compile Include="Sorting\EdgeBits.cs" />
+    <Compile Include="Sorting\ForgivingTopologicalSort.cs" />
+    <Compile Include="Sorting\SortedDrawList.cs" />
+    <Compile Include="Sorting\TarjansAlgorithm.cs" />
+    <Compile Include="Sprite.cs" />
+    <Compile Include="SpriteRef.cs" />
+    <Compile Include="TagLookup.cs" />
+    <Compile Include="TagSet.cs" />
+    <Compile Include="TransformedMaskData.cs" />
+    <Compile Include="VoxelRenderer.cs" />
+    <Compile Include="WorldSpriteExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FNA\FNA.csproj">
+      <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
+      <Name>FNA</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
