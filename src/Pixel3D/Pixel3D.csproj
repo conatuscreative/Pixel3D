@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Pixel3D.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pixel3D.Serialization.1.0.0\lib\net40-client\Pixel3D.Serialization.dll</HintPath>
+      <HintPath>..\..\packages\Pixel3D.Serialization.1.0.0\lib\net40-client\Pixel3D.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -108,8 +108,6 @@
     <Compile Include="MaskData.cs" />
     <Compile Include="Oblique.cs" />
     <Compile Include="PanCamera.cs" />
-    <Compile Include="Physics\CharacterPhysics.cs" />
-    <Compile Include="Physics\WorldPhysics.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Range.cs" />
@@ -124,7 +122,6 @@
     <Compile Include="TagLookup.cs" />
     <Compile Include="TagSet.cs" />
     <Compile Include="TransformedMaskData.cs" />
-    <Compile Include="VoxelRenderer.cs" />
     <Compile Include="WorldSpriteExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -136,5 +133,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

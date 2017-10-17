@@ -8,7 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{75599E13-1A1C-4F6F-81CD-59377FBD4C8F}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
+		pack.bat = pack.bat
 		src\Pixel3D\Pixel3D.nuspec = src\Pixel3D\Pixel3D.nuspec
+		push.bat = push.bat
 		README.md = README.md
 	EndProjectSection
 EndProject
