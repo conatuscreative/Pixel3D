@@ -140,7 +140,7 @@ namespace Pixel3D.Animations
             if(flatDirection == Oblique.Straight)
                 return 0;
 
-            return physicsWidth = Math.Min(physicsWidth, ((int)byte.MaxValue)+1);
+            return physicsWidth = System.Math.Min(physicsWidth, ((int)byte.MaxValue)+1);
         }
 
         public static DepthBounds CreateForFlat(AnimationSet animationSet)
@@ -162,7 +162,7 @@ namespace Pixel3D.Animations
                     if(animationSet.flatDirection == Oblique.Left)
                         depth = width - 1 - i;
 
-                    byte d = (byte)Math.Min(byte.MaxValue, depth);
+                    byte d = (byte)System.Math.Min(byte.MaxValue, depth);
                     ds.depths[i].front = d;
                     ds.depths[i].back = d;
                 }
@@ -297,8 +297,8 @@ namespace Pixel3D.Animations
                         int back = depthBack[range.index-1];
                         int backNext = depthBack[range.index-2];
 
-                        leftBack = Math.Max(front, Math.Min(back, (back +  back -  backNext)));
-                        leftFront = Math.Min(leftBack, Math.Max(front, Math.Min(back, (front + front - frontNext))));
+                        leftBack = System.Math.Max(front, System.Math.Min(back, (back +  back -  backNext)));
+                        leftFront = System.Math.Min(leftBack, System.Math.Max(front, System.Math.Min(back, (front + front - frontNext))));
                     }
                     else if(range.index != 0) // only one data point to the left
                     {
@@ -314,8 +314,8 @@ namespace Pixel3D.Animations
                         int back = depthBack[range.index+range.count];
                         int backNext = depthBack[range.index+range.count+1];
 
-                        rightBack = Math.Max(front, Math.Min(back, (back +  back -  backNext)));
-                        rightFront = Math.Min(rightBack, Math.Max(front, Math.Min(back, (front + front - frontNext))));
+                        rightBack = System.Math.Max(front, System.Math.Min(back, (back +  back -  backNext)));
+                        rightFront = System.Math.Min(rightBack, System.Math.Max(front, System.Math.Min(back, (front + front - frontNext))));
                     }
                     else if(range.index + range.count < Width) // only one data point to the right
                     {
@@ -476,8 +476,8 @@ namespace Pixel3D.Animations
             depthSlice.depths = new FrontBack[dataEnd - dataStart];
             for(int i = 0; i < depthSlice.depths.Length; i++)
             {
-                depthSlice.depths[i].front = (byte)Math.Min(byte.MaxValue, rawDepthData.depthFront[i + dataStart] - depthSlice.zOffset);
-                depthSlice.depths[i].back  = (byte)Math.Min(byte.MaxValue, rawDepthData.depthBack[i + dataStart]  - depthSlice.zOffset);
+                depthSlice.depths[i].front = (byte)System.Math.Min(byte.MaxValue, rawDepthData.depthFront[i + dataStart] - depthSlice.zOffset);
+                depthSlice.depths[i].back  = (byte)System.Math.Min(byte.MaxValue, rawDepthData.depthBack[i + dataStart]  - depthSlice.zOffset);
             }
 
             return depthSlice;
@@ -508,7 +508,7 @@ namespace Pixel3D.Animations
                     if(belowBounds.front == belowBounds.back && missingRange.count == 1) // <- Indicates the lower layer is an extrapolation (keep it that way)
                         depthSlice.depths[i] = belowBounds;
                     else // Lower bounds is a surface, encode an "above" bounds
-                        depthSlice.depths[i] = new FrontBack { back = belowBounds.back, front = (byte)Math.Min(byte.MaxValue, (int)belowBounds.back + 1) };
+                        depthSlice.depths[i] = new FrontBack { back = belowBounds.back, front = (byte)System.Math.Min(byte.MaxValue, (int)belowBounds.back + 1) };
                 }
             }
 

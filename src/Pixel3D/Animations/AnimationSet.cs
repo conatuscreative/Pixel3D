@@ -9,6 +9,7 @@ using Common;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO.Compression;
 using Pixel3D.Animations.Serialization;
+using Pixel3D.Extensions;
 using Pixel3D.Serialization;
 
 namespace Pixel3D.Animations
@@ -138,9 +139,9 @@ namespace Pixel3D.Animations
         /// <summary>Returns the physics as an AABB (who's bounds are fully inclusive), with at least 1 pixel of volume</summary>
         public AABB GetPhysicsAsAABB()
         {
-            AABB result = new AABB(physicsStartX, Math.Max(physicsStartX, physicsEndX - 1),
-                    0, Math.Max(0, physicsHeight),
-                    physicsStartZ, Math.Max(physicsStartZ, physicsEndZ - 1));
+            AABB result = new AABB(physicsStartX, System.Math.Max(physicsStartX, physicsEndX - 1),
+                    0, System.Math.Max(0, physicsHeight),
+                    physicsStartZ, System.Math.Max(physicsStartZ, physicsEndZ - 1));
 
             return result;
         }
@@ -206,7 +207,7 @@ namespace Pixel3D.Animations
                 physicsEndX = bounds.X + bounds.Width;
                 physicsStartZ = 0;
                 physicsEndZ = 0;
-                physicsHeight = Math.Max(0, bounds.Y + bounds.Height); // Z-sort disregards anything below-ground
+                physicsHeight = System.Math.Max(0, bounds.Y + bounds.Height); // Z-sort disregards anything below-ground
                 flatDirection = Oblique.Straight;
             }
             
