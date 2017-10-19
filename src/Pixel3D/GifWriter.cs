@@ -6,6 +6,7 @@ using Pixel3D.Animations;
 using System.IO;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using Pixel3D.Extensions;
 
 #region GIF Format Documentation
 // http://www.w3.org/Graphics/GIF/spec-gif89a.txt
@@ -128,7 +129,7 @@ namespace Pixel3D
                 int delayTime = (frame.delay * 100) / 60; // Convert ticks at 60FPS to ticks at 100FPS (the GIF standard)
                 // NOTE: Browsers do retarded things with timings of 0 or 1. Some even do stupid things with 2-5.
                 //       See http://nullsleep.tumblr.com/post/16524517190/animated-gif-minimum-frame-delay-browser for details
-                delayTime = Math.Max(2, Math.Min(delayTime, ushort.MaxValue)); 
+                delayTime = System.Math.Max(2, System.Math.Min(delayTime, ushort.MaxValue)); 
 
                 // GIF: Graphic Control Extension
                 {
@@ -399,7 +400,7 @@ namespace Pixel3D
 
             while(bits > 0)
             {
-                int takeBits = Math.Min(bits, 8-pending.bits);
+                int takeBits = System.Math.Min(bits, 8-pending.bits);
                 uint takeMask = (1u << takeBits) - 1u;
 
                 pending.value |= ((value & takeMask) << pending.bits);

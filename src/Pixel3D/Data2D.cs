@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using Pixel3D.Extensions;
 
 namespace Pixel3D
 {
@@ -256,10 +254,10 @@ namespace Pixel3D
             Point cornerD = matrix.Transform(BR);
 
             // Convert to rectangle:
-            int minX = Math.Min(Math.Min(cornerA.X, cornerB.X), Math.Min(cornerC.X, cornerD.X));
-            int minY = Math.Min(Math.Min(cornerA.Y, cornerB.Y), Math.Min(cornerC.Y, cornerD.Y));
-            int maxX = Math.Max(Math.Max(cornerA.X, cornerB.X), Math.Max(cornerC.X, cornerD.X));
-            int maxY = Math.Max(Math.Max(cornerA.Y, cornerB.Y), Math.Max(cornerC.Y, cornerD.Y));
+            int minX = System.Math.Min(System.Math.Min(cornerA.X, cornerB.X), System.Math.Min(cornerC.X, cornerD.X));
+            int minY = System.Math.Min(System.Math.Min(cornerA.Y, cornerB.Y), System.Math.Min(cornerC.Y, cornerD.Y));
+            int maxX = System.Math.Max(System.Math.Max(cornerA.X, cornerB.X), System.Math.Max(cornerC.X, cornerD.X));
+            int maxY = System.Math.Max(System.Math.Max(cornerA.Y, cornerB.Y), System.Math.Max(cornerC.Y, cornerD.Y));
             Rectangle outputBounds = new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
 
             // Now transform the data:

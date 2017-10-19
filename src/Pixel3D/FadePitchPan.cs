@@ -12,9 +12,9 @@ namespace Pixel3D
 
         public FadePitchPan(Vector2 audioPosition)
         {
-            float xFade = Math.Abs(audioPosition.X).MapFrom(1.05f, 1.3f).Clamp(); // <- assume horizontal is smaller
-            float yFade = Math.Abs(audioPosition.Y).MapFrom(1.2f, 1.6f).Clamp();
-            fade = ((float)Math.Sqrt(xFade * xFade + yFade * yFade)).Clamp().MapTo(1f, 0f); // <- circular edges
+            float xFade = System.Math.Abs(audioPosition.X).MapFrom(1.05f, 1.3f).Clamp(); // <- assume horizontal is smaller
+            float yFade = System.Math.Abs(audioPosition.Y).MapFrom(1.2f, 1.6f).Clamp();
+            fade = ((float)System.Math.Sqrt(xFade * xFade + yFade * yFade)).Clamp().MapTo(1f, 0f); // <- circular edges
 
 
             pitch = fade.MapFrom(0f, 0.3f).Clamp().MapTo(-0.15f, 0f); // <- subtle pitch-down effect at the edges :)

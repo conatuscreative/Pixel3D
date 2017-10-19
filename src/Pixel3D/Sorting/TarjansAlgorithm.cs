@@ -118,12 +118,12 @@ namespace Pixel3D.Sorting
                 {
                     // Successor w has not yet been visited; recurse on it
                     StrongConnect(w, vertexCount, edgeBits, ref output);
-                    vertexLowLink[v] = Math.Min(vertexLowLink[v], vertexLowLink[w]);
+                    vertexLowLink[v] = System.Math.Min(vertexLowLink[v], vertexLowLink[w]);
                 }
                 else if((vertexIndex[w] & OnStackBit) != 0)
                 {
                     // Successor w is in the stack and hence in the current strongly-connected-component
-                    vertexLowLink[v] = Math.Min(vertexLowLink[v], vertexIndex[w] & ~OnStackBit);
+                    vertexLowLink[v] = System.Math.Min(vertexLowLink[v], vertexIndex[w] & ~OnStackBit);
                 }
             }
 

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using System.IO;
+using Pixel3D.Extensions;
 
 namespace Pixel3D
 {
@@ -147,8 +148,8 @@ namespace Pixel3D
                 return false;
 
             Debug.Assert(xStart <= xEnd);
-            xStart = Math.Max(0, xStart - OffsetX);
-            xEnd = Math.Min(Width, xEnd - OffsetX);
+            xStart = System.Math.Max(0, xStart - OffsetX);
+            xEnd = System.Math.Min(Width, xEnd - OffsetX);
 
             // PERF: Consider doing this with bitmasks to save some cycles
             for(int x = xStart; x < xEnd; x++)
@@ -176,10 +177,10 @@ namespace Pixel3D
 
         public void SetBitwiseOrFrom(MaskData other)
         {
-            int localStartX = Math.Max(this.StartX, other.StartX);
-            int localStartY = Math.Max(this.StartY, other.StartY);
-            int localEndX = Math.Min(this.EndX, other.EndX);
-            int localEndY = Math.Min(this.EndY, other.EndY);
+            int localStartX = System.Math.Max(this.StartX, other.StartX);
+            int localStartY = System.Math.Max(this.StartY, other.StartY);
+            int localEndX = System.Math.Min(this.EndX, other.EndX);
+            int localEndY = System.Math.Min(this.EndY, other.EndY);
             
             for(int y = localStartY; y < localEndY; y++) for(int x = localStartX; x < localEndX; x++)
             {
@@ -311,10 +312,10 @@ namespace Pixel3D
         {
             MaskData copy = new MaskData(newBounds);
 
-            int startX = Math.Max(copy.StartX, this.StartX);
-            int startY = Math.Max(copy.StartY, this.StartY);
-            int endX = Math.Min(copy.EndX, this.EndX);
-            int endY = Math.Min(copy.EndY, this.EndY);
+            int startX = System.Math.Max(copy.StartX, this.StartX);
+            int startY = System.Math.Max(copy.StartY, this.StartY);
+            int endX = System.Math.Min(copy.EndX, this.EndX);
+            int endY = System.Math.Min(copy.EndY, this.EndY);
 
             for(int y = startY; y < endY; y++) for(int x = startX; x < endX; x++)
             {
@@ -383,9 +384,9 @@ namespace Pixel3D
             int dx = x2 - x1;
             int dy = y2 - y1;
             int x_inc = (dx < 0) ? -1 : 1;
-            int l = Math.Abs(dx);
+            int l = System.Math.Abs(dx);
             int y_inc = (dy < 0) ? -1 : 1;
-            int m = Math.Abs(dy);
+            int m = System.Math.Abs(dy);
             int dx2 = l << 1;
             int dy2 = m << 1;
 

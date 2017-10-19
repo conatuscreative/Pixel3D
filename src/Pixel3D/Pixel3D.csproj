@@ -32,6 +32,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.12\lib\net40\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="Pixel3D.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Pixel3D.Serialization.1.0.0\lib\net40-client\Pixel3D.Serialization.dll</HintPath>
     </Reference>
@@ -72,8 +75,24 @@
     <Compile Include="Animations\Serialization\TextureData.cs" />
     <Compile Include="Animations\ShadowCasterList.cs" />
     <Compile Include="Animations\ShadowLayer.cs" />
+    <Compile Include="AssetManagement\AssetManager.cs" />
+    <Compile Include="AssetManagement\AssetReader.cs" />
+    <Compile Include="AssetManagement\IAssetPathProvider.cs" />
+    <Compile Include="AssetManagement\IAssetProvider.cs" />
+    <Compile Include="AssetManagement\IHasReferencedAssets.cs" />
+    <Compile Include="Audio\AudioDevice.cs" />
+    <Compile Include="Audio\Cue.cs" />
+    <Compile Include="Audio\CueDeserializeContext.cs" />
+    <Compile Include="Audio\CueSerializeContext.cs" />
+    <Compile Include="Audio\CueType.cs" />
+    <Compile Include="Audio\IAudioDefinitions.cs" />
+    <Compile Include="Audio\SafeSoundEffect.cs" />
+    <Compile Include="Audio\Sound.cs" />
     <Compile Include="Bounds.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Collections\MultiDictionary.cs" />
+    <Compile Include="Collections\MultiDictionaryExtensions.cs" />
+    <Compile Include="Collections\OrderedDictionary.cs" />
     <Compile Include="ColorDataExtensions.cs" />
     <Compile Include="ColorGradient.cs" />
     <Compile Include="CombinedHeightmap.cs" />
@@ -105,7 +124,11 @@
     <Compile Include="IHasDrawableFrame.cs" />
     <Compile Include="IntMatrix2.cs" />
     <Compile Include="ISmoothProvider.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="MaskData.cs" />
+    <Compile Include="Maths\Fixed65536.cs" />
+    <Compile Include="Maths\Fraction.cs" />
+    <Compile Include="Maths\PackedVelocity.cs" />
     <Compile Include="Oblique.cs" />
     <Compile Include="PanCamera.cs" />
     <Compile Include="Position.cs" />
@@ -123,6 +146,7 @@
     <Compile Include="TagSet.cs" />
     <Compile Include="TransformedMaskData.cs" />
     <Compile Include="WorldSpriteExtensions.cs" />
+    <Compile Include="XorShift.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FNA\FNA.csproj">

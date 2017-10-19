@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using Pixel3D.Extensions;
 
 namespace Pixel3D
 {

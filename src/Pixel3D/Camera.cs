@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using Pixel3D.Extensions;
 
 namespace Pixel3D
 {
@@ -316,8 +317,8 @@ namespace Pixel3D
         private void RecalculateCamera()
         {
             ContentTargetInPixels = new Point(
-                    (int)Math.Floor(ContentSize.X * ContentTargetProportional.X),
-                    (int)Math.Floor(ContentSize.Y * ContentTargetProportional.Y));
+                    (int)System.Math.Floor(ContentSize.X * ContentTargetProportional.X),
+                    (int)System.Math.Floor(ContentSize.Y * ContentTargetProportional.Y));
 
             // Change the targeting calculation to put the world target at the top-left of the content area
             // (Historically, when we were in floating-point, we did this to keep the world pixel-aligned at the top left)
