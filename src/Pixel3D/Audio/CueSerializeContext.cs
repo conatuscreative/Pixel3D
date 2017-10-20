@@ -1,5 +1,4 @@
 using System.IO;
-using Pixel3D.Core;
 
 namespace Pixel3D.Audio
 {

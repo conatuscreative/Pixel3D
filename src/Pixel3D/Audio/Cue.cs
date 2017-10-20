@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using Microsoft.Xna.Framework;
-using Pixel3D.Core;
 using Pixel3D.Serialization;
 
 namespace Pixel3D.Audio

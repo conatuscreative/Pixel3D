@@ -1,6 +1,6 @@
 using NLog;
 
-namespace Pixel3D.Core
+namespace Pixel3D
 {
     public static class Log
     {

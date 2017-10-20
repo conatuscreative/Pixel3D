@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Audio;
-using Pixel3D.Core;
 
 namespace Pixel3D.Audio
 {

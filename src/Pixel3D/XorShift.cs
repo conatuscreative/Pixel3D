@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pixel3D.Core
+namespace Pixel3D
 {
 	/// <summary>
     /// Random number generator that requires significantly less state than Random

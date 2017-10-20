@@ -121,6 +121,7 @@
     <Compile Include="HeightmapView.cs" />
     <Compile Include="IDrawObject.cs" />
     <Compile Include="IEditorNameProvider.cs" />
+    <Compile Include="IGameState.cs" />
     <Compile Include="IHasDrawableFrame.cs" />
     <Compile Include="IntMatrix2.cs" />
     <Compile Include="ISmoothProvider.cs" />
