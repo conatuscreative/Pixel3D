@@ -137,12 +137,10 @@ namespace Pixel3D
             return null;
         }
 
-#if DEVELOPER
         public static List<State> DeveloperGetAllStatesByType(Type type)
         {
             return _allStatesByType[type];
         }
-#endif
 
         #endregion
 
