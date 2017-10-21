@@ -1,7 +1,7 @@
 Pixel3D
 =======
 
-Isometric/2.5D pixel game engine built on FNA.
+A 2.5D pixel game engine built on FNA.
 
 It was used to create the game River City Ransom: Underground.
 
