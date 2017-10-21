@@ -19,7 +19,7 @@ namespace Pixel3D.Audio
         #region Version
 
         /// <summary>Increment this number when anything we serialize changes</summary>
-        public const int formatVersion = 3;
+        public const int formatVersion = 4;
 
         public int Version { get; private set; }
 

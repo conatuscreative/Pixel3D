@@ -1,3 +1,5 @@
+using System;
+
 namespace Pixel3D.Audio
 {
     public class Sound
@@ -8,12 +10,22 @@ namespace Pixel3D.Audio
 
         public void Serialize(CueSerializeContext context)
         {
-            context.bw.Write(path);
+			if(context.Version >= 4)
+				context.bw.Write(path);
+			else
+				throw new NotSupportedException("Legacy formats are not supported.");
         }
 
         /// <summary>Deserialize into new object instance</summary>
         public Sound(CueDeserializeContext context)
         {
+	        if (context.Version < 4)
+	        {
+				context.br.ReadNullableSingle();				// pitch
+		        context.br.ReadNullableSingle();				// pan
+		        context.br.ReadNullableSingle();				// volume
+		        context.br.ReadBoolean();						// isLooped
+			}
             path = context.br.ReadString();
         }
 
