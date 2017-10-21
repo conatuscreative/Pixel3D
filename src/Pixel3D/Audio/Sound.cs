@@ -19,14 +19,14 @@ namespace Pixel3D.Audio
         /// <summary>Deserialize into new object instance</summary>
         public Sound(CueDeserializeContext context)
         {
-	        if (context.Version < 4)
+			path = context.br.ReadString();
+			if (context.Version < 4)
 	        {
 				context.br.ReadNullableSingle();				// pitch
 		        context.br.ReadNullableSingle();				// pan
 		        context.br.ReadNullableSingle();				// volume
 		        context.br.ReadBoolean();						// isLooped
 			}
-            path = context.br.ReadString();
         }
 
         public Sound() { }
