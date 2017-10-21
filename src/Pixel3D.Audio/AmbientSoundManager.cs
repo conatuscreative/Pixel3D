@@ -5,6 +5,7 @@ using Common;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Pixel3D.Animations;
+using Pixel3D.Engine;
 
 namespace Pixel3D.Audio
 {

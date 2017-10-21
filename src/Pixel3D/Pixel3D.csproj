@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AABB.cs" />
+    <Compile Include="Attributes\AlwaysNullCheckedAttribute.cs" />
     <Compile Include="Animations\Animation.cs" />
     <Compile Include="Animations\AnimationDeserializeContext.cs" />
     <Compile Include="Animations\AnimationFrame.cs" />
@@ -93,6 +94,8 @@
     <Compile Include="Collections\MultiDictionary.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />
     <Compile Include="Collections\OrderedDictionary.cs" />
+    <Compile Include="Collections\PriorityQueue.cs" />
+    <Compile Include="Collections\ReadOnlyList.cs" />
     <Compile Include="ColorDataExtensions.cs" />
     <Compile Include="ColorGradient.cs" />
     <Compile Include="CombinedHeightmap.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="CubeCornerColors.cs" />
     <Compile Include="Data2D.cs" />
     <Compile Include="Data2DExtensions.cs" />
+    <Compile Include="DebugColors.cs" />
     <Compile Include="DebugRenderingExtensions.cs" />
     <Compile Include="DrawableFrame.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
@@ -121,10 +125,11 @@
     <Compile Include="HeightmapView.cs" />
     <Compile Include="IDrawObject.cs" />
     <Compile Include="IEditorNameProvider.cs" />
-    <Compile Include="IGameState.cs" />
+    <Compile Include="Engine\IGameState.cs" />
     <Compile Include="IHasDrawableFrame.cs" />
     <Compile Include="IntMatrix2.cs" />
     <Compile Include="ISmoothProvider.cs" />
+    <Compile Include="Engine\IUpdateContext.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MaskData.cs" />
     <Compile Include="Maths\Fixed65536.cs" />
@@ -143,6 +148,12 @@
     <Compile Include="Sorting\TarjansAlgorithm.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="SpriteRef.cs" />
+    <Compile Include="StateMachine.cs" />
+    <Compile Include="StateProvider.cs" />
+    <Compile Include="Strings\LineWrapping.cs" />
+    <Compile Include="Strings\StringBank.cs" />
+    <Compile Include="Strings\StringList.cs" />
+    <Compile Include="Strings\Tokenizer.cs" />
     <Compile Include="TagLookup.cs" />
     <Compile Include="TagSet.cs" />
     <Compile Include="TransformedMaskData.cs" />

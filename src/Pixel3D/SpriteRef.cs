@@ -9,8 +9,8 @@ using Pixel3D.Serialization.Context;
 
 namespace Pixel3D
 {
-    /// <summary>Reference to a <see cref="Sprite"/> stored in a <see cref="ImageBundle"/></summary>
-    public struct SpriteRef
+	/// <summary>Reference to a <see cref="Sprite"/> stored in a <see cref="ImageBundle"/></summary>
+	public struct SpriteRef
     {
         private ImageBundle bundle;
         private int index;
