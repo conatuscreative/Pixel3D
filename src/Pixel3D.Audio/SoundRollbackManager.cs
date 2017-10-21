@@ -20,66 +20,67 @@ namespace Pixel3D.Audio
 
 
 
-
-
-        /// <param name="random">IMPORTANT: This may be part of the game state</param>
-        /// <param name="cueStates">IMPORTANT: This may be part of the game state</param>
-        /// <param name="playLocally">True if this sound should be played, false if the sound is for a remote player (not for us). Allows for local-only UI sounds.</param>
-        public void PlayCue(IAudioDefinitions definitions, Cue cue, Position? worldPosition, FadePitchPan fpp, PlayCueParameters parameters, bool playsLocally)
+	    /// <param name="random">IMPORTANT: This may be part of the game state</param>
+		/// <param name="cueStates">IMPORTANT: This may be part of the game state</param>
+		/// <param name="playLocally">True if this sound should be played, false if the sound is for a remote player (not for us). Allows for local-only UI sounds.</param>
+		public void PlayCue(IAudioDefinitions definitions, Cue cue, Position? worldPosition, FadePitchPan fpp, PlayCueParameters parameters, bool playsLocally)
         {
-#if DEVELOPER
             if(parameters.soundIndex == PlayCueParameters.MISSING_CUE)
             {
-                if(!doingPrediction) // <- poor man's "first time simulated" (Nelson doesn't get rollback-aware sound handling)
+                if(!doingPrediction) // <- poor man's "first time simulated" (Missing music doesn't get rollback-aware sound handling)
                     MissingAudio.TriedToPlayMissingCue(fpp);
                 return;
             }
-#endif
-            if(parameters.soundIndex < 0)
-                return;
-            
 
-            if(!playsLocally || !AudioDevice.Available)
-                return; // <- nothing to do!
-
-            if(doingPrediction) // Re-prediction following rollback
-            {
-                if(activeFrame >= liveFrame - DontCareLimit) // <- new enough that we could still be tracking it
-                {
-                    if(!TryKillCueExact(cue, activeFrame, worldPosition))
-                    {
-                        if(activeFrame >= liveFrame - MaximumSoundShift) // <- new enough that we may play it
-                        {
-                            PendingCue pending;
-                            pending.cue = cue;
-                            pending.parameters = parameters;
-                            pending.frame = activeFrame;
-                            pending.position = worldPosition;
-                            pending.fpp = fpp;
-
-                            pendingCues.Add(pending);
-                        }
-                    }
-                }
-            }
-            else // Standard playback
-            {
-                Debug.Assert(activeFrame == liveFrame);
-
-                if(!rollbackAware || !TryKillCueFuzzy(cue, activeFrame, worldPosition))
-                {
-                    if(!doingStartupPrediction)
-                        SoundEffectManager.PlayCueSkipMissingCheck(definitions, cue, parameters, fpp);
-                    AddLiveCueNow(cue, worldPosition);
-                }
-            }
+            PlayCueSkipMissingCheck(definitions, cue, worldPosition, fpp, parameters, playsLocally);
         }
 
+	    public void PlayCueSkipMissingCheck(IAudioDefinitions definitions, Cue cue, Position? worldPosition, FadePitchPan fpp,
+		    PlayCueParameters parameters, bool playsLocally)
+	    {
+		    if (parameters.soundIndex < 0)
+			    return;
 
 
+		    if (!playsLocally || !AudioDevice.Available)
+			    return; // <- nothing to do!
 
-        /// <summary>Prevent any sounds from playing while doing startup prediction</summary>
-        bool doingStartupPrediction = false;
+		    if (doingPrediction) // Re-prediction following rollback
+		    {
+			    if (activeFrame >= liveFrame - DontCareLimit) // <- new enough that we could still be tracking it
+			    {
+				    if (!TryKillCueExact(cue, activeFrame, worldPosition))
+				    {
+					    if (activeFrame >= liveFrame - MaximumSoundShift) // <- new enough that we may play it
+					    {
+						    PendingCue pending;
+						    pending.cue = cue;
+						    pending.parameters = parameters;
+						    pending.frame = activeFrame;
+						    pending.position = worldPosition;
+						    pending.fpp = fpp;
+
+						    pendingCues.Add(pending);
+					    }
+				    }
+			    }
+		    }
+		    else // Standard playback
+		    {
+			    Debug.Assert(activeFrame == liveFrame);
+
+			    if (!rollbackAware || !TryKillCueFuzzy(cue, activeFrame, worldPosition))
+			    {
+				    if (!doingStartupPrediction)
+					    SoundEffectManager.PlayCueSkipMissingCheck(definitions, cue, parameters, fpp);
+				    AddLiveCueNow(cue, worldPosition);
+			    }
+		    }
+	    }
+
+
+		/// <summary>Prevent any sounds from playing while doing startup prediction</summary>
+		bool doingStartupPrediction = false;
         bool rollbackAware = false;
         bool doingPrediction = false;
 

@@ -13,8 +13,7 @@ namespace Pixel3D.Audio
 
 		private static readonly HashSet<string> missingCues = new HashSet<string>();
 
-	    [Conditional("DEVELOPER")]
-		public static void ReportMissingCue(string name, object debugContext)
+	    public static void ReportMissingCue(string name, object debugContext)
         {
 	        bool added;
 	        lock (missingCues)
@@ -65,7 +64,6 @@ namespace Pixel3D.Audio
 
         private static readonly HashSet<ExpectedCueInfo> expectedCues = new HashSet<ExpectedCueInfo>();
 
-        [Conditional("DEVELOPER")]
         public static void ReportExpectedCue(string context, AnimationSet animationSet, Animation animation = null, int frame = -1)
         {
 	        ExpectedCueInfo eci = new ExpectedCueInfo { context = context, animationSet = animationSet, animation = animation, frame = frame };
@@ -130,7 +128,7 @@ namespace Pixel3D.Audio
                         Debug.WriteLine("Couldn't load Nelson!");
                     else
                         lock(lockObject)
-                            nelson = sound;
+                            missingSoundEffect = sound;
                 }
             }
             
@@ -145,22 +143,19 @@ namespace Pixel3D.Audio
                         Debug.WriteLine("Couldn't load Howard!");
                     else
                         lock(lockObject)
-                            howard = sound;
+                            missingMusic = sound;
                 }
             }
 #endif
         }
 
+		private static SafeSoundEffect missingSoundEffect, missingMusic;
 
-        private static SafeSoundEffect nelson, howard;
-
-
-	    [Conditional("DEVELOPER")]
 		public static void TriedToPlayMissingCue(FadePitchPan fpp)
         {
             SafeSoundEffect sound;
             lock(lockObject)
-                sound = nelson;
+                sound = missingSoundEffect;
 
             if(sound != null)
                 sound.Play(fpp.fade, fpp.pitch, fpp.pan);
@@ -169,7 +164,7 @@ namespace Pixel3D.Audio
 		public static SafeSoundEffect GetMissingMusicSound()
         {
             lock(lockObject)
-                return howard;
+                return missingMusic;
         }
 
         #endregion

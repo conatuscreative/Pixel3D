@@ -47,14 +47,13 @@ namespace Pixel3D.Audio
 
         public static void PlayCue(IAudioDefinitions definitions, Cue cue, PlayCueParameters parameters, FadePitchPan fpp, bool loop = false)
         {
-#if DEVELOPER
             if(parameters.soundIndex == PlayCueParameters.MISSING_CUE)
             {
                 MissingAudio.TriedToPlayMissingCue(fpp);
                 return;
             }
-#endif
-            if(parameters.soundIndex < 0)
+
+			if (parameters.soundIndex < 0)
                 return;
 
             PlayCueSkipMissingCheck(definitions, cue, parameters, fpp, loop);
