@@ -22,7 +22,7 @@ Requires the following directories to be added at the same level as the Solution
 - "FNA" containing FNA project from https://github.com/FNA-XNA/FNA
 - "FNALibs" containing FNA libraries from http://fna.flibitijibibo.com/archive/fnalibs.tar.bz2
 
-fxc.exe should live in 'build\tools'
+fxc.exe should live in `build\tools`
 
 Note that shaders need to be loaded from fxb files, not through ContentManager (example is provided)
 
