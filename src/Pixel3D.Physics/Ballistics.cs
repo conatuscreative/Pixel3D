@@ -12,7 +12,7 @@ namespace Pixel3D.Physics
     public static class Ballistics
     {
         // Could modify this to take up and down gravity
-        internal static ThreeDVelocity GetVelocityToHit(Position position, Position goal, int clearanceHeight, int gravity256)
+	    public static ThreeDVelocity GetVelocityToHit(Position position, Position goal, int clearanceHeight, int gravity256)
         {
             // There is possibly a minor performance argument for doing this in 24.8 instead of 16.16 (mostly due to sqrt), but oh well...
 
