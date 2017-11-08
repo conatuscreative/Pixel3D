@@ -109,6 +109,7 @@
     <Compile Include="DebugColors.cs" />
     <Compile Include="DebugRenderingExtensions.cs" />
     <Compile Include="DrawableFrame.cs" />
+    <Compile Include="Engine\IDefinitions.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="FadeEffect.cs" />

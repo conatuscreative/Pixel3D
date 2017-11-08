@@ -6,7 +6,7 @@ namespace Pixel3D.Audio
 {
     public static class AudioDevice
     {
-        public static bool Available { get; }
+        public static bool Available { get; private set; }
 
         static AudioDevice()
         {
