@@ -126,9 +126,11 @@
     <Compile Include="Bounds.cs" />
     <Compile Include="Fader.cs" />
     <Compile Include="Helpers\TarWriter.cs" />
+    <Compile Include="Levels\CreateThingCache.cs" />
     <Compile Include="Levels\IEditorObject.cs" />
     <Compile Include="Levels\LevelDeserializeContext.cs" />
     <Compile Include="Levels\LevelSerializeContext.cs" />
+    <Compile Include="Levels\Thing.cs" />
     <Compile Include="LoopSystem\ByteArrayExtensions.cs" />
     <Compile Include="LoopSystem\Loop.cs" />
     <Compile Include="LoopSystem\MemoryCompareReadStream.cs" />
