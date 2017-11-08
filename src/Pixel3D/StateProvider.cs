@@ -479,7 +479,8 @@ namespace Pixel3D
                         ThrowMethodMismatch(methodInStateMachine, methodInMethodTable);
 
                     for(int i = 0; i < methodInStateMachineParameters.Length; i++)
-                        if(methodInStateMachineParameters[i].ParameterType != methodInMethodTableParameters[i+1].ParameterType) // +1 to account for 'this' parameter to open delegate
+                        if(methodInStateMachineParameters[i].ParameterType != methodInMethodTableParameters[i+1].ParameterType &&
+                           !methodInMethodTableParameters[i + 1].ParameterType.IsAssignableFrom(methodInStateMachineParameters[i].ParameterType)) // +1 to account for 'this' parameter to open delegate
                             ThrowMethodMismatch(methodInStateMachine, methodInMethodTable);
                     
 
