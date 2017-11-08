@@ -2,6 +2,7 @@
 {
 	public interface IAudioDefinitions
 	{
-		SafeSoundEffect GetSound(Cue cue, int index);
+	    Cue GetCue(string name, object debugContext);
+        SafeSoundEffect GetSound(Cue cue, int index);
 	}
 }

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Pixel3D.Animations;
+using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
+using Pixel3D.Animations;
 using Pixel3D.Extensions;
 
 #region GIF Format Documentation
@@ -17,7 +14,7 @@ using Pixel3D.Extensions;
 #endregion
 
 
-namespace Pixel3D
+namespace Pixel3D.Helpers
 {
     public class GifWriter
     {

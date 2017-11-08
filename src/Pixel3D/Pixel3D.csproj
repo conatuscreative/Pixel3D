@@ -124,6 +124,15 @@
     <Compile Include="Audio\SafeSoundEffect.cs" />
     <Compile Include="Audio\Sound.cs" />
     <Compile Include="Bounds.cs" />
+    <Compile Include="Fader.cs" />
+    <Compile Include="Helpers\TarWriter.cs" />
+    <Compile Include="Levels\IEditorObject.cs" />
+    <Compile Include="Levels\LevelDeserializeContext.cs" />
+    <Compile Include="Levels\LevelSerializeContext.cs" />
+    <Compile Include="LoopSystem\ByteArrayExtensions.cs" />
+    <Compile Include="LoopSystem\Loop.cs" />
+    <Compile Include="LoopSystem\MemoryCompareReadStream.cs" />
+    <Compile Include="LoopSystem\NaturalStringComparer.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeDictionary.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeOrderedDictionary.cs" />
     <Compile Include="Camera.cs" />
@@ -160,7 +169,7 @@
     <Compile Include="Common\FrameworkExtensions\ListExtensions.cs" />
     <Compile Include="Common\FrameworkExtensions\RandomExtensions.cs" />
     <Compile Include="Common\FrameworkExtensions\ReferenceEqualityComparer.cs" />
-    <Compile Include="GifWriter.cs" />
+    <Compile Include="Helpers\GifWriter.cs" />
     <Compile Include="Heightmap.cs" />
     <Compile Include="HeightmapInstruction.cs" />
     <Compile Include="HeightmapView.cs" />
@@ -203,6 +212,10 @@
     <Compile Include="XorShift.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Pixel3D.Network\src\Pixel3D.Network.Rollback.Input\Pixel3D.Network.Rollback.Input.csproj">
+      <Project>{9A3B44B2-C5FC-45A4-915D-8F4B4AD665F8}</Project>
+      <Name>Pixel3D.Network.Rollback.Input</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\FNA\FNA.csproj">
       <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
       <Name>FNA</Name>

@@ -1,7 +1,9 @@
-﻿namespace Pixel3D.Engine
+﻿using Pixel3D.Audio;
+
+namespace Pixel3D.Engine
 {
-	public interface IDefinitions
+	public interface IDefinitions : IAudioDefinitions
 	{
-		
+	    
 	}
 }
