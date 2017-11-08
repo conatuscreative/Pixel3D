@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Pixel3D.Engine;
 
 namespace Pixel3D.DebugRendering // <- Separate namespace, so you have to opt-into these
 {

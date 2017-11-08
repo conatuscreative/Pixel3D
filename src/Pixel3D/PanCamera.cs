@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Common.GlobalInput;
 using Microsoft.Xna.Framework;
+using Pixel3D.Engine;
 using Pixel3D.Extensions;
 
 namespace Pixel3D

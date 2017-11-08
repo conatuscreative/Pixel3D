@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Pixel3D.Extensions;
 
-namespace Pixel3D
+namespace Pixel3D.Engine
 {
     public class Camera
     {

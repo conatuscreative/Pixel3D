@@ -1,8 +1,7 @@
 ﻿using System;
 using Pixel3D.Attributes;
-using Pixel3D.Engine;
 
-namespace Pixel3D
+namespace Pixel3D.Engine
 {
     /// <summary>State machine for types that exist within the game state</summary>
     public class StateMachine : StateProvider

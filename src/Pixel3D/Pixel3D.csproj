@@ -117,16 +117,28 @@
     <Compile Include="AssetManagement\IAssetPathProvider.cs" />
     <Compile Include="AssetManagement\IAssetProvider.cs" />
     <Compile Include="AssetManagement\IHasReferencedAssets.cs" />
+    <Compile Include="Audio\AmbientSound.cs" />
+    <Compile Include="Audio\AmbientSoundManager.cs" />
     <Compile Include="Audio\AudioDevice.cs" />
     <Compile Include="Audio\Cue.cs" />
     <Compile Include="Audio\CueDeserializeContext.cs" />
     <Compile Include="Audio\CueSerializeContext.cs" />
     <Compile Include="Audio\CueType.cs" />
+    <Compile Include="Audio\IAmbientSoundSource.cs" />
     <Compile Include="Audio\IAudioDefinitions.cs" />
+    <Compile Include="Audio\IAudioPlayer.cs" />
+    <Compile Include="Audio\MissingAudio.cs" />
+    <Compile Include="Audio\MusicManager.cs" />
+    <Compile Include="Audio\PlayCueParameters.cs" />
+    <Compile Include="Audio\ReadAudioPackage.cs" />
     <Compile Include="Audio\SafeSoundEffect.cs" />
     <Compile Include="Audio\Sound.cs" />
+    <Compile Include="Audio\SoundEffectManager.cs" />
+    <Compile Include="Audio\SoundRollbackManager.cs" />
+    <Compile Include="Audio\VorbisfileDecoder.cs" />
     <Compile Include="Bounds.cs" />
     <Compile Include="Engine\SmoothingIdentifiers.cs" />
+    <Compile Include="Engine\UpdateContext.cs" />
     <Compile Include="Fader.cs" />
     <Compile Include="Helpers\TarWriter.cs" />
     <Compile Include="Levels\CreateThingCache.cs" />
@@ -140,7 +152,7 @@
     <Compile Include="LoopSystem\NaturalStringComparer.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeDictionary.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeOrderedDictionary.cs" />
-    <Compile Include="Camera.cs" />
+    <Compile Include="Engine\Camera.cs" />
     <Compile Include="Collections\MultiDictionary.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />
     <Compile Include="Collections\OrderedDictionary.cs" />
@@ -203,7 +215,7 @@
     <Compile Include="Sorting\TarjansAlgorithm.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="SpriteRef.cs" />
-    <Compile Include="StateMachine.cs" />
+    <Compile Include="Engine\StateMachine.cs" />
     <Compile Include="StateProvider.cs" />
     <Compile Include="Strings\ILocalizationProvider.cs" />
     <Compile Include="Strings\LineWrapping.cs" />
@@ -227,6 +239,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Audio\packages.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
