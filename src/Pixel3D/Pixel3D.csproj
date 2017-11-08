@@ -124,6 +124,7 @@
     <Compile Include="Audio\SafeSoundEffect.cs" />
     <Compile Include="Audio\Sound.cs" />
     <Compile Include="Bounds.cs" />
+    <Compile Include="Engine\SmoothingIdentifiers.cs" />
     <Compile Include="Fader.cs" />
     <Compile Include="Helpers\TarWriter.cs" />
     <Compile Include="Levels\CreateThingCache.cs" />
