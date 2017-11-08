@@ -124,8 +124,8 @@
     <Compile Include="Audio\SafeSoundEffect.cs" />
     <Compile Include="Audio\Sound.cs" />
     <Compile Include="Bounds.cs" />
-    <Compile Include="BuiltIn\SerializeDictionary.cs" />
-    <Compile Include="BuiltIn\SerializeOrderedDictionary.cs" />
+    <Compile Include="Serialization\BuiltIn\SerializeDictionary.cs" />
+    <Compile Include="Serialization\BuiltIn\SerializeOrderedDictionary.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Collections\MultiDictionary.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />

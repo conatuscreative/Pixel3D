@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
 using Pixel3D.Collections;
-using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 
-namespace Pixel3D.BuiltIn
+namespace Pixel3D.Serialization.BuiltIn
 {
     static class SerializeOrderedDictionary
     {
