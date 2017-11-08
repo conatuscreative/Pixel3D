@@ -81,6 +81,7 @@
     <Compile Include="AmbientSound.cs" />
     <Compile Include="AmbientSoundManager.cs" />
     <Compile Include="IAmbientSoundSource.cs" />
+    <Compile Include="IAudioPlayer.cs" />
     <Compile Include="MissingAudio.cs" />
     <Compile Include="MusicManager.cs" />
     <Compile Include="PlayCueParameters.cs" />

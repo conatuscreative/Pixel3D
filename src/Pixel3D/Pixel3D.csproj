@@ -132,6 +132,7 @@
     <Compile Include="Collections\OrderedDictionary.cs" />
     <Compile Include="Collections\PriorityQueue.cs" />
     <Compile Include="Collections\ReadOnlyList.cs" />
+    <Compile Include="Collections\ShortPriorityQueue.cs" />
     <Compile Include="Collections\TransientList.cs" />
     <Compile Include="Collections\UniqueList.cs" />
     <Compile Include="ColorDataExtensions.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="DebugColors.cs" />
     <Compile Include="DebugRenderingExtensions.cs" />
     <Compile Include="DrawableFrame.cs" />
+    <Compile Include="Engine\IActor.cs" />
     <Compile Include="Engine\IDefinitions.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
