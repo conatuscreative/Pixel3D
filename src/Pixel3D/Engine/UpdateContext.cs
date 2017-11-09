@@ -18,13 +18,14 @@ namespace Pixel3D.Engine
         /// </summary>
         public virtual void Reset()
         {
-
+            random = null;
         }
 
         #region Non-Retained Data
 
         // Things that must not be retained across frames (clear in Reset method!)
 
+        public XorShift random; // <- here so that no one uses it outside of network update methods
 
         #endregion
 

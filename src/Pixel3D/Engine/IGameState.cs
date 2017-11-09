@@ -3,7 +3,6 @@
 	public interface IGameState
 	{
 		int MaxPlayers { get; }
-
-		Position? GetPlayerPosition(int playerIndex);
+	    Position? GetPlayerPosition(int playerIndex);
 	}
 }
