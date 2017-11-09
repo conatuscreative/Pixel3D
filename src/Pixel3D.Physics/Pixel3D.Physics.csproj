@@ -68,9 +68,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Pixel3D.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pixel3D.Serialization.1.0.0\lib\net40-client\Pixel3D.Serialization.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -90,6 +87,10 @@
     <Compile Include="WorldPhysics.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj">
+      <Project>{A57814B6-1D0B-48BD-B512-BF8CE9000282}</Project>
+      <Name>Pixel3D.Serialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\rcru-pixel3d\FNA\FNA.csproj">
       <Project>{35253CE1-C864-4CD3-8249-4D1319748E8F}</Project>
       <Name>FNA</Name>

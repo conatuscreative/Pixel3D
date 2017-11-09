@@ -136,6 +136,7 @@
     <Compile Include="Bounds.cs" />
     <Compile Include="Engine\Definitions.cs" />
     <Compile Include="Engine\GameState.cs" />
+    <Compile Include="MaskDataReferenceResolver.cs" />
     <Compile Include="Engine\SmoothingIdentifiers.cs" />
     <Compile Include="Engine\UpdateContext.cs" />
     <Compile Include="Fader.cs" />

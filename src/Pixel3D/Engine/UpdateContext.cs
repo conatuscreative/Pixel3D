@@ -19,6 +19,7 @@ namespace Pixel3D.Engine
         public virtual void Reset()
         {
             random = null;
+            activeActorIndex = -1;
         }
 
         #region Non-Retained Data
@@ -26,6 +27,9 @@ namespace Pixel3D.Engine
         // Things that must not be retained across frames (clear in Reset method!)
 
         public XorShift random; // <- here so that no one uses it outside of network update methods
+
+        /// <summary>The index in the actor list of the actor currently being updated (or -1 when outside the normal actor update loop)</summary>
+        public int activeActorIndex = -1;
 
         #endregion
 
