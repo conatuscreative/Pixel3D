@@ -68,7 +68,7 @@ namespace Pixel3D.Engine
         public int cuesWithIds;
 
         /// <summary>Sentinel value for when we cannot find a requested cue</summary>
-        public Cue missingCue = new Cue { friendlyName = "[missing cue]" };
+        public Cue missingCue = new Cue() { friendlyName = "[missing cue]" };
 
         public Cue GetCue(string name, object debugContext)
         {
