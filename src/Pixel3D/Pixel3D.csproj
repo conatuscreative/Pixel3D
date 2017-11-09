@@ -68,11 +68,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NLog.4.4.12\lib\net40\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="Pixel3D.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Pixel3D.Serialization.1.0.0\lib\net40-client\Pixel3D.Serialization.dll</HintPath>
+    <Reference Include="NLog">
+      <HintPath>..\..\..\rcru-pixel3d\packages\NLog.4.4.12\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -148,10 +145,10 @@
     <Compile Include="Levels\LevelDeserializeContext.cs" />
     <Compile Include="Levels\LevelSerializeContext.cs" />
     <Compile Include="Levels\Thing.cs" />
-    <Compile Include="LoopSystem\ByteArrayExtensions.cs" />
-    <Compile Include="LoopSystem\Loop.cs" />
-    <Compile Include="LoopSystem\MemoryCompareReadStream.cs" />
-    <Compile Include="LoopSystem\NaturalStringComparer.cs" />
+    <Compile Include="Engine\LoopSystem\ByteArrayExtensions.cs" />
+    <Compile Include="Engine\LoopSystem\Loop.cs" />
+    <Compile Include="Engine\LoopSystem\MemoryCompareReadStream.cs" />
+    <Compile Include="Engine\LoopSystem\NaturalStringComparer.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeDictionary.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeOrderedDictionary.cs" />
     <Compile Include="Engine\Camera.cs" />
@@ -219,7 +216,7 @@
     <Compile Include="SpriteRef.cs" />
     <Compile Include="Engine\StateMachine.cs" />
     <Compile Include="StateProvider.cs" />
-    <Compile Include="Strings\ILocalizationProvider.cs" />
+    <Compile Include="Engine\ILocalizationProvider.cs" />
     <Compile Include="Strings\LineWrapping.cs" />
     <Compile Include="Strings\StringBank.cs" />
     <Compile Include="Strings\StringList.cs" />
@@ -235,8 +232,12 @@
       <Project>{9A3B44B2-C5FC-45A4-915D-8F4B4AD665F8}</Project>
       <Name>Pixel3D.Network.Rollback.Input</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FNA\FNA.csproj">
-      <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
+    <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj">
+      <Project>{A57814B6-1D0B-48BD-B512-BF8CE9000282}</Project>
+      <Name>Pixel3D.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\rcru-pixel3d\FNA\FNA.csproj">
+      <Project>{35253CE1-C864-4CD3-8249-4D1319748E8F}</Project>
       <Name>FNA</Name>
     </ProjectReference>
   </ItemGroup>

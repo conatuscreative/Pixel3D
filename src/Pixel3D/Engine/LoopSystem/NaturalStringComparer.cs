@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace Pixel3D.LoopSystem
+namespace Pixel3D.Engine.LoopSystem
 {
     public sealed class NaturalStringComparer : IComparer<string>
     {

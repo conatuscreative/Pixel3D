@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Pixel3D.LoopSystem
+namespace Pixel3D.Engine.LoopSystem
 {
     public class MemoryCompareReadStream : Stream
     {

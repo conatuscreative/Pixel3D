@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using Pixel3D.Network.Rollback.Input;
 using Pixel3D.Serialization;
 
-namespace Pixel3D.LoopSystem
+namespace Pixel3D.Engine.LoopSystem
 {
     public sealed class Loop : IDisposable
     {

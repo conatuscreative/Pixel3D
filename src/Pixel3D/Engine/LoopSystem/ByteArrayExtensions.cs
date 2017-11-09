@@ -1,7 +1,7 @@
 using System.IO;
 using Pixel3D.Serialization;
 
-namespace Pixel3D.LoopSystem
+namespace Pixel3D.Engine.LoopSystem
 {
     public static class ByteArrayExtensions
     {

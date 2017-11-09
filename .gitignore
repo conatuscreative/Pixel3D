@@ -122,3 +122,4 @@ Backup*/
 UpgradeLog*.XML
 *.nupkg
 /.vs
+/.vs/

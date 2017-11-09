@@ -83,10 +83,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FNA\FNA.csproj">
-      <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
-      <Name>FNA</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pixel3D\Pixel3D.csproj">
       <Project>{1036d647-a388-4166-8ff0-d271a0d80853}</Project>
       <Name>Pixel3D</Name>
