@@ -8,5 +8,8 @@
         public static readonly string Down = "Down";
         public static readonly string Front = "Front";
         public static readonly string Back = "Back";
+
+        public static readonly string Default = "Default";
+        public static readonly string DefaultSpawn = "Spawn";
     }
 }

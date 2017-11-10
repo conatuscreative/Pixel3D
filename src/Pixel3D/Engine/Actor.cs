@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using Pixel3D;
 using Pixel3D.Animations;
-using Pixel3D.Engine;
 using Pixel3D.Levels;
 using Pixel3D.Physics;
 using Pixel3D.Sorting;
 
-namespace RCRU.Engine
+namespace Pixel3D.Engine
 {
     public class Actor : StateMachine, IHasDrawableFrame, IDrawObject
     {
