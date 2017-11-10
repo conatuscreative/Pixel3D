@@ -77,14 +77,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ballistics.cs" />
-    <Compile Include="CharacterMoveRate.cs" />
-    <Compile Include="CharacterPhysics.cs" />
-    <Compile Include="Motion.cs" />
-    <Compile Include="MoveSpeed.cs" />
+    <Compile Include="GamePhysics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VoxelRenderer.cs" />
-    <Compile Include="WorldPhysics.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj">

@@ -1,4 +1,6 @@
-﻿namespace Pixel3D.Engine
+﻿using RCRU.Engine;
+
+namespace Pixel3D.Engine
 {
 	public interface IGameState
 	{
