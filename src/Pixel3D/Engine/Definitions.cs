@@ -8,7 +8,7 @@ using Pixel3D.Strings;
 
 namespace Pixel3D.Engine
 {
-    public abstract class Definitions : IDefinitions
+    public abstract class Definitions : IAudioDefinitions
     {
         #region Sound Effects
 
