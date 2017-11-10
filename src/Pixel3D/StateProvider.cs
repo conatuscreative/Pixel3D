@@ -13,7 +13,7 @@ using Pixel3D.Serialization.Context;
 
 namespace Pixel3D
 {
-    /// <summary>Provides state infrastructure for implementing finite state machines with stateful methods.</summary>
+	/// <summary>Provides state infrastructure for implementing finite state machines with stateful methods.</summary>
     /// <remarks>
     /// This is loosely based on UnrealScript states. UnrealScript does its magic by chaining the VTable
     /// of objects on-the-fly (educated guess on my part -AR). We can't do that in C#, so instead we
@@ -108,7 +108,7 @@ namespace Pixel3D
             where TType : StateProvider
             where TState : State, new()
         {
-            return StateInstanceLookup<TState>.forType[typeof(TType)];
+            return StateInstanceLookup<TState>.forType[typeof (TType)];
         }
 
         public static ReadOnlyList<State> GetAllStatesFor(Type type)
@@ -128,10 +128,10 @@ namespace Pixel3D
             foreach (var state in _allStatesByType[type])
             {
                 IHaveSymbol queryable = state as IHaveSymbol;
-                if (queryable == null)
+                if(queryable == null)
                     continue;
 
-                if (queryable.Symbol == symbol)
+                if(queryable.Symbol == symbol)
                     return state;
             }
             return null;
@@ -145,13 +145,13 @@ namespace Pixel3D
         #endregion
 
 
-
+        
         /// <summary>Collection of all objects used by the state machine. These are definitions, for the purpose of serialization.</summary>
         public static List<State> AllStateInstances { get { Debug.Assert(_allStateInstances != null); return _allStateInstances; } }
         static List<State> _allStateInstances;
 
-        static Dictionary<Type, List<State>> _allStatesByType;
-
+        static Dictionary<Type, List<State>> _allStatesByType; 
+        
 
 
         #region Setup
@@ -159,19 +159,19 @@ namespace Pixel3D
         /// <summary>Initialize all state machines. Can only be called once.</summary>
         public static void Setup(Assembly[] assemblies)
         {
-            if (Interlocked.CompareExchange(ref _allStateInstances, new List<State>(), null) != null)
+            if(Interlocked.CompareExchange(ref _allStateInstances, new List<State>(), null) != null)
             {
                 Debug.Assert(false); // <- Programmer threading fail
                 throw new InvalidOperationException("StateProvider was already setup");
             }
             // At this point, we own AllStateInstances
-
+            
             Dictionary<Type, Dictionary<Type, State>> stateMachinesToStates = new Dictionary<Type, Dictionary<Type, State>>();
             Dictionary<Type, Dictionary<Type, MethodTable>> stateMachinesToAbstractStates = new Dictionary<Type, Dictionary<Type, MethodTable>>();
 
             // Create all states for all state machines:
             var allStateMachineTypes = assemblies.SelectMany(a => a.GetTypes()).Where(t => typeof(StateProvider).IsAssignableFrom(t));
-            foreach (var type in allStateMachineTypes)
+            foreach(var type in allStateMachineTypes)
             {
                 SetupStateMachineTypeRecursive(stateMachinesToStates, stateMachinesToAbstractStates, type);
             }
@@ -179,9 +179,9 @@ namespace Pixel3D
             // Unpack generated information into the appropriate lookups
             // IMPORTANT: The AllStateInstances lookup gets used by networking - must be network-safe-ordered!!
             _allStatesByType = new Dictionary<Type, List<State>>();
-            foreach (var stateMachineAndStates in stateMachinesToStates.NetworkOrder(kvp => kvp.Key.ToString()))
+            foreach(var stateMachineAndStates in stateMachinesToStates.NetworkOrder(kvp => kvp.Key.ToString()))
             {
-                foreach (var state in stateMachineAndStates.Value.NetworkOrder(kvp => kvp.Key.ToString()))
+                foreach(var state in stateMachineAndStates.Value.NetworkOrder(kvp => kvp.Key.ToString()))
                 {
                     AllStateInstances.Add(state.Value);
 
@@ -204,7 +204,7 @@ namespace Pixel3D
         private static string GetStateName(Type stateType)
         {
             string stateName = stateType.Name;
-            if (stateName != "State" && stateName.EndsWith("State"))
+            if(stateName != "State" && stateName.EndsWith("State"))
                 stateName = stateName.Substring(0, stateName.Length - "State".Length);
             return stateName;
         }
@@ -216,13 +216,13 @@ namespace Pixel3D
         {
             Debug.Assert(typeof(StateProvider).IsAssignableFrom(stateMachineType));
 
-            if (stateMachinesToStates.ContainsKey(stateMachineType))
+            if(stateMachinesToStates.ContainsKey(stateMachineType))
                 return; // We've already visited this type
 
             // Recursively process all ancestors, then fetch base type's states
             Dictionary<Type, State> baseStates = null;
             Dictionary<Type, MethodTable> baseAbstractStates = null;
-            if (stateMachineType != typeof(StateProvider))
+            if(stateMachineType != typeof(StateProvider))
             {
                 SetupStateMachineTypeRecursive(stateMachinesToStates, stateMachinesToAbstractStates, stateMachineType.BaseType);
                 baseStates = stateMachinesToStates[stateMachineType.BaseType];
@@ -238,15 +238,15 @@ namespace Pixel3D
             // Get our method table type:
             Type methodTableType;
             Type methodTableSearchType = stateMachineType;
-            while ((methodTableType = methodTableSearchType.GetNestedType("MethodTable", BindingFlags.Public | BindingFlags.NonPublic)) == null)
+            while((methodTableType = methodTableSearchType.GetNestedType("MethodTable", BindingFlags.Public | BindingFlags.NonPublic)) == null)
             {
-                if (!typeof(StateProvider).IsAssignableFrom(methodTableSearchType.BaseType))
+                if(!typeof(StateProvider).IsAssignableFrom(methodTableSearchType.BaseType))
                     break;
                 methodTableSearchType = methodTableSearchType.BaseType;
             }
-            if (methodTableType == null)
+            if(methodTableType == null)
                 throw new InvalidOperationException("MethodTable not found for " + stateMachineType);
-            if (!typeof(StateProvider.MethodTable).IsAssignableFrom(methodTableType))
+            if(!typeof(StateProvider.MethodTable).IsAssignableFrom(methodTableType))
                 throw new InvalidOperationException("MethodTable must be derived from StateMachine.MethodTable");
 
             // NOTE: There is more correctness checking we could be doing for MethodTable, but it is complicated because
@@ -259,7 +259,7 @@ namespace Pixel3D
 
             // Created derived versions of all of our base type's states
             Debug.Assert((baseStates != null) == (baseAbstractStates != null));
-            if (baseStates != null)
+            if(baseStates != null)
             {
                 // This is *not* recursive, because in derived state machines, we want overriding
                 // methods to only override the specified state's method - not not *child* states 
@@ -268,7 +268,7 @@ namespace Pixel3D
                 //
                 // (I'm guessing this is the best approach. Can always change it later. -AR)
 
-                foreach (var baseState in baseStates)
+                foreach(var baseState in baseStates)
                 {
                     // The state type remains the same, but the method table gets derived
                     State state = (State)Activator.CreateInstance(baseState.Key);
@@ -278,7 +278,7 @@ namespace Pixel3D
                     states.Add(baseState.Key, state);
                 }
 
-                foreach (var baseAbstractState in baseAbstractStates)
+                foreach(var baseAbstractState in baseAbstractStates)
                 {
                     // The state type remains the same, but the method table gets derived
                     var methodTable = ShallowCloneToDerived(baseAbstractState.Value, methodTableType);
@@ -290,13 +290,13 @@ namespace Pixel3D
 
             // Create state instances for all states declared by the current state machine (recursive to handle state inheritance)
             var newStateTypes = stateMachineType.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic).Where(nt => typeof(State).IsAssignableFrom(nt)).ToArray();
-            foreach (var stateType in newStateTypes)
+            foreach(var stateType in newStateTypes)
             {
                 SetupStateTypeRecursive(states, abstractStates, stateType, stateMachineType, methodTableType, stateMethods);
             }
 
 
-            if (stateMethods.Count > 0)
+            if(stateMethods.Count > 0)
             {
                 Debug.Assert(false);
                 throw new Exception("State methods were unused (probably a naming error or undefined state):\n" + string.Join("\n", stateMethods.Values));
@@ -306,18 +306,18 @@ namespace Pixel3D
             // Fill in any delegates that are still null with empty methods
             // This is so calling does not require a null check (probably slower due to jump, but makes coding far easier!)
             var stateTypesToMethodTables = states.Select(kvp => new KeyValuePair<Type, MethodTable>(kvp.Key, kvp.Value.methodTable)).Concat(abstractStates);
-            foreach (var typeToMethodTable in stateTypesToMethodTables)
+            foreach(var typeToMethodTable in stateTypesToMethodTables)
             {
                 MethodTable methodTable = typeToMethodTable.Value;
                 var allMethodTableEntries = methodTable.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance)
                         .Where(fi => fi.FieldType.BaseType == typeof(MulticastDelegate));
 
-                foreach (var fieldInfo in allMethodTableEntries)
+                foreach(var fieldInfo in allMethodTableEntries)
                 {
-                    if (fieldInfo.GetCustomAttributes(typeof(AlwaysNullCheckedAttribute), true).Length != 0)
+                    if(fieldInfo.GetCustomAttributes(typeof(AlwaysNullCheckedAttribute), true).Length != 0)
                         continue; // Don't need a default implementation if we promise to always null-check
 
-                    if (fieldInfo.GetValue(methodTable) == null)
+                    if(fieldInfo.GetValue(methodTable) == null)
                     {
                         var methodInMethodTable = fieldInfo.FieldType.GetMethod("Invoke");
 
@@ -341,10 +341,10 @@ namespace Pixel3D
 
         private static void EmitDefault(ILGenerator il, Type type)
         {
-            if (type == typeof(void))
+            if(type == typeof(void))
                 return; // No default to emit
 
-            switch (Type.GetTypeCode(type))
+            switch(Type.GetTypeCode(type))
             {
                 case TypeCode.Boolean:
                 case TypeCode.Char:
@@ -372,7 +372,7 @@ namespace Pixel3D
                     break;
 
                 default:
-                    if (type.IsValueType)
+                    if(type.IsValueType)
                     {
                         LocalBuilder lb = il.DeclareLocal(type);
                         il.Emit(OpCodes.Ldloca, lb);
@@ -392,10 +392,10 @@ namespace Pixel3D
         private static void SetupStateTypeRecursive(Dictionary<Type, State> states, Dictionary<Type, MethodTable> abstractStates,
                 Type stateType, Type stateMachineType, Type methodTableType, Dictionary<string, MethodInfo> stateMethods)
         {
-            if (states.ContainsKey(stateType) || abstractStates.ContainsKey(stateType))
+            if(states.ContainsKey(stateType) || abstractStates.ContainsKey(stateType))
                 return; // Already processed
 
-            if (stateType == typeof(State) && stateMachineType == typeof(StateProvider))
+            if(stateType == typeof(State) && stateMachineType == typeof(StateProvider))
             {
                 Debug.Assert(!stateType.IsAbstract); // <- NOTE: Following needs to add to the correct table...
                 states.Add(stateType, new State() { methodTable = new MethodTable() }); // No parent, so we must create directly
@@ -420,7 +420,7 @@ namespace Pixel3D
 
 
             // Output
-            if (stateType.IsAbstract)
+            if(stateType.IsAbstract)
             {
                 abstractStates.Add(stateType, methodTable);
             }
@@ -437,13 +437,13 @@ namespace Pixel3D
         private static MethodTable ShallowCloneToDerived(MethodTable state, Type derivedType)
         {
             Type baseType = state.GetType();
-            if (!baseType.IsAssignableFrom(derivedType))
+            if(!baseType.IsAssignableFrom(derivedType))
                 throw new Exception("Method table inheritance hierarchy error.");
 
             MethodTable derivedMethodTable = (MethodTable)Activator.CreateInstance(derivedType);
 
             // Copy all fields that exist in the base type to the more derived type
-            foreach (var field in baseType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+            foreach(var field in baseType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 field.SetValue(derivedMethodTable, field.GetValue(state));
             }
@@ -459,32 +459,33 @@ namespace Pixel3D
             var allMethodTableEntries = methodTable.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance)
                     .Where(fi => fi.FieldType.BaseType == typeof(MulticastDelegate));
 
-            foreach (var fieldInfo in allMethodTableEntries)
+            foreach(var fieldInfo in allMethodTableEntries)
             {
                 string potentialMethodName = "State_" + GetStateName(stateType) + "_" + fieldInfo.Name;
                 MethodInfo methodInStateMachine;
-                if (stateMethods.TryGetValue(potentialMethodName, out methodInStateMachine))
+                if(stateMethods.TryGetValue(potentialMethodName, out methodInStateMachine))
                 {
                     var methodInMethodTable = fieldInfo.FieldType.GetMethod("Invoke");
 
 
                     // Check the method signatures match...
-                    if (methodInStateMachine.ReturnType != methodInMethodTable.ReturnType)
+                    if(methodInStateMachine.ReturnType != methodInMethodTable.ReturnType)
                         ThrowMethodMismatch(methodInStateMachine, methodInMethodTable);
 
                     var methodInMethodTableParameters = methodInMethodTable.GetParameters();
                     var methodInStateMachineParameters = methodInStateMachine.GetParameters();
 
-                    if (methodInStateMachineParameters.Length != methodInMethodTableParameters.Length - 1) // -1 to account for 'this' parameter to open delegate
+                    if(methodInStateMachineParameters.Length != methodInMethodTableParameters.Length-1) // -1 to account for 'this' parameter to open delegate
                         ThrowMethodMismatch(methodInStateMachine, methodInMethodTable);
 
-                    for (int i = 0; i < methodInStateMachineParameters.Length; i++)
-                        if (methodInStateMachineParameters[i].ParameterType != methodInMethodTableParameters[i + 1].ParameterType) // +1 to account for 'this' parameter to open delegate
+                    for(int i = 0; i < methodInStateMachineParameters.Length; i++)
+                        if (methodInStateMachineParameters[i].ParameterType != methodInMethodTableParameters[i + 1].ParameterType &&  // +1 to account for 'this' parameter to open delegate     
+                           !methodInMethodTableParameters[i + 1].ParameterType.IsAssignableFrom(methodInStateMachineParameters[i].ParameterType)) // i.e. supports custom implementations of IUpdateContext
                             ThrowMethodMismatch(methodInStateMachine, methodInMethodTable);
-
+                    
 
                     // Check whether we need a down-casting shim (because the method was declared for a base type of the current stateMachineType)
-                    if (!stateMachineType.IsAssignableFrom(methodInMethodTableParameters[0].ParameterType))
+                    if(!stateMachineType.IsAssignableFrom(methodInMethodTableParameters[0].ParameterType))
                     {
                         Debug.Assert(methodInMethodTableParameters[0].ParameterType.IsAssignableFrom(stateMachineType)); // (other direction)
 
@@ -493,12 +494,12 @@ namespace Pixel3D
                         var il = dynamicMethod.GetILGenerator();
                         il.Emit(OpCodes.Ldarg_0);
                         il.Emit(OpCodes.Castclass, stateMachineType); // <- the casting bit of the shim
-                        if (methodInMethodTableParameters.Length > 1) il.Emit(OpCodes.Ldarg_1);
-                        if (methodInMethodTableParameters.Length > 2) il.Emit(OpCodes.Ldarg_2);
-                        if (methodInMethodTableParameters.Length > 3) il.Emit(OpCodes.Ldarg_3);
-                        for (int i = 4; i < methodInMethodTableParameters.Length; i++)
+                        if(methodInMethodTableParameters.Length > 1) il.Emit(OpCodes.Ldarg_1);
+                        if(methodInMethodTableParameters.Length > 2) il.Emit(OpCodes.Ldarg_2);
+                        if(methodInMethodTableParameters.Length > 3) il.Emit(OpCodes.Ldarg_3);
+                        for(int i = 4; i < methodInMethodTableParameters.Length; i++)
                         {
-                            if (i <= byte.MaxValue)
+                            if(i <= byte.MaxValue)
                                 il.Emit(OpCodes.Ldarg_S, (byte)i);
                             else
                                 il.Emit(OpCodes.Ldarg, (ushort)i);
