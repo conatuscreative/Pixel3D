@@ -1,35 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Reflection.Emit;
 using Pixel3D.Engine;
-using Pixel3D.Levels;
+using RCRU.Engine;
 
-namespace RCRU.Engine.Levels
+namespace Pixel3D.Levels
 {
     public static class CreateThingCache
     {
-        delegate IActor CreateThingDelegate(Thing thing, IUpdateContext context);
+        delegate Actor CreateThingDelegate(Thing thing, UpdateContext context);
         static Dictionary<string, CreateThingDelegate> cache = new Dictionary<string, CreateThingDelegate>();
 
-        public static void Initialize(Assembly assembly)
+        static CreateThingCache()
         {
             // This should match CreateThingDelegate
-            Type[] constructorTypes = { typeof(Thing), typeof(IUpdateContext) };
+            Type[] constructorTypes = new[] { typeof(Thing), typeof(UpdateContext) };
 
-            foreach (var type in assembly.GetTypes())
+            foreach (var type in typeof(CreateThingCache).Assembly.GetTypes())
             {
-                if (typeof(IActor).IsAssignableFrom(type))
+                if (typeof(Actor).IsAssignableFrom(type))
                 {
-                    var constructor = GetConstructor(type);
+                    var constructor = type.GetConstructor(constructorTypes);
                     if (constructor != null)
                     {
                         // No way to convert a constructor to a delegate directly. To IL we go!
-                        DynamicMethod dm = new DynamicMethod("Create_" + type.Name, typeof(IActor), constructorTypes, type);
+                        DynamicMethod dm = new DynamicMethod("Create_" + type.Name, typeof(Actor), constructorTypes, type);
                         ILGenerator il = dm.GetILGenerator();
                         il.Emit(OpCodes.Ldarg_0); // Thing
-                        il.Emit(OpCodes.Ldarg_1); // IUpdateContext
+                        il.Emit(OpCodes.Ldarg_1); // UpdateContext
                         il.Emit(OpCodes.Newobj, constructor);
                         il.Emit(OpCodes.Ret);
 
@@ -43,22 +41,7 @@ namespace RCRU.Engine.Levels
             }
         }
 
-        private static ConstructorInfo GetConstructor(Type type)
-        {
-            return type.GetConstructors()
-                .Where(ci =>
-                {
-                    var parameters = ci.GetParameters();
-                    return parameters.Length == 2 && parameters[0].ParameterType == typeof(Thing);
-                })
-                .Where(ci =>
-                {
-                    var parameters = ci.GetParameters();
-                    return typeof(IUpdateContext).IsAssignableFrom(parameters[1].ParameterType);
-                }).FirstOrDefault();
-        }
-
-        public static IActor CreateThing(string behaviour, Thing thing, IUpdateContext context)
+        public static Actor CreateThing(string behaviour, Thing thing, UpdateContext context)
         {
             return cache[behaviour](thing, context);
         }
