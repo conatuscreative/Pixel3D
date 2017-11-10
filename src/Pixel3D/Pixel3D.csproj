@@ -210,7 +210,6 @@
     <Compile Include="IHasDrawableFrame.cs" />
     <Compile Include="IntMatrix2.cs" />
     <Compile Include="ISmoothProvider.cs" />
-    <Compile Include="Engine\IUpdateContext.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MaskData.cs" />
     <Compile Include="Maths\Fixed65536.cs" />

@@ -15,10 +15,10 @@ namespace Pixel3D.Engine
         public new class MethodTable : StateProvider.MethodTable
         {
             [AlwaysNullChecked]
-            public Action<StateMachine, IUpdateContext, State> BeginState;
+            public Action<StateMachine, UpdateContext, State> BeginState;
 
             [AlwaysNullChecked]
-            public Action<StateMachine, IUpdateContext, State> EndState;
+            public Action<StateMachine, UpdateContext, State> EndState;
         }
 
         public MethodTable StateMethods { get { return (MethodTable)CurrentState.methodTable; } }
@@ -31,14 +31,14 @@ namespace Pixel3D.Engine
         }
 
 
-        public void SetState<TState>(IUpdateContext updateContext, bool allowStateRestart = false) where TState : State, new()
+        public void SetState<TState>(UpdateContext updateContext, bool allowStateRestart = false) where TState : State, new()
         {
             _DirectlySetState(GetState<TState>(), updateContext, allowStateRestart);
         }
 
 
         /// <summary>Set a state from a previously found state object. Not for general use.</summary>
-        public void _DirectlySetState(State nextState, IUpdateContext updateContext, bool allowStateRestart)
+        public void _DirectlySetState(State nextState, UpdateContext updateContext, bool allowStateRestart)
         {
             if(!allowStateRestart && ReferenceEquals(CurrentState, nextState))
                 return; // Don't re-enter the same state

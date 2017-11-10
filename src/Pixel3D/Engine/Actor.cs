@@ -17,7 +17,7 @@ namespace RCRU.Engine
             this.currentAnimation = new AnimationPlayer(animationSet.DefaultAnimation);
         }
 
-        public Actor(Thing thing, IUpdateContext updateContext)
+        public Actor(Thing thing, UpdateContext updateContext)
         {
             this.animationSet = thing.AnimationSet;
             this.position = thing.Position;
@@ -36,10 +36,10 @@ namespace RCRU.Engine
 
         public new class MethodTable : StateMachine.MethodTable
         {
-            public delegate void AnimationTriggersDelegate(Actor self, List<string> triggerList, IUpdateContext updateContext);
+            public delegate void AnimationTriggersDelegate(Actor self, List<string> triggerList, UpdateContext updateContext);
             public AnimationTriggersDelegate AnimationTriggers = null;
-            
-            public delegate void UpdateDelegate(Actor self, IUpdateContext updateContext);
+
+            public delegate void UpdateDelegate(Actor self, UpdateContext updateContext);
 
             public UpdateDelegate Update = null;
         }

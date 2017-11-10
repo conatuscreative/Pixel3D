@@ -8,7 +8,7 @@ using RCRU.Engine;
 
 namespace Pixel3D.Engine
 {
-    public class UpdateContext : IUpdateContext, ILocalizationProvider
+    public class UpdateContext : ILocalizationProvider
     {
         protected readonly SoundRollbackManager soundRollbackManager;
 
