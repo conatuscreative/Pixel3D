@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Reflection.Emit;
 using Pixel3D.Engine;
 using RCRU.Engine;
@@ -11,12 +12,12 @@ namespace Pixel3D.Levels
         delegate Actor CreateThingDelegate(Thing thing, UpdateContext context);
         static Dictionary<string, CreateThingDelegate> cache = new Dictionary<string, CreateThingDelegate>();
 
-        static CreateThingCache()
+        public static void Initialize(Assembly assembly)
         {
             // This should match CreateThingDelegate
             Type[] constructorTypes = new[] { typeof(Thing), typeof(UpdateContext) };
 
-            foreach (var type in typeof(CreateThingCache).Assembly.GetTypes())
+            foreach (var type in assembly.GetTypes())
             {
                 if (typeof(Actor).IsAssignableFrom(type))
                 {

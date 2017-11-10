@@ -91,7 +91,7 @@ namespace Pixel3D.Engine
         protected bool firstTimeSimulated;
 
         /// <summary>Play a sound without any position (always plays centred)</summary>
-        public void PlayCueGlobal(string symbol, IActor source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
+        public void PlayCueGlobal(string symbol, Actor source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
         {
             PlayCueGlobal(Definitions.GetCue(symbol, source), source);
         }
@@ -116,7 +116,7 @@ namespace Pixel3D.Engine
 
 
         /// <summary>Play a sound without any position (always plays centred)</summary>
-        public void PlayCueGlobal(Cue cue, IActor source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
+        public void PlayCueGlobal(Cue cue, Actor source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
         {
             var parameters = PlayCueParameters.GetParameters(Definitions, cue, random, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv

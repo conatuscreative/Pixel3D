@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
+using Pixel3D.Attributes;
 using Pixel3D.Collections;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
@@ -136,12 +137,10 @@ namespace Pixel3D
             return null;
         }
 
-#if DEVELOPER
         public static List<State> DeveloperGetAllStatesByType(Type type)
         {
             return _allStatesByType[type];
         }
-#endif
 
         #endregion
 

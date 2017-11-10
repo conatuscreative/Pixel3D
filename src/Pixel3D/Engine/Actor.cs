@@ -9,7 +9,7 @@ using Pixel3D.Sorting;
 
 namespace RCRU.Engine
 {
-    public class Actor : StateMachine, IHasDrawableFrame, IDrawObject, IActor
+    public class Actor : StateMachine, IHasDrawableFrame, IDrawObject
     {
         public Actor(AnimationSet animationSet)
         {
