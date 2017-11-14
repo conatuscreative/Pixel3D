@@ -5,6 +5,11 @@ namespace Pixel3D.Levels
 {
     public class LevelBehaviour
     {
+        public virtual void BeforeUpdate(UpdateContext updateContext)
+        {
+            /* Handler for when the update loop is about to tick */
+        }
+
         public virtual void LevelWillChange(UpdateContext updateContext, LevelBehaviour nextLevelBehaviour)
         {
             /* Handler for when the current level is about to be changed out */
