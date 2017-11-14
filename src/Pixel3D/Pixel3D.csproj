@@ -143,6 +143,7 @@
     <Compile Include="Engine\IFullScreenEffect.cs" />
     <Compile Include="Engine\Symbols.cs" />
     <Compile Include="Engine\TagSetExtensions.cs" />
+    <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelBehaviour.cs" />
     <Compile Include="Levels\LevelPosition.cs" />
     <Compile Include="Levels\Path.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Navigation\DirectionNumber.cs" />
     <Compile Include="Navigation\DriveDirection.cs" />
     <Compile Include="Navigation\MinMax.cs" />
+    <Compile Include="Navigation\MovePreference.cs" />
     <Compile Include="Navigation\NavEdge.cs" />
     <Compile Include="Navigation\NavRegion.cs" />
     <Compile Include="Navigation\NavRegionProjection.cs" />
