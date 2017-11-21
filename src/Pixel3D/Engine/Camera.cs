@@ -156,12 +156,7 @@ namespace Pixel3D.Engine
         {
             // TODO: Can we do this without the matrix multiply? Just call CreateOrthographicOffCenter with the offset built-in?
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, width, height, 0, 0, 1);
-#if SDL2
             return projection;
-#else
-            Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
-            return halfPixelOffset * projection;
-#endif
         }
 
         #endregion
