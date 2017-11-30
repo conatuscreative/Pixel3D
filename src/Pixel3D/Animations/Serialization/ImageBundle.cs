@@ -62,24 +62,24 @@ namespace Pixel3D.Animations.Serialization
         public void ReadAllImagesOLD(BinaryReader br, GraphicsDevice graphicsDevice, List<TextureData> texturesData = null)
         {
             int version = br.ReadInt32();
-            if(version > ImageWriter.formatVersion)
+            if (version > ImageWriter.formatVersion)
                 throw new Exception("Texture file too new");
 
             // Read in textures:
             int textureCount = br.ReadInt32();
-            if(textures == null)
+            if (textures == null)
                 textures = new Texture2D[textureCount];
             else
                 Debug.Assert(textures.Length == textureCount);
 
-            for(int i = 0; i < textures.Length; i++)
+            for (int i = 0; i < textures.Length; i++)
             {
                 int width = br.ReadInt32();
                 int height = br.ReadInt32();
                 int bytes = width * height * 4;
 
                 // TODO: Refactor: Maybe stick this on an interface (request temp memory, submit read texture)
-                if(manager != null) // <- if we have a bundle manager, use shared resources:
+                if (manager != null) // <- if we have a bundle manager, use shared resources:
                 {
                     Debug.Assert(manager.sharedLoadBuffer.Length >= bytes);
                     br.Read(manager.sharedLoadBuffer, 0, bytes);
@@ -89,12 +89,12 @@ namespace Pixel3D.Animations.Serialization
                 else
                 {
                     byte[] data = br.ReadBytes(bytes);
-                    if(graphicsDevice != null) // <- Allows us to operate in headless mode for asset packing
+                    if (graphicsDevice != null) // <- Allows us to operate in headless mode for asset packing
                     {
                         textures[i] = new Texture2D(graphicsDevice, width, height);
                         textures[i].SetData(data);
                     }
-                    if(texturesData != null)
+                    if (texturesData != null)
                         texturesData.Add(new TextureData(width, height, data));
                 }
             }
@@ -105,7 +105,7 @@ namespace Pixel3D.Animations.Serialization
             imageSourceRectangles = new Rectangle[imageCount];
 
             // TODO: Separate these loads, and make the texture index optional if we only have a single texture (common case)
-            for(int i = 0; i < imageCount; i++)
+            for (int i = 0; i < imageCount; i++)
             {
                 imageTextureIndicies[i] = (byte)br.ReadInt32(); // <- TODO: change to a byte
                 imageSourceRectangles[i] = br.ReadRectangle();
@@ -121,17 +121,17 @@ namespace Pixel3D.Animations.Serialization
 
             bool firstTime = (textures == null);
 
-            if(firstTime)
+            if (firstTime)
             {
                 Debug.Assert(imageSourceRectangles == null);
 
                 // Read in the counts and allocate before we do `fixed(data)` to avoid allocations while fixed (better for GC)
-                textures = new Texture2D[data[offset+0]];
+                textures = new Texture2D[data[offset + 0]];
 
-                int imageCount = data[offset+1];
-                imageCount |= (data[offset+2] << 8); // <- ReadShort
-                
-                if(textures.Length > 1)
+                int imageCount = data[offset + 1];
+                imageCount |= (data[offset + 2] << 8); // <- ReadShort
+
+                if (textures.Length > 1)
                     imageTextureIndicies = new byte[imageCount];
                 imageSourceRectangles = new Rectangle[imageCount];
             }
@@ -144,15 +144,15 @@ namespace Pixel3D.Animations.Serialization
             offset += 3;
 
             byte[] sharedLoadBuffer = loadHelper.GetSharedLoadBuffer();
-            fixed(byte* dataPointer = data, loadBuffer = sharedLoadBuffer)
+            fixed (byte* dataPointer = data, loadBuffer = sharedLoadBuffer)
             {
                 byte* startReadAt = dataPointer + offset;
                 byte* d = startReadAt;
                 uint* pixels = (uint*)loadBuffer;
 
-                for(int t = 0; t < textures.Length; t++)
+                for (int t = 0; t < textures.Length; t++)
                 {
-                    int width  = ReadShort(d); d += 2;
+                    int width = ReadShort(d); d += 2;
                     int height = ReadShort(d); d += 2;
                     Debug.Assert(sharedLoadBuffer.Length >= width * height * 4); // <- ensure we're not about to buffer-overrun!
 
@@ -162,20 +162,20 @@ namespace Pixel3D.Animations.Serialization
                 }
 
                 // Finish up by reading image locations, if this is our first time touching the bundle:
-                if(firstTime)
+                if (firstTime)
                 {
-                    if(textures.Length > 1) // <- we have texture indicies to load:
+                    if (textures.Length > 1) // <- we have texture indicies to load:
                     {
                         System.Runtime.InteropServices.Marshal.Copy((IntPtr)d, imageTextureIndicies, 0, imageTextureIndicies.Length);
                         d += imageTextureIndicies.Length;
                     }
 
                     // This might be nicer as a memory copy, too...
-                    for(int i = 0; i < imageSourceRectangles.Length; i++)
+                    for (int i = 0; i < imageSourceRectangles.Length; i++)
                     {
-                        imageSourceRectangles[i].X      = ReadShort(d); d += 2;
-                        imageSourceRectangles[i].Y      = ReadShort(d); d += 2;
-                        imageSourceRectangles[i].Width  = ReadShort(d); d += 2;
+                        imageSourceRectangles[i].X = ReadShort(d); d += 2;
+                        imageSourceRectangles[i].Y = ReadShort(d); d += 2;
+                        imageSourceRectangles[i].Width = ReadShort(d); d += 2;
                         imageSourceRectangles[i].Height = ReadShort(d); d += 2;
                     }
 
@@ -192,7 +192,7 @@ namespace Pixel3D.Animations.Serialization
 
         private static unsafe int ReadShort(byte* buffer)
         {
-            return (*buffer) | (*(buffer+1) << 8);
+            return (*buffer) | (*(buffer + 1) << 8);
         }
 
 
@@ -205,7 +205,7 @@ namespace Pixel3D.Animations.Serialization
         internal int bundleIndex;
         internal int liveIndex;
 
-        internal Texture2D[] textures;
+        public Texture2D[] textures;
         public byte[] imageTextureIndicies;  // <- NOTE: Only public so the asset packer can see it
         public Rectangle[] imageSourceRectangles;  // <- NOTE: Only public so the asset packer can see it
 
@@ -213,16 +213,16 @@ namespace Pixel3D.Animations.Serialization
 
         internal Sprite GetSprite(int index, Point origin)
         {
-            if(index == -1) // <- blank sprite
+            if (index == -1) // <- blank sprite
                 return new Sprite();
 
-            if(liveIndex == -1)
+            if (liveIndex == -1)
             {
                 Debug.Assert(manager != null);
                 Debug.WriteLine("Loading image bundle: " + manager.GetBundleName(bundleIndex));
                 manager.MakeBundleAlive(this);
             }
-            else if(manager != null)
+            else if (manager != null)
             {
                 manager.LiveListTouch(liveIndex);
             }
@@ -235,11 +235,13 @@ namespace Pixel3D.Animations.Serialization
         }
 
 
-        
+
         #region Network Serializer Block
 
-        [CustomFieldSerializer] public static void Serialize(SerializeContext context, BinaryWriter bw, ImageBundle value) { throw new InvalidOperationException(); }
-        [CustomFieldSerializer] public static void Deserialize(DeserializeContext context, BinaryReader br, ref ImageBundle value) { throw new InvalidOperationException(); }
+        [CustomFieldSerializer]
+        public static void Serialize(SerializeContext context, BinaryWriter bw, ImageBundle value) { throw new InvalidOperationException(); }
+        [CustomFieldSerializer]
+        public static void Deserialize(DeserializeContext context, BinaryReader br, ref ImageBundle value) { throw new InvalidOperationException(); }
 
         #endregion
 
@@ -249,18 +251,18 @@ namespace Pixel3D.Animations.Serialization
 
         public void Dispose()
         {
-            if(manager != null)
+            if (manager != null)
             {
                 // If there is a manager, it owns us and the textures, not you.
                 Debug.Assert(false);
             }
             else
             {
-                if(textures != null)
+                if (textures != null)
                 {
-                    for(int i = 0; i < textures.Length; i++)
+                    for (int i = 0; i < textures.Length; i++)
                     {
-                        if(textures[i] != null)
+                        if (textures[i] != null)
                         {
                             textures[i].Dispose();
                             textures[i] = null;
