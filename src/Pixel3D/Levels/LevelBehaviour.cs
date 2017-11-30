@@ -1,10 +1,14 @@
 ﻿using Pixel3D.Animations;
+using Pixel3D.Collections;
 using Pixel3D.Engine;
 
 namespace Pixel3D.Levels
 {
+
     public class LevelBehaviour
     {
+        public ReadOnlyList<ILevelSubBehaviour> subBehaviours;
+
         public virtual void BeforeUpdate(UpdateContext updateContext)
         {
             /* Handler for when the update loop is about to tick */

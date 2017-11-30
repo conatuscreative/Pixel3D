@@ -143,9 +143,11 @@
     <Compile Include="Engine\IFullScreenEffect.cs" />
     <Compile Include="Engine\Symbols.cs" />
     <Compile Include="Engine\TagSetExtensions.cs" />
+    <Compile Include="Levels\ILevelSubBehaviour.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelBehaviour.cs" />
     <Compile Include="Levels\LevelPosition.cs" />
+    <Compile Include="Levels\LevelSubBehaviour.cs" />
     <Compile Include="Levels\Path.cs" />
     <Compile Include="Levels\PropertiesExtensions.cs" />
     <Compile Include="Levels\Region.cs" />
