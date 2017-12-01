@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 using Pixel3D.Engine;
@@ -11,31 +12,34 @@ namespace Pixel3D.Levels
         delegate Actor CreateThingDelegate(Thing thing, UpdateContext context);
         static Dictionary<string, CreateThingDelegate> cache = new Dictionary<string, CreateThingDelegate>();
 
-        public static void Initialize(Assembly assembly)
+        public static void Initialize(params Assembly[] assemblies)
         {
             // This should match CreateThingDelegate
-            Type[] constructorTypes = new[] { typeof(Thing), typeof(UpdateContext) };
+            Type[] constructorTypes = { typeof(Thing), typeof(UpdateContext) };
 
-            foreach (var type in assembly.GetTypes())
+            foreach (var assembly in assemblies)
             {
-                if (typeof(Actor).IsAssignableFrom(type))
+                foreach (var type in assembly.GetTypes())
                 {
-                    var constructor = type.GetConstructor(constructorTypes);
-                    if (constructor != null)
+                    if (typeof(Actor).IsAssignableFrom(type))
                     {
-                        // No way to convert a constructor to a delegate directly. To IL we go!
-                        DynamicMethod dm = new DynamicMethod("Create_" + type.Name, typeof(Actor), constructorTypes, type);
-                        ILGenerator il = dm.GetILGenerator();
-                        il.Emit(OpCodes.Ldarg_0); // Thing
-                        il.Emit(OpCodes.Ldarg_1); // UpdateContext
-                        il.Emit(OpCodes.Newobj, constructor);
-                        il.Emit(OpCodes.Ret);
+                        var constructor = type.GetConstructor(constructorTypes);
+                        if (constructor != null)
+                        {
+                            // No way to convert a constructor to a delegate directly. To IL we go!
+                            DynamicMethod dm = new DynamicMethod("Create_" + type.Name, typeof(Actor), constructorTypes, type);
+                            ILGenerator il = dm.GetILGenerator();
+                            il.Emit(OpCodes.Ldarg_0); // Thing
+                            il.Emit(OpCodes.Ldarg_1); // UpdateContext
+                            il.Emit(OpCodes.Newobj, constructor);
+                            il.Emit(OpCodes.Ret);
 
-                        cache[type.Name] = (CreateThingDelegate)dm.CreateDelegate(typeof(CreateThingDelegate));
-                    }
-                    else
-                    {
-                        // Debug.WriteLine("Warning: No 'Thing' constructor for " + type);
+                            cache[type.Name] = (CreateThingDelegate)dm.CreateDelegate(typeof(CreateThingDelegate));
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Warning: No 'Thing' constructor for " + type);
+                        }
                     }
                 }
             }
