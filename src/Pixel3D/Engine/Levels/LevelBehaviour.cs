@@ -12,6 +12,11 @@ namespace Pixel3D.Levels
         public virtual void BeforeUpdate(UpdateContext updateContext)
         {
             /* Handler for when the update loop is about to tick */
+
+            foreach (var subBehaviour in subBehaviours)
+            {
+                subBehaviour.BeforeUpdate(updateContext);
+            }
         }
 
         public virtual void LevelWillChange(UpdateContext updateContext, LevelBehaviour nextLevelBehaviour)
@@ -55,6 +60,17 @@ namespace Pixel3D.Levels
             var actor = CreateThingCache.CreateThing(thing.Behaviour, thing, updateContext);
             updateContext.GameState.actors.Add(actor);
             return actor;
+        }
+
+        public T GetSubBehaviour<T>() where T : LevelSubBehaviour
+        {
+            foreach (var subBehaviour in subBehaviours)
+            {
+                if (!(subBehaviour is T))
+                    continue;
+                return subBehaviour as T;
+            }
+            return null;
         }
     }
 }
