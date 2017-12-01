@@ -11,5 +11,6 @@
 
         public static readonly string Default = "Default";
         public static readonly string DefaultSpawn = "Spawn";
+        public static readonly string SubBehaviours = "SubBehaviours";
     }
 }

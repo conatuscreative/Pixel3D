@@ -54,12 +54,25 @@ namespace Pixel3D.Levels
         public static int? GetInteger(this OrderedDictionary<string, string> properties, string propertyName)
         {
             string valueString;
-            if(!properties.TryGetValue(propertyName, out valueString))
+            if (!properties.TryGetValue(propertyName, out valueString))
                 return null;
 
             int value;
-            if(!Int32.TryParse(valueString, out value))
+            if (!Int32.TryParse(valueString, out value))
                 return null;
+
+            return value;
+        }
+
+        public static T GetEnum<T>(this OrderedDictionary<string, string> properties, string propertyName) where T : struct
+        {
+            string valueString;
+            if (!properties.TryGetValue(propertyName, out valueString))
+                return default(T);
+
+            T value;
+            if (!Enum.TryParse(valueString, out value))
+                return default(T);
 
             return value;
         }

@@ -52,7 +52,7 @@ namespace Pixel3D.Levels
 
         public virtual Actor SpawnThing(Thing thing, UpdateContext updateContext)
         {
-            var actor = (Actor)CreateThingCache.CreateThing(thing.Behaviour, thing, updateContext);
+            var actor = CreateThingCache.CreateThing(thing.Behaviour, thing, updateContext);
             updateContext.GameState.actors.Add(actor);
             return actor;
         }
