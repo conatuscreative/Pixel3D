@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using Pixel3D.Collections;
 using Pixel3D.Engine;
+using Pixel3D.Engine.Levels;
 using RCRU.Engine.Levels;
 
 namespace Pixel3D.Levels

@@ -1,6 +1,8 @@
 ﻿using Pixel3D.Animations;
 using Pixel3D.Collections;
 using Pixel3D.Engine;
+using Pixel3D.Engine.Levels;
+using RCRU.Engine.Levels;
 
 namespace Pixel3D.Levels
 {
@@ -19,7 +21,7 @@ namespace Pixel3D.Levels
             }
         }
 
-        public virtual void LevelWillChange(UpdateContext updateContext, LevelBehaviour nextLevelBehaviour)
+        public virtual void LevelWillChange(UpdateContext updateContext, LevelBehaviour nextLevelBehaviour, Level nextLevel)
         {
             /* Handler for when the current level is about to be changed out */
         }

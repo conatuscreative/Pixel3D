@@ -5,17 +5,16 @@ using System.IO.Compression;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pixel3D;
 using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
 using Pixel3D.AssetManagement;
 using Pixel3D.Collections;
-using Pixel3D.Engine;
 using Pixel3D.Extensions;
 using Pixel3D.Levels;
 using Pixel3D.Serialization;
+using Path = RCRU.Engine.Levels.Path;
 
-namespace RCRU.Engine.Levels
+namespace Pixel3D.Engine.Levels
 {
     public class Level : IHasReferencedAssets, IEditorNameProvider
     {
