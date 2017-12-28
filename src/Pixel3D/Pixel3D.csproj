@@ -140,6 +140,7 @@
     <Compile Include="Engine\Definitions.cs" />
     <Compile Include="Engine\GamePhysics.cs" />
     <Compile Include="Engine\GameState.cs" />
+    <Compile Include="Engine\HideableActor.cs" />
     <Compile Include="Engine\IFullScreenEffect.cs" />
     <Compile Include="Engine\Symbols.cs" />
     <Compile Include="Engine\TagSetExtensions.cs" />

@@ -99,7 +99,7 @@ namespace Pixel3D.Levels
             if (behaviour == null)
                 return new LevelBehaviour();
 
-            CreateLevelBehaviourDelegate createMethod;
+            CreateLevelBehaviourDelegate createMethod; 
             if (levelCache.TryGetValue(behaviour, out createMethod))
             {
                 LevelBehaviour levelBehaviour = createMethod(level, context);
