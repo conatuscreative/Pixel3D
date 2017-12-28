@@ -1,5 +1,4 @@
 ﻿using Pixel3D.Animations;
-using RCRU.Engine;
 
 namespace Pixel3D.Engine
 {

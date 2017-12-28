@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace RCRU.Engine
+namespace Pixel3D.Collections
 {
     // NOTE: This does not have a custom network serializer (should not serialize the internal array, just valid data)
     //       BUT: It probably shouldn't appear in the serialization anyway...

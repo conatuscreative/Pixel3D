@@ -12,7 +12,7 @@ using Pixel3D.Collections;
 using Pixel3D.Extensions;
 using Pixel3D.Levels;
 using Pixel3D.Serialization;
-using Path = RCRU.Engine.Levels.Path;
+using Path = Pixel3D.Engine.Levels.Path;
 
 namespace Pixel3D.Engine.Levels
 {

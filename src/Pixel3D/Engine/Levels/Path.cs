@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Pixel3D.Collections;
 using Pixel3D.Levels;
 
-namespace RCRU.Engine.Levels
+namespace Pixel3D.Engine.Levels
 {
     public class Path
     {

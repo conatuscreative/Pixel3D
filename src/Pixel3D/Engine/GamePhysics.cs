@@ -5,7 +5,6 @@ using Common;
 using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
 using Pixel3D.Physics;
-using RCRU.Engine;
 
 namespace Pixel3D.Engine
 {

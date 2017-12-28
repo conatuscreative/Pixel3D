@@ -1,7 +1,6 @@
-﻿using Pixel3D.Audio;
-using Pixel3D.Engine;
+﻿using Pixel3D.Engine;
 
-namespace RCRU.Engine
+namespace Pixel3D.Audio
 {
     public interface IAudioPlayer
     {
