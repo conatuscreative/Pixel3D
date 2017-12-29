@@ -135,6 +135,9 @@
     <Compile Include="Audio\VorbisfileDecoder.cs" />
     <Compile Include="Bounds.cs" />
     <Compile Include="Engine\Actor.cs" />
+    <Compile Include="Engine\Actors\Effects\MovingSimpleEffect.cs" />
+    <Compile Include="Engine\Actors\Effects\PermanentEffect.cs" />
+    <Compile Include="Engine\Actors\Effects\SimpleEffect.cs" />
     <Compile Include="Engine\AttachmentTracking.cs" />
     <Compile Include="Engine\DeferredAttachment.cs" />
     <Compile Include="Engine\Definitions.cs" />
