@@ -255,10 +255,10 @@
     <Compile Include="Engine\StateMachine.cs" />
     <Compile Include="StateProvider.cs" />
     <Compile Include="Engine\ILocalizationProvider.cs" />
-    <Compile Include="Strings\LineWrapping.cs" />
-    <Compile Include="Strings\StringBank.cs" />
-    <Compile Include="Strings\StringList.cs" />
-    <Compile Include="Strings\Tokenizer.cs" />
+    <Compile Include="Engine\Strings\LineWrapping.cs" />
+    <Compile Include="Engine\Strings\StringBank.cs" />
+    <Compile Include="Engine\Strings\StringList.cs" />
+    <Compile Include="Engine\Strings\Tokenizer.cs" />
     <Compile Include="TagLookup.cs" />
     <Compile Include="TagSet.cs" />
     <Compile Include="TransformedMaskData.cs" />
