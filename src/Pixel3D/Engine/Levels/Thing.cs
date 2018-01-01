@@ -20,7 +20,7 @@ namespace Pixel3D.Levels
         public Position Position { get; set; }
         public bool FacingLeft { get; set; }
 
-
+        
         /// <summary>Optional name of the thing (intended for use by the LevelBehaviour)</summary>
         public string name;
 
@@ -36,7 +36,6 @@ namespace Pixel3D.Levels
 
 
         public bool includeInNavigation;
-
 
         #region Serialize
 

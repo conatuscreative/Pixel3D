@@ -99,6 +99,7 @@ namespace Pixel3D.Levels
         {
             var actor = CreateThingCache.CreateThing(thing.Behaviour, thing, updateContext);
             updateContext.GameState.actors.Add(actor);
+            actor.DidSpawn(updateContext);
             return actor;
         }
 

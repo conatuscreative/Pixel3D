@@ -437,5 +437,11 @@ namespace Pixel3D.Engine
 
 
         #endregion
+
+        #region Events
+
+        public virtual void DidSpawn(UpdateContext updateContext) { } 
+
+        #endregion
     }
 }
