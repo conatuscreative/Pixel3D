@@ -13,5 +13,10 @@ namespace Pixel3D.Levels
         public virtual void AfterUpdate(UpdateContext updateContext) { }
         public virtual void BeforeBackgroundDraw(DrawContext drawContext) { }
         public virtual void AfterDraw(DrawContext drawContext) { }
+        
+        public virtual void PlayerDidLeave(UpdateContext updateContext, int playerIndex) { }
+        public virtual void PlayerDidJoin(UpdateContext updateContext, int playerIndex) { }
+
+        public virtual void LevelWillChange(UpdateContext updateContext, LevelBehaviour nextLevelBehaviour, Level nextLevel) { }
     }
 }

@@ -16,8 +16,9 @@ namespace Pixel3D.Levels
 
         static Dictionary<string, CreateLevelBehaviourDelegate> levelCache = new Dictionary<string, CreateLevelBehaviourDelegate>();
         static Dictionary<string, CreateLevelSubBehaviourDelegate> levelSubCache = new Dictionary<string, CreateLevelSubBehaviourDelegate>();
+        static Dictionary<string, CreateLevelSubBehaviourDelegate> globalSubCache = new Dictionary<string, CreateLevelSubBehaviourDelegate>();
 
-        public static void Initialize(Assembly[] scanAssemblies)
+        public static void Initialize(Assembly[] scanAssemblies, params Type[] globalSubBehaviours)
         {
             Type[] delegateArgumentTypes = { typeof(Level), typeof(UpdateContext) };
 
@@ -30,6 +31,14 @@ namespace Pixel3D.Levels
             };
 
             //
+            // Add all global sub-behaviours; in the future, these can be managed through better tools
+            //
+            foreach (var subBehaviour in globalSubBehaviours)
+            {
+                RegisterSubBehaviourType(globalSubCache, subBehaviour);
+            }
+
+            //
             // Look in all assemblies, as we may have content scattered across multiple WADs...
             //
 
@@ -37,20 +46,9 @@ namespace Pixel3D.Levels
             {
                 foreach (var type in assembly.GetTypes())
                 {
-                    if (typeof(ILevelSubBehaviour).IsAssignableFrom(type) && type != typeof(LevelSubBehaviour) &&
-                        !type.IsAbstract)
+                    if (typeof(ILevelSubBehaviour).IsAssignableFrom(type) && type != typeof(LevelSubBehaviour) && !type.IsAbstract)
                     {
-                        var constructor = type.GetConstructor(Type.EmptyTypes);
-                        if (constructor != null)
-                        {
-                            DynamicMethod dm = new DynamicMethod("Create_" + type.Name, type, Type.EmptyTypes);
-                            ILGenerator il = dm.GetILGenerator();
-                            il.Emit(OpCodes.Newobj, constructor);
-                            il.Emit(OpCodes.Ret);
-
-                            string key = type.Name.Replace("SubBehaviour", string.Empty);
-                            levelSubCache[key] = (CreateLevelSubBehaviourDelegate)dm.CreateDelegate(typeof(CreateLevelSubBehaviourDelegate));
-                        }
+                        RegisterSubBehaviourType(levelSubCache, type);
                     }
 
                     if (typeof(LevelBehaviour).IsAssignableFrom(type) && type != typeof(LevelBehaviour) && !type.IsAbstract)
@@ -92,6 +90,21 @@ namespace Pixel3D.Levels
             }
         }
 
+        private static void RegisterSubBehaviourType(IDictionary<string, CreateLevelSubBehaviourDelegate> cache, Type type)
+        {
+            var constructor = type.GetConstructor(Type.EmptyTypes);
+            if (constructor != null)
+            {
+                DynamicMethod dm = new DynamicMethod("Create_" + type.Name, type, Type.EmptyTypes);
+                ILGenerator il = dm.GetILGenerator();
+                il.Emit(OpCodes.Newobj, constructor);
+                il.Emit(OpCodes.Ret);
+
+                string key = type.Name.Replace("SubBehaviour", string.Empty);
+                cache[key] = (CreateLevelSubBehaviourDelegate)dm.CreateDelegate(typeof(CreateLevelSubBehaviourDelegate));
+            }
+        }
+
         private static readonly char[] CommaSeparator = { ',' };
 
         public static LevelBehaviour CreateLevelBehaviour(string behaviour, Level level, UpdateContext context)
@@ -105,7 +118,7 @@ namespace Pixel3D.Levels
                 LevelBehaviour levelBehaviour = createMethod(level, context);
 
                 InjectSubBehaviours(level, levelBehaviour);
-
+                
                 return levelBehaviour;
             }
             
@@ -117,31 +130,41 @@ namespace Pixel3D.Levels
 
         private static void InjectSubBehaviours(Level level, LevelBehaviour levelBehaviour)
         {
+            bool hasGlobalSubBehaviours = globalSubCache != null && globalSubCache.Count > 0;
+            
             var subBehaviourString = level.properties.GetString(Symbols.SubBehaviours);
-            if (subBehaviourString == null)
+            if (!hasGlobalSubBehaviours && subBehaviourString == null)
             {
                 levelBehaviour.subBehaviours = NoSubBehaviours;
                 return;
             }
 
             var subBehaviours = subBehaviourString.Split(CommaSeparator, StringSplitOptions.RemoveEmptyEntries);
-            if (subBehaviours.Length == 0)
+            if (!hasGlobalSubBehaviours && subBehaviours.Length == 0)
             {
                 levelBehaviour.subBehaviours = NoSubBehaviours;
                 return;
             }
-
+            
             var subList = new List<ILevelSubBehaviour>();
+
+            if (hasGlobalSubBehaviours)
+            {
+                foreach (var globalSubBehaviour in globalSubCache)
+                {
+                    subList.Add(globalSubBehaviour.Value());
+                }    
+            }
+            
             foreach (var subBehaviour in subBehaviours)
             {
                 CreateLevelSubBehaviourDelegate createSubMethod;
                 if (levelSubCache.TryGetValue(subBehaviour, out createSubMethod))
                 {
-                    ILevelSubBehaviour levelSubBehaviour = createSubMethod();
-                    subList.Add(levelSubBehaviour);
+                    subList.Add(createSubMethod());
                 }
             }
-
+            
             levelBehaviour.subBehaviours = new ReadOnlyList<ILevelSubBehaviour>(subList);
         }
     }
