@@ -139,11 +139,15 @@ namespace Pixel3D.Levels
                 return;
             }
 
-            var subBehaviours = subBehaviourString.Split(CommaSeparator, StringSplitOptions.RemoveEmptyEntries);
-            if (!hasGlobalSubBehaviours && subBehaviours.Length == 0)
+            string[] subBehaviours = null;
+            if (subBehaviourString != null)
             {
-                levelBehaviour.subBehaviours = NoSubBehaviours;
-                return;
+                subBehaviours = subBehaviourString.Split(CommaSeparator, StringSplitOptions.RemoveEmptyEntries);
+                if (!hasGlobalSubBehaviours && subBehaviours.Length == 0)
+                {
+                    levelBehaviour.subBehaviours = NoSubBehaviours;
+                    return;
+                }    
             }
             
             var subList = new List<ILevelSubBehaviour>();
@@ -155,13 +159,16 @@ namespace Pixel3D.Levels
                     subList.Add(globalSubBehaviour.Value());
                 }    
             }
-            
-            foreach (var subBehaviour in subBehaviours)
+
+            if (subBehaviours != null)
             {
-                CreateLevelSubBehaviourDelegate createSubMethod;
-                if (levelSubCache.TryGetValue(subBehaviour, out createSubMethod))
+                foreach (var subBehaviour in subBehaviours)
                 {
-                    subList.Add(createSubMethod());
+                    CreateLevelSubBehaviourDelegate createSubMethod;
+                    if (levelSubCache.TryGetValue(subBehaviour, out createSubMethod))
+                    {
+                        subList.Add(createSubMethod());
+                    }
                 }
             }
             
