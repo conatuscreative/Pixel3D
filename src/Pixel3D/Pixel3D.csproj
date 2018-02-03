@@ -155,6 +155,7 @@
     <Compile Include="Engine\Levels\Region.cs" />
     <Compile Include="Engine\Levels\Shim.cs" />
     <Compile Include="Engine\Levels\Teleporter.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="MaskDataReferenceResolver.cs" />
     <Compile Include="Engine\SmoothingIdentifiers.cs" />
     <Compile Include="Engine\UpdateContext.cs" />
