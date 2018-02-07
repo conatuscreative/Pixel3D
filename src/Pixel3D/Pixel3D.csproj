@@ -272,7 +272,7 @@
       <Project>{a57814b6-1d0b-48bd-b512-bf8ce9000282}</Project>
       <Name>Pixel3D.Serialization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\rcru-pixel3d\FNA\FNA.csproj">
+    <ProjectReference Include="..\..\..\Pixel3D\FNA\FNA.csproj">
       <Project>{35253CE1-C864-4CD3-8249-4D1319748E8F}</Project>
       <Name>FNA</Name>
     </ProjectReference>
