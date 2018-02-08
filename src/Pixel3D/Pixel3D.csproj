@@ -188,6 +188,7 @@
     <Compile Include="Engine\Physics\MoveSpeed.cs" />
     <Compile Include="Engine\Physics\VoxelRenderer.cs" />
     <Compile Include="Engine\Physics\WorldPhysics.cs" />
+    <Compile Include="Palette.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeDictionary.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeOrderedDictionary.cs" />
     <Compile Include="Engine\Camera.cs" />
