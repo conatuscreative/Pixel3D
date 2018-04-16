@@ -265,17 +265,17 @@
     <Compile Include="XorShift.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\FNA\FNA.csproj">
+      <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
+      <Name>FNA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Pixel3D.Network\src\Pixel3D.Network.Rollback.Input\Pixel3D.Network.Rollback.Input.csproj">
       <Project>{9A3B44B2-C5FC-45A4-915D-8F4B4AD665F8}</Project>
       <Name>Pixel3D.Network.Rollback.Input</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj">
-      <Project>{a57814b6-1d0b-48bd-b512-bf8ce9000282}</Project>
+      <Project>{eedbf0f2-9594-4164-a37f-081a944c0bb0}</Project>
       <Name>Pixel3D.Serialization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Pixel3D\FNA\FNA.csproj">
-      <Project>{35253CE1-C864-4CD3-8249-4D1319748E8F}</Project>
-      <Name>FNA</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
