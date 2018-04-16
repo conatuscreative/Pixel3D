@@ -265,9 +265,9 @@
     <Compile Include="XorShift.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FNA\FNA.csproj">
-      <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
-      <Name>FNA</Name>
+    <ProjectReference Include="..\..\..\FNA\FNA.Core.csproj">
+      <Project>{0c583805-2e77-44ec-a5a0-3faef16318aa}</Project>
+      <Name>FNA.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Pixel3D.Network\src\Pixel3D.Network.Rollback.Input\Pixel3D.Network.Rollback.Input.csproj">
       <Project>{9A3B44B2-C5FC-45A4-915D-8F4B4AD665F8}</Project>
