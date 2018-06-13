@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Version>1.0.13</Version>
     <Authors>Conatus Creative Inc.</Authors>
@@ -16,12 +16,8 @@
     <PackageReleaseNotes>- add .net standard 2.0 support</PackageReleaseNotes>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
+    <ProjectReference Include="..\..\..\FNA\FNA.Core.csproj" />
     <ProjectReference Include="..\..\..\Pixel3D.Network\src\Pixel3D.Network.Rollback.Input\Pixel3D.Network.Rollback.Input.csproj" />
     <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj" />
   </ItemGroup>
