@@ -15,10 +15,6 @@ namespace Pixel3D.Engine
         // Host derived content
         public byte language = 0;
 
-        #region // DEBUG ONLY (not in an #if region, so that loops are compatible between builds)
-        public bool forceDoorsOpen;
-        #endregion // DEBUG ONLY 
-
         public GameState(Definitions definitions)
         {
             this.definitions = definitions;
