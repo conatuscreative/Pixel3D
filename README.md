@@ -3,7 +3,7 @@ Pixel3D
 
 A 2.5D pixel game engine built on FNA.
 
-It was used to create the game River City Ransom: Underground.
+It was used to create the game [River City Ransom: Underground](https://store.steampowered.com/app/422810/River_City_Ransom_Underground/).
 
 NOTE: You will need to source your own copy of fxc.exe and place it in /builds/tools
 
