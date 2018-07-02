@@ -6,15 +6,21 @@ namespace Pixel3D.AssetManagement
 {
     public static class AssetReader
     {
-		public static Dictionary<Type, string> ExtensionRegistry = new Dictionary<Type, string>();
-	    public static Dictionary<Type, ReadFromFile> ReadRegistry = new Dictionary<Type, ReadFromFile>();
+		static readonly Dictionary<Type, string> ExtensionRegistry = new Dictionary<Type, string>();
+	    static readonly Dictionary<Type, ReadFromFile> ReadRegistry = new Dictionary<Type, ReadFromFile>();
 
-	    public delegate object ReadFromFile(string fullPath, IAssetProvider assetProvider,
-		    GraphicsDevice graphicsDevice);
+	    public delegate object ReadFromFile(string fullPath, IAssetProvider assetProvider, GraphicsDevice graphicsDevice);
+
+	    public static void Clear()
+	    {
+		    ExtensionRegistry.Clear();
+			ReadRegistry.Clear();
+	    }
 
 	    public static void Add<T>(string extension, ReadFromFile read)
 	    {
 		    ExtensionRegistry.Add(typeof(T), extension);
+		    ReadRegistry.Add(typeof(T), read);
 	    }
 
 		/// <summary>Return the extension for an asset type, including leading period.</summary>

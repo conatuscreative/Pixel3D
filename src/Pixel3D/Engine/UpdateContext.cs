@@ -215,7 +215,7 @@ namespace Pixel3D.Engine
 
         #endregion
 
-        #region By string
+        #region By String
 
         public string GetSingleString(string tagSet)
         {

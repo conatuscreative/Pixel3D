@@ -302,12 +302,7 @@ namespace Pixel3D.Engine
 
         /// <summary>Matrix to convert Display space to Audio space</summary>
         public Matrix AudioMatrix { get; private set; }
-
-
-        /// <summary>TODO: Want to get rid of this. Switch to WorldZeroBounds.Center - should be safe in all cases, but needs verification.</summary>
-        [Obsolete]
-        public Position WorldZeroCenterRoundedUp { get { return DisplayBounds.Center.FlipY().AsPosition(); } }
-        
+		
         private void RecalculateCamera()
         {
             ContentTargetInPixels = new Point(
