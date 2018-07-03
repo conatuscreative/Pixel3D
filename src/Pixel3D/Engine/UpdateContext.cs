@@ -7,16 +7,18 @@ using Pixel3D.Strings;
 
 namespace Pixel3D.Engine
 {
-    public class UpdateContext : ILocalizationProvider
+	public class UpdateContext : ILocalizationProvider
     {
         protected readonly SoundRollbackManager soundRollbackManager;
+	    protected readonly StringsProvider stringsProvider;
 
         /// <summary>Not network-safe!</summary>
         public int localPlayerBits = int.MaxValue;
 
-        public UpdateContext(Camera audioCamera, SoundRollbackManager soundRollbackManager)
+        public UpdateContext(Camera audioCamera, SoundRollbackManager soundRollbackManager, StringsProvider stringsProvider)
         {
             this.soundRollbackManager = soundRollbackManager;
+	        this.stringsProvider = stringsProvider;
             AudioCamera = audioCamera;
         }
 
@@ -66,7 +68,7 @@ namespace Pixel3D.Engine
         /// <summary>Play a cue in a world-space position (relative to the camera)</summary>
         public void PlayCueWorld(Cue cue, Actor source)
         {
-            var parameters = PlayCueParameters.GetParameters(Definitions, cue, random, GameState.cueStates);
+            var parameters = PlayCueParameters.GetParameters(cue, random, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null && AudioCamera != null)
             {
@@ -117,7 +119,7 @@ namespace Pixel3D.Engine
         /// <summary>Play a sound without any position (always plays centred)</summary>
         public void PlayCueGlobal(Cue cue, Actor source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
         {
-            var parameters = PlayCueParameters.GetParameters(Definitions, cue, random, GameState.cueStates);
+            var parameters = PlayCueParameters.GetParameters(cue, random, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null)
             {
@@ -133,7 +135,7 @@ namespace Pixel3D.Engine
         /// <summary>Play a cue in a world-space position (relative to the camera)</summary>
         public void PlayCueWorld(Cue cue, Position source)
         {
-            var parameters = PlayCueParameters.GetParameters(Definitions, cue, random, GameState.cueStates);
+            var parameters = PlayCueParameters.GetParameters(cue, random, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null && AudioCamera != null)
             {
@@ -150,7 +152,7 @@ namespace Pixel3D.Engine
 
         public void PlayCueUI(Cue cue, int playerIndex, bool useHudStereo)
         {
-            var parameters = PlayCueParameters.GetParameters(Definitions, cue, random, GameState.cueStates);
+            var parameters = PlayCueParameters.GetParameters(cue, random, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null)
             {
@@ -190,27 +192,27 @@ namespace Pixel3D.Engine
 
         public string GetSingleString(TagSet tagSet)
         {
-            return Definitions.GetSingleString(tagSet, GameState.language);
+            return stringsProvider.GetSingleString(tagSet, GameState.language);
         }
 
         public string GetSingleStringUppercase(TagSet tagSet)
         {
-            return Definitions.GetSingleStringUppercase(tagSet, GameState.language);
+            return stringsProvider.GetSingleStringUppercase(tagSet, GameState.language);
         }
 
         public StringList GetStrings(TagSet tagSet)
         {
-            return Definitions.GetStrings(tagSet, GameState.language);
+            return stringsProvider.GetStrings(tagSet, GameState.language);
         }
 
         public string GetRandomString(TagSet tagSet)
         {
-            return Definitions.GetRandomString(tagSet, GameState.language, random.Next());
+            return stringsProvider.GetRandomString(tagSet, GameState.language, random.Next());
         }
 
         public string GetRandomStringUppercase(TagSet tagSet)
         {
-            return Definitions.GetRandomStringUppercase(tagSet, GameState.language, random.Next());
+            return stringsProvider.GetRandomStringUppercase(tagSet, GameState.language, random.Next());
         }
 
         #endregion
@@ -219,27 +221,27 @@ namespace Pixel3D.Engine
 
         public string GetSingleString(string tagSet)
         {
-            return Definitions.GetSingleString(tagSet, GameState.language);
+            return stringsProvider.GetSingleString(tagSet, GameState.language);
         }
 
         public string GetSingleStringUppercase(string tagSet)
         {
-            return Definitions.GetSingleStringUppercase(tagSet, GameState.language);
+            return stringsProvider.GetSingleStringUppercase(tagSet, GameState.language);
         }
 
         public StringList GetStrings(string tagSet)
         {
-            return Definitions.GetStrings(tagSet, GameState.language);
+            return stringsProvider.GetStrings(tagSet, GameState.language);
         }
 
         public string GetRandomString(string tagSet)
         {
-            return Definitions.GetRandomString(tagSet, GameState.language, random.Next());
+            return stringsProvider.GetRandomString(tagSet, GameState.language, random.Next());
         }
 
         public string GetRandomStringUppercase(string tagSet)
         {
-            return Definitions.GetRandomStringUppercase(tagSet, GameState.language, random.Next());
+            return stringsProvider.GetRandomStringUppercase(tagSet, GameState.language, random.Next());
         }
 
         #endregion
