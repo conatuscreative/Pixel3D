@@ -4,7 +4,7 @@ using Pixel3D.Attributes;
 namespace Pixel3D.Engine
 {
     /// <summary>State machine for types that exist within the game state</summary>
-    public class StateMachine : StateProvider
+    public class StateMachine<TUpdateContext> : StateProvider
     {
         public StateMachine()
         {
@@ -15,10 +15,10 @@ namespace Pixel3D.Engine
         public new class MethodTable : StateProvider.MethodTable
         {
             [AlwaysNullChecked]
-            public Action<StateMachine, UpdateContext, State> BeginState;
+            public Action<StateMachine<TUpdateContext>, TUpdateContext, State> BeginState;
 
             [AlwaysNullChecked]
-            public Action<StateMachine, UpdateContext, State> EndState;
+            public Action<StateMachine<TUpdateContext>, TUpdateContext, State> EndState;
         }
 
         public MethodTable StateMethods { get { return (MethodTable)CurrentState.methodTable; } }
@@ -31,14 +31,14 @@ namespace Pixel3D.Engine
         }
 
 
-        public void SetState<TState>(UpdateContext updateContext, bool allowStateRestart = false) where TState : State, new()
+        public void SetState<TState>(TUpdateContext updateContext, bool allowStateRestart = false) where TState : State, new()
         {
             _DirectlySetState(GetState<TState>(), updateContext, allowStateRestart);
         }
 
 
         /// <summary>Set a state from a previously found state object. Not for general use.</summary>
-        public void _DirectlySetState(State nextState, UpdateContext updateContext, bool allowStateRestart)
+        public void _DirectlySetState(State nextState, TUpdateContext updateContext, bool allowStateRestart)
         {
             if(!allowStateRestart && ReferenceEquals(CurrentState, nextState))
                 return; // Don't re-enter the same state

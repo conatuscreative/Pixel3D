@@ -7,7 +7,7 @@ using Pixel3D.Sorting;
 
 namespace Pixel3D.Engine
 {
-    public class Actor : StateMachine, IHasDrawableFrame, IDrawObject
+    public class Actor : StateMachine<UpdateContext>, IHasDrawableFrame, IDrawObject
     {
         public Actor(AnimationSet animationSet)
         {
@@ -32,7 +32,7 @@ namespace Pixel3D.Engine
             get { return (MethodTable) CurrentState.methodTable; }
         }
 
-        public new class MethodTable : StateMachine.MethodTable
+        public new class MethodTable : StateMachine<UpdateContext>.MethodTable
         {
             public delegate void AnimationTriggersDelegate(Actor self, List<string> triggerList, UpdateContext updateContext);
             public AnimationTriggersDelegate AnimationTriggers = null;

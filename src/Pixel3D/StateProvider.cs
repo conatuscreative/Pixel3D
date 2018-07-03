@@ -272,7 +272,7 @@ namespace Pixel3D
                 {
                     // The state type remains the same, but the method table gets derived
                     State state = (State)Activator.CreateInstance(baseState.Key);
-                    state.methodTable = ShallowCloneToDerived(baseState.Value.methodTable, methodTableType);
+                    state.methodTable = ShallowCloneToDerived(baseState.Value.methodTable, methodTableType, stateMachineType);
                     FillMethodTableWithOverrides(baseState.Key, state.methodTable, stateMachineType, stateMethods);
 
                     states.Add(baseState.Key, state);
@@ -281,7 +281,7 @@ namespace Pixel3D
                 foreach(var baseAbstractState in baseAbstractStates)
                 {
                     // The state type remains the same, but the method table gets derived
-                    var methodTable = ShallowCloneToDerived(baseAbstractState.Value, methodTableType);
+                    var methodTable = ShallowCloneToDerived(baseAbstractState.Value, methodTableType, stateMachineType);
                     FillMethodTableWithOverrides(baseAbstractState.Key, methodTable, stateMachineType, stateMethods);
 
                     abstractStates.Add(baseAbstractState.Key, methodTable);
@@ -415,7 +415,7 @@ namespace Pixel3D
             var parentMethodTable = stateType.BaseType.IsAbstract
                     ? abstractStates[stateType.BaseType]
                     : states[stateType.BaseType].methodTable;
-            var methodTable = ShallowCloneToDerived(parentMethodTable, methodTableType);
+            var methodTable = ShallowCloneToDerived(parentMethodTable, methodTableType, stateMachineType);
             FillMethodTableWithOverrides(stateType, methodTable, stateMachineType, stateMethods);
 
 
@@ -434,13 +434,16 @@ namespace Pixel3D
 
 
 
-        private static MethodTable ShallowCloneToDerived(MethodTable state, Type derivedType)
+        private static MethodTable ShallowCloneToDerived(MethodTable state, Type derivedType, Type stateMachineType)
         {
             Type baseType = state.GetType();
             if(!baseType.IsAssignableFrom(derivedType))
                 throw new Exception("Method table inheritance hierarchy error.");
 
-            MethodTable derivedMethodTable = (MethodTable)Activator.CreateInstance(derivedType);
+	        if (derivedType.IsGenericType)
+		        derivedType = derivedType.MakeGenericType(stateMachineType.GetGenericArguments()[0]);
+			
+	        MethodTable derivedMethodTable = (MethodTable)Activator.CreateInstance(derivedType);
 
             // Copy all fields that exist in the base type to the more derived type
             foreach(var field in baseType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
