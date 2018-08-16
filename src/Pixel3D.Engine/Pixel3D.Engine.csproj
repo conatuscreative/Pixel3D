@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F4271246-09A8-43F3-9230-071E9E6306B7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pixel3D.Engine</RootNamespace>
+    <AssemblyName>Pixel3D.Engine</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actor.cs" />
+    <Compile Include="Actors\Effects\MovingSimpleEffect.cs" />
+    <Compile Include="Actors\Effects\PermanentEffect.cs" />
+    <Compile Include="Actors\Effects\SimpleEffect.cs" />
+    <Compile Include="AssetManagement\AssetManager.cs" />
+    <Compile Include="AssetManagement\AssetReader.cs" />
+    <Compile Include="AssetManagement\IAssetPathProvider.cs" />
+    <Compile Include="AssetManagement\IAssetProvider.cs" />
+    <Compile Include="AssetManagement\IHasReferencedAssets.cs" />
+    <Compile Include="AttachmentTracking.cs" />
+    <Compile Include="Attributes\AlwaysNullCheckedAttribute.cs" />
+    <Compile Include="Audio\AmbientSound.cs" />
+    <Compile Include="Audio\AmbientSoundManager.cs" />
+    <Compile Include="Audio\AudioDevice.cs" />
+    <Compile Include="Audio\Cue.cs" />
+    <Compile Include="Audio\CueDeserializeContext.cs" />
+    <Compile Include="Audio\CueSerializeContext.cs" />
+    <Compile Include="Audio\CueType.cs" />
+    <Compile Include="Audio\IAmbientSoundSource.cs" />
+    <Compile Include="Audio\IAudioDefinitions.cs" />
+    <Compile Include="Audio\IAudioPlayer.cs" />
+    <Compile Include="Audio\MissingAudio.cs" />
+    <Compile Include="Audio\MusicManager.cs" />
+    <Compile Include="Audio\PlayCueParameters.cs" />
+    <Compile Include="Audio\ReadAudioPackage.cs" />
+    <Compile Include="Audio\SafeSoundEffect.cs" />
+    <Compile Include="Audio\Sound.cs" />
+    <Compile Include="Audio\SoundEffectManager.cs" />
+    <Compile Include="Audio\SoundRollbackManager.cs" />
+    <Compile Include="Audio\VorbisfileDecoder.cs" />
+    <Compile Include="Collections\MultiDictionary.cs" />
+    <Compile Include="Collections\MultiDictionaryExtensions.cs" />
+    <Compile Include="Collections\OrderedDictionary.cs" />
+    <Compile Include="Collections\PriorityQueue.cs" />
+    <Compile Include="Collections\ReadOnlyList.cs" />
+    <Compile Include="Collections\ShortPriorityQueue.cs" />
+    <Compile Include="Collections\TransientList.cs" />
+    <Compile Include="Collections\UniqueList.cs" />
+    <Compile Include="DeferredAttachment.cs" />
+    <Compile Include="Definitions.cs" />
+    <Compile Include="GamePhysics.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="HideableActor.cs" />
+    <Compile Include="IFullScreenEffect.cs" />
+    <Compile Include="IGameState.cs" />
+    <Compile Include="ILocalizationProvider.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="Levels\CreateLevelBehaviourCache.cs" />
+    <Compile Include="Levels\CreateThingCache.cs" />
+    <Compile Include="Levels\IEditorObject.cs" />
+    <Compile Include="Levels\ILevelSubBehaviour.cs" />
+    <Compile Include="Levels\Level.cs" />
+    <Compile Include="Levels\LevelBehaviour.cs" />
+    <Compile Include="Levels\LevelDeserializeContext.cs" />
+    <Compile Include="Levels\LevelPosition.cs" />
+    <Compile Include="Levels\LevelSerializeContext.cs" />
+    <Compile Include="Levels\LevelSubBehaviour.cs" />
+    <Compile Include="Levels\Path.cs" />
+    <Compile Include="Levels\PropertiesExtensions.cs" />
+    <Compile Include="Levels\Region.cs" />
+    <Compile Include="Levels\Shim.cs" />
+    <Compile Include="Levels\Teleporter.cs" />
+    <Compile Include="Levels\Thing.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="LoopSystem\ByteArrayExtensions.cs" />
+    <Compile Include="LoopSystem\Loop.cs" />
+    <Compile Include="LoopSystem\MemoryCompareReadStream.cs" />
+    <Compile Include="LoopSystem\NaturalStringComparer.cs" />
+    <Compile Include="MaskDataReferenceResolver.cs" />
+    <Compile Include="Maths\Fixed65536.cs" />
+    <Compile Include="Maths\Fraction.cs" />
+    <Compile Include="Maths\PackedVelocity.cs" />
+    <Compile Include="Navigation\DirectionFlags.cs" />
+    <Compile Include="Navigation\DirectionNumber.cs" />
+    <Compile Include="Navigation\DriveDirection.cs" />
+    <Compile Include="Navigation\MinMax.cs" />
+    <Compile Include="Navigation\MovePreference.cs" />
+    <Compile Include="Navigation\NavEdge.cs" />
+    <Compile Include="Navigation\NavRegion.cs" />
+    <Compile Include="Navigation\NavRegionProjection.cs" />
+    <Compile Include="Navigation\PathEdge.cs" />
+    <Compile Include="Navigation\PathfindingResults.cs" />
+    <Compile Include="Navigation\WalkmapTools.cs" />
+    <Compile Include="Physics\Ballistics.cs" />
+    <Compile Include="Physics\CharacterMoveRate.cs" />
+    <Compile Include="Physics\Motion.cs" />
+    <Compile Include="Physics\MoveSpeed.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\BuiltIn\SerializeDictionary.cs" />
+    <Compile Include="Serialization\BuiltIn\SerializeOrderedDictionary.cs" />
+    <Compile Include="SmoothingIdentifiers.cs" />
+    <Compile Include="StateMachine.cs" />
+    <Compile Include="StateProvider.cs" />
+    <Compile Include="StringsProvider.cs" />
+    <Compile Include="Strings\LineWrapping.cs" />
+    <Compile Include="Strings\StringBank.cs" />
+    <Compile Include="Strings\StringList.cs" />
+    <Compile Include="Strings\Tokenizer.cs" />
+    <Compile Include="Symbols.cs" />
+    <Compile Include="TagSetExtensions.cs" />
+    <Compile Include="UpdateContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\FNA\FNA.csproj">
+      <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
+      <Name>FNA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Pixel3D.Network\src\Pixel3D.Network.Rollback.Input\Pixel3D.Network.Rollback.Input.csproj">
+      <Project>{681d39f7-bfa4-4c92-8623-e19815b5da07}</Project>
+      <Name>Pixel3D.Network.Rollback.Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj">
+      <Project>{eedbf0f2-9594-4164-a37f-081a944c0bb0}</Project>
+      <Name>Pixel3D.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pixel3D\Pixel3D.csproj">
+      <Project>{790b8ab0-e162-4f29-abed-11ad81d4d6f9}</Project>
+      <Name>Pixel3D</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Audio\packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

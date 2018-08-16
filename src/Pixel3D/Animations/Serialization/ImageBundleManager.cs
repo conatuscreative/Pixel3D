@@ -6,7 +6,6 @@ using System.IO.Compression;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using System.Threading;
-using Pixel3D.Helpers;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 

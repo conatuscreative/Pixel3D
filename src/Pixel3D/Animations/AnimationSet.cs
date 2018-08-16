@@ -9,7 +9,6 @@ using Common;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO.Compression;
 using Pixel3D.Animations.Serialization;
-using Pixel3D.Extensions;
 using Pixel3D.Serialization;
 
 namespace Pixel3D.Animations

@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Network.Rollback.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNA", "..\FNA\FNA.csproj", "{35253CE1-C864-4CD3-8249-4D1319748E8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.Engine", "src\Pixel3D.Engine\Pixel3D.Engine.csproj", "{F4271246-09A8-43F3-9230-071E9E6306B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,18 @@ Global
 		{35253CE1-C864-4CD3-8249-4D1319748E8F}.Release|x64.Build.0 = Release|x64
 		{35253CE1-C864-4CD3-8249-4D1319748E8F}.Release|x86.ActiveCfg = Release|x86
 		{35253CE1-C864-4CD3-8249-4D1319748E8F}.Release|x86.Build.0 = Release|x86
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Debug|x64.Build.0 = Debug|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Debug|x86.Build.0 = Debug|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Release|x64.ActiveCfg = Release|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Release|x64.Build.0 = Release|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Release|x86.ActiveCfg = Release|Any CPU
+		{F4271246-09A8-43F3-9230-071E9E6306B7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

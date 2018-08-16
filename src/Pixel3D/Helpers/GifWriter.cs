@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
-using Pixel3D.Extensions;
 
 #region GIF Format Documentation
 // http://www.w3.org/Graphics/GIF/spec-gif89a.txt
@@ -14,7 +13,7 @@ using Pixel3D.Extensions;
 #endregion
 
 
-namespace Pixel3D.Helpers
+namespace Pixel3D
 {
     public class GifWriter
     {

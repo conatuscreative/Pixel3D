@@ -1,0 +1,124 @@
+
+AnimationSet
+{
+	FriendlyName
+	
+	TargetContext			// additional context for when made an attachment target
+	
+	Heightmap				// Can be null; might move later if we need to fiddle about animating it
+
+	// TODO: Extra editor data (eg: masks and "instructions" for regenerating the Heightmap)
+
+	AttachAs3DObject		// Use Z-sorting when attaching, instead of layering
+	
+	ZSortInfo				// Stored here, because we don't want the sort info changing mid-animation, to avoid flickering
+
+	
+	Animation [lookup]
+	{
+		FriendlyName
+		
+		IsLooped				// Used to be a more general "Next Animation", but this is hard to serialize (can think about adding it back later)
+		
+		CompatibilitySetNumber	// Animations in the same compatibility set can seamlessly transition by frame-number
+
+		FaceRight				// Inverse the game's auto-flipping (for specific animations that face right, selected by context)
+		
+		
+		AnimationFrame[]
+		{
+			ParentAnimation		// To allow access to lookup-based data as *properties*
+			DelayFrames
+			
+			CelViews[]			// Layers (each can be null, can contain duplicate references)
+			{
+				Cel
+				FlipX
+				PositionXY
+			}
+			
+			GameplayMotion
+			GroundSnap
+			
+			ShadowOffset
+			ShadowType			// enum with None or Normal, eventually might have custom shadows
+			
+			Trigger[]			// List of symbols (or null)
+
+
+			OutgoingAttachment [lookup]
+			{
+				LayerNumber			// Draw before sprite layer of given number
+				Position			// Relative to origin
+				TargetAttachment	// Context for query; add on state context, target context (including dynamic context?)
+				TargetAnimation		// Context for query; add on state context, target context (including dynamic context?)
+			}
+		
+			IncomingAttachment [lookup]
+			{
+				Position
+			}
+
+			MaskViews [lookup]
+			{
+				Mask
+				FlipX
+				PositionXY
+			}
+		}
+	}
+}
+
+
+Mask
+{
+	MaskData
+
+	FriendlyName
+
+	ParentCel			// The Cel that this Mask is associated with (can be null; one Cel may have many child Masks)
+						// For editor use: Sync MaskData origin with Cel origin, Sync MaskView with matching CelView, display/use matching masks for Cels, etc
+
+	IsAlphaChannel		// This mask is auto-generated from the alpha-channel of its ParentCel (and can safely be re-generated as such)
+}
+
+
+Cel
+{
+	FriendlyName
+	
+	Sprite
+
+	ShadowReceiver			// Can be null; can duplicate references, draw after sprite
+	{
+		Sprite				// Graphical mask
+		ShadowHeightmap
+		ShadowExtendDirection
+	}
+}
+
+
+
+Sprite
+{
+	Texture
+	SourceRectangle
+	Origin
+}
+
+
+
+
+
+NOTES ON SHARING: (ie: object reuse)
+
+Cels are shared within an AnimationSet
+ShadowReceivers are shared within an AnimationSet
+Masks are shared within an AnimationSet
+
+Masks are NOT shared for HeightmapInstruction (otherwise we get a nasty circular dependency through ShadowReceiver)
+
+Sprites are not shared (unique to each Cel or ShadowReceiver)
+Animations are not shared (unique to each AnimationSet)
+AnimationFrames are not shared (unique to each Animation)
+Heightmaps are not shared (unique to each AnimationSet or ShadowReceiver)

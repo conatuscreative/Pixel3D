@@ -1,0 +1,74 @@
+﻿The various coordinate systems in use can be tricky.
+
+Internally, the engine uses a natural "Y+ is up" cartesian coordinate system.
+But care needs to be taken when inputting and outputting texture data with XNA,
+which uses "Y+ is down" in most places.
+
+
+
+Here's what you need to know:
+
+TRANSFORMATION SEQUENCE:
+
+World -> World Zero -> Display -> Content -> View -> Render -> Screen
+
+
+
+WORLD COORDINATES:
+
+World Space: A 3D position in world space.
+             X+ is right, Y+ is up, Z+ is backwards (into the screen)
+			 Where is matters, origin is at the bottom, left, front
+
+World Zero: A 2D position in the XY plane, at depth Z = 0
+            World space coordinates can be projected to World Zero trivially (Y' = Y + Z)
+
+World XY, World XZ: 2D positions in the XY (no depth) and XZ (no height) axes respectively
+              NOTE: A World XZ coordinate with height = 0 can be used directly as a World Zero coordinate
+
+
+Display: A special coordinate system for transforming coordinates for display purposes
+         Equivelent to World Zero with the Y axis flipped
+         X+ is right, Y- is up
+		 Origin is still at the bottom, left
+         Can be used with SpriteBatch with an appropriate transformation matrix
+		 Most world-space flips are around a pixel centre, this one is around the pixel boundary
+
+
+
+XNA COORDINATES:
+
+Client: A 2D position in client space. Used for textures, viewports, SpriteBatch, etc
+        X+ is right, Y+ is DOWN
+        Origin is in the top-left
+        Transforming from World (usually Display) coordinates requires knowing the height (origin offset)
+
+Viewport, Texture, Screen, Render, Content: Special cases of Client coordinates
+
+
+
+SPECIAL:
+
+Audio: A 2D position used for calculating audio playback positions.
+       X+ is right, Y+ is up
+	   Origin is in the screen centre
+	   Edges of the screen are at -1 and 1 on each axis
+
+
+
+
+NOTES:
+
+- Beware of XNA data structures like Rectangle that specify a "Bottom" and "Top" (these only make sense in XNA coordinates)
+
+- Translating coordinate systems on-the-fly is too hard to think about (do you love off-by-one errors?), so instead
+  as much data as possible is kept in world coordinates, and we only use XNA coordinates where absolutely necessary (eg: textures, rendering)
+
+- Positions in world space (eg: origins, attachment points) are considered to be the *pixel centre*!
+  This is so that attachments and placements always address the same pixel, even when sprites are flipped.
+  
+- Origins in XNA texture space are at the *bottom-left* of the pixel specified as the origin in world-space.
+  This means that if the world-space origin of a sprite is at (0,0), the pixel that that refers to in texture space is (0, Height-1),
+  but the origin for drawing that texture is (0, Height) - which is the bottom-left of the pixel above it.
+  The reason for this is that it makes conversions to and from Display space easier.
+
