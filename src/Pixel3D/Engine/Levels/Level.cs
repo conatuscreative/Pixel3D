@@ -466,24 +466,6 @@ namespace Pixel3D.Engine.Levels
 
         public string EditorName { get { return friendlyName; } }
 
-        private const string ArenaPropertyName = "Arena";
-        private const string ArenaNotVisiblePropertyName = "ArenaVisible";
-
-        public bool IsDefinedAsAnArena
-        {
-            get
-            {
-                bool isArena;
-                bool.TryParse(properties.GetString(ArenaPropertyName), out isArena);
-                if (!isArena)
-                    return false;
-                bool isArenaVisible;
-                if (!bool.TryParse(properties.GetString(ArenaNotVisiblePropertyName), out isArenaVisible))
-                    isArenaVisible = true;
-                return isArenaVisible;
-            }
-        }
-
         public Level(Sprite sprite) : this()
         {
             SetLevelAnimationFromSprite(sprite);

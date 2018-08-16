@@ -10,15 +10,13 @@ namespace Pixel3D.Engine
 	public class UpdateContext : ILocalizationProvider
     {
         protected readonly SoundRollbackManager soundRollbackManager;
-	    protected readonly StringsProvider stringsProvider;
 
         /// <summary>Not network-safe!</summary>
         public int localPlayerBits = int.MaxValue;
 
-        public UpdateContext(Camera audioCamera, SoundRollbackManager soundRollbackManager, StringsProvider stringsProvider)
+        public UpdateContext(Camera audioCamera, SoundRollbackManager soundRollbackManager)
         {
             this.soundRollbackManager = soundRollbackManager;
-	        this.stringsProvider = stringsProvider;
             AudioCamera = audioCamera;
         }
 
@@ -192,27 +190,27 @@ namespace Pixel3D.Engine
 
         public string GetSingleString(TagSet tagSet)
         {
-            return stringsProvider.GetSingleString(tagSet, GameState.language);
+            return Definitions.stringsProvider.GetSingleString(tagSet, GameState.language);
         }
 
         public string GetSingleStringUppercase(TagSet tagSet)
         {
-            return stringsProvider.GetSingleStringUppercase(tagSet, GameState.language);
+            return Definitions.stringsProvider.GetSingleStringUppercase(tagSet, GameState.language);
         }
 
         public StringList GetStrings(TagSet tagSet)
         {
-            return stringsProvider.GetStrings(tagSet, GameState.language);
+            return Definitions.stringsProvider.GetStrings(tagSet, GameState.language);
         }
 
         public string GetRandomString(TagSet tagSet)
         {
-            return stringsProvider.GetRandomString(tagSet, GameState.language, random.Next());
+            return Definitions.stringsProvider.GetRandomString(tagSet, GameState.language, random.Next());
         }
 
         public string GetRandomStringUppercase(TagSet tagSet)
         {
-            return stringsProvider.GetRandomStringUppercase(tagSet, GameState.language, random.Next());
+            return Definitions.stringsProvider.GetRandomStringUppercase(tagSet, GameState.language, random.Next());
         }
 
         #endregion
@@ -221,27 +219,27 @@ namespace Pixel3D.Engine
 
         public string GetSingleString(string tagSet)
         {
-            return stringsProvider.GetSingleString(tagSet, GameState.language);
+            return Definitions.stringsProvider.GetSingleString(tagSet, GameState.language);
         }
 
         public string GetSingleStringUppercase(string tagSet)
         {
-            return stringsProvider.GetSingleStringUppercase(tagSet, GameState.language);
+            return Definitions.stringsProvider.GetSingleStringUppercase(tagSet, GameState.language);
         }
 
         public StringList GetStrings(string tagSet)
         {
-            return stringsProvider.GetStrings(tagSet, GameState.language);
+            return Definitions.stringsProvider.GetStrings(tagSet, GameState.language);
         }
 
         public string GetRandomString(string tagSet)
         {
-            return stringsProvider.GetRandomString(tagSet, GameState.language, random.Next());
+            return Definitions.stringsProvider.GetRandomString(tagSet, GameState.language, random.Next());
         }
 
         public string GetRandomStringUppercase(string tagSet)
         {
-            return stringsProvider.GetRandomStringUppercase(tagSet, GameState.language, random.Next());
+            return Definitions.stringsProvider.GetRandomStringUppercase(tagSet, GameState.language, random.Next());
         }
 
         #endregion
