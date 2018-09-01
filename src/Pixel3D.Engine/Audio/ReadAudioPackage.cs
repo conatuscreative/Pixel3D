@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
+using Pixel3D.Audio;
 using Pixel3D.Engine.Collections;
 
 namespace Pixel3D.Engine.Audio

@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework.Audio;
+using Pixel3D.Audio;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 
 namespace Pixel3D.Engine.Audio
 {
+	public delegate SafeSoundEffect CreateSoundEffectFromStream(Stream stream);
+
+
+
     /// <summary>Because XNA sucks, it will crash when attempting to create a sound if there is no audio hardware. We must wrap, because we need an object for serialization.</summary>
     public class SafeSoundEffect
     {

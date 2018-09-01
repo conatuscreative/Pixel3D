@@ -50,7 +50,6 @@
     <Compile Include="Attributes\AlwaysNullCheckedAttribute.cs" />
     <Compile Include="Audio\AmbientSound.cs" />
     <Compile Include="Audio\AmbientSoundManager.cs" />
-    <Compile Include="Audio\AudioDevice.cs" />
     <Compile Include="Audio\Cue.cs" />
     <Compile Include="Audio\IAmbientSoundSource.cs" />
     <Compile Include="Audio\IAudioDefinitions.cs" />

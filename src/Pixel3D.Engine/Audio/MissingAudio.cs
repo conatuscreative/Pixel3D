@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Pixel3D.Animations;
+using Pixel3D.Audio;
 
 namespace Pixel3D.Engine.Audio
 {
