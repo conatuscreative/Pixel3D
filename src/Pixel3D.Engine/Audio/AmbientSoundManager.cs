@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Common;
-using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
 using Pixel3D.Audio;
 
@@ -98,7 +97,7 @@ namespace Pixel3D.Engine.Audio
             }
 
             float fadeAmount = (ducking ? -(1f / (SoundEffectManager.slotFadeTime * 60f)) : (1f / (SoundEffectManager.slotFadeTime * 60f)));
-            duckFade = MathHelper.Clamp(duckFade + fadeAmount, 0.4f, 1); // <- NOTE: not fading out all the way (sounds better)
+            duckFade = AudioMath.Clamp(duckFade + fadeAmount, 0.4f, 1); // <- NOTE: not fading out all the way (sounds better)
 
             //
             // FIRST PASS: Pair sources with already-known associations:
@@ -283,11 +282,7 @@ namespace Pixel3D.Engine.Audio
             nextAssociations = tempAssociations;
         }
 
-
-
-
-
-        #region Spatial Playback Parameter Modulation
+		#region Spatial Playback Parameter Modulation
 
         public static int GetDistanceSquaredToLocalPlayer(AnimationSet animationSet, Position position, bool facingLeft, IGameState gameState, int localPlayerBits)
         {
@@ -296,7 +291,7 @@ namespace Pixel3D.Engine.Audio
             if(animationSet != null && animationSet.Heightmap != null) // Sound source has some (spatial) volume
             {
                 var heightmapView = new HeightmapView(animationSet.Heightmap, position, facingLeft);
-                Rectangle heightmapXZ = heightmapView.Bounds;
+                var heightmapXZ = heightmapView.Bounds;
 
                 // TODO: Stop assuming a height, and get a real AABB from the heightmap (requires Heightmap cache its own AABB)
                 const int guessHeight = 50;
@@ -394,7 +389,7 @@ namespace Pixel3D.Engine.Audio
             //
 
             // Trying linear fade-out here
-            float listenerFade = MathHelper.Clamp(1f - (float)Math.Sqrt(distanceSquared) / (float)radius, 0f, 1f);
+            float listenerFade = AudioMath.Clamp(1f - (float)Math.Sqrt(distanceSquared) / (float)radius, 0f, 1f);
             fadePitchPan.fade *= listenerFade;
 
             return true;

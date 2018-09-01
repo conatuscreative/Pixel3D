@@ -1,6 +1,6 @@
 ﻿namespace Pixel3D.Audio
 {
-    // TODO: Replace me with Cue
+	// TODO: Replace me with Cue
     public class AmbientSound
     {
         public AmbientSound(SafeSoundEffect sound, int radius, float volume, float pitch, float pan)

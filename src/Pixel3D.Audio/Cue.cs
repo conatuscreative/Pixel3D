@@ -6,7 +6,7 @@ using System.IO.Compression;
 
 namespace Pixel3D.Audio
 {
-    public class Cue
+	public class Cue
     {
         public int id;
 
@@ -152,18 +152,12 @@ namespace Pixel3D.Audio
                 var min = p * minPitch.GetValueOrDefault();
                 var max = p * maxPitch.GetValueOrDefault();
                 float randomValue = random._NetworkUnsafe_UseMeForAudioOnly_NextSingle();
-                Lerp(min, max, randomValue);
+                AudioMath.Lerp(min, max, randomValue);
                 cuePitch = pitch - 1;
             }
 
             return cuePitch;
         }
-
-		//  Microsoft.Xna.Framework.MathHelpers.Lerp
-		public static float Lerp(float value1, float value2, float amount)
-	    {
-		    return value1 + (value2 - value1) * amount;
-	    }
 
 		/// <param name="random">This parameter will be mutated. Be aware of network-safety!</param>
 		/// <param name="cueStates">This parameter will be mutated. Be aware of network-safety!</param>
