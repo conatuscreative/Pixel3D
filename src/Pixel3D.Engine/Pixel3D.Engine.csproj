@@ -54,7 +54,6 @@
     <Compile Include="Audio\IAmbientSoundSource.cs" />
     <Compile Include="Audio\IAudioPlayer.cs" />
     <Compile Include="Audio\MissingAudio.cs" />
-    <Compile Include="Audio\ReadAudioPackage.cs" />
     <Compile Include="Audio\SerializeAudioTypes.cs" />
     <Compile Include="Audio\SoundEffectManager.cs" />
     <Compile Include="Audio\SoundRollbackManager.cs" />

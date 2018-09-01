@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Audio;
+using Pixel3D.Audio;
 
 namespace Pixel3D.Engine.Audio
 {
@@ -10,7 +13,7 @@ namespace Pixel3D.Engine.Audio
     // (See conversations between myself and Ethan about why struct layout cross-platform is annoying,
     //  and at least FNA has been tested.)
 
-    static class VorbisfileDecoder
+    public static class VorbisfileDecoder
     {
         [DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false), SuppressUnmanagedCodeSecurity]
         private static extern unsafe void* memcpy(void* dest, void* src, UIntPtr byteCount);
@@ -101,5 +104,25 @@ namespace Pixel3D.Engine.Audio
 
             return new SoundEffect(audioData, 0, audioData.Length, (int)info.rate, (AudioChannels)info.channels, loopStart, loopLength);
         }
-    }
+
+	    // This is split out so that it can run late in the loading process (because it saturates the CPU)
+	    public static unsafe void DecodeVorbisData(ReadAudioPackage.Result input)
+	    {
+		    if (!AudioDevice.Available)
+			    return; // <- No sound!
+
+		    // IMPORTANT: This is lock-free, because each entry only writes to its own slot (everything else is read-only)
+		    fixed (byte* data = input.audioPackageBytes)
+		    {
+			    byte* vorbisStart = data + input.vorbisOffset;
+
+			    int count = input.sounds.Length;
+			    //for (int i = 0; i < count; i++)
+			    Parallel.ForEach(Enumerable.Range(0, count), i =>
+			    {
+				    input.sounds[i].owner = VorbisfileDecoder.Decode(vorbisStart + input.offsets[i], vorbisStart + input.offsets[i + 1]);
+			    });
+		    }
+	    }
+	}
 }

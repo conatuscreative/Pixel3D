@@ -1,25 +1,14 @@
 ﻿namespace Pixel3D.Audio
 {
 	public static class AudioSystem
-	{
-		// 
-		// Sound Effect Instance:
+	{ 
 		public static CreateSoundEffectInstance createSoundEffectInstance;
-
-		//
-		// Sound Effect:
-		public static CreateSoundEffectFromStream createSoundEffectFromStream;
-		public static CreateSoundEffectFromFile createSoundEffectFromFile;
-		public static PlaySoundEffect playSoundEffect;
-
-		public static IsAudioDeviceAvailable audioDeviceCheck;
-		public static GetSingle getMasterVolume;
-		public static SetSingle setMasterVolume;
-
-
 		public static PlaySoundEffectInstance playSoundEffectInstance;
 		public static StopSoundEffectInstance stopSoundEffectInstance;
 		public static PauseSoundEffectInstance pauseSoundEffectInstance;
+
+		public static GetSingle getMasterVolume;
+		public static SetSingle setMasterVolume;
 
 		public static GetString getName;
 		public static SetString setName;
@@ -41,5 +30,10 @@
 		public static GetState getState;
 		
 		public static SetFadePitchPan setFadePitchPan;
+
+		public static CreateSoundEffectFromStream createSoundEffectFromStream;
+		public static CreateSoundEffectFromFile createSoundEffectFromFile;
+		public static PlaySoundEffect playSoundEffect;
+		public static IsAudioDeviceAvailable audioDeviceCheck;
 	}
 }

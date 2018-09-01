@@ -1,12 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Threading.Tasks;
-using Pixel3D.Audio;
-using Pixel3D.Engine.Collections;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Audio
 {
     public static class ReadAudioPackage
     {
@@ -17,7 +14,7 @@ namespace Pixel3D.Engine.Audio
 
 	    public struct Result
         {
-            public OrderedDictionary<string, SafeSoundEffect> lookup;
+            public IDictionary<string, SafeSoundEffect> lookup;
 
             public byte[] audioPackageBytes;
             public int vorbisOffset;
@@ -65,26 +62,6 @@ namespace Pixel3D.Engine.Audio
             }
 
             return result;
-        }
-
-        // This is split out so that it can run late in the loading process (because it saturates the CPU)
-        public static unsafe void DecodeVorbisData(Result input)
-        {
-            if(!AudioDevice.Available)
-                return; // <- No sound!
-
-            // IMPORTANT: This is lock-free, because each entry only writes to its own slot (everything else is read-only)
-            fixed(byte* data = input.audioPackageBytes)
-            {
-                byte* vorbisStart = data + input.vorbisOffset;
-
-                int count = input.sounds.Length;
-                //for (int i = 0; i < count; i++)
-                Parallel.ForEach(Enumerable.Range(0, count), i =>
-                {
-                    input.sounds[i].owner = VorbisfileDecoder.Decode(vorbisStart + input.offsets[i], vorbisStart + input.offsets[i+1]);
-                });
-            }
         }
     }
 }
