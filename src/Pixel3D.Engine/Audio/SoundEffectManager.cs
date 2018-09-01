@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Pixel3D.Audio;
-using Cue = Pixel3D.Audio.Cue;
-using SoundState = Pixel3D.Audio.SoundState;
 
 namespace Pixel3D.Engine.Audio
 {
     public static class SoundEffectManager
     {
         // Public static methods are thread safe!
-        private static object lockObject = new object();
+        private static readonly object lockObject = new object();
 
 
 
@@ -66,9 +62,9 @@ namespace Pixel3D.Engine.Audio
         /// <summary>Call this only when PlayCueParameters have been validated</summary>
         public static void PlayCueSkipMissingCheck(IAudioDefinitions definitions, Cue cue, PlayCueParameters parameters, FadePitchPan fpp, bool loop = false)
         {
-            fpp.fade = MathHelper.Clamp(fpp.fade * cue.volume, 0, 1);
-            fpp.pitch = MathHelper.Clamp(fpp.pitch + parameters.cuePitch, -1, 1);
-            fpp.pan = MathHelper.Clamp(fpp.pan + cue.pan, -1, 1);
+            fpp.fade = AudioMath.Clamp(fpp.fade * cue.volume, 0, 1);
+            fpp.pitch = AudioMath.Clamp(fpp.pitch + parameters.cuePitch, -1, 1);
+            fpp.pan = AudioMath.Clamp(fpp.pan + cue.pan, -1, 1);
 
             if(fpp.fade < 0.01f)
                 return; // too quiet to care about
@@ -221,7 +217,7 @@ namespace Pixel3D.Engine.Audio
                 if(i < rollOffSoundCount)
                     fadeAmount = Math.Min(fadeAmount, -(1f / (rollOffTime * 60f)));
 
-                playingSounds[i].fade = MathHelper.Clamp(playingSounds[i].fade + fadeAmount, 0, 1);
+                playingSounds[i].fade = AudioMath.Clamp(playingSounds[i].fade + fadeAmount, 0, 1);
                 if(i < rollOffSoundCount && playingSounds[i].fade == 0)
                 {
                     ReleasePlayingSoundAt(i);
@@ -263,7 +259,7 @@ namespace Pixel3D.Engine.Audio
                 return;
             }
             // TODO: This is ugly because sequential sounds will inherit this fade level
-            fpp.fade *= MathHelper.Clamp(quashFade, 0f, 1f);
+            fpp.fade *= AudioMath.Clamp(quashFade, 0f, 1f);
 
 
 

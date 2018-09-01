@@ -1,6 +1,4 @@
-﻿using Pixel3D.Audio;
-
-namespace Pixel3D.Engine.Audio
+﻿namespace Pixel3D.Audio
 {
 	public interface IAudioDefinitions
 	{
