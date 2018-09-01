@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Audio;
-using Pixel3D.Audio;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Audio
 {
     public static class MusicManager
     {
         // Public methods are thread-safe (must lock)
-        private static object lockObject = new object();
-
-
+        private static readonly object lockObject = new object();
+		
         const float fadeTime = 0.8f; // seconds
         const float sufficientFadeOutToStart = 0.2f;
         const float sufficientFadeOutToFadeIn = 0.75f;
@@ -28,12 +25,18 @@ namespace Pixel3D.Engine.Audio
                     if(!AudioDevice.Available)
                         return;
 
-                    foreach(var a in activeMusic)
-                        if(a.instance != null)
-                            a.instance.Volume = a.fade.StepNES() * _volume;
+	                foreach (var a in activeMusic)
+	                {
+		                if (a.instance != null)
+		                {
+			                AudioSystem.setVolume(a.instance, a.fade.StepNES() * _volume);
+		                }
+	                }
 
-                    foreach(var f in fadingOutMusic)
-                        f.instance.Volume = f.fade.StepNES() * _volume;
+	                foreach (var f in fadingOutMusic)
+	                {
+		                AudioSystem.setVolume(f.instance, f.fade.StepNES() * _volume);
+	                }
                 }
             }
         }
@@ -66,18 +69,17 @@ namespace Pixel3D.Engine.Audio
             }
         }
 
-
-        private struct ActiveMusic
+	    private struct ActiveMusic
         {
-            public SoundEffect music; // <- used to indicate "exists" ("has value")
-            public SoundEffectInstance instance;
+            public IDisposable music; // <- used to indicate "exists" ("has value")
+            public IDisposable instance;
             public float fade;
             public bool loop;
             public bool synchronise;
         }
 
         // Active music at different priorities (lower index is higher priority)
-        private static ActiveMusic[] activeMusic = new ActiveMusic[2];
+        private static readonly ActiveMusic[] activeMusic = new ActiveMusic[2];
 
         private static int BestPriority
         {
@@ -90,16 +92,16 @@ namespace Pixel3D.Engine.Audio
                 return i;
             }
         }
-
-
-
+		
         private static void SetMusic(SafeSoundEffect safeMusic, int priority, bool loop, bool synchronise)
         {
             if(!AudioDevice.Available)
                 return;
-            SoundEffect music = safeMusic != null ? safeMusic.soundEffect : null;
 
-            if(activeMusic[priority].music == music)
+            var music = safeMusic?.owner;
+
+	        // ReSharper disable once PossibleUnintendedReferenceComparison
+	        if(activeMusic[priority].music == music)
                 return; // Already playing this song
 
             // Get rid of music currently set at this level (possibly with a fade-out, if it is still playing)
@@ -110,7 +112,11 @@ namespace Pixel3D.Engine.Audio
                     if(activeMusic[priority].fade == 0)
                         activeMusic[priority].instance.Dispose();
                     else
-                        fadingOutMusic.Add(new FadingOutMusic { fade = activeMusic[priority].fade, instance = activeMusic[priority].instance });
+                        fadingOutMusic.Add(new FadingOutMusic
+                        {
+	                        fade = activeMusic[priority].fade,
+	                        instance = activeMusic[priority].instance
+                        });
                 }
 
                 activeMusic[priority] = default(ActiveMusic);
@@ -123,8 +129,7 @@ namespace Pixel3D.Engine.Audio
             activeMusic[priority].loop = loop;
             activeMusic[priority].synchronise = synchronise;
 
-
-            if(synchronise && priority >= BestPriority)
+			if(synchronise && priority >= BestPriority)
                 DoFastFade(); // Make the most of the synced music opening
 
             if(synchronise)
@@ -132,21 +137,21 @@ namespace Pixel3D.Engine.Audio
             else if(CanStartSong(priority, sufficientFadeOutToStart))
                 StartPlaying(priority);
         }
-
-
+		
         private static void StartPlaying(int priority, float fade = 1f)
         {
-            var instance = activeMusic[priority].music.CreateInstance();
+	        var instance = AudioSystem.createSoundEffectInstance(activeMusic[priority].music);
+
+	        var sei = new SafeSoundEffectInstance(instance);
             activeMusic[priority].instance = instance;
             activeMusic[priority].fade = fade;
-
-            instance.Volume = _volume * fade;
-            instance.IsLooped = activeMusic[priority].loop;
-            instance.Play();
+			
+			sei.Volume = _volume * fade;
+            sei.IsLooped = activeMusic[priority].loop;
+            sei.Play();
         }
 
-
-        private static bool CanStartSong(int priority, float sufficientFade)
+		private static bool CanStartSong(int priority, float sufficientFade)
         {
             if(fadingOutMusic.Count > 0 && fadingOutMusic[fadingOutMusic.Count-1].fade > sufficientFade)
                 return false;
@@ -168,9 +173,7 @@ namespace Pixel3D.Engine.Audio
             return true;
         }
 
-
-
-        public static void Update(TimeSpan elapsedTime)
+	    public static void Update(TimeSpan elapsedTime)
         {
             if(!AudioDevice.Available)
                 return;
@@ -206,8 +209,8 @@ namespace Pixel3D.Engine.Audio
                                 {
                                     if(CanStartSong(i, sufficientFadeOutToFadeIn))
                                     {
-                                        if(activeMusic[i].loop) // NOTE: only looping music gets paused when silent
-                                            activeMusic[i].instance.Play(); // unpause
+	                                    if (activeMusic[i].loop) // NOTE: only looping music gets paused when silent
+		                                    Pixel3D.Audio.AudioSystem.playSoundEffectInstance(activeMusic[i].instance); // unpause
                                     }
                                     else
                                         continue;
@@ -216,7 +219,9 @@ namespace Pixel3D.Engine.Audio
                                 activeMusic[i].fade += (seconds / fadeTime); // fade in
                                 if(activeMusic[i].fade > 1f)
                                     activeMusic[i].fade = 1f;
-                                activeMusic[i].instance.Volume = _volume * activeMusic[i].fade.StepNES();
+
+	                            Pixel3D.Audio.AudioSystem.setVolume(activeMusic[i].instance,
+		                            _volume * activeMusic[i].fade.StepNES());
                             }
                         }
 
@@ -231,13 +236,17 @@ namespace Pixel3D.Engine.Audio
                                     if(activeMusic[i].fade <= 0f)
                                     {
                                         activeMusic[i].fade = 0f;
-                                        activeMusic[i].instance.Volume = 0f;
-                                        if(activeMusic[i].loop) // NOTE: only looping music gets paused when silent
-                                            activeMusic[i].instance.Pause();
+
+	                                    Pixel3D.Audio.AudioSystem.setVolume(activeMusic[i].instance, 0f);
+
+	                                    if (activeMusic[i].loop) // NOTE: only looping music gets paused when silent
+	                                    {
+		                                    Pixel3D.Audio.AudioSystem.pauseSoundEffectInstance(activeMusic[i].instance);
+	                                    }
                                     }
                                     else
                                     {
-                                        activeMusic[i].instance.Volume = _volume * activeMusic[i].fade.StepNES();
+	                                    Pixel3D.Audio.AudioSystem.setVolume(activeMusic[i].instance, _volume * activeMusic[i].fade.StepNES());
                                     }
                                 }
                             }
@@ -245,26 +254,22 @@ namespace Pixel3D.Engine.Audio
 
                     }
                 } // <- end for each active music
-
             }
         }
 
         #endregion
-
-
-
-
+		
         #region Fading Out Music
 
         private struct FadingOutMusic
         {
             public float fade;
-            public SoundEffectInstance instance;
+            public IDisposable instance;
             public bool fastFade;
         }
 
         // This acts as a queue
-        private static List<FadingOutMusic> fadingOutMusic = new List<FadingOutMusic>();
+        private static readonly List<FadingOutMusic> fadingOutMusic = new List<FadingOutMusic>();
 
         private static void DoFastFade()
         {
@@ -275,8 +280,7 @@ namespace Pixel3D.Engine.Audio
                 fadingOutMusic[i] = f;
             }
         }
-
-
+		
         private static void UpdateFadeOuts(float seconds)
         {
             for(int i = 0; i < fadingOutMusic.Count;) // NOTE: in-loop removal
@@ -296,7 +300,7 @@ namespace Pixel3D.Engine.Audio
                 }
                 else
                 {
-                    f.instance.Volume = _volume * f.fade.StepNES();
+	                Pixel3D.Audio.AudioSystem.setVolume(f.instance, _volume * f.fade.StepNES());
                     fadingOutMusic[i] = f;
                 }
 
@@ -305,7 +309,5 @@ namespace Pixel3D.Engine.Audio
         }
 
         #endregion
-
-
     }
 }

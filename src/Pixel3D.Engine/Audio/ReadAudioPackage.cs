@@ -82,7 +82,7 @@ namespace Pixel3D.Engine.Audio
                 //for (int i = 0; i < count; i++)
                 Parallel.ForEach(Enumerable.Range(0, count), i =>
                 {
-                    input.sounds[i].soundEffect = VorbisfileDecoder.Decode(vorbisStart + input.offsets[i], vorbisStart + input.offsets[i+1]);
+                    input.sounds[i].owner = VorbisfileDecoder.Decode(vorbisStart + input.offsets[i], vorbisStart + input.offsets[i+1]);
                 });
             }
         }

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Pixel3D.Audio;
+using SoundState = Pixel3D.Audio.SoundState;
 
 namespace Pixel3D.Engine.Audio
 {
@@ -118,7 +119,7 @@ namespace Pixel3D.Engine.Audio
         struct PlayingSound
         {
             public SafeSoundEffect sound;
-            public SoundEffectInstance instance; // <- never null, for valid indicies of `playingSounds`
+            public SafeSoundEffectInstance instance; // <- never null, for valid indicies of `playingSounds`
             public FadePitchPan fpp;
             public float fade; // <- handles global roll-off AND ducking for channel-limit simulation
             public int frameCount;

@@ -1,4 +1,4 @@
-﻿namespace Pixel3D.Engine.Audio
+﻿namespace Pixel3D.Audio
 {
     // TODO: Replace me with Cue
     public class AmbientSound

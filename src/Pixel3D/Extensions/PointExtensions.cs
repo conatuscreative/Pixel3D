@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace Pixel3D
 {
-    public static class PointExtensions
+	public static class PointExtensions
     {
         public static Vector2 AsVector2(this Point point)
         {

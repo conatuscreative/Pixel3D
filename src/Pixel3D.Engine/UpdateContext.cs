@@ -71,7 +71,7 @@ namespace Pixel3D.Engine
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null && AudioCamera != null)
             {
-                var fpp = new FadePitchPan(AudioCamera.WorldToAudio(source.position));
+                var fpp = new FadePitchPan(AudioCamera.WorldToAudio(source.position).AsAudioPosition());
 #if DEVELOPER
                 soundRollbackManager.PlayCue(Definitions, cue, source.position, fpp, parameters, playsLocally: true);
 #else
@@ -138,7 +138,7 @@ namespace Pixel3D.Engine
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null && AudioCamera != null)
             {
-                var fpp = new FadePitchPan(AudioCamera.WorldToAudio(source));
+                var fpp = new FadePitchPan(AudioCamera.WorldToAudio(source).AsAudioPosition());
 
 #if DEVELOPER
                 soundRollbackManager.PlayCue(Definitions, cue, source, fpp, parameters, playsLocally: true);

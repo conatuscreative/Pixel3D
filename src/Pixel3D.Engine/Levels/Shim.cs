@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
+using Pixel3D.Audio;
 using Pixel3D.Engine.Audio;
 using Pixel3D.Engine.Collections;
 
