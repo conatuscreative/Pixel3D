@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using Microsoft.Xna.Framework;
+using Pixel3D.Audio;
 using Pixel3D.Serialization;
 
 namespace Pixel3D.Engine.Audio
@@ -13,7 +13,7 @@ namespace Pixel3D.Engine.Audio
         public int id;
 
         /// <summary>IMPORTANT: Do not use in gameplay code (not network safe)</summary>
-        [SerializationIgnore]
+        [NonSerialized]
         public string friendlyName;
 
         public CueType type;
@@ -156,17 +156,22 @@ namespace Pixel3D.Engine.Audio
                 var min = p * minPitch.GetValueOrDefault();
                 var max = p * maxPitch.GetValueOrDefault();
                 float randomValue = random._NetworkUnsafe_UseMeForAudioOnly_NextSingle();
-                MathHelper.Lerp(min, max, randomValue);
+                Lerp(min, max, randomValue);
                 cuePitch = pitch - 1;
             }
 
             return cuePitch;
         }
 
+		//  Microsoft.Xna.Framework.MathHelpers.Lerp
+		public static float Lerp(float value1, float value2, float amount)
+	    {
+		    return value1 + (value2 - value1) * amount;
+	    }
 
-        /// <param name="random">This parameter will be mutated. Be aware of network-safety!</param>
-        /// <param name="cueStates">This parameter will be mutated. Be aware of network-safety!</param>
-        public int SelectSound(XorShift random, ushort[] cueStates)
+		/// <param name="random">This parameter will be mutated. Be aware of network-safety!</param>
+		/// <param name="cueStates">This parameter will be mutated. Be aware of network-safety!</param>
+		public int SelectSound(XorShift random, ushort[] cueStates)
         {
             switch(type)
             {

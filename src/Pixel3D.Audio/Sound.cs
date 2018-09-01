@@ -1,8 +1,8 @@
 using System;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Audio
 {
-    public class Sound
+	public class Sound
     {
         public string path;
 

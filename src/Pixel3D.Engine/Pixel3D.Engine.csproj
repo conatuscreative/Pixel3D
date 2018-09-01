@@ -52,9 +52,6 @@
     <Compile Include="Audio\AmbientSoundManager.cs" />
     <Compile Include="Audio\AudioDevice.cs" />
     <Compile Include="Audio\Cue.cs" />
-    <Compile Include="Audio\CueDeserializeContext.cs" />
-    <Compile Include="Audio\CueSerializeContext.cs" />
-    <Compile Include="Audio\CueType.cs" />
     <Compile Include="Audio\IAmbientSoundSource.cs" />
     <Compile Include="Audio\IAudioDefinitions.cs" />
     <Compile Include="Audio\IAudioPlayer.cs" />
@@ -63,7 +60,6 @@
     <Compile Include="Audio\PlayCueParameters.cs" />
     <Compile Include="Audio\ReadAudioPackage.cs" />
     <Compile Include="Audio\SafeSoundEffect.cs" />
-    <Compile Include="Audio\Sound.cs" />
     <Compile Include="Audio\SoundEffectManager.cs" />
     <Compile Include="Audio\SoundRollbackManager.cs" />
     <Compile Include="Audio\VorbisfileDecoder.cs" />
@@ -155,6 +151,10 @@
     <ProjectReference Include="..\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj">
       <Project>{550e1bff-47be-4b1e-9b11-2a1784519626}</Project>
       <Name>Pixel3D.AssetManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj">
+      <Project>{52f63851-9353-44be-bbbe-a4a92c353d14}</Project>
+      <Name>Pixel3D.Audio</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pixel3D\Pixel3D.csproj">
       <Project>{790b8ab0-e162-4f29-abed-11ad81d4d6f9}</Project>

@@ -1,4 +1,4 @@
-﻿namespace Pixel3D.Engine.Audio
+﻿namespace Pixel3D.Audio
 {
     /// <summary>
     /// Parallel: all sounds in the cue play at the same time
@@ -15,4 +15,6 @@
         Random,
         RandomCycle
     }
+
+
 }

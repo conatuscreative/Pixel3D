@@ -133,13 +133,13 @@ namespace Pixel3D.Animations
         #region Editor Stuff
 
         /// <summary>IMPORTANT: Do not use in gameplay code (not network safe)</summary>
-        [SerializationIgnore]
+        [NonSerialized]
         public string friendlyName;
 
         public string EditorName { get { return friendlyName; } }
 
         /// <summary>EDITOR ONLY. Surrogate property for tag-setting in the UI; do not carry over!</summary>
-        [SerializationIgnore]
+        [NonSerialized]
         public string tags;
 
         /// <summary> Tells the editor the animation is shared; for batch sync operations </summary>

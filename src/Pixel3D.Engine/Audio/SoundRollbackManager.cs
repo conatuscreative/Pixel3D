@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Pixel3D.Audio;
 
 namespace Pixel3D.Engine.Audio
 {
@@ -17,10 +18,7 @@ namespace Pixel3D.Engine.Audio
         // Allows a tracked sound to exist long enough to kill a sound (shifting it backwards) that would otherwise be shifted forward to play immediately
         public const int DontCareLimit = MaximumSoundShift * 2;
 
-
-
-
-	    /// <param name="random">IMPORTANT: This may be part of the game state</param>
+		/// <param name="random">IMPORTANT: This may be part of the game state</param>
 		/// <param name="cueStates">IMPORTANT: This may be part of the game state</param>
 		/// <param name="playLocally">True if this sound should be played, false if the sound is for a remote player (not for us). Allows for local-only UI sounds.</param>
 		public void PlayCue(IAudioDefinitions definitions, Cue cue, Position? worldPosition, FadePitchPan fpp, PlayCueParameters parameters, bool playsLocally)
@@ -35,12 +33,10 @@ namespace Pixel3D.Engine.Audio
             PlayCueSkipMissingCheck(definitions, cue, worldPosition, fpp, parameters, playsLocally);
         }
 
-	    public void PlayCueSkipMissingCheck(IAudioDefinitions definitions, Cue cue, Position? worldPosition, FadePitchPan fpp,
-		    PlayCueParameters parameters, bool playsLocally)
+	    public void PlayCueSkipMissingCheck(IAudioDefinitions definitions, Cue cue, Position? worldPosition, FadePitchPan fpp, PlayCueParameters parameters, bool playsLocally)
 	    {
 		    if (parameters.soundIndex < 0)
 			    return;
-
 
 		    if (!playsLocally || !AudioDevice.Available)
 			    return; // <- nothing to do!
@@ -86,9 +82,9 @@ namespace Pixel3D.Engine.Audio
 
         /// <summary>Frame that cues are being played on</summary>
         int activeFrame = 0;
+
         /// <summary>The most recent frame to be simulated</summary>
         int liveFrame = 0;
-
 
         /// <param name="frame">Networked frame number</param>
         public void BeforeRollbackAwareFrame(int frame, bool startupPrediction)
@@ -130,8 +126,7 @@ namespace Pixel3D.Engine.Audio
                 CleanupLiveCueList(liveCues, frame - DontCareLimit);
             }
         }
-
-
+		
         public void AfterRollbackAwareFrame(IAudioDefinitions definitions)
         {
             Debug.Assert(rollbackAware);
@@ -156,7 +151,6 @@ namespace Pixel3D.Engine.Audio
                 }
             }
         }
-        
 
         public void StopBeingRollbackAware()
         {
@@ -169,9 +163,6 @@ namespace Pixel3D.Engine.Audio
             liveUnmatched.Clear();
             pendingCues.Clear();
         }
-
-
-
 
         #region Played Cue Lists
         
@@ -189,8 +180,7 @@ namespace Pixel3D.Engine.Audio
         readonly List<LiveCue> liveUnmatched = new List<LiveCue>();
         readonly List<LiveCue> liveCues = new List<LiveCue>();
 
-
-        static void CleanupLiveCueList(List<LiveCue> list, int keepFrom)
+		static void CleanupLiveCueList(List<LiveCue> list, int keepFrom)
         {
             for(int i = 0; i < list.Count;)
             {
@@ -203,8 +193,7 @@ namespace Pixel3D.Engine.Audio
             }
         }
 
-
-        bool TryKillCueExact(Cue cue, int frame, Position? position)
+		bool TryKillCueExact(Cue cue, int frame, Position? position)
         {
             for(int i = 0; i < liveUnmatched.Count; i++)
             {
@@ -268,8 +257,7 @@ namespace Pixel3D.Engine.Audio
                 return false;
         }
 
-
-        void AddLiveCueNow(Cue cue, Position? position)
+		void AddLiveCueNow(Cue cue, Position? position)
         {
             if(rollbackAware)
             {
@@ -286,9 +274,7 @@ namespace Pixel3D.Engine.Audio
         
         #endregion
 
-
-
-        #region Pending Cue list (for rollback)
+		#region Pending Cue list (for rollback)
 
         struct PendingCue
         {
@@ -305,9 +291,5 @@ namespace Pixel3D.Engine.Audio
         readonly List<PendingCue> pendingCues = new List<PendingCue>();
 
         #endregion
-
-
-
     }
 }
-

@@ -24,7 +24,7 @@ namespace Pixel3D.Engine.Levels
         }
 
         /// <summary>IMPORTANT: Do not use in gameplay code (not network safe)</summary>
-        [SerializationIgnore]
+        [NonSerialized]
         public string friendlyName;
 
         /// <summary>Class name of level behaviour class to spawn</summary>

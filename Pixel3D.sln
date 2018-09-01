@@ -19,7 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNA", "..\FNA\FNA.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.Engine", "src\Pixel3D.Engine\Pixel3D.Engine.csproj", "{F4271246-09A8-43F3-9230-071E9E6306B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.AssetManagement", "src\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj", "{550E1BFF-47BE-4B1E-9B11-2A1784519626}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.AssetManagement", "src\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj", "{550E1BFF-47BE-4B1E-9B11-2A1784519626}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Audio", "src\Pixel3D.Audio\Pixel3D.Audio.csproj", "{52F63851-9353-44BE-BBBE-A4A92C353D14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +105,18 @@ Global
 		{550E1BFF-47BE-4B1E-9B11-2A1784519626}.Release|x64.Build.0 = Release|Any CPU
 		{550E1BFF-47BE-4B1E-9B11-2A1784519626}.Release|x86.ActiveCfg = Release|Any CPU
 		{550E1BFF-47BE-4B1E-9B11-2A1784519626}.Release|x86.Build.0 = Release|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Debug|x64.Build.0 = Debug|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Debug|x86.Build.0 = Debug|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Release|x64.ActiveCfg = Release|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Release|x64.Build.0 = Release|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Release|x86.ActiveCfg = Release|Any CPU
+		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

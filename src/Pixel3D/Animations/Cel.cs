@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
-using Pixel3D.Serialization;
 
 namespace Pixel3D.Animations
 {
@@ -12,7 +11,7 @@ namespace Pixel3D.Animations
         public Cel next;
 
         /// <summary>IMPORTANT: Do not use in gameplay code (not network safe)</summary>
-        [SerializationIgnore]
+        [NonSerialized]
         public string friendlyName;
 
         public SpriteRef spriteRef;

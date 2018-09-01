@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Audio
 {
-    public partial class CueDeserializeContext
+	public partial class CueDeserializeContext
     {
         public CueDeserializeContext(BinaryReader br)
         {

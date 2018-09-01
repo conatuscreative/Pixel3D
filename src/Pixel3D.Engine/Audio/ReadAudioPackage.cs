@@ -14,14 +14,7 @@ namespace Pixel3D.Engine.Audio
             throw new Exception("Audio Package Corrupt");
         }
 
-	    public static string FixupSoundName(string input)
-        {
-            return "\\" + input + ".wav"; // <- Because the cues have a weird naming scheme...
-        }
-
-
-
-        public struct Result
+	    public struct Result
         {
             public OrderedDictionary<string, SafeSoundEffect> lookup;
 
