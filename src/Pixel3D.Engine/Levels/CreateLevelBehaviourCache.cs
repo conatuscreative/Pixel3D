@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
-using Pixel3D.Engine;
 using Pixel3D.Engine.Collections;
-using Pixel3D.Engine.Levels;
 
 namespace Pixel3D.Engine.Levels
 {

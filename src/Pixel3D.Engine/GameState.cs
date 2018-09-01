@@ -35,7 +35,5 @@ namespace Pixel3D.Engine
         public readonly List<Actor> actors = new List<Actor>();
 
         #endregion
-
-
     }
 }

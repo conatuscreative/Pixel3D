@@ -1,4 +1,4 @@
-﻿namespace Pixel3D.Engine.AssetManagement
+﻿namespace Pixel3D.AssetManagement
 {
     public interface IAssetProvider
     {

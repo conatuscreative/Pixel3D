@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
-using Pixel3D.Engine.AssetManagement;
+using Pixel3D.AssetManagement;
 
 namespace Pixel3D.Engine.Levels
 {

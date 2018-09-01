@@ -46,11 +46,6 @@
     <Compile Include="Actors\Effects\MovingSimpleEffect.cs" />
     <Compile Include="Actors\Effects\PermanentEffect.cs" />
     <Compile Include="Actors\Effects\SimpleEffect.cs" />
-    <Compile Include="AssetManagement\AssetManager.cs" />
-    <Compile Include="AssetManagement\AssetReader.cs" />
-    <Compile Include="AssetManagement\IAssetPathProvider.cs" />
-    <Compile Include="AssetManagement\IAssetProvider.cs" />
-    <Compile Include="AssetManagement\IHasReferencedAssets.cs" />
     <Compile Include="AttachmentTracking.cs" />
     <Compile Include="Attributes\AlwaysNullCheckedAttribute.cs" />
     <Compile Include="Audio\AmbientSound.cs" />
@@ -156,6 +151,10 @@
     <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj">
       <Project>{eedbf0f2-9594-4164-a37f-081a944c0bb0}</Project>
       <Name>Pixel3D.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj">
+      <Project>{550e1bff-47be-4b1e-9b11-2a1784519626}</Project>
+      <Name>Pixel3D.AssetManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pixel3D\Pixel3D.csproj">
       <Project>{790b8ab0-e162-4f29-abed-11ad81d4d6f9}</Project>

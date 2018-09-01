@@ -1,6 +1,4 @@
 ﻿using Pixel3D.Animations;
-using Pixel3D.Engine;
-using Pixel3D.Engine.Levels;
 
 namespace Pixel3D.Engine.Levels
 {

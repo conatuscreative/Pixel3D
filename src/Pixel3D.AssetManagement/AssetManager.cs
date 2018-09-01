@@ -4,51 +4,38 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace Pixel3D.Engine.AssetManagement
+namespace Pixel3D.AssetManagement
 {
-    // NOTE: IAssetPathProvider is only required so we can implement scenario saving
-
     public class AssetManager : IAssetProvider, IAssetPathProvider
     {
-        public IServiceProvider Services { get; private set; }
+        public IServiceProvider Services { get; }
 
         public AssetManager(IServiceProvider services, string rootDirectory)
         {
-            this.Services = services;
-            this.RootDirectory = rootDirectory;
+            Services = services;
+            RootDirectory = rootDirectory;
         }
-
-
-
+		
         #region Asset Root Directory
 
-        string _rootDirectory;
+	    private string rootDirectory;
+
         /// <summary>The root directory for managed assets, or null for absolute paths</summary>
         public string RootDirectory
         {
-            get { return _rootDirectory; }
-            set
+            get => rootDirectory;
+	        set
             {
                 if(loadedAssets.Count == 0)
-                    _rootDirectory = CanonicaliseAssetPath(value);
+                    rootDirectory = CanonicaliseAssetPath(value);
                 else
                     throw new InvalidOperationException("Cannot change the asset root directory after loading assets");
             }
         }
 
-        public string GetFullPathForAssetPath(string assetPath)
-        {
-            if(_rootDirectory == null)
-                return assetPath;
-            else
-                return Path.Combine(_rootDirectory, assetPath);
-        }
-
         #endregion
 
-
-
-        #region Managed Assets
+		#region Managed Assets
 
         public static string CanonicaliseAssetPath(string assetPath)
         {
@@ -62,15 +49,15 @@ namespace Pixel3D.Engine.AssetManagement
                 assetPath = assetPath.Substring(1, assetPath.Length - 1);
             return assetPath;
         }
-
-
+		
         /// <summary>Lookup of asset path to loaded asset</summary>
-        public Dictionary<string, object> loadedAssets = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> loadedAssets = new Dictionary<string, object>();
+	    private readonly Dictionary<object, string> loadedAssetPaths = new Dictionary<object, string>();
 
-
-        public void Insert<T>(string assetPath, T asset) where T : class
+		public void Insert<T>(string assetPath, T asset) where T : class
         {
             loadedAssets.Add(assetPath, asset);
+			loadedAssetPaths.Add(asset, assetPath);
         }
 
         /// <param name="assetPath">Path relative to the asset directory</param>
@@ -78,30 +65,28 @@ namespace Pixel3D.Engine.AssetManagement
         {
             assetPath = CanonicaliseAssetPath(assetPath);
 
-            object asset;
-            if(loadedAssets.TryGetValue(assetPath, out asset)) // Check cache
+	        if(loadedAssets.TryGetValue(assetPath, out var asset)) // Check cache
             {
                 return (T)asset;
             }
-            else // Not found, load asset
-            {
-                if(Locked)
-                    throw new InvalidOperationException("Asset manager has been locked, cannot load from disk.");
 
-                var fullPath = Path.Combine(_rootDirectory, assetPath + AssetReader.Extension<T>());
+	        if (Locked)
+	        {
+		        throw new InvalidOperationException("Asset manager has been locked, cannot load from disk.");
+	        }
 
-                Debug.Assert(!fullPath.Contains("\\\\")); // <- corrupt file?
+	        var fullPath = Path.Combine(rootDirectory, assetPath + AssetReader.Extension<T>());
 
-                T typedAsset = AssetReader.Read<T>(this, Services, fullPath);
-                loadedAssets.Add(assetPath, typedAsset);
-                return typedAsset;
-            }
+	        Debug.Assert(!fullPath.Contains("\\\\")); // <- corrupt file?
+	        var typedAsset = AssetReader.Read<T>(this, Services, fullPath);
+	        loadedAssets.Add(assetPath, typedAsset);
+			loadedAssetPaths.Add(typedAsset, assetPath);
+	        return typedAsset;
         }
 
         #endregion
 
-
-        #region Locking
+		#region Locking
 
         /// <summary>True if the asset manager is locked and can no longer be used to load assets from disk.</summary>
         public bool Locked { get; private set; }
@@ -109,26 +94,19 @@ namespace Pixel3D.Engine.AssetManagement
         /// <remarks>Call this when network definition data is created.</remarks>
         public void Lock()
         {
-            this.Locked = true;
+            Locked = true;
         }
 
         #endregion
 
+		#region IAssetPathProvider
 
-        #region IAssetPathProvider (for Scenario serialization only)
-
-        // TODO: PERF: IMPORTANT: A bunch of not-developer-tools stuff has ended up depending on this. BADLY needs a fast reverse-lookup!!!
-
-        /// <summary>Developer tooling only. Slow!</summary>
         public string GetAssetPath<T>(T asset) where T : class
         {
-            return loadedAssets.FirstOrDefault(p => ReferenceEquals(p.Value, asset)).Key;
+	        loadedAssetPaths.TryGetValue(asset, out var assetPath);
+	        return assetPath;
         }
 
         #endregion
-
-
-
-
     }
 }

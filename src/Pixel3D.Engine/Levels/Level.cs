@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
-using Pixel3D.Engine.AssetManagement;
+using Pixel3D.AssetManagement;
 using Pixel3D.Engine.Collections;
 using Pixel3D.Serialization;
 

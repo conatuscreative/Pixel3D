@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Pixel3D.Engine.AssetManagement
+namespace Pixel3D.AssetManagement
 {
-	/// <summary>Editor support: allows management of assets that reference other assets</summary>
+	/// <summary>Allows management of assets that reference other assets</summary>
 	public interface IHasReferencedAssets
 	{
 		/// <summary>Get a list of all assets referenced by this asset</summary>

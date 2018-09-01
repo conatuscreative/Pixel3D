@@ -1,18 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Pixel3D.Animations;
 using System.IO;
-using System.Linq;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 
 namespace Pixel3D
 {
     // This data structure is millstone. One day, it will go far, far away.
-
-
+	
     /// <summary>Immutable set of tags for matching in TagLookup</summary>
     public class TagSet : IEnumerable<string>
     {
