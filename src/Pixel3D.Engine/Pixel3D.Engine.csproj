@@ -48,14 +48,13 @@
     <Compile Include="Actors\Effects\SimpleEffect.cs" />
     <Compile Include="AttachmentTracking.cs" />
     <Compile Include="Attributes\AlwaysNullCheckedAttribute.cs" />
+    <Compile Include="Audio\AudioRandom.cs" />
     <Compile Include="Audio\AmbientSoundManager.cs" />
     <Compile Include="Audio\AudioExtensions.cs" />
-    <Compile Include="Audio\Cue.cs" />
     <Compile Include="Audio\IAmbientSoundSource.cs" />
     <Compile Include="Audio\IAudioDefinitions.cs" />
     <Compile Include="Audio\IAudioPlayer.cs" />
     <Compile Include="Audio\MissingAudio.cs" />
-    <Compile Include="Audio\PlayCueParameters.cs" />
     <Compile Include="Audio\ReadAudioPackage.cs" />
     <Compile Include="Audio\SerializeAudioTypes.cs" />
     <Compile Include="Audio\SoundEffectManager.cs" />

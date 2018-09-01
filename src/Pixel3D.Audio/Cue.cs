@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using Pixel3D.Audio;
-using Pixel3D.Serialization;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Audio
 {
-    public class Cue : IEditorNameProvider
+    public class Cue
     {
         public int id;
 
@@ -16,7 +14,12 @@ namespace Pixel3D.Engine.Audio
         [NonSerialized]
         public string friendlyName;
 
-        public CueType type;
+	    public string EditorName
+	    {
+		    get { return friendlyName; }
+	    }
+
+		public CueType type;
         public int radius;
         public float pitch;
         public float pan;
@@ -135,17 +138,10 @@ namespace Pixel3D.Engine.Audio
 
         #endregion
 
-        public string EditorName
-        {
-            get { return friendlyName; }
-        }
-
-
-
         #region Simulation Helpers
 
         /// <param name="random">This parameter will be mutated. Be aware of network-safety!</param>
-        public float SelectPitch(XorShift random)
+        public float SelectPitch(IAudioRandomizer random)
         {
             // Pitch variance:
             var cuePitch = pitch;
@@ -171,7 +167,7 @@ namespace Pixel3D.Engine.Audio
 
 		/// <param name="random">This parameter will be mutated. Be aware of network-safety!</param>
 		/// <param name="cueStates">This parameter will be mutated. Be aware of network-safety!</param>
-		public int SelectSound(XorShift random, ushort[] cueStates)
+		public int SelectSound(IAudioRandomizer random, ushort[] cueStates)
         {
             switch(type)
             {
@@ -206,7 +202,7 @@ namespace Pixel3D.Engine.Audio
                 case CueType.RandomCycle:
                     {
                         Debug.Assert(SoundCount <= 16); // Sound storage is 16 bits!
-                        int safeSoundCount = System.Math.Min(16, SoundCount);
+                        int safeSoundCount = Math.Min(16, SoundCount);
 
                         int bitCount;
                         if(cueStates[id] == 0)
@@ -251,7 +247,5 @@ namespace Pixel3D.Engine.Audio
         }
 
         #endregion
-
-
     }
 }

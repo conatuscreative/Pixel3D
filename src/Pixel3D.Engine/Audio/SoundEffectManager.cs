@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Pixel3D.Audio;
+using Cue = Pixel3D.Audio.Cue;
 using SoundState = Pixel3D.Audio.SoundState;
 
 namespace Pixel3D.Engine.Audio

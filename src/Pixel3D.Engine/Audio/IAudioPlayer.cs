@@ -1,4 +1,6 @@
-﻿namespace Pixel3D.Engine.Audio
+﻿using Pixel3D.Audio;
+
+namespace Pixel3D.Engine.Audio
 {
     public interface IAudioPlayer
     {
