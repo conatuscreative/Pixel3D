@@ -22,8 +22,24 @@ namespace Pixel3D.LoopRecorder
 		TGameState gameState;
 
 		public event Action<TGameState> OnGameStateReplaced;
-		public event Func<bool> IsNetworked; 
+		public event Func<bool> IsNetworked;
 
+		public LoopManager(int slots, Value128 definitionHash, DefinitionObjectTable definitionTable, TGameState gameState,
+			Action<TGameState> onGameStateReplaced, Func<bool> isNetworked)
+		{
+			loopSlots = new Loop[slots];
+
+			this.definitionHash = definitionHash;
+			this.definitionTable = definitionTable;
+
+			this.gameState = gameState;
+			this.OnGameStateReplaced = onGameStateReplaced;
+			this.IsNetworked = isNetworked;
+
+			Trace.WriteLine("Definition Hash = " + definitionHash);
+		}
+
+		[Obsolete]
 		public LoopManager(int slots, TDefinitions definitions, TGameState gameState, Action<TGameState> onGameStateReplaced, Func<bool> isNetworked)
 		{
 			loopSlots = new Loop[slots];
@@ -153,11 +169,8 @@ namespace Pixel3D.LoopRecorder
 			return userInput;
 		}
 
-		public void LoopPlayerUpdate(LoopCommand command, int? slotIndex = null)
+		public void Update(LoopCommand command, int? slotIndex = null)
 		{
-			if (command == 0)
-				return;
-
 			// Cannot use loop player while networked
 			bool skipLoopsBecauseNetwork = false;
 			if (IsNetworked != null && IsNetworked())
