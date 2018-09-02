@@ -35,5 +35,8 @@
 		public static CreateSoundEffectFromFile createSoundEffectFromFile;
 		public static PlaySoundEffect playSoundEffect;
 		public static IsAudioDeviceAvailable audioDeviceCheck;
+
+		public static ReportExpectedCue reportExpectedCue;
+		public static ReportMissingCue reportMissingCue;
 	}
 }

@@ -2,107 +2,88 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Pixel3D.Animations;
-using Pixel3D.Audio;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Audio
 {
     // IMPORTANT: This class is thread-safe.
     public static class MissingAudio
     {
 		#region Reporting
 
-		private static readonly HashSet<string> missingCues = new HashSet<string>();
+		private static readonly HashSet<string> MissingCues = new HashSet<string>();
 
 	    public static void ReportMissingCue(string name, object debugContext)
         {
 	        bool added;
-	        lock (missingCues)
-		        added = missingCues.Add(name);
+	        lock (MissingCues)
+		        added = MissingCues.Add(name);
 
 	        if (added)
 	        {
-		        string c;
-		        if (debugContext is string)
-			        c = (string)debugContext;
-		        else if (debugContext is IEditorNameProvider)
-			        c = string.Format("{0}: {1}", debugContext.GetType().Name, ((IEditorNameProvider)debugContext).EditorName);
-		        else if (debugContext != null)
-			        c = debugContext.ToString();
-		        else
-			        c = "[no context]";
-
-		        string message = string.Format("Missing cue \"{0}\" (context: {1})", name, c);
-		        Debug.WriteLine(message);
-		        Log.Current.Warn(message);
+		        AudioSystem.reportMissingCue?.Invoke(name, debugContext);
 	        }
 		}
 
         class ExpectedCueInfo
         {
             public string context;
-            public AnimationSet animationSet;
-            public Animation animation;
-            public int frame;
+
+			public object[] args;
 
             public override int GetHashCode()
             {
-                return context.GetHashCode() ^ RuntimeHelpers.GetHashCode(animationSet) ^ RuntimeHelpers.GetHashCode(animation) ^ frame.GetHashCode();
+	            var hashCode = context.GetHashCode();
+	            foreach (var arg in args)
+		            hashCode ^= RuntimeHelpers.GetHashCode(arg);
+	            return hashCode;
             }
 
             public override bool Equals(object obj)
             {
-                ExpectedCueInfo other = obj as ExpectedCueInfo;
-                if(other == null)
-                    return false;
+	            if(!(obj is ExpectedCueInfo other))
+	                return false;
 
-                return context == other.context
-                    && ReferenceEquals(animationSet, other.animationSet)
-                    && ReferenceEquals(animationSet, other.animationSet)
-                    && frame == other.frame;
+	            if (args.Length != other.args.Length)
+		            return false;
+
+	            var equals = context == other.context;
+	            for (var i = 0; i < args.Length; i++)
+					equals &= ReferenceEquals(args[i], other.args[i]);
+
+				return equals;
             }
         }
 
-        private static readonly HashSet<ExpectedCueInfo> expectedCues = new HashSet<ExpectedCueInfo>();
+        private static readonly HashSet<ExpectedCueInfo> ExpectedCues = new HashSet<ExpectedCueInfo>();
 
-        public static void ReportExpectedCue(string context, AnimationSet animationSet, Animation animation = null, int frame = -1)
+        public static void ReportExpectedCue(string context, params object[] args)
         {
-	        ExpectedCueInfo eci = new ExpectedCueInfo { context = context, animationSet = animationSet, animation = animation, frame = frame };
-	        bool added;
-	        lock (expectedCues)
-		        added = expectedCues.Add(eci);
-
-	        if (added)
+	        var eci = new ExpectedCueInfo
 	        {
-		        string format;
-		        if (animation == null)
-			        format = "Expected cue for \"{0}\" on AnimationSet = {1}";
-		        else if (frame == -1)
-			        format = "Expected cue for \"{0}\" on Animation = {2} (AnimationSet = {1})";
-		        else
-			        format = "Expected cue for \"{0}\" on Frame = {3} (AnimationSet = {1}, Animation = {2})";
-
-		        string message = string.Format(format, context, animationSet == null ? "???" : animationSet.friendlyName,
-			        animation == null ? "???" : animation.friendlyName, frame);
-		        Debug.WriteLine(message);
-		        Log.Current.Warn(message);
-	        }
+		        context = context,
+		        args = args
+	        };
+	        bool added;
+	        lock (ExpectedCues)
+		        added = ExpectedCues.Add(eci);
+	        if (added)
+		        AudioSystem.reportExpectedCue?.Invoke(context, args);
 		}
 
         #endregion
 
         #region Nonsense Sounds (DEVELOPER only)
 
-        private static readonly object lockObject = new object();
+        private static readonly object LockObject = new object();
 
-        private static bool initialized = false;
+        private static bool initialized;
 
         public static void ActivateAudibleMissingSounds()
         {
             if(!AudioDevice.Available)
                 return; // Don't even bother with setup, if we have no device
 
-            lock(lockObject)
+            lock(LockObject)
             {
                 if(initialized)
                     return;
@@ -110,7 +91,6 @@ namespace Pixel3D.Engine.Audio
             }
 
             Debug.WriteLine("Enabling Developer Audio");
-
             Thread thread = new Thread(InternalInitializeMissingSounds);
             thread.Start();
         }
@@ -155,16 +135,15 @@ namespace Pixel3D.Engine.Audio
 		public static void TriedToPlayMissingCue(FadePitchPan fpp)
         {
             SafeSoundEffect sound;
-            lock(lockObject)
+            lock(LockObject)
                 sound = missingSoundEffect;
 
-            if(sound != null)
-                sound.Play(fpp.fade, fpp.pitch, fpp.pan);
+	        sound?.Play(fpp.fade, fpp.pitch, fpp.pan);
         }
 
 		public static SafeSoundEffect GetMissingMusicSound()
         {
-            lock(lockObject)
+            lock(LockObject)
                 return missingMusic;
         }
 

@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
 using Pixel3D.Audio;
 using Pixel3D.Engine.Audio;
-using Pixel3D.Engine.Collections;
 
 namespace Pixel3D.Engine.Levels
 {

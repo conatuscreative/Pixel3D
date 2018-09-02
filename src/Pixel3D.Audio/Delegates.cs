@@ -31,7 +31,10 @@ namespace Pixel3D.Audio
 	public delegate void PauseSoundEffectInstance(IDisposable owner);
 
 	public delegate void SetFadePitchPan(SafeSoundEffectInstance owner, float volume, float pitch, float pan);
-	
+
+	public delegate void ReportExpectedCue(string context, params object[] args);
+	public delegate void ReportMissingCue(string name, object debugContext);
+
 	public enum SoundState
 	{
 		Playing,
