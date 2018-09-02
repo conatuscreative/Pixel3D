@@ -4,6 +4,7 @@ using System.IO;
 namespace Pixel3D.Audio
 {
 	public delegate int GetMaxPlayers();
+	public delegate PitchPan WorldToAudio(object owner, int x, int y, int z);
 	public delegate AudioPosition? GetPlayerAudioPosition(object owner, int playerIndex);
 	public delegate SafeSoundEffect CreateSoundEffectFromStream(Stream stream);
 	public delegate SafeSoundEffect CreateSoundEffectFromFile(string path);
@@ -14,7 +15,7 @@ namespace Pixel3D.Audio
 	public delegate void SetBoolean(IDisposable owner, bool value);
 	public delegate float GetSingle(IDisposable owner);
 	public delegate void SetSingle(IDisposable owner, float value);
-	public delegate SoundState GetState(IDisposable owner);
+	public delegate SoundState GetSoundState(IDisposable owner);
 	public delegate void SetState(IDisposable owner, SoundState value);
 	public delegate TimeSpan GetTimeSpan(IDisposable owner);
 	public delegate void SetTimeSpan(IDisposable owner, TimeSpan value);

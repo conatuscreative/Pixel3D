@@ -12,7 +12,7 @@ namespace Pixel3D.Audio
 			this.owner = owner;
 		}
 
-		public SoundState State => AudioSystem.getState(owner);
+		public SoundState State => AudioSystem.getSoundState(owner);
 
 		#region Wrapper
 

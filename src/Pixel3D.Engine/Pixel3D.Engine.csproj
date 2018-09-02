@@ -48,7 +48,6 @@
     <Compile Include="Actors\Effects\SimpleEffect.cs" />
     <Compile Include="AttachmentTracking.cs" />
     <Compile Include="Attributes\AlwaysNullCheckedAttribute.cs" />
-    <Compile Include="Audio\AmbientSoundManager.cs" />
     <Compile Include="Audio\AudioRandom.cs" />
     <Compile Include="Audio\AudioExtensions.cs" />
     <Compile Include="Audio\SerializeAudioTypes.cs" />

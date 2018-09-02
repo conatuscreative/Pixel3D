@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Common;
-using Pixel3D.Audio;
+using Pixel3D.Engine.Audio;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Audio
 {
 	public class AmbientSoundManager
     {
-        public AmbientSoundManager(IGameState gameState)
+        public AmbientSoundManager(object gameState)
         {
             this.gameState = gameState;
         }
 
-        public void InvalidateGameState(IGameState newGameState)
+        public void InvalidateGameState(object newGameState)
         {
             gameState = newGameState;
             previousAssociations.Clear(); // <- All our actor instance associations just got nuked
         }
 
-		private IGameState gameState;
+		private object gameState;
 
 	    private const int ExpireTime = 60; // 1 second of silence to stop audio
 		
@@ -45,7 +44,7 @@ namespace Pixel3D.Engine.Audio
         private readonly List<IAmbientSoundSource> pendingSources = new List<IAmbientSoundSource>();
         private readonly List<FadePitchPan> pendingFadePitchPans = new List<FadePitchPan>();
 		
-        public void AddPotentialAmbientSoundSourceToPending(object potentialAmbientSoundSource, Camera camera, int localPlayerBits)
+        public void AddPotentialAmbientSoundSourceToPending(object potentialAmbientSoundSource, object camera, int localPlayerBits)
         {
             if (!GameIsReceivingAmbientAudio(localPlayerBits))
                 return;
@@ -133,8 +132,7 @@ namespace Pixel3D.Engine.Audio
             }
 
             previousAssociations.Clear();
-
-
+			
             //
             // SECOND PASS: Pair remaining pending sources with remaining live sounds based on effect and distance
             //
@@ -284,7 +282,7 @@ namespace Pixel3D.Engine.Audio
 	        float volume, 
 	        float pitch, 
 	        float pan, 
-	        Camera camera, 
+	        object camera, 
 			object gameState, 
 	        int localPlayerBits,
 	        out FadePitchPan fadePitchPan)
@@ -302,8 +300,8 @@ namespace Pixel3D.Engine.Audio
             //
             // Nominal audio position:
             //
-	        var worldToAudio = camera.WorldToAudio(position.AsPosition());
-	        fadePitchPan = new FadePitchPan(worldToAudio.X, worldToAudio.Y);
+	        var worldToAudio = AudioSystem.worldToAudio(camera, position.X, position.Y, position.Z);
+	        fadePitchPan = new FadePitchPan(worldToAudio.pitch, worldToAudio.pan);
             fadePitchPan.fade *= volume;
             fadePitchPan.pitch *= pitch;
             fadePitchPan.pan *= pan;
@@ -341,8 +339,7 @@ namespace Pixel3D.Engine.Audio
             return true;
         }
 
-
-	    public static int GetDistanceSquaredToLocalPlayer(AudioAABB? aabb, AudioPosition position, bool facingLeft, object gameState, int localPlayerBits)
+		public static int GetDistanceSquaredToLocalPlayer(AudioAABB? aabb, AudioPosition position, bool facingLeft, object gameState, int localPlayerBits)
 		{
 			int maxPlayers = AudioSystem.getMaxPlayers();
 			
