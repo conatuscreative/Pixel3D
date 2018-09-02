@@ -28,30 +28,22 @@ namespace Pixel3D.StateManagement
         {
             return string.Format("{0} ({1})", GetType().Name, CurrentState != null ? CurrentState.GetType().Name : "(null)");
         }
-
-
+		
         public void SetState<TState>(TUpdateContext updateContext, bool allowStateRestart = false) where TState : State, new()
         {
             _DirectlySetState(GetState<TState>(), updateContext, allowStateRestart);
         }
 
-
-        /// <summary>Set a state from a previously found state object. Not for general use.</summary>
+		/// <summary>Set a state from a previously found state object. Not for general use.</summary>
         public void _DirectlySetState(State nextState, TUpdateContext updateContext, bool allowStateRestart)
         {
             if(!allowStateRestart && ReferenceEquals(CurrentState, nextState))
                 return; // Don't re-enter the same state
-            
-            if(StateMethods.EndState != null)
-                StateMethods.EndState(this, updateContext, nextState);
-            
-            State previousState = CurrentState;
-            
+
+	        StateMethods.EndState?.Invoke(this, updateContext, nextState);
+	        var previousState = CurrentState;
             CurrentState = nextState;
-
-            if(StateMethods.BeginState != null)
-                StateMethods.BeginState(this, updateContext, previousState);
+	        StateMethods.BeginState?.Invoke(this, updateContext, previousState);
         }
-
     }
 }

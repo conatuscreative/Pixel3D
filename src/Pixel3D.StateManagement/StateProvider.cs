@@ -114,18 +114,14 @@ namespace Pixel3D.StateManagement
             return _allStatesByType[type];
         }
 
-        #endregion
+		#endregion
 
-
-        
-        /// <summary>Collection of all objects used by the state machine. These are definitions, for the purpose of serialization.</summary>
-        public static List<State> AllStateInstances { get { Debug.Assert(_allStateInstances != null); return _allStateInstances; } }
+		/// <summary>Collection of all objects used by the state machine. These are definitions, for the purpose of serialization.</summary>
+		public static List<State> AllStateInstances { get { Debug.Assert(_allStateInstances != null); return _allStateInstances; } }
         static List<State> _allStateInstances;
 
         static Dictionary<Type, List<State>> _allStatesByType; 
         
-
-
         #region Setup
 
         /// <summary>Initialize all state machines. Can only be called once.</summary>
@@ -502,7 +498,5 @@ namespace Pixel3D.StateManagement
         }
 
         #endregion
-
-
     }
 }

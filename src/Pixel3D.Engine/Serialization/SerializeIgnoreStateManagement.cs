@@ -7,8 +7,6 @@ namespace Pixel3D.Engine.Serialization
 {
 	public static class SerializeIgnoreStateManagement
 	{
-		#region Network Serialization
-
 		// Don't want to serialize into the "State" object (mostly during type discovery)
 		// because it will always be a definition object that is manually created using
 		// "AllStateInstances". Instead, just link up the reference by calling "Walk".
@@ -24,7 +22,5 @@ namespace Pixel3D.Engine.Serialization
 		{
 			context.Walk(ref value);
 		}
-
-		#endregion
 	}
 }
