@@ -8,7 +8,7 @@ using Pixel3D.Engine.Strings;
 
 namespace Pixel3D.Engine
 {
-	public class UpdateContext : ILocalizationProvider
+	public class UpdateContext : ILocalizationProvider, IAudioPlayer
     {
         protected readonly SoundRollbackManager soundRollbackManager;
 
@@ -93,7 +93,7 @@ namespace Pixel3D.Engine
         protected bool firstTimeSimulated;
 
         /// <summary>Play a sound without any position (always plays centred)</summary>
-        public void PlayCueGlobal(string symbol, Actor source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
+        public void PlayCueGlobal(string symbol, object source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
         {
             PlayCueGlobal(Definitions.GetCue(symbol, source), source);
         }
@@ -115,10 +115,9 @@ namespace Pixel3D.Engine
         {
             PlayCueUI(Definitions.GetCue(symbol, "PlayCueUI"), playerIndex, useHudStereo);
         }
-
-
-        /// <summary>Play a sound without any position (always plays centred)</summary>
-        public void PlayCueGlobal(Cue cue, Actor source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
+		
+	    /// <summary>Play a sound without any position (always plays centred)</summary>
+        public void PlayCueGlobal(Cue cue, object source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
         {
             var parameters = PlayCueParameters.GetParameters(cue, audioRandom, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv
