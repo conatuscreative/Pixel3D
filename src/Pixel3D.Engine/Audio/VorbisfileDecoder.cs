@@ -25,7 +25,6 @@ namespace Pixel3D.Engine.Audio
             public byte* end;
         }
 
-
         private static unsafe IntPtr BufferReadFunc(IntPtr ptr, IntPtr size, IntPtr elements, IntPtr datasource)
         {
             FakeFile* file = (FakeFile*)datasource;
@@ -48,17 +47,14 @@ namespace Pixel3D.Engine.Audio
 
             return (IntPtr)(e);
         }
-
-
-        private static Vorbisfile.ov_callbacks staticCallbacks = new Vorbisfile.ov_callbacks
+		
+        private static readonly Vorbisfile.ov_callbacks StaticCallbacks = new Vorbisfile.ov_callbacks
         {
             read_func = BufferReadFunc,
             seek_func = null,
             close_func = null,
             tell_func = null,
         };
-
-
 
         public static unsafe SoundEffect Decode(byte* start, byte* end)
         {
@@ -73,7 +69,7 @@ namespace Pixel3D.Engine.Audio
 
             // TODO: Consider modifying vorbisfile binding so we can stackalloc `vf`
             IntPtr vf;
-            Vorbisfile.ov_open_callbacks((IntPtr)(&file), out vf, IntPtr.Zero, IntPtr.Zero, staticCallbacks);
+            Vorbisfile.ov_open_callbacks((IntPtr)(&file), out vf, IntPtr.Zero, IntPtr.Zero, StaticCallbacks);
 
             Vorbisfile.vorbis_info info = Vorbisfile.ov_info(vf, 0);
 

@@ -51,7 +51,6 @@
     <Compile Include="Audio\AmbientSoundManager.cs" />
     <Compile Include="Audio\AudioRandom.cs" />
     <Compile Include="Audio\AudioExtensions.cs" />
-    <Compile Include="Audio\IAmbientSoundSource.cs" />
     <Compile Include="Audio\SerializeAudioTypes.cs" />
     <Compile Include="Audio\VorbisfileDecoder.cs" />
     <Compile Include="Collections\MultiDictionary.cs" />

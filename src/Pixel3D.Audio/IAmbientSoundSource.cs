@@ -1,5 +1,4 @@
-﻿using Pixel3D.Animations;
-using Pixel3D.Audio;
+﻿using Pixel3D.Audio;
 
 namespace Pixel3D.Engine.Audio
 {
@@ -11,6 +10,6 @@ namespace Pixel3D.Engine.Audio
         AmbientSound AmbientSound { get; }
         AudioPosition Position { get; }
         bool FacingLeft { get; }
-        AnimationSet AnimationSet { get; }
+        AudioAABB? Bounds { get; }
     }
 }

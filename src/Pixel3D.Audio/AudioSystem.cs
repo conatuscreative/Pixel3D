@@ -1,7 +1,10 @@
 ﻿namespace Pixel3D.Audio
 {
 	public static class AudioSystem
-	{ 
+	{
+		public static GetMaxPlayers getMaxPlayers;
+		public static GetPlayerAudioPosition getPlayerAudioPosition;
+
 		public static CreateSoundEffectInstance createSoundEffectInstance;
 		public static PlaySoundEffectInstance playSoundEffectInstance;
 		public static StopSoundEffectInstance stopSoundEffectInstance;

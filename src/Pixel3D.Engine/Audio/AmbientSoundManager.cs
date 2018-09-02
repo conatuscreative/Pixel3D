@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Common;
-using Pixel3D.Animations;
 using Pixel3D.Audio;
 
 namespace Pixel3D.Engine.Audio
@@ -58,7 +57,7 @@ namespace Pixel3D.Engine.Audio
 		            return;
 
 	            if(GetPlaybackInfoFor(
-		            ambientSoundSource.AnimationSet, 
+		            ambientSoundSource.Bounds, 
 		            ambientSoundSource.Position, 
 		            ambientSoundSource.FacingLeft,
 		            ambientSound.radius,
@@ -276,56 +275,19 @@ namespace Pixel3D.Engine.Audio
 
 		#region Spatial Playback Parameter Modulation
 
-        public static int GetDistanceSquaredToLocalPlayer(AnimationSet animationSet, AudioPosition position, bool facingLeft, IGameState gameState, int localPlayerBits)
-        {
-            int bestDistanceSquared = int.MaxValue;
-
-            if(animationSet?.Heightmap != null) // Sound source has some (spatial) volume
-            {
-                var heightmapView = new HeightmapView(animationSet.Heightmap, position.AsPosition(), facingLeft);
-                var heightmapXZ = heightmapView.Bounds;
-
-                // TODO: Stop assuming a height, and get a real AABB from the heightmap (requires Heightmap cache its own AABB)
-                const int guessHeight = 50;
-                AABB heightmapAABB = new AABB(heightmapXZ.Left, heightmapXZ.Right-1,
-                        position.Y, position.Y + guessHeight, heightmapXZ.Y, heightmapXZ.Y + heightmapXZ.Height - 1);
-				
-                for(int i = 0; i < gameState.MaxPlayers; i++) // For each possible player
-                {
-                    if(((1 << i) & localPlayerBits) != 0) // This player is interactive locally
-                    {
-                        var playerPosition = gameState.GetPlayerPosition(i);
-                        if(playerPosition != null)
-                        {
-                            int distanceSquared = heightmapAABB.DistanceSquaredTo(playerPosition.Value);
-                            if(distanceSquared < bestDistanceSquared)
-                                bestDistanceSquared = distanceSquared;
-                        }
-                    }
-                }
-            }
-            else // Sound source is a point source
-            {
-                for(int i = 0; i < gameState.MaxPlayers; i++) // For each possible player
-                {
-                    if(((1 << i) & localPlayerBits) != 0) // This player is interactive locally
-                    {
-                        var playerPosition = gameState.GetPlayerPosition(i);
-                        if(playerPosition != null)
-                        {
-                            int distanceSquared = AudioPosition.DistanceSquared(position, playerPosition.Value.AsAudioPosition());
-                            if(distanceSquared < bestDistanceSquared)
-                                bestDistanceSquared = distanceSquared;
-                        }
-                    }
-                }
-            }
-
-            return bestDistanceSquared;
-        }
-		
         /// <returns>Returns true if this ambient sound is playable</returns>
-        public static bool GetPlaybackInfoFor(AnimationSet animationSet, AudioPosition position, bool facingLeft, int radius, float volume, float pitch, float pan, Camera camera, IGameState gameState, int localPlayerBits, out FadePitchPan fadePitchPan)
+        public static bool GetPlaybackInfoFor(
+	        AudioAABB? aabb,
+	        AudioPosition position, 
+	        bool facingLeft, 
+	        int radius, 
+	        float volume, 
+	        float pitch, 
+	        float pan, 
+	        Camera camera, 
+			object gameState, 
+	        int localPlayerBits,
+	        out FadePitchPan fadePitchPan)
         {
             //
             // Global ambient audio
@@ -362,7 +324,7 @@ namespace Pixel3D.Engine.Audio
                 return false;
             }
 
-            int distanceSquared = GetDistanceSquaredToLocalPlayer(animationSet, position, facingLeft, gameState, localPlayerBits);
+			int distanceSquared = GetDistanceSquaredToLocalPlayer(aabb, position, facingLeft, gameState, localPlayerBits);
 			if(distanceSquared > radius * radius)
             {
                 fadePitchPan.fade = 0;
@@ -379,6 +341,49 @@ namespace Pixel3D.Engine.Audio
             return true;
         }
 
-        #endregion
-    }
+
+	    public static int GetDistanceSquaredToLocalPlayer(AudioAABB? aabb, AudioPosition position, bool facingLeft, object gameState, int localPlayerBits)
+		{
+			int maxPlayers = AudioSystem.getMaxPlayers();
+			
+			int bestDistanceSquared = int.MaxValue;
+
+			if (aabb != null) // Sound source has some (spatial) volume
+			{
+				for (int i = 0; i < maxPlayers; i++) // For each possible player
+				{
+					if (((1 << i) & localPlayerBits) != 0) // This player is interactive locally
+					{
+						var playerPosition = AudioSystem.getPlayerAudioPosition(gameState, i);
+						if (playerPosition != null)
+						{
+							int distanceSquared = aabb.Value.DistanceSquaredTo(playerPosition.Value);
+							if (distanceSquared < bestDistanceSquared)
+								bestDistanceSquared = distanceSquared;
+						}
+					}
+				}
+			}
+			else // Sound source is a point source
+			{
+				for (int i = 0; i < maxPlayers; i++) // For each possible player
+				{
+					if (((1 << i) & localPlayerBits) != 0) // This player is interactive locally
+					{
+						var playerPosition = AudioSystem.getPlayerAudioPosition(gameState, i);
+						if (playerPosition != null)
+						{
+							int distanceSquared = AudioPosition.DistanceSquared(position, playerPosition.Value);
+							if (distanceSquared < bestDistanceSquared)
+								bestDistanceSquared = distanceSquared;
+						}
+					}
+				}
+			}
+
+			return bestDistanceSquared;
+		}
+
+		#endregion
+	}
 }
