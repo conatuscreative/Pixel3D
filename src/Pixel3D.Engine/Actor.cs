@@ -22,8 +22,7 @@ namespace Pixel3D.Engine
 
             this.currentAnimation = new AnimationPlayer(animationSet.DefaultAnimation);
         }
-
-
+		
         #region State Machine Methods
 
         public new MethodTable StateMethods
@@ -42,8 +41,7 @@ namespace Pixel3D.Engine
         }
 
         #endregion
-
-        
+		
         #region Update and Gameplay
 
         public virtual void Update(UpdateContext updateContext)
@@ -63,8 +61,7 @@ namespace Pixel3D.Engine
         }
 
         #endregion
-
-
+		
         #region Connection (holding / held relationships)
 
         // This is so the game state can track what actors are connected to each other,
@@ -112,8 +109,7 @@ namespace Pixel3D.Engine
         protected virtual void InternalBreakIncomingConnection(UpdateContext updateContext) { }
 
         #endregion
-
-
+		
         #region Positioning
 
         public Position position;
@@ -152,8 +148,7 @@ namespace Pixel3D.Engine
 
         #endregion
         
-
-        #region Context
+		#region Context
 
         public virtual TagSet AddContextTo(TagSet tagSet)
         {
@@ -161,8 +156,7 @@ namespace Pixel3D.Engine
         }
 
         #endregion
-
-        
+		
         #region Rendering
 
         // NOTE: Two versions of this method in case we want to play with not smoothing for sorting (so positions are always physically possible)
@@ -216,8 +210,7 @@ namespace Pixel3D.Engine
         }
 
         #endregion
-
-        
+		
         #region Animation
 
         public AnimationSet animationSet;
@@ -307,8 +300,7 @@ namespace Pixel3D.Engine
 
         #endregion
 
-
-        #region Attachment
+		#region Attachment
 
         /// <summary>Get a view of an outgoing attachment point for a given animation at frame 0</summary>
         /// <param name="animationContext">The context to select the animation (frame 0 is used)</param>
@@ -386,8 +378,7 @@ namespace Pixel3D.Engine
         }
 
         #endregion
-
-        
+		
         #region Masks
 
         /// <summary>

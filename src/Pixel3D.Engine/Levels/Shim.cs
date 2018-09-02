@@ -13,10 +13,12 @@ namespace Pixel3D.Engine.Levels
     public sealed class Shim : IEditorObject, IDrawObject, IAmbientSoundSource
     {
         public AnimationSet AnimationSet { get; set; }
-        public Position Position { get; set; }
-        public bool FacingLeft { get; set; }
-        
-        public float parallaxX;
+        AudioPosition IAmbientSoundSource.Position => Position.AsAudioPosition();
+		public bool FacingLeft { get; set; }
+
+		public Position Position { get; set; }
+		
+		public float parallaxX;
         public float parallaxY;
         public int animationNumber = -1;
         public string ambientSoundSource;
@@ -29,8 +31,8 @@ namespace Pixel3D.Engine.Levels
         // TODO: Convert this to null when not in use (it is hardly used at all) (could consider removing and using tag instead)
         /// <summary>Arbitrary thing properties (consumers are expected to parse the strings)</summary>
         public readonly Collections.OrderedDictionary<string, string> properties = new Collections.OrderedDictionary<string, string>();
-
-        public Shim(AnimationSet animationSet, Position position, bool facingLeft, float parallaxX, float parallaxY)
+		
+	    public Shim(AnimationSet animationSet, Position position, bool facingLeft, float parallaxX, float parallaxY)
         {
             this.AnimationSet = animationSet;
             this.Position = position;

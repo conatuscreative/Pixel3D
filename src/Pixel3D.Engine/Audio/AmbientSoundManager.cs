@@ -33,7 +33,7 @@ namespace Pixel3D.Engine.Audio
         {
             public IDisposable soundEffect;
             public SafeSoundEffectInstance soundEffectInstance;
-            public Position position;
+            public AudioPosition position;
             public int expiryTimer;
         }
                 
@@ -149,7 +149,7 @@ namespace Pixel3D.Engine.Audio
             for(int i = 0; i < pendingSources.Count; )
             {
                 var sourceAmbientSound = pendingSources[i].AmbientSound;
-                Position sourcePosition = pendingSources[i].Position;
+                var sourcePosition = pendingSources[i].Position;
 
 
                 // Find the closest live sound to assign as a voice
@@ -168,7 +168,7 @@ namespace Pixel3D.Engine.Audio
 
                     if(ReferenceEquals(liveSound.soundEffect, sourceAmbientSound.soundEffect.owner))
                     {
-                        int distanceSquared = Position.DistanceSquared(liveSound.position, sourcePosition);
+                        int distanceSquared = AudioPosition.DistanceSquared(liveSound.position, sourcePosition);
                         if(distanceSquared < bestDistanceSquared)
                         {
                             bestDistanceSquared = distanceSquared;
@@ -284,13 +284,13 @@ namespace Pixel3D.Engine.Audio
 
 		#region Spatial Playback Parameter Modulation
 
-        public static int GetDistanceSquaredToLocalPlayer(AnimationSet animationSet, Position position, bool facingLeft, IGameState gameState, int localPlayerBits)
+        public static int GetDistanceSquaredToLocalPlayer(AnimationSet animationSet, AudioPosition position, bool facingLeft, IGameState gameState, int localPlayerBits)
         {
             int bestDistanceSquared = Int32.MaxValue;
 
             if(animationSet != null && animationSet.Heightmap != null) // Sound source has some (spatial) volume
             {
-                var heightmapView = new HeightmapView(animationSet.Heightmap, position, facingLeft);
+                var heightmapView = new HeightmapView(animationSet.Heightmap, position.AsPosition(), facingLeft);
                 var heightmapXZ = heightmapView.Bounds;
 
                 // TODO: Stop assuming a height, and get a real AABB from the heightmap (requires Heightmap cache its own AABB)
@@ -322,7 +322,7 @@ namespace Pixel3D.Engine.Audio
                         var playerPosition = gameState.GetPlayerPosition(i);
                         if(playerPosition != null)
                         {
-                            int distanceSquared = Position.DistanceSquared(position, playerPosition.Value);
+                            int distanceSquared = AudioPosition.DistanceSquared(position, playerPosition.Value.AsAudioPosition());
                             if(distanceSquared < bestDistanceSquared)
                                 bestDistanceSquared = distanceSquared;
                         }
@@ -336,7 +336,7 @@ namespace Pixel3D.Engine.Audio
 
 
         /// <returns>Returns true if this ambient sound is playable</returns>
-        public static bool GetPlaybackInfoFor(AnimationSet animationSet, Position position, bool facingLeft, int radius, float volume, float pitch, float pan, Camera camera, IGameState gameState, int localPlayerBits, out FadePitchPan fadePitchPan)
+        public static bool GetPlaybackInfoFor(AnimationSet animationSet, AudioPosition position, bool facingLeft, int radius, float volume, float pitch, float pan, Camera camera, IGameState gameState, int localPlayerBits, out FadePitchPan fadePitchPan)
         {
             //
             // Global ambient audio
@@ -352,7 +352,7 @@ namespace Pixel3D.Engine.Audio
             //
             // Nominal audio position:
             //
-	        var worldToAudio = camera.WorldToAudio(position);
+	        var worldToAudio = camera.WorldToAudio(position.AsPosition());
 	        fadePitchPan = new FadePitchPan(worldToAudio.X, worldToAudio.Y);
             fadePitchPan.fade *= volume;
             fadePitchPan.pitch *= pitch;

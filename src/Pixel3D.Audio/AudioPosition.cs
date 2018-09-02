@@ -4,40 +4,49 @@ namespace Pixel3D.Audio
 {
 	public struct AudioPosition : IEquatable<AudioPosition>
 	{
-		public int x;
-		public int y;
-		public int z;
+		public int X;
+		public int Y;
+		public int Z;
 
 		public AudioPosition(int x, int y, int z)
 		{
-			this.x = x;
-			this.y = y;
-			this.z = z;
+			this.X = x;
+			this.Y = y;
+			this.Z = z;
 		}
+
+		#region Predefined Positions
+
+		public static AudioPosition Zero { get { return new AudioPosition(); } }
+		public static AudioPosition UnitX { get { return new AudioPosition(1, 0, 0); } }
+		public static AudioPosition UnitY { get { return new AudioPosition(0, 1, 0); } }
+		public static AudioPosition UnitZ { get { return new AudioPosition(0, 0, 1); } }
+
+		#endregion
 
 		public static int DistanceSquared(AudioPosition a, AudioPosition b)
 		{
-			return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z);
+			return (a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y) + (a.Z - b.Z) * (a.Z - b.Z);
 		}
 
 		public override bool Equals(object obj)
 		{
-			return obj is AudioPosition && Equals((AudioPosition)obj);
+			return obj is AudioPosition position && Equals(position);
 		}
 
 		public bool Equals(AudioPosition other)
 		{
-			return x == other.x &&
-				   y == other.y &&
-				   z == other.z;
+			return X == other.X &&
+				   Y == other.Y &&
+				   Z == other.Z;
 		}
 
 		public override int GetHashCode()
 		{
 			var hashCode = 373119288;
-			hashCode = hashCode * -1521134295 + x.GetHashCode();
-			hashCode = hashCode * -1521134295 + y.GetHashCode();
-			hashCode = hashCode * -1521134295 + z.GetHashCode();
+			hashCode = hashCode * -1521134295 + X.GetHashCode();
+			hashCode = hashCode * -1521134295 + Y.GetHashCode();
+			hashCode = hashCode * -1521134295 + Z.GetHashCode();
 			return hashCode;
 		}
 
