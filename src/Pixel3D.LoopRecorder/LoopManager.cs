@@ -119,8 +119,7 @@ namespace Pixel3D.LoopRecorder
 			if (loopGameState != null)
 			{
 				gameState = loopGameState;
-				if(OnGameStateReplaced != null)
-					OnGameStateReplaced(gameState);
+				OnGameStateReplaced?.Invoke(gameState);
 				return true;
 			}
 
