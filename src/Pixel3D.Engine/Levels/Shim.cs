@@ -15,8 +15,7 @@ namespace Pixel3D.Engine.Levels
         public AnimationSet AnimationSet { get; set; }
         AudioPosition IAmbientSoundSource.Position => Position.AsAudioPosition();
 		public bool FacingLeft { get; set; }
-
-		public Position Position { get; set; }
+	    public Position Position { get; set; }
 		
 		public float parallaxX;
         public float parallaxY;
@@ -26,8 +25,7 @@ namespace Pixel3D.Engine.Levels
 
         public const int TagDay = 1;
         public const int TagNight = 2;
-
-
+		
         // TODO: Convert this to null when not in use (it is hardly used at all) (could consider removing and using tag instead)
         /// <summary>Arbitrary thing properties (consumers are expected to parse the strings)</summary>
         public readonly Collections.OrderedDictionary<string, string> properties = new Collections.OrderedDictionary<string, string>();
@@ -95,12 +93,9 @@ namespace Pixel3D.Engine.Levels
 
         #endregion
 
-        public int DirectionX
-        {
-            get { return FacingLeft ? -1 : 1; }
-        }
+        public int DirectionX => FacingLeft ? -1 : 1;
 
-        #region Masks
+	    #region Masks
 
         public TransformedMaskData GetAlphaMask()
         {
@@ -109,20 +104,16 @@ namespace Pixel3D.Engine.Levels
         }
 
         #endregion
-
-
+		
         public DrawableFrame GetDrawableFrame()
         {
             return new DrawableFrame(AnimationSet.DefaultAnimation.Frames[0], Position, FacingLeft);
         }
-
-
-
+		
         /// <summary>Implements IDrawObject.Draw</summary>
         public void Draw(DrawContext drawContext, int frameNumber, IDrawSmoothProvider sp)
         {
             AnimationSet.DefaultAnimation.Frames[frameNumber].Draw(drawContext, Position, FacingLeft, Color.White);
         }
-
     }
 }

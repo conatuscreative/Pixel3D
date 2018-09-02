@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Pixel3D
 {
@@ -11,16 +8,11 @@ namespace Pixel3D
         Position Position { get; }
         bool FlipX { get; }
     }
-
-
+	
     public class CombinedHeightmap
     {
         public Heightmap levelHeightmap;
 
         public List<IHeightmapObject> heightmapObjects = new List<IHeightmapObject>();
-
-
-
     }
-
 }

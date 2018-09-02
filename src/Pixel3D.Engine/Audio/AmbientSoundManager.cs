@@ -14,29 +14,23 @@ namespace Pixel3D.Engine.Audio
             this.gameState = gameState;
         }
 
-
         public void InvalidateGameState(IGameState newGameState)
         {
-            this.gameState = newGameState;
+            gameState = newGameState;
             previousAssociations.Clear(); // <- All our actor instance associations just got nuked
         }
 
+		private IGameState gameState;
 
-        private IGameState gameState;
-
-
-
-        const int expireTime = 60; // 1 second of silence to stop audio
-
-
-        class LiveSound
+	    private const int ExpireTime = 60; // 1 second of silence to stop audio
+		
+	    private class LiveSound
         {
-            public IDisposable soundEffect;
+            public SafeSoundEffect soundEffect;
             public SafeSoundEffectInstance soundEffectInstance;
             public AudioPosition position;
             public int expiryTimer;
         }
-                
 
         // PERF: Convert this to struct-of-array form? (We've got a nasty O(n) lookup, but our data size is hopefully small enough that we work entirely in cache)
 
@@ -47,34 +41,38 @@ namespace Pixel3D.Engine.Audio
         // Next frame
         private Dictionary<IAmbientSoundSource, int> nextAssociations = new Dictionary<IAmbientSoundSource, int>(ReferenceEqualityComparer<IAmbientSoundSource>.Instance);
         private List<LiveSound> nextLiveSounds = new List<LiveSound>();
-
-
+		
         // Temporary storage during update - NOTE: These are parallel
         private readonly List<IAmbientSoundSource> pendingSources = new List<IAmbientSoundSource>();
         private readonly List<FadePitchPan> pendingFadePitchPans = new List<FadePitchPan>();
-
-
-
+		
         public void AddPotentialAmbientSoundSourceToPending(object potentialAmbientSoundSource, Camera camera, int localPlayerBits)
         {
             if (!GameIsReceivingAmbientAudio(localPlayerBits))
                 return;
 
-            var ambientSoundSource = potentialAmbientSoundSource as IAmbientSoundSource;
-            if(ambientSoundSource != null)
+	        if(potentialAmbientSoundSource is IAmbientSoundSource ambientSoundSource)
             {
-                AmbientSound ambientSound = ambientSoundSource.AmbientSound;
-                if(ambientSound != null)
-                {
-                    FadePitchPan fpp;
-                    if(GetPlaybackInfoFor(ambientSoundSource.AnimationSet, ambientSoundSource.Position, ambientSoundSource.FacingLeft,
-                            ambientSound.radius, ambientSound.volume, ambientSound.pitch, ambientSound.pan, camera, gameState, localPlayerBits, out fpp))
-                    {
-                        // At this point, we have an audible sound. Store it. NOTE: Parallel lists
-                        pendingSources.Add(ambientSoundSource);
-                        pendingFadePitchPans.Add(fpp);
-                    }
-                }
+                var ambientSound = ambientSoundSource.AmbientSound;
+	            if (ambientSound == null)
+		            return;
+
+	            if(GetPlaybackInfoFor(
+		            ambientSoundSource.AnimationSet, 
+		            ambientSoundSource.Position, 
+		            ambientSoundSource.FacingLeft,
+		            ambientSound.radius,
+		            ambientSound.volume, 
+		            ambientSound.pitch, 
+		            ambientSound.pan, 
+		            camera, 
+		            gameState, 
+		            localPlayerBits, out var fpp))
+	            {
+		            // At this point, we have an audible sound. Store it. NOTE: Parallel lists
+		            pendingSources.Add(ambientSoundSource);
+		            pendingFadePitchPans.Add(fpp);
+	            }
             }
         }
 
@@ -85,9 +83,8 @@ namespace Pixel3D.Engine.Audio
             // return gameState.GetFirstLocalGameMenu(localPlayerBits) == null;
         }
 
-
         private float duckFade = 1f;
-	    public void Update(Camera camera, int localPlayerBits, bool ducking)
+	    public void Update(int localPlayerBits, bool ducking)
         {
             if(!AudioDevice.Available)
             {
@@ -96,7 +93,7 @@ namespace Pixel3D.Engine.Audio
                 return;
             }
 
-            float fadeAmount = (ducking ? -(1f / (SoundEffectManager.slotFadeTime * 60f)) : (1f / (SoundEffectManager.slotFadeTime * 60f)));
+            var fadeAmount = (ducking ? -(1f / (SoundEffectManager.slotFadeTime * 60f)) : (1f / (SoundEffectManager.slotFadeTime * 60f)));
             duckFade = AudioMath.Clamp(duckFade + fadeAmount, 0.4f, 1); // <- NOTE: not fading out all the way (sounds better)
 
             //
@@ -105,8 +102,7 @@ namespace Pixel3D.Engine.Audio
 
             for(int i = 0; i < pendingSources.Count; )
             {
-                int association;
-                if(previousAssociations.TryGetValue(pendingSources[i], out association))
+	            if(previousAssociations.TryGetValue(pendingSources[i], out var association))
                 {
                     var sourceAmbientSound = pendingSources[i].AmbientSound;
                     var liveSound = previousLiveSounds[association];
@@ -128,12 +124,10 @@ namespace Pixel3D.Engine.Audio
                         pendingFadePitchPans.RemoveAtUnordered(i);
                         continue; // <- in-loop removal
                     }
-                    else
-                    {
-                        // Sound was changed - expire the associated sound immediately (assign a voice to the source later)
-                        liveSound.soundEffect = null; // <- prevent re-use in second pass
-                        liveSound.expiryTimer = expireTime; // <- flag for cleanup
-                    }
+
+	                // Sound was changed - expire the associated sound immediately (assign a voice to the source later)
+	                liveSound.soundEffect = null; // <- prevent re-use in second pass
+	                liveSound.expiryTimer = ExpireTime; // <- flag for cleanup
                 }
 
                 i++;
@@ -217,7 +211,7 @@ namespace Pixel3D.Engine.Audio
                     continue;
 
                 liveSound.expiryTimer++;
-                if(liveSound.expiryTimer > expireTime)
+                if(liveSound.expiryTimer > ExpireTime)
                 {
                     liveSound.soundEffectInstance.Dispose(); // <- this stops the sound
                     // Remove from the live sound list by virtue of not adding it to the next list
@@ -226,8 +220,8 @@ namespace Pixel3D.Engine.Audio
                 {
                     const float fadeOutFrames = 10f; // <- quickly fade out any remaining sound from ambient sounds that stop existing
 
-	                var volume = Pixel3D.Audio.AudioSystem.getVolume(liveSound.soundEffectInstance);
-	                Pixel3D.Audio.AudioSystem.setVolume(liveSound.soundEffectInstance, Math.Max(0, volume - (1f / fadeOutFrames)));
+	                var volume = AudioSystem.getVolume(liveSound.soundEffectInstance);
+	                AudioSystem.setVolume(liveSound.soundEffectInstance, Math.Max(0, volume - (1f / fadeOutFrames)));
                     nextLiveSounds.Add(liveSound);
                 }
             }
@@ -238,7 +232,7 @@ namespace Pixel3D.Engine.Audio
             // THIRD PASS: Spawn voices for remaining sound sources
             //
 
-            for(int i = 0; i < pendingSources.Count; i++)
+            for(var i = 0; i < pendingSources.Count; i++)
             {
                 var ambientSound = pendingSources[i].AmbientSound;
 
@@ -249,7 +243,7 @@ namespace Pixel3D.Engine.Audio
 
                 nextLiveSounds.Add(new LiveSound
                 {
-                    soundEffect = ambientSound.soundEffect.owner,
+                    soundEffect = ambientSound.soundEffect,
                     soundEffectInstance = sei,
                     position = pendingSources[i].Position,
                     expiryTimer = 0,
@@ -259,9 +253,7 @@ namespace Pixel3D.Engine.Audio
             pendingSources.Clear();
             pendingFadePitchPans.Clear();
 
-
-
-            //
+			//
             // Cycle for next call
             //
 
@@ -286,9 +278,9 @@ namespace Pixel3D.Engine.Audio
 
         public static int GetDistanceSquaredToLocalPlayer(AnimationSet animationSet, AudioPosition position, bool facingLeft, IGameState gameState, int localPlayerBits)
         {
-            int bestDistanceSquared = Int32.MaxValue;
+            int bestDistanceSquared = int.MaxValue;
 
-            if(animationSet != null && animationSet.Heightmap != null) // Sound source has some (spatial) volume
+            if(animationSet?.Heightmap != null) // Sound source has some (spatial) volume
             {
                 var heightmapView = new HeightmapView(animationSet.Heightmap, position.AsPosition(), facingLeft);
                 var heightmapXZ = heightmapView.Bounds;
@@ -297,8 +289,7 @@ namespace Pixel3D.Engine.Audio
                 const int guessHeight = 50;
                 AABB heightmapAABB = new AABB(heightmapXZ.Left, heightmapXZ.Right-1,
                         position.Y, position.Y + guessHeight, heightmapXZ.Y, heightmapXZ.Y + heightmapXZ.Height - 1);
-
-
+				
                 for(int i = 0; i < gameState.MaxPlayers; i++) // For each possible player
                 {
                     if(((1 << i) & localPlayerBits) != 0) // This player is interactive locally
@@ -332,9 +323,7 @@ namespace Pixel3D.Engine.Audio
 
             return bestDistanceSquared;
         }
-
-
-
+		
         /// <returns>Returns true if this ambient sound is playable</returns>
         public static bool GetPlaybackInfoFor(AnimationSet animationSet, AudioPosition position, bool facingLeft, int radius, float volume, float pitch, float pan, Camera camera, IGameState gameState, int localPlayerBits, out FadePitchPan fadePitchPan)
         {
@@ -347,7 +336,6 @@ namespace Pixel3D.Engine.Audio
                 fadePitchPan = new FadePitchPan(1f);
                 return true;
             }
-
 
             //
             // Nominal audio position:
@@ -364,7 +352,6 @@ namespace Pixel3D.Engine.Audio
                 return false;
             }
 
-
             //
             // Distance to a listening player:
             //
@@ -376,27 +363,22 @@ namespace Pixel3D.Engine.Audio
             }
 
             int distanceSquared = GetDistanceSquaredToLocalPlayer(animationSet, position, facingLeft, gameState, localPlayerBits);
-
-            if(distanceSquared > radius * radius)
+			if(distanceSquared > radius * radius)
             {
                 fadePitchPan.fade = 0;
                 return false;
             }
 
-
-            //
+			//
             // Modulate by listening player distance and apply settings:
             //
 
             // Trying linear fade-out here
-            float listenerFade = AudioMath.Clamp(1f - (float)Math.Sqrt(distanceSquared) / (float)radius, 0f, 1f);
+            float listenerFade = AudioMath.Clamp(1f - (float)Math.Sqrt(distanceSquared) / radius, 0f, 1f);
             fadePitchPan.fade *= listenerFade;
-
             return true;
         }
 
         #endregion
-
-
     }
 }
