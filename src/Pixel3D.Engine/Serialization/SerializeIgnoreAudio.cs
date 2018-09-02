@@ -5,7 +5,7 @@ using Pixel3D.Audio;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Engine.Serialization
 {
 	public static class SerializeIgnoreAudio
 	{

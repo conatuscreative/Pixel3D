@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Audio", "src\Pixel3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.StateManagement", "src\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj", "{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.LoopRecorder", "src\Pixel3D.LoopRecorder\Pixel3D.LoopRecorder.csproj", "{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,18 @@ Global
 		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Release|x64.Build.0 = Release|Any CPU
 		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Release|x86.ActiveCfg = Release|Any CPU
 		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Release|x86.Build.0 = Release|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Debug|x64.Build.0 = Debug|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Debug|x86.Build.0 = Debug|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Release|x64.ActiveCfg = Release|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Release|x64.Build.0 = Release|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Release|x86.ActiveCfg = Release|Any CPU
+		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
