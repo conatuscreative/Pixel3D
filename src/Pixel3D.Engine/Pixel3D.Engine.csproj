@@ -54,7 +54,6 @@
     <Compile Include="Audio\IAmbientSoundSource.cs" />
     <Compile Include="Audio\IAudioPlayer.cs" />
     <Compile Include="Audio\SerializeAudioTypes.cs" />
-    <Compile Include="Audio\SoundRollbackManager.cs" />
     <Compile Include="Audio\VorbisfileDecoder.cs" />
     <Compile Include="Collections\MultiDictionary.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />

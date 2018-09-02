@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Pixel3D.Audio;
+using Pixel3D.Engine.Audio;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Audio
 {
     /// <summary>
     /// Rollback-aware one-shot sound playback manager.
@@ -21,7 +21,7 @@ namespace Pixel3D.Engine.Audio
 		/// <param name="random">IMPORTANT: This may be part of the game state</param>
 		/// <param name="cueStates">IMPORTANT: This may be part of the game state</param>
 		/// <param name="playLocally">True if this sound should be played, false if the sound is for a remote player (not for us). Allows for local-only UI sounds.</param>
-		public void PlayCue(IAudioDefinitions definitions, Cue cue, Position? worldPosition, FadePitchPan fpp, PlayCueParameters parameters, bool playsLocally)
+		public void PlayCue(IAudioDefinitions definitions, Cue cue, AudioPosition? worldPosition, FadePitchPan fpp, PlayCueParameters parameters, bool playsLocally)
         {
             if(parameters.soundIndex == PlayCueParameters.MISSING_CUE)
             {
@@ -33,7 +33,7 @@ namespace Pixel3D.Engine.Audio
             PlayCueSkipMissingCheck(definitions, cue, worldPosition, fpp, parameters, playsLocally);
         }
 
-	    public void PlayCueSkipMissingCheck(IAudioDefinitions definitions, Cue cue, Position? worldPosition, FadePitchPan fpp, PlayCueParameters parameters, bool playsLocally)
+	    public void PlayCueSkipMissingCheck(IAudioDefinitions definitions, Cue cue, AudioPosition? worldPosition, FadePitchPan fpp, PlayCueParameters parameters, bool playsLocally)
 	    {
 		    if (parameters.soundIndex < 0)
 			    return;
@@ -172,8 +172,8 @@ namespace Pixel3D.Engine.Audio
 
             public int playedFrame; // <- for fuzzy matching
             public int simulationFrame; // <- for simulation matching
-            public Position? playedPosition;
-            public Position? simulationPosition;
+            public AudioPosition? playedPosition;
+            public AudioPosition? simulationPosition;
         }
 
         /// <summary>Sounds that are live, but haven't actually been played by the simulation.</summary>
@@ -193,7 +193,7 @@ namespace Pixel3D.Engine.Audio
             }
         }
 
-		bool TryKillCueExact(Cue cue, int frame, Position? position)
+		bool TryKillCueExact(Cue cue, int frame, AudioPosition? position)
         {
             for(int i = 0; i < liveUnmatched.Count; i++)
             {
@@ -212,7 +212,7 @@ namespace Pixel3D.Engine.Audio
             return false;
         }
 
-        bool TryKillCueFuzzy(Cue cue, int frame, Position? position)
+        bool TryKillCueFuzzy(Cue cue, int frame, AudioPosition? position)
         {
             const int frameDistanceSqFactor = 5*5;
             const int worldDistanceThresholdSq = 60*60; // <- really quite wide
@@ -227,7 +227,7 @@ namespace Pixel3D.Engine.Audio
                     int distanceSq = 0;
                     if(position.HasValue)
                     {
-                        distanceSq = Position.DistanceSquared(position.GetValueOrDefault(), liveUnmatched[i].playedPosition.GetValueOrDefault());
+                        distanceSq = AudioPosition.DistanceSquared(position.GetValueOrDefault(), liveUnmatched[i].playedPosition.GetValueOrDefault());
                         if(distanceSq > worldDistanceThresholdSq)
                             continue; // <- too far away
                     }
@@ -257,7 +257,7 @@ namespace Pixel3D.Engine.Audio
                 return false;
         }
 
-		void AddLiveCueNow(Cue cue, Position? position)
+		void AddLiveCueNow(Cue cue, AudioPosition? position)
         {
             if(rollbackAware)
             {
@@ -281,7 +281,7 @@ namespace Pixel3D.Engine.Audio
             public Cue cue;
 
             public int frame;
-            public Position? position;
+            public AudioPosition? position;
 
             public PlayCueParameters parameters;
             public FadePitchPan fpp;

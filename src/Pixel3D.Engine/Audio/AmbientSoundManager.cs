@@ -352,8 +352,8 @@ namespace Pixel3D.Engine.Audio
             //
             // Nominal audio position:
             //
-
-            fadePitchPan = new FadePitchPan(camera.WorldToAudio(position).AsAudioPosition());
+	        var worldToAudio = camera.WorldToAudio(position);
+	        fadePitchPan = new FadePitchPan(worldToAudio.X, worldToAudio.Y);
             fadePitchPan.fade *= volume;
             fadePitchPan.pitch *= pitch;
             fadePitchPan.pan *= pan;
