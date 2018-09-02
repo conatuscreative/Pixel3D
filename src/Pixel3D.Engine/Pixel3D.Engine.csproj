@@ -47,10 +47,9 @@
     <Compile Include="Actors\Effects\PermanentEffect.cs" />
     <Compile Include="Actors\Effects\SimpleEffect.cs" />
     <Compile Include="AttachmentTracking.cs" />
-    <Compile Include="Attributes\AlwaysNullCheckedAttribute.cs" />
     <Compile Include="Audio\AudioRandom.cs" />
     <Compile Include="Audio\AudioExtensions.cs" />
-    <Compile Include="Audio\SerializeAudioTypes.cs" />
+    <Compile Include="Serialization\SerializeIgnoreAudio.cs" />
     <Compile Include="Audio\VorbisfileDecoder.cs" />
     <Compile Include="Collections\MultiDictionary.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />
@@ -112,9 +111,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeDictionary.cs" />
     <Compile Include="Serialization\BuiltIn\SerializeOrderedDictionary.cs" />
+    <Compile Include="Serialization\SerializeIgnoreStateManagement.cs" />
     <Compile Include="SmoothingIdentifiers.cs" />
-    <Compile Include="StateMachine.cs" />
-    <Compile Include="StateProvider.cs" />
     <Compile Include="StringsProvider.cs" />
     <Compile Include="Strings\LineWrapping.cs" />
     <Compile Include="Strings\StringBank.cs" />
@@ -144,6 +142,10 @@
     <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj">
       <Project>{52f63851-9353-44be-bbbe-a4a92c353d14}</Project>
       <Name>Pixel3D.Audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj">
+      <Project>{6e48fcd0-ad6b-43a4-a2b0-149e53025f74}</Project>
+      <Name>Pixel3D.StateManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pixel3D\Pixel3D.csproj">
       <Project>{790b8ab0-e162-4f29-abed-11ad81d4d6f9}</Project>

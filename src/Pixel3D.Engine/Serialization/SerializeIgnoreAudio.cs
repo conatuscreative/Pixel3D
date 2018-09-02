@@ -7,7 +7,7 @@ using Pixel3D.Serialization.Context;
 
 namespace Pixel3D.Engine.Audio
 {
-	public static class SerializeAudioTypes
+	public static class SerializeIgnoreAudio
 	{
 		// "Ignore" serializer, as per SerializeIgnoreXNA -- we want to be able to store a ref for the definition table, but we can't deserialize a sound effect
 		[CustomSerializer] public static void Serialize(SerializeContext context, BinaryWriter bw, SafeSoundEffect value) { context.VisitObject(value); context.LeaveObject(); }

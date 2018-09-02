@@ -1,7 +1,6 @@
 ﻿using System;
-using Pixel3D.Engine.Attributes;
 
-namespace Pixel3D.Engine
+namespace Pixel3D.StateManagement
 {
     /// <summary>State machine for types that exist within the game state</summary>
     public class StateMachine<TUpdateContext> : StateProvider

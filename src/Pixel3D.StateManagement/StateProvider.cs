@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
-using Pixel3D.Engine.Attributes;
-using Pixel3D.Engine.Collections;
-using Pixel3D.Serialization;
-using Pixel3D.Serialization.Context;
 
-namespace Pixel3D.Engine
+namespace Pixel3D.StateManagement
 {
 	/// <summary>Provides state infrastructure for implementing finite state machines with stateful methods.</summary>
     /// <remarks>
@@ -44,30 +39,7 @@ namespace Pixel3D.Engine
             // Serializer probably should not walk into this field
             public MethodTable methodTable;
         }
-
-
-        #region Network Serialization
-
-        // Don't want to serialize into the "State" object (mostly during type discovery)
-        // because it will always be a definition object that is manually created using
-        // "AllStateInstances". Instead, just link up the reference by calling "Walk".
-
-        [CustomFieldSerializer]
-        public static void SerializeField(SerializeContext context, BinaryWriter bw, State value)
-        {
-            context.Walk(value);
-        }
-
-        [CustomFieldSerializer]
-        public static void DeserializeField(DeserializeContext context, BinaryReader br, ref State value)
-        {
-            context.Walk(ref value);
-        }
-
-        #endregion
-
-
-
+		
         #region Lookup Helpers
 
         // Hope that the .NET type lookup here on TState is fastest option (it should be).

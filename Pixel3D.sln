@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.AssetManagement", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Audio", "src\Pixel3D.Audio\Pixel3D.Audio.csproj", "{52F63851-9353-44BE-BBBE-A4A92C353D14}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.StateManagement", "src\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj", "{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,18 @@ Global
 		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Release|x64.Build.0 = Release|Any CPU
 		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Release|x86.ActiveCfg = Release|Any CPU
 		{52F63851-9353-44BE-BBBE-A4A92C353D14}.Release|x86.Build.0 = Release|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Debug|x64.Build.0 = Debug|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Debug|x86.Build.0 = Debug|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Release|x64.ActiveCfg = Release|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Release|x64.Build.0 = Release|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Release|x86.ActiveCfg = Release|Any CPU
+		{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
