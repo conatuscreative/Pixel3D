@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using Microsoft.Xna.Framework.Input;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 
@@ -9,13 +8,16 @@ namespace Pixel3D.LoopRecorder
 {
 	public class LoopManager<TDefinitions, TGameState>
 	{
-		readonly Loop[] loopSlots;
+		// TODO should not be public
+		public readonly Loop[] loopSlots;
 		Value128 definitionHash;
 		readonly DefinitionObjectTable definitionTable;
 
 		int selectedLoop;
-		int? playingLoop;
-		int loopPlaybackPosition;
+		// TODO should not be public
+		public int? playingLoop;
+		// TODO should not be public
+		public int loopPlaybackPosition;
 
 		TGameState gameState;
 
@@ -152,25 +154,28 @@ namespace Pixel3D.LoopRecorder
 			return userInput;
 		}
 
-		public void LoopPlayerUpdate()
+		public void LoopPlayerUpdate(LoopCommand command, int? slotIndex = null)
 		{
+			if (command == 0)
+				return;
+
 			// Cannot use loop player while networked
 			bool skipLoopsBecauseNetwork = false;
-			if (IsNetworked != null && IsNetworked.Invoke())
+			if (IsNetworked != null && IsNetworked())
 			{
 				LoopStopAllRecording();
 				LoopStopPlaying();
 				skipLoopsBecauseNetwork = true;
 			}
 
-			if (!Input.Alt)
+			if (command.HasFlag(LoopCommand.RecordHasFocus))
 			{
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < loopSlots.Length; i++)
 				{
-					if (Input.KeyWentDown(Keys.D0 + i))
+					if (slotIndex.HasValue && slotIndex.Value == i)
 					{
 						// Record the loop (can't record to the playing loop!)
-						if (Input.Control && !(playingLoop.HasValue && i == playingLoop.Value))
+						if (command.HasFlag(LoopCommand.Record) && !(playingLoop.HasValue && i == playingLoop.Value))
 						{
 							// If we were already recording on that slot, stop recording - this closes the file so we can re-open it!
 							if (loopSlots[i] != null)
@@ -179,7 +184,7 @@ namespace Pixel3D.LoopRecorder
 							byte[] saveState = Serialize();
 
 							loopSlots[i] = Loop.StartRecording($"loop{i}.bin", saveState, definitionHash, "");
-							if (Input.Shift || skipLoopsBecauseNetwork)
+							if (command.HasFlag(LoopCommand.SnapshotOnly) || skipLoopsBecauseNetwork)
 								loopSlots[i].StopRecording(); // <- just the snapshot
 						}
 
@@ -193,9 +198,7 @@ namespace Pixel3D.LoopRecorder
 
 			if (droppedLoopFilename != null)
 			{
-				bool goPrevious = Input.KeyWentDown(Keys.PageUp);
-				bool goNext = Input.KeyWentDown(Keys.PageDown);
-				if (goPrevious || goNext)
+				if (command.HasFlag(LoopCommand.NextLoop) || command.HasFlag(LoopCommand.PreviousLoop))
 				{
 					var dir = Path.GetDirectoryName(droppedLoopFilename);
 					var files = Directory.GetFiles(dir, "*.bin", SearchOption.TopDirectoryOnly);
@@ -203,7 +206,7 @@ namespace Pixel3D.LoopRecorder
 					int index = Array.IndexOf(files, droppedLoopFilename);
 					if (index >= 0)
 					{
-						if (goNext)
+						if (command == LoopCommand.NextLoop)
 							index += 1;
 						else
 							index += (files.Length - 1);
@@ -213,14 +216,13 @@ namespace Pixel3D.LoopRecorder
 				}
 			}
 
-			if (Input.KeyWentDown(Keys.Back))
+			if (command.HasFlag(LoopCommand.Stop))
 			{
 				LoopStopAllRecording();
 				LoopStopPlaying();
 			}
 
-			if (Input.KeyWentDown(Keys.OemPipe) ||
-			    Input.KeyWentDown(Keys.OemBackslash))
+			if (command.HasFlag(LoopCommand.StartPlaying))
 			{
 				// Lazy-load from working directory:
 				if (loopSlots[selectedLoop] == null)
@@ -281,6 +283,22 @@ namespace Pixel3D.LoopRecorder
 			{
 				Trace.WriteLine($"Failed to open file \"{filename}\" ({e.Message})");
 			}
+		}
+
+		public MultiInputState PreviewInput(MultiInputState original)
+		{
+			if (playingLoop.HasValue)
+			{
+				MultiInputState loopInput;
+				if (loopPlaybackPosition >= loopSlots[playingLoop.Value].frameCount)
+					loopInput = loopSlots[playingLoop.Value].inputFrames[0];
+				else
+					loopInput = loopSlots[playingLoop.Value].inputFrames[loopPlaybackPosition];
+
+				return loopInput;
+			}
+			else
+				return original;
 		}
 
 		#region Serialization 
