@@ -85,10 +85,6 @@
     <Compile Include="Levels\Teleporter.cs" />
     <Compile Include="Levels\Thing.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="LoopSystem\ByteArrayExtensions.cs" />
-    <Compile Include="LoopSystem\Loop.cs" />
-    <Compile Include="LoopSystem\MemoryCompareReadStream.cs" />
-    <Compile Include="LoopSystem\NaturalStringComparer.cs" />
     <Compile Include="MaskDataReferenceResolver.cs" />
     <Compile Include="Maths\Fixed65536.cs" />
     <Compile Include="Maths\Fraction.cs" />
