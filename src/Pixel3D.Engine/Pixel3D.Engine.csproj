@@ -112,10 +112,6 @@
       <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
       <Name>FNA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Pixel3D.Network\src\Pixel3D.Network.Rollback.Input\Pixel3D.Network.Rollback.Input.csproj">
-      <Project>{681d39f7-bfa4-4c92-8623-e19815b5da07}</Project>
-      <Name>Pixel3D.Network.Rollback.Input</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj">
       <Project>{eedbf0f2-9594-4164-a37f-081a944c0bb0}</Project>
       <Name>Pixel3D.Serialization</Name>
