@@ -61,7 +61,7 @@ namespace Pixel3D.Engine.FNA
 			{
 				var gameState = (IGameState) owner;
 				var position = gameState.GetPlayerPosition(playerIndex);
-				return position?.AsAudioPosition();
+				return position;
 			};
 
 			//

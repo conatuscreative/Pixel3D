@@ -26,7 +26,7 @@ namespace Pixel3D.Audio
         {
             public SafeSoundEffect soundEffect;
             public SafeSoundEffectInstance soundEffectInstance;
-            public AudioPosition position;
+            public Position position;
             public int expiryTimer;
         }
 
@@ -159,7 +159,7 @@ namespace Pixel3D.Audio
 
                     if(ReferenceEquals(liveSound.soundEffect, sourceAmbientSound.soundEffect.owner))
                     {
-                        int distanceSquared = AudioPosition.DistanceSquared(liveSound.position, sourcePosition);
+                        int distanceSquared = Position.DistanceSquared(liveSound.position, sourcePosition);
                         if(distanceSquared < bestDistanceSquared)
                         {
                             bestDistanceSquared = distanceSquared;
@@ -276,7 +276,7 @@ namespace Pixel3D.Audio
         /// <returns>Returns true if this ambient sound is playable</returns>
         public static bool GetPlaybackInfoFor(
 	        AudioAABB? aabb,
-	        AudioPosition position, 
+	        Position position, 
 	        bool facingLeft, 
 	        int radius, 
 	        float volume, 
@@ -339,7 +339,7 @@ namespace Pixel3D.Audio
             return true;
         }
 
-		public static int GetDistanceSquaredToLocalPlayer(AudioAABB? aabb, AudioPosition position, bool facingLeft, object gameState, int localPlayerBits)
+		public static int GetDistanceSquaredToLocalPlayer(AudioAABB? aabb, Position position, bool facingLeft, object gameState, int localPlayerBits)
 		{
 			int maxPlayers = AudioSystem.getMaxPlayers();
 			
@@ -370,7 +370,7 @@ namespace Pixel3D.Audio
 						var playerPosition = AudioSystem.getPlayerAudioPosition(gameState, i);
 						if (playerPosition != null)
 						{
-							int distanceSquared = AudioPosition.DistanceSquared(position, playerPosition.Value);
+							int distanceSquared = Position.DistanceSquared(position, playerPosition.Value);
 							if (distanceSquared < bestDistanceSquared)
 								bestDistanceSquared = distanceSquared;
 						}

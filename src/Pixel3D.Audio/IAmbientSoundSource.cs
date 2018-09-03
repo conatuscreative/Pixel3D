@@ -8,7 +8,7 @@ namespace Pixel3D.Engine.Audio
     public interface IAmbientSoundSource
     {
         AmbientSound AmbientSound { get; }
-        AudioPosition Position { get; }
+	    Position Position { get; }
         bool FacingLeft { get; }
         AudioAABB? Bounds { get; }
     }

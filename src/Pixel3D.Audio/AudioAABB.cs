@@ -2,7 +2,7 @@
 {
 	public struct AudioAABB
 	{
-		public AudioAABB(AudioPosition min, AudioPosition max)
+		public AudioAABB(Position min, Position max)
 		{
 			this.min = min;
 			this.max = max;
@@ -10,11 +10,11 @@
 
 		public AudioAABB(int left, int right, int bottom, int top, int front, int back)
 		{
-			this.min = new AudioPosition(left, bottom, front);
-			this.max = new AudioPosition(right, top, back);
+			this.min = new Position(left, bottom, front);
+			this.max = new Position(right, top, back);
 		}
 
-		public AudioPosition min, max;
+		public Position min, max;
 
 		#region Faces
 
@@ -27,7 +27,7 @@
 
 		#endregion
 		
-		public int DistanceSquaredTo(AudioPosition position)
+		public int DistanceSquaredTo(Position position)
 		{
 			int xDistance = 0;
 			if (position.X < min.X)

@@ -5,11 +5,6 @@ namespace Pixel3D.Engine.Audio
 {
 	public static class AudioExtensions
 	{
-		public static AudioPosition AsAudioPosition(this Position position)
-		{
-			return new AudioPosition { X = position.X, Y = position.Y, Z = position.Z };
-		}
-
 		public static AudioAABB AsAudioAABB(this AnimationSet animationSet, Position position, bool facingLeft)
 		{
 			// TODO: Stop assuming a height, and get a real AABB from the heightmap (requires Heightmap cache its own AABB)

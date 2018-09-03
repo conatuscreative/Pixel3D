@@ -14,7 +14,7 @@ namespace Pixel3D.Engine.Levels
     {
         public AnimationSet AnimationSet { get; set; }
 	    public AudioAABB? Bounds => AnimationSet.AsAudioAABB(Position, FacingLeft);
-		AudioPosition IAmbientSoundSource.Position => Position.AsAudioPosition();
+	    Position IAmbientSoundSource.Position => Position;
 		public bool FacingLeft { get; set; }
 	    public Position Position { get; set; }
 		

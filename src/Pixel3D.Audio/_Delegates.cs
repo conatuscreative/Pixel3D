@@ -5,7 +5,7 @@ namespace Pixel3D.Audio
 {
 	public delegate int GetMaxPlayers();
 	public delegate PitchPan WorldToAudio(object owner, int x, int y, int z);
-	public delegate AudioPosition? GetPlayerAudioPosition(object owner, int playerIndex);
+	public delegate Position? GetPlayerAudioPosition(object owner, int playerIndex);
 	public delegate SafeSoundEffect CreateSoundEffectFromStream(Stream stream);
 	public delegate SafeSoundEffect CreateSoundEffectFromFile(string path);
 	public delegate IDisposable CreateSoundEffectInstance(object owner);

@@ -76,7 +76,7 @@ namespace Pixel3D.Engine
 #if DEVELOPER
                 soundRollbackManager.PlayCue(Definitions, cue, source.position, fpp, parameters, playsLocally: true);
 #else
-                soundRollbackManager.PlayCueSkipMissingCheck(Definitions, cue, source.position.AsAudioPosition(), fpp, parameters, playsLocally: true);
+                soundRollbackManager.PlayCueSkipMissingCheck(Definitions, cue, source.position, fpp, parameters, playsLocally: true);
 #endif
 
             }
@@ -144,7 +144,7 @@ namespace Pixel3D.Engine
 #if DEVELOPER
                 soundRollbackManager.PlayCue(Definitions, cue, source, fpp, parameters, playsLocally: true);
 #else
-                soundRollbackManager.PlayCueSkipMissingCheck(Definitions, cue, source.AsAudioPosition(), fpp, parameters, playsLocally: true);
+                soundRollbackManager.PlayCueSkipMissingCheck(Definitions, cue, source, fpp, parameters, playsLocally: true);
 #endif
             }
         }
@@ -166,7 +166,7 @@ namespace Pixel3D.Engine
 #if DEVELOPER
                 soundRollbackManager.PlayCue(Definitions, cue, new Position(-6000 + 4000 * playerIndex, -100000, 0), fpp, parameters, playLocally);
 #else
-                soundRollbackManager.PlayCueSkipMissingCheck(Definitions, cue, new AudioPosition(-6000 + 4000 * playerIndex, -100000, 0), fpp, parameters, playLocally);
+                soundRollbackManager.PlayCueSkipMissingCheck(Definitions, cue, new Position(-6000 + 4000 * playerIndex, -100000, 0), fpp, parameters, playLocally);
 #endif
             }
         }
