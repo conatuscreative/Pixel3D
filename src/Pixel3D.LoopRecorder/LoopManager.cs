@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using Pixel3D.Network.Rollback.Input;
 
 namespace Pixel3D.LoopRecorder
 {
