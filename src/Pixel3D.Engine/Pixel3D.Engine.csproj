@@ -88,15 +88,10 @@
     <Compile Include="Maths\Fixed65536.cs" />
     <Compile Include="Maths\Fraction.cs" />
     <Compile Include="Maths\PackedVelocity.cs" />
-    <Compile Include="Navigation\DirectionFlags.cs" />
     <Compile Include="Navigation\DirectionNumber.cs" />
-    <Compile Include="Navigation\DriveDirection.cs" />
-    <Compile Include="Navigation\MinMax.cs" />
     <Compile Include="Navigation\MovePreference.cs" />
     <Compile Include="Navigation\NavEdge.cs" />
     <Compile Include="Navigation\NavRegion.cs" />
-    <Compile Include="Navigation\NavRegionProjection.cs" />
-    <Compile Include="Navigation\PathEdge.cs" />
     <Compile Include="Navigation\PathfindingResults.cs" />
     <Compile Include="Navigation\WalkmapTools.cs" />
     <Compile Include="Physics\Ballistics.cs" />
@@ -132,6 +127,10 @@
     <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj">
       <Project>{52f63851-9353-44be-bbbe-a4a92c353d14}</Project>
       <Name>Pixel3D.Audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pixel3D.Navigation\Pixel3D.Navigation.csproj">
+      <Project>{914260d9-8aca-4122-84ea-0776f304f2ad}</Project>
+      <Name>Pixel3D.Navigation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj">
       <Project>{6e48fcd0-ad6b-43a4-a2b0-149e53025f74}</Project>
