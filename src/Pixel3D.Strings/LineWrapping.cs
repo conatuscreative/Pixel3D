@@ -306,7 +306,7 @@ namespace Pixel3D.Strings
 
 
 
-        /// <summary>Given two strings that are the same except for whitespace, return the index in the target that matche the index in the source</summary>
+        /// <summary>Given two strings that are the same except for whitespace, return the index in the target that matches the index in the source</summary>
         public static int GetMatchingStringIndexIgnoreWhitespace(StringBuilder source, StringBuilder target, int index)
         {
             if(index >= source.Length)
