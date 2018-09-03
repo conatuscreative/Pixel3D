@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Pixel3D.Engine.Strings
+namespace Pixel3D.Strings
 {
 	public static class Tokenizer
     {

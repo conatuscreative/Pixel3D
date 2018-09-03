@@ -1,6 +1,4 @@
-using Pixel3D.Engine.Strings;
-
-namespace Pixel3D.Engine
+namespace Pixel3D.Strings
 {
     public interface ILocalizationProvider
     {

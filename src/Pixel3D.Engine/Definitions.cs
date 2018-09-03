@@ -3,8 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using Pixel3D.Audio;
-using Pixel3D.Engine.Audio;
-using Pixel3D.Engine.Collections;
+using Pixel3D.Strings;
 
 namespace Pixel3D.Engine
 {

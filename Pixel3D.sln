@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Audio", "src\Pixel3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.StateManagement", "src\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj", "{6E48FCD0-AD6B-43A4-A2B0-149E53025F74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.LoopRecorder", "src\Pixel3D.LoopRecorder\Pixel3D.LoopRecorder.csproj", "{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.LoopRecorder", "src\Pixel3D.LoopRecorder\Pixel3D.LoopRecorder.csproj", "{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.Strings", "src\Pixel3D.Strings\Pixel3D.Strings.csproj", "{D05171BF-A7F7-4A43-9BA2-D8643B047209}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,6 +147,18 @@ Global
 		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Release|x64.Build.0 = Release|Any CPU
 		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Release|x86.ActiveCfg = Release|Any CPU
 		{A5B8E53C-24D8-43AF-9708-6EE5D091C07E}.Release|x86.Build.0 = Release|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Debug|x64.Build.0 = Debug|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Debug|x86.Build.0 = Debug|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Release|x64.ActiveCfg = Release|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Release|x64.Build.0 = Release|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Release|x86.ActiveCfg = Release|Any CPU
+		{D05171BF-A7F7-4A43-9BA2-D8643B047209}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

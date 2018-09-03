@@ -66,7 +66,6 @@
     <Compile Include="HideableActor.cs" />
     <Compile Include="IFullScreenEffect.cs" />
     <Compile Include="IGameState.cs" />
-    <Compile Include="ILocalizationProvider.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Levels\CreateLevelBehaviourCache.cs" />
     <Compile Include="Levels\CreateThingCache.cs" />
@@ -109,11 +108,6 @@
     <Compile Include="Serialization\BuiltIn\SerializeOrderedDictionary.cs" />
     <Compile Include="Serialization\SerializeIgnoreStateManagement.cs" />
     <Compile Include="SmoothingIdentifiers.cs" />
-    <Compile Include="StringsProvider.cs" />
-    <Compile Include="Strings\LineWrapping.cs" />
-    <Compile Include="Strings\StringBank.cs" />
-    <Compile Include="Strings\StringList.cs" />
-    <Compile Include="Strings\Tokenizer.cs" />
     <Compile Include="Symbols.cs" />
     <Compile Include="TagSetExtensions.cs" />
     <Compile Include="UpdateContext.cs" />
@@ -142,6 +136,10 @@
     <ProjectReference Include="..\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj">
       <Project>{6e48fcd0-ad6b-43a4-a2b0-149e53025f74}</Project>
       <Name>Pixel3D.StateManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pixel3D.Strings\Pixel3D.Strings.csproj">
+      <Project>{d05171bf-a7f7-4a43-9ba2-d8643b047209}</Project>
+      <Name>Pixel3D.Strings</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pixel3D\Pixel3D.csproj">
       <Project>{790b8ab0-e162-4f29-abed-11ad81d4d6f9}</Project>

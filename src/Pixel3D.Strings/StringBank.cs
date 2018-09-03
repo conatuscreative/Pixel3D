@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Pixel3D.Engine.Strings
+namespace Pixel3D.Strings
 {
 	public class StringBank
 	{
@@ -18,8 +18,7 @@ namespace Pixel3D.Engine.Strings
 		TagLookup<StringRange> lookup;
 		List<string> lowercase;
 		List<string> uppercase;
-
-
+		
 		#region Constructor and Serialization
 
 		/// <summary>Construct from text file lines</summary>
@@ -301,9 +300,7 @@ namespace Pixel3D.Engine.Strings
 		}
 
 		#endregion
-
-
-
+		
 		#region Getters (by TagSet)
 
 		public int GetStringCount(TagSet tagSet)
@@ -384,8 +381,7 @@ namespace Pixel3D.Engine.Strings
 		}
 
 		#endregion
-
-
+		
 		#region Getters (by string) -- NOTE: Copy-pasted!
 
 		public int GetStringCount(string tagSet)
@@ -466,6 +462,5 @@ namespace Pixel3D.Engine.Strings
 		}
 
 		#endregion
-
 	}
 }

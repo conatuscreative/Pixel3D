@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
-using Pixel3D.Engine.Strings;
 
-namespace Pixel3D.Engine
+namespace Pixel3D.Strings
 {
 	public class StringsProvider
 	{

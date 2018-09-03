@@ -4,7 +4,7 @@ using Common;
 using Pixel3D.Animations;
 using Pixel3D.Audio;
 using Pixel3D.Engine.Audio;
-using Pixel3D.Engine.Strings;
+using Pixel3D.Strings;
 
 namespace Pixel3D.Engine
 {

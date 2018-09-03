@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Pixel3D.Engine.Strings
+namespace Pixel3D.Strings
 {
 	/// <summary>
 	/// So we don't ever have to return a list...
