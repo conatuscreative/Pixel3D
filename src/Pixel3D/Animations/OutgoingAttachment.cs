@@ -35,8 +35,8 @@ namespace Pixel3D.Animations
         public void Serialize(AnimationSerializeContext context)
         {
             context.bw.Write(position);
-            targetAnimationContext.Serialize(context);
-            targetAttachmentContext.Serialize(context);
+            targetAnimationContext.SerializeTagSet(context);
+            targetAttachmentContext.SerializeTagSet(context);
             context.bw.Write(attachRange);
             context.bw.Write((int)facing);
         }

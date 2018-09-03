@@ -2,10 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Pixel3D.Animations;
 using System.IO;
-using Pixel3D.Serialization;
-using Pixel3D.Serialization.Context;
 
 namespace Pixel3D
 {
@@ -15,14 +12,14 @@ namespace Pixel3D
     {
         const int defaultCapacity = 8;
 
-        int count;
+	    int count;
 
         /// <summary>Performance optimisation to skip over rules with more than one tag</summary>
         int countOfMultiTagRules;
 
         // Lookup of data stable-sorted by tag count
         TagSet[] rules;
-        T[] values;
+	    public T[] values;
         
         public int Count { get { return count; } }
         public int Capacity { get { return rules.Length; } }
@@ -502,20 +499,7 @@ namespace Pixel3D
         }
 
 		#region Serialization
-
-        // NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagLookup` is *really* stable, and some folks need to directly serialize us)
-
-        public void Serialize(AnimationSerializeContext context, Action<T> serializeValue)
-        {
-            Serialize(context.bw, serializeValue);
-        }
-
-        /// <summary>Deserialize into new object instance</summary>
-        public TagLookup(AnimationDeserializeContext context, Func<T> deserializeValue) : this(context.br, deserializeValue)
-        {
-        }
-
-
+		
         public void Serialize(BinaryWriter bw, Action<T> serializeValue)
         {
             bw.Write(Count);
@@ -584,12 +568,6 @@ namespace Pixel3D
         }
 
         #endregion
-
-		internal void NetworkSerializeHelper(SerializeContext context, BinaryWriter bw)
-        {
-            for(int i = 0; i < count; i++)
-                Field.Serialize(context, bw, ref values[i]);
-        }
     }
 }
 

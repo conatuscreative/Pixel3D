@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
+using Pixel3D.Animations.Serialization;
 using Pixel3D.Serialization;
 
 
@@ -307,10 +308,10 @@ namespace Pixel3D.Animations
             foreach(var cel in layers)
                 cel.Serialize(context);
 
-            masks.Serialize(context, m => m.Serialize(context));
+            masks.SerializeTagLookup(context, m => m.Serialize(context));
 
-            outgoingAttachments.Serialize(context, oa => oa.Serialize(context));
-            incomingAttachments.Serialize(context, p => context.bw.Write(p));
+            outgoingAttachments.SerializeTagLookup(context, oa => oa.Serialize(context));
+            incomingAttachments.SerializeTagLookup(context, p => context.bw.Write(p));
 
             if(triggers == null)
                 context.bw.Write((int)0);
@@ -349,10 +350,10 @@ namespace Pixel3D.Animations
                 }
             }
 
-            masks = new TagLookup<Mask>(context, () => new Mask(context));
-
-            outgoingAttachments = new TagLookup<OutgoingAttachment>(context, () => new OutgoingAttachment(context));
-            incomingAttachments = new TagLookup<Position>(context, () => context.br.ReadPosition());
+	        masks = context.DeserializeTagLookup(() => new Mask(context));
+            
+			outgoingAttachments = context.DeserializeTagLookup(() => new OutgoingAttachment(context));
+            incomingAttachments = context.DeserializeTagLookup(() => context.br.ReadPosition());
 
             int triggerCount = context.br.ReadInt32();
             if(triggerCount > 0)

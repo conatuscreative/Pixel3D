@@ -402,7 +402,7 @@ namespace Pixel3D.Animations
                 Ceiling.Serialize(context);
 
 
-            animations.Serialize(context, a => a.Serialize(context));
+            animations.SerializeTagLookup(context, a => a.Serialize(context));
 
 
             // Unused Animations
@@ -493,7 +493,7 @@ namespace Pixel3D.Animations
             if(context.br.ReadBoolean())
                 Ceiling = new Heightmap(context);
 
-            animations = new TagLookup<Animation>(context, () => new Animation(context));
+            animations = context.DeserializeTagLookup(() => new Animation(context));
 
 
             // Unused Animations

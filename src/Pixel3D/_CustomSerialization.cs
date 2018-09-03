@@ -19,6 +19,7 @@ namespace Pixel3D
 
 		// Due to a limitation in the serializer generator, this needs to be in a different class to TagLookup<T>
 		// because the generic parameters need to be on the Method and NOT on the Type. (Maybe we should fix this so they can be on either.)
+
 		public class CustomSerializerForTagLookup
 		{
 			// At last count, TagLookup and its TagSet rules and their strings were taking up ~70% of definition objects.
@@ -28,7 +29,8 @@ namespace Pixel3D
 			[CustomFieldSerializer]
 			public static void Serialize<T>(SerializeContext context, BinaryWriter bw, TagLookup<T> value)
 			{
-				value.NetworkSerializeHelper(context, bw); // <- so we can access private `count` field directly
+				for (int i = 0; i < value.Count; i++)
+					Field.Serialize(context, bw, ref value.values[i]);
 			}
 
 			[CustomFieldSerializer]
