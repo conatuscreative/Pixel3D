@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
+    <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj" />
+    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj" />
+    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.Audio\Pixel3D.Audio.csproj" />
+    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.Engine\Pixel3D.Engine.csproj" />
+    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.LoopRecorder\Pixel3D.LoopRecorder.csproj" />
+    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D\Pixel3D.csproj" />
+  </ItemGroup>
+
+</Project>
