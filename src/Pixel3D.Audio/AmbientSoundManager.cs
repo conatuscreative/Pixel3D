@@ -275,7 +275,7 @@ namespace Pixel3D.Audio
 
         /// <returns>Returns true if this ambient sound is playable</returns>
         public static bool GetPlaybackInfoFor(
-	        AudioAABB? aabb,
+	        AABB? aabb,
 	        Position position, 
 	        bool facingLeft, 
 	        int radius, 
@@ -339,7 +339,7 @@ namespace Pixel3D.Audio
             return true;
         }
 
-		public static int GetDistanceSquaredToLocalPlayer(AudioAABB? aabb, Position position, bool facingLeft, object gameState, int localPlayerBits)
+		public static int GetDistanceSquaredToLocalPlayer(AABB? aabb, Position position, bool facingLeft, object gameState, int localPlayerBits)
 		{
 			int maxPlayers = AudioSystem.getMaxPlayers();
 			

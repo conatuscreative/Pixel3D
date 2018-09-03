@@ -10,6 +10,6 @@ namespace Pixel3D.Engine.Audio
         AmbientSound AmbientSound { get; }
 	    Position Position { get; }
         bool FacingLeft { get; }
-        AudioAABB? Bounds { get; }
+        AABB? Bounds { get; }
     }
 }

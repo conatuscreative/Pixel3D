@@ -13,7 +13,7 @@ namespace Pixel3D.Engine.Levels
     public sealed class Shim : IEditorObject, IDrawObject, IAmbientSoundSource
     {
         public AnimationSet AnimationSet { get; set; }
-	    public AudioAABB? Bounds => AnimationSet.AsAudioAABB(Position, FacingLeft);
+	    public AABB? Bounds => AnimationSet.AsAudioAABB(Position, FacingLeft);
 	    Position IAmbientSoundSource.Position => Position;
 		public bool FacingLeft { get; set; }
 	    public Position Position { get; set; }

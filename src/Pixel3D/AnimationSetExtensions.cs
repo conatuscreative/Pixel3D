@@ -1,8 +1,8 @@
 ﻿using Pixel3D.Animations;
 
-namespace Pixel3D.Engine
+namespace Pixel3D
 {
-	public static class AudioExtensions
+	public static class AnimationSetExtensions
 	{
 		public static AABB AsAudioAABB(this AnimationSet animationSet, Position position, bool facingLeft)
 		{
