@@ -5,8 +5,4 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
-  </ItemGroup>
-
 </Project>
