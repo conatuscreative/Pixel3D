@@ -4,18 +4,8 @@ using InputState = Pixel3D.LoopRecorder.InputState;
 
 namespace Pixel3D.Engine.FNA
 {
-	public static class LoopSystemExtensions
+	public static class Extensions
 	{
-		public static Value128 AsSerializeValue(this Pixel3D.LoopRecorder.Value128 value)
-		{
-			return new Value128 {v1 = value.v1, v2 = value.v2, v3 = value.v3, v4 = value.v4};
-		}
-
-		public static Pixel3D.LoopRecorder.Value128 AsLoopValue(this Value128 value)
-		{
-			return new Pixel3D.LoopRecorder.Value128 { v1 = value.v1, v2 = value.v2, v3 = value.v3, v4 = value.v4 };
-		}
-
 		public static MultiInputState AsNetworkValue(this Pixel3D.LoopRecorder.MultiInputState value)
 		{
 			return new MultiInputState

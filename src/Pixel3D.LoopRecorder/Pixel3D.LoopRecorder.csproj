@@ -5,4 +5,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj" />
+  </ItemGroup>
+
 </Project>

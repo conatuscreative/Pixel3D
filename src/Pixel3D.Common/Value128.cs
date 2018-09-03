@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Pixel3D.LoopRecorder
+namespace Pixel3D
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct Value128
@@ -49,8 +49,8 @@ namespace Pixel3D.LoopRecorder
 
         public override bool Equals(object obj)
         {
-            if(obj is Value128)
-                return ((Value128)obj) == this;
+            if(obj is Value128 value128)
+                return value128 == this;
             return false;
         }
 
@@ -61,7 +61,7 @@ namespace Pixel3D.LoopRecorder
 
         public override string ToString()
         {
-            return string.Format("{0:X8}{1:X8}{2:X8}{3:X8}", v1, v2, v3, v4);
+            return $"{v1:X8}{v2:X8}{v3:X8}{v4:X8}";
         }
 
         #endregion
