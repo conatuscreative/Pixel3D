@@ -48,7 +48,7 @@
     <Compile Include="Actors\Effects\SimpleEffect.cs" />
     <Compile Include="AttachmentTracking.cs" />
     <Compile Include="Audio\AudioRandom.cs" />
-    <Compile Include="Audio\AudioExtensions.cs" />
+    <Compile Include="AudioExtensions.cs" />
     <Compile Include="LineWrapping.cs" />
     <Compile Include="Serialization\SerializeIgnoreAudio.cs" />
     <Compile Include="Audio\VorbisfileDecoder.cs" />
