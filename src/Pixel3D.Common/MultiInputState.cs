@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Pixel3D.Network.Rollback.Input
+namespace Pixel3D
 {
     [Serializable]
     public struct MultiInputState

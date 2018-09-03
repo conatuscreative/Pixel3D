@@ -1,6 +1,6 @@
 using System;
 
-namespace Pixel3D.Network.Rollback.Input
+namespace Pixel3D
 {
     // NOTE: This type must match what is replicated in Pixel3D.Network.Rollback.InputStateExtensions
 
