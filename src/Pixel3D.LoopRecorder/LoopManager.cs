@@ -1,31 +1,31 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using Pixel3D.Serialization;
-using Pixel3D.Serialization.Context;
 
 namespace Pixel3D.LoopRecorder
 {
-	public class LoopManager<TDefinitions, TGameState>
+	public class LoopManager<TGameState>
 	{
-		// TODO should not be public
-		public readonly Loop[] loopSlots;
-		Value128 definitionHash;
-		readonly DefinitionObjectTable definitionTable;
+		private readonly Loop[] loopSlots;
+		private Value128 definitionHash;
+		private readonly object definitionTable;
+		private int? playingLoop;
+		private int loopPlaybackPosition;
 
-		int selectedLoop;
-		// TODO should not be public
-		public int? playingLoop;
-		// TODO should not be public
-		public int loopPlaybackPosition;
-
-		TGameState gameState;
+		private TGameState gameState;
 
 		public event Action<TGameState> OnGameStateReplaced;
 		public event Func<bool> IsNetworked;
 
-		public LoopManager(int slots, Value128 definitionHash, DefinitionObjectTable definitionTable, TGameState gameState,
-			Action<TGameState> onGameStateReplaced, Func<bool> isNetworked)
+		public bool IsPlaying => playingLoop.HasValue;
+		public int SelectedLoop { get; private set; }
+
+		public LoopManager(int slots, 
+			Value128 definitionHash, 
+			object definitionTable, 
+			TGameState gameState,
+			Action<TGameState> onGameStateReplaced, 
+			Func<bool> isNetworked)
 		{
 			loopSlots = new Loop[slots];
 
@@ -38,34 +38,10 @@ namespace Pixel3D.LoopRecorder
 
 			Trace.WriteLine("Definition Hash = " + definitionHash);
 		}
-
-		[Obsolete]
-		public LoopManager(int slots, TDefinitions definitions, TGameState gameState, Action<TGameState> onGameStateReplaced, Func<bool> isNetworked)
-		{
-			loopSlots = new Loop[slots];
-
-			HashingStream hs = new HashingStream();
-			BinaryWriter bw = new BinaryWriter(hs);
-
-			SerializeContext serializeContext = new SerializeContext(bw, true);
-			SerializeDefinitionFields(serializeContext, bw, definitions);
-			definitionTable = serializeContext.GetAsDefinitionObjectTable();
-			definitionHash = hs.GetHash();
-
-			this.gameState = gameState;
-			this.OnGameStateReplaced = onGameStateReplaced;
-			this.IsNetworked = isNetworked;
-
-			Trace.WriteLine("Definition Hash = " + definitionHash);
-		}
-
-		public bool IsPlaying => playingLoop.HasValue;
-
-		public int SelectedLoop => selectedLoop;
-
+		
 		public void LoopStopAllRecording()
 		{
-			for (int i = 0; i < loopSlots.Length; i++)
+			for (var i = 0; i < loopSlots.Length; i++)
 			{
 				if (loopSlots[i] != null)
 					loopSlots[i].StopRecording();
@@ -76,7 +52,7 @@ namespace Pixel3D.LoopRecorder
 		{
 			if (loopSlots[loopToPlay] == null)
 			{
-				Trace.WriteLine("Loop slot " + loopToPlay + " is empty.");
+				Trace.WriteLine($"Loop slot {loopToPlay} is empty.");
 				return;
 			}
 
@@ -172,7 +148,7 @@ namespace Pixel3D.LoopRecorder
 		public void Update(LoopCommand command, int? slotIndex = null)
 		{
 			// Cannot use loop player while networked
-			bool skipLoopsBecauseNetwork = false;
+			var skipLoopsBecauseNetwork = false;
 			if (IsNetworked != null && IsNetworked())
 			{
 				LoopStopAllRecording();
@@ -193,14 +169,14 @@ namespace Pixel3D.LoopRecorder
 							if (loopSlots[i] != null)
 								loopSlots[i].StopRecording();
 
-							byte[] saveState = Serialize();
+							var saveState = Serialize();
 
 							loopSlots[i] = Loop.StartRecording($"loop{i}.bin", saveState, definitionHash, "");
 							if (command.HasFlag(LoopCommand.SnapshotOnly) || skipLoopsBecauseNetwork)
 								loopSlots[i].StopRecording(); // <- just the snapshot
 						}
 
-						selectedLoop = i;
+						SelectedLoop = i;
 					}
 				}
 			}
@@ -237,26 +213,24 @@ namespace Pixel3D.LoopRecorder
 			if (command.HasFlag(LoopCommand.StartPlaying))
 			{
 				// Lazy-load from working directory:
-				if (loopSlots[selectedLoop] == null)
+				if (loopSlots[SelectedLoop] == null)
 				{
-					string filename = "loop" + selectedLoop + ".bin";
+					string filename = "loop" + SelectedLoop + ".bin";
 					if (File.Exists(filename))
-						loopSlots[selectedLoop] = Loop.TryLoadFromFile(filename, ref definitionHash);
+						loopSlots[SelectedLoop] = Loop.TryLoadFromFile(filename, ref definitionHash);
 				}
 
-				LoopStartPlaying(selectedLoop);
+				LoopStartPlaying(SelectedLoop);
 			}
 		}
 
 		private string droppedLoopFilename;
 
-		public void SaveSnapshotOf(object gameState, string filename)
+		public void SaveSnapshotOf(TGameState gameState, string filename)
 		{
 			var ms = new MemoryStream();
 			var bw = new BinaryWriter(ms);
-			SerializeContext context = new SerializeContext(bw, false, definitionTable);
-			Field.Serialize(context, bw, ref gameState);
-
+			LoopSystem<TGameState>.serialize(bw, ref gameState, definitionTable);
 			var loop = Loop.StartRecording(filename, ms.ToArray(), definitionHash, "");
 			loop.StopRecording();
 		}
@@ -267,7 +241,7 @@ namespace Pixel3D.LoopRecorder
 
 			try
 			{
-				using (FileStream fileStream = File.OpenRead(filename))
+				using (var fileStream = File.OpenRead(filename))
 				{
 					fileStream.Position = 0;
 
@@ -287,8 +261,8 @@ namespace Pixel3D.LoopRecorder
 					LoopStopAllRecording();
 					LoopStopPlaying();
 
-					loopSlots[selectedLoop] = loop;
-					LoopStartPlaying(selectedLoop);
+					loopSlots[SelectedLoop] = loop;
+					LoopStartPlaying(SelectedLoop);
 				}
 			}
 			catch (Exception e)
@@ -301,11 +275,9 @@ namespace Pixel3D.LoopRecorder
 		{
 			if (playingLoop.HasValue)
 			{
-				MultiInputState loopInput;
-				if (loopPlaybackPosition >= loopSlots[playingLoop.Value].frameCount)
-					loopInput = loopSlots[playingLoop.Value].inputFrames[0];
-				else
-					loopInput = loopSlots[playingLoop.Value].inputFrames[loopPlaybackPosition];
+				var loopInput = loopPlaybackPosition >= loopSlots[playingLoop.Value].frameCount
+					? loopSlots[playingLoop.Value].inputFrames[0]
+					: loopSlots[playingLoop.Value].inputFrames[loopPlaybackPosition];
 
 				return loopInput;
 			}
@@ -315,44 +287,30 @@ namespace Pixel3D.LoopRecorder
 
 		#region Serialization 
 
-		public void SerializeDefinitionFields(SerializeContext serializeContext, BinaryWriter bw, TDefinitions definitions)
-		{
-			Field.Serialize(serializeContext, bw, ref definitions);
-		}
-
 		public byte[] Serialize()
 		{
-			MemoryStream ms = new MemoryStream();
-			BinaryWriter bw = new BinaryWriter(ms);
-
-			var serializeContext = new SerializeContext(bw, false, definitionTable);
-			Field.Serialize(serializeContext, bw, ref gameState);
-
+			var ms = new MemoryStream();
+			var bw = new BinaryWriter(ms);
+			LoopSystem<TGameState>.serialize(bw, ref gameState, definitionTable);
 			return ms.ToArray();
 		}
 
 		/// <summary>NOTE: Will throw an exception if the deserialization isn't clean (eg: bad network). Caller must handle.</summary>
 		public void Deserialize(byte[] data)
 		{
-			MemoryStream ms = new MemoryStream(data);
-			BinaryReader br = new BinaryReader(ms);
-
-			var deserializeContext = new DeserializeContext(br, definitionTable);
-
-			Field.Deserialize(deserializeContext, br, ref gameState);
-
-			if (OnGameStateReplaced != null)
-				OnGameStateReplaced(gameState);
+			var ms = new MemoryStream(data);
+			var br = new BinaryReader(ms);
+			LoopSystem<TGameState>.deserialize(br, ref gameState, definitionTable);
+			OnGameStateReplaced?.Invoke(gameState);
 		}
 
-		public static TGameState SafeDeserialize(byte[] data, DefinitionObjectTable definitionTable)
+		public static TGameState SafeDeserialize(byte[] data, object definitionTable)
 		{
-			MemoryStream ms = new MemoryStream(data);
-			BinaryReader br = new BinaryReader(ms);
-
-			var deserializeContext = new DeserializeContext(br, definitionTable);
+			var ms = new MemoryStream(data);
+			var br = new BinaryReader(ms);
+			
 			var result = default(TGameState);
-			Field.Deserialize(deserializeContext, br, ref result);
+			LoopSystem<TGameState>.deserialize(br, ref result, definitionTable);
 			return result;
 		}
 

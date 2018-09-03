@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
-    <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj" />
   </ItemGroup>
 
 </Project>
