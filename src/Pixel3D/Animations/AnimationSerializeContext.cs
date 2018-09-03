@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Common;
 using System.IO;
-using Microsoft.Xna.Framework;
-using System.Diagnostics;
 using Pixel3D.Animations.Serialization;
 
 namespace Pixel3D.Animations
 {
-    public class AnimationSerializeContext
+	public class AnimationSerializeContext
     {
         public AnimationSerializeContext(BinaryWriter bw, ImageWriter imageWriter) : this(bw, imageWriter, formatVersion) { } // Default to writing current version
 

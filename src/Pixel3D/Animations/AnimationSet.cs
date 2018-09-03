@@ -20,22 +20,21 @@ namespace Pixel3D.Animations
             animations = new TagLookup<Animation>();
         }
 
-        /// <summary>IMPORTANT: Do not use in gameplay code (not network safe)</summary>
-        [SerializationIgnore]
+	    //public TagSet id;
+	    
+	    /// <summary>IMPORTANT: Do not use in gameplay code (not network safe)</summary>
+        [NonSerialized]
         public string friendlyName;
 
-        public string EditorName { get { return friendlyName; } }
+        public string EditorName => friendlyName;
 
-
-        /// <summary>Class name of default class to spawn for this AnimationSet</summary>
+	    /// <summary>Class name of default class to spawn for this AnimationSet</summary>
         public string behaviour;
 
-        /// <summary>General purpose cue; used for ambience sounds, boss sounds, and level animation sounds, etc </summary>
+        /// <summary>General purpose cue; used for ambient sounds, boss sounds, level animation sounds, etc. </summary>
         public string cue;
 
-
-
-        #region Animations
+		#region Animations
 
         /// <summary>Animations without associated TagSets (but we still want to store them)</summary>
         public List<Animation> unusedAnimations = null;
@@ -61,14 +60,10 @@ namespace Pixel3D.Animations
         }
 
         #endregion
-
-
-
+		
         /// <summary>Texture space origin to line up all imported images by their top-left corners (for editor use)</summary>
         public Point importOrigin;
-
-
-
+		
         #region Shadows
 
         public List<ShadowLayer> shadowLayers;
@@ -121,9 +116,7 @@ namespace Pixel3D.Animations
         }
 
         #endregion
-
-
-
+		
         #region Physics Bounds
 
         // StartX, StartZ, EndX and Height may be manually set for "flat" objects (no heightmap)
@@ -237,9 +230,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-
-        #region Z-Bounds
+		#region Z-Bounds
 
         /// <summary>Z-sort should do a static physics vs mover "above" check when sorting</summary>
         public bool doAboveCheck = false;
@@ -268,9 +259,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-
-        #region Heightmap
+		#region Heightmap
 
         public Heightmap Heightmap { get; set; }
 
@@ -285,16 +274,12 @@ namespace Pixel3D.Animations
         
         #endregion
 
-
-
-        #region Ceiling
+		#region Ceiling
 
         public Heightmap Ceiling { get; set; }
 
         #endregion
-
-
-        
+		
         #region Editor Helpers
 
         /// <summary>Get the set of all unused <see cref="Animation"/>s</summary>
@@ -330,9 +315,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-
-        #region Serialize
+		#region Serialize
 
         public void RegisterImages(ImageWriter imageWriter)
         {
@@ -454,7 +437,14 @@ namespace Pixel3D.Animations
                     context.bw.Write(cachedShadowBounds);
                 }
             }
-        }
+
+	        //if (context.Version >= 39)
+	        //{
+		       // if (id == null)
+			      //  id = new TagSet();
+		       // id.Serialize(context);
+	        //}
+		}
 
 
         /// <summary>Deserialize into new object instance</summary>
@@ -539,17 +529,8 @@ namespace Pixel3D.Animations
                 }
             }
 
-
-            //
-            // FIX-UPS:
-            //
-
-            // TODO: Commenting this out and seeing if anything breaks (remove it eventually) -AR 7/7/16
-            //if(physicsStartX == physicsEndX) // <- Why do we have zero width?
-            //{
-            //    Debug.WriteLine("WARNING: AnimationSet \"" + friendlyName + "\" has zero physics width");
-            //    AutoGeneratePhysicsAndDepthBounds();
-            //}
+	        //if (context.Version >= 39)
+		       // id = context.DeserializeTagSet();
         }
 
 
@@ -603,9 +584,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-
-        #region File Read/Write
+		#region File Read/Write
         
         public void WriteToFile(string path)
         {
@@ -693,8 +672,7 @@ namespace Pixel3D.Animations
         #endregion
 
 
-
-        /// <summary>Create a default animation that is just a single Cel</summary>
+		/// <summary>Create a default animation that is just a single Cel</summary>
         public void AddStaticDefaultAnimation(Cel cel)
         {
             Animation animation = new Animation(true);
@@ -702,7 +680,7 @@ namespace Pixel3D.Animations
             AddAnimation(TagSet.Empty, animation);
         }
 
-        public static AnimationSet CreateSingleSprite(Sprite sprite)
+	    public static AnimationSet CreateSingleSprite(Sprite sprite)
         {
             AnimationSet animationSet = new AnimationSet();
             animationSet.importOrigin = sprite.origin;
@@ -710,22 +688,14 @@ namespace Pixel3D.Animations
             animationSet.FinishGeneration();
             return animationSet;
         }
-
-
-
+		
         [Browsable(false)]
-        public Animation DefaultAnimation
-        {
-            get { return animations.GetBaseFallback(); }
-        }
+        public Animation DefaultAnimation => animations.GetBaseFallback();
 
-        [Browsable(false)]
-        public bool HasDefaultAnimation
-        {
-            get { return animations.HasBaseFallback; }
-        }
+	    [Browsable(false)]
+        public bool HasDefaultAnimation => animations.HasBaseFallback;
 
-        #region All Animations
+	    #region All Animations
 
         /// <summary>Return all animations and their TagSets, including animations without assigned TagSets (gives a key of null)</summary>
         public IEnumerable<KeyValuePair<TagSet, Animation>> GetAllAnimations()
@@ -761,9 +731,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-
-        #region Formerly Shared Items
+		#region Formerly Shared Items
 
         /// <summary>Get the set of all <see cref="Mask"/>s (NOTE: does not include heightmap instructions)</summary>
         public HashSet<Mask> AllMasks()
@@ -828,9 +796,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-
-        /// <summary>Calculate the maximum world space bounds of the entire animation set (slow). EDITOR ONLY!</summary>
+		/// <summary>Calculate the maximum world space bounds of the entire animation set (slow). EDITOR ONLY!</summary>
         public Rectangle CalculateGraphicsBounds()
         {
             Rectangle maxBounds = Rectangle.Empty;
@@ -840,9 +806,7 @@ namespace Pixel3D.Animations
             }
             return maxBounds;
         }
-
-
-
+		
         #region Alpha Masks
 
         public void RegenerateAlphaMasks()
@@ -905,9 +869,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-
-        /// <summary>Recreate all generated items</summary>
+		/// <summary>Recreate all generated items</summary>
         public void FinishGeneration()
         {
             Debug.Assert(CheckShadowLayerOrder());
@@ -915,7 +877,6 @@ namespace Pixel3D.Animations
             RegenerateAlphaMasks();
             RegeneratePhysicsAndDepthBounds();
         }
-
     }
 }
 

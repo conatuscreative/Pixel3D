@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Pixel3D.Animations;
 using System.IO;
 
 namespace Pixel3D
@@ -249,19 +248,6 @@ namespace Pixel3D
         #endregion
 		
 		#region Serialize
-
-        // NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagSet` is *really* stable, and some folks need to directly serialize us)
-
-        public void Serialize(AnimationSerializeContext context)
-        {
-            Serialize(context.bw);
-        }
-
-        public TagSet(AnimationDeserializeContext context) : this(context.br)
-        {
-        }
-
-
 
         public void Serialize(BinaryWriter bw)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Pixel3D.Animations.Serialization;
 
 namespace Pixel3D.Animations
 {
@@ -44,9 +45,9 @@ namespace Pixel3D.Animations
         public OutgoingAttachment(AnimationDeserializeContext context)
         {
             position = context.br.ReadPosition();
-            targetAnimationContext = new TagSet(context);
-            targetAttachmentContext = new TagSet(context);
-            attachRange = context.br.ReadAABB();
+	        targetAnimationContext = context.DeserializeTagSet();
+            targetAttachmentContext = context.DeserializeTagSet();
+			attachRange = context.br.ReadAABB();
             facing = (Facing)context.br.ReadInt32();
         }
 

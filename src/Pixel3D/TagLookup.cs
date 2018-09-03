@@ -32,8 +32,7 @@ namespace Pixel3D
             count = 0;
             countOfMultiTagRules = 0;
         }
-
-
+		
         public TagLookup() : this(defaultCapacity) { }
 
         public TagLookup(int capacity)
