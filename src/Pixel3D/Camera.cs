@@ -311,7 +311,7 @@ namespace Pixel3D
             // Change the targeting calculation to put the world target at the top-left of the content area
             // (Historically, when we were in floating-point, we did this to keep the world pixel-aligned at the top left)
             // (NOTE: These are pixel boundaries, so the content target is below the boundary, while the world target is above!)
-            Point targetAtWorldZero = WorldTarget.ToWorldZero;
+            Point targetAtWorldZero = WorldTarget.ToWorldZero();
             Point worldTargetTopLeft = new Point(
                     targetAtWorldZero.X - ContentTargetInPixels.X,
                     targetAtWorldZero.Y + ContentTargetInPixels.Y); // Negated ContentTargetInPixels.Y to convert relative Content to relative World
@@ -357,7 +357,7 @@ namespace Pixel3D
         /// <summary>Convert a world position to an audio pan/fade position (0 is centre, -1 and 1 are client edges)</summary>
         public Vector2 WorldToAudio(Position worldPosition)
         {
-            return Vector2.Transform(worldPosition.ToDisplay, AudioMatrix);
+            return Vector2.Transform(worldPosition.ToDisplay(), AudioMatrix);
         }
 
         public Rectangle WorldZeroToContent(Rectangle rectangle)

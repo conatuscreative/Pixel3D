@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-using System.IO;
 using System;
 
 namespace Pixel3D
@@ -23,14 +21,6 @@ namespace Pixel3D
             this.Y = y;
             this.Z = z;
         }
-
-        public Position(Point xy, int z = 0)
-        {
-            this.X = xy.X;
-            this.Y = xy.Y;
-            this.Z = z;
-        }
-
 
         #region Object Overrides and Equality
 
@@ -64,8 +54,7 @@ namespace Pixel3D
 
         #endregion
 
-
-        #region Predefined Positions
+		#region Predefined Positions
 
         public static Position Zero { get { return new Position(); } }
         public static Position UnitX { get { return new Position(1, 0, 0); } }
@@ -73,8 +62,7 @@ namespace Pixel3D
         public static Position UnitZ { get { return new Position(0, 0, 1); } }
 
         #endregion
-
-
+		
         #region Operators
 
         public static Position operator -(Position a)
@@ -99,23 +87,7 @@ namespace Pixel3D
 
         #endregion
 
-
         #region Coordinate System Conversions
-
-        public Point GetXY() { return new Point(X, Y); }
-        public Point GetXZ() { return new Point(X, Z); }
-
-        /// <summary>Project the point onto the XY plane at depth Z = 0</summary>
-        public Point ToWorldZero
-        {
-            get { return new Point(X, Y+Z); }
-        }
-
-        /// <summary>Project the point onto the XY plane at depth Z = 0, where Y- is up. (Suitable for passing to a SpriteBatch with an appropriate transform.)</summary>
-        public Vector2 ToDisplay
-        {
-            get { return new Vector2(X, -(Y + Z)); }
-        }
 
         /// <summary>Mirror on the X axis</summary>
         public Position FlipX { get { return new Position(-X, Y, Z); } }
@@ -126,8 +98,7 @@ namespace Pixel3D
         }
 
         #endregion
-
-
+		
         #region Distance and Length
 
         public int LengthSquared
@@ -176,28 +147,5 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
-    }
-
-
-    public static class PositionExtensions
-    {
-        public static void Write(this BinaryWriter bw, Position position)
-        {
-            bw.Write(position.X);
-            bw.Write(position.Y);
-            bw.Write(position.Z);
-        }
-
-        public static Position ReadPosition(this BinaryReader br)
-        {
-            Position p;
-            p.X = br.ReadInt32();
-            p.Y = br.ReadInt32();
-            p.Z = br.ReadInt32();
-            return p;
-        }
     }
 }

@@ -57,7 +57,7 @@ namespace Pixel3D.Animations
         /// <summary>Return mask data that has been transformed by this mask view and the supplied transformation</summary>
         public TransformedMaskData GetTransformedMaskData(Position transformPosition, bool transformFlipX)
         {
-            return GetTransformedMaskData(transformPosition.ToWorldZero, transformFlipX);
+            return GetTransformedMaskData(transformPosition.ToWorldZero(), transformFlipX);
         }
 
         /// <summary>Return mask data that has been transformed by this mask view (simple 2D transform of the data) and then transformed as an XZ mask on an actor</summary>

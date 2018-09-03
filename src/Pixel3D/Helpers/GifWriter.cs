@@ -43,7 +43,7 @@ namespace Pixel3D
         // TODO: Factor this out such that frames can be appended on-the-fly (for capturing "animated screenshots").
         //
         //       May want to do threading  (outside this class). Could thread the following:
-        //       - Pulling GPU surfaces (want to return surfaces quikcly)
+        //       - Pulling GPU surfaces (want to return surfaces quickly)
         //       - GIF encoding (maybe fast enough to combine, rather than take buffer re-cache hit and thread costs)
         //       - File I/O (want to avoid blocking useful work while writing to file, and built-in async allocates, uses a thread pool anyway??)
         //       Debatable about what, if anything, to combine.
@@ -118,7 +118,7 @@ namespace Pixel3D
                     data = new Data2D<Color>(animationBounds.X, animationBounds.Y, 1, 1);
 
                 accumulatedGameplayMotion += frame.positionDelta;
-                Point motion = accumulatedGameplayMotion.ToWorldZero.FlipY(); // Convert to texture space
+                Point motion = accumulatedGameplayMotion.ToWorldZero().FlipY(); // Convert to texture space
                 data.OffsetX += motion.X;
                 data.OffsetY += motion.Y;
 

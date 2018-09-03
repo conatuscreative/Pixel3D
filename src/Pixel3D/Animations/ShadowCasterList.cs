@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
@@ -96,7 +93,7 @@ namespace Pixel3D.Animations
 
         public void DrawShadowReceiver(DrawContext context, Sprite whitemask, ShadowReceiver shadowReceiver, Position shadowReceiverPosition, bool shadowReceiverFlipX)
         {
-            Bounds receiverBounds = new Bounds(whitemask.WorldSpaceBounds).MaybeFlipX(shadowReceiverFlipX) + shadowReceiverPosition.ToWorldZero;
+            Bounds receiverBounds = new Bounds(whitemask.WorldSpaceBounds).MaybeFlipX(shadowReceiverFlipX) + shadowReceiverPosition.ToWorldZero();
 
             bool startedReceivingShadows = false;
 
@@ -150,7 +147,7 @@ namespace Pixel3D.Animations
 
                 
                 // Determine whether the shadow overlaps the whitemask
-                Bounds shadowBounds = new Bounds(shadowSprite.WorldSpaceBounds).MaybeFlipX(shadowCaster.flipX) + shadowPosition.ToWorldZero;
+                Bounds shadowBounds = new Bounds(shadowSprite.WorldSpaceBounds).MaybeFlipX(shadowCaster.flipX) + shadowPosition.ToWorldZero();
                 Bounds worldZeroDrawBounds = Bounds.Intersection(receiverBounds, shadowBounds);
                 if(!worldZeroDrawBounds.HasPositiveArea)
                     continue;

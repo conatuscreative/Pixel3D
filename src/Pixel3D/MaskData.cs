@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Pixel3D
 {
-	/// <summary>A bit-packed mask, basically equivelent to Data2D[bool]</summary>
+	/// <summary>A bit-packed mask, basically equivalent to Data2D[bool]</summary>
 	[Serializable]
     public struct MaskData
     {

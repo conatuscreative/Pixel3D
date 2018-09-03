@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Common;
 using Microsoft.Xna.Framework;
-using Pixel3D.Serialization;
 
 namespace Pixel3D.Animations
 {
@@ -29,7 +28,7 @@ namespace Pixel3D.Animations
 
         public Bounds GetBoundsInWorld(Position position, bool flipX)
         {
-            return (flipX ? cachedBounds.FlipX() : cachedBounds) + position.ToWorldZero;
+            return (flipX ? cachedBounds.FlipX() : cachedBounds) + position.ToWorldZero();
         }
 
 
@@ -61,7 +60,7 @@ namespace Pixel3D.Animations
                 {
                     accumulatedMotion += frame.positionDelta;
 
-                    Point offset = accumulatedMotion.ToWorldZero.FlipY(); // Flip because we're outputting in texture space
+                    Point offset = accumulatedMotion.ToWorldZero().FlipY(); // Flip because we're outputting in texture space
                     bounds.X += offset.X;
                     bounds.Y += offset.Y;
                 }

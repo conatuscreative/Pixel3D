@@ -89,7 +89,7 @@ namespace Pixel3D.DebugRendering // <- Separate namespace, so you have to opt-in
 
         public static void DrawDebugArrow(this SpriteBatch sb, Position from, Position to, Color color, float width = 2f)
         {
-            DrawDebugDisplaySpaceArrow(sb, from.ToDisplay, to.ToDisplay, color, width);
+            DrawDebugDisplaySpaceArrow(sb, from.ToDisplay(), to.ToDisplay(), color, width);
         }
 
 
@@ -118,8 +118,8 @@ namespace Pixel3D.DebugRendering // <- Separate namespace, so you have to opt-in
         {
             LazyGenerateTextures(sb.GraphicsDevice);
 
-            var p1 = from.ToDisplay;
-            var p2 = to.ToDisplay;
+            var p1 = from.ToDisplay();
+            var p2 = to.ToDisplay();
             var length = Vector2.Distance(p1, p2);
             var angle = (float)Math.Atan2(p2.Y - p1.Y, p2.X - p1.X);
 
@@ -135,7 +135,7 @@ namespace Pixel3D.DebugRendering // <- Separate namespace, so you have to opt-in
                 var rect = sourceRectangle ?? texture.Bounds;
                 origin.X = rect.Width - origin.X - 1; // -1 because the engine flips around the pixel itself, rather than the boundary between pixels
             }
-            sb.Draw(texture, position.ToDisplay, sourceRectangle, color, angle, origin, scale, effects, 0);
+            sb.Draw(texture, position.ToDisplay(), sourceRectangle, color, angle, origin, scale, effects, 0);
         }
     }
 }

@@ -317,14 +317,14 @@ namespace Pixel3D.Animations
             if(!flipX)
             {
                 Vector2 drawOriginInSheet = new Vector2(whitemask.sourceRectangle.X + whitemask.origin.X, whitemask.sourceRectangle.Y + whitemask.origin.Y + 1); // <- equivelent to Sprite.DrawOrigin
-                Vector2 maskTopLeftDisplay = position.ToDisplay - drawOriginInSheet;
+                Vector2 maskTopLeftDisplay = position.ToDisplay() - drawOriginInSheet;
                 maskTextureMatrix = Matrix.CreateTranslation(new Vector3(-maskTopLeftDisplay, 0))
                         * Matrix.CreateScale(1f / whitemask.texture.Width, 1f / whitemask.texture.Height, 1f);
             }
             else
             {
                 Vector2 drawOriginInSheetFlipX = new Vector2(whitemask.texture.Width - (whitemask.sourceRectangle.X + whitemask.origin.X) - 1, whitemask.sourceRectangle.Y + whitemask.origin.Y + 1); // <- equivelent to Sprite.DrawOriginFlipX
-                Vector2 maskTopLeftDisplay = position.ToDisplay - drawOriginInSheetFlipX;
+                Vector2 maskTopLeftDisplay = position.ToDisplay() - drawOriginInSheetFlipX;
                 maskTextureMatrix = Matrix.CreateTranslation(new Vector3(-maskTopLeftDisplay, 0))
                         * Matrix.CreateScale(1f / whitemask.texture.Width, 1f / whitemask.texture.Height, 1f)
                         * Matrix.CreateScale(-1f, 1f, 1f) * Matrix.CreateTranslation(1, 0, 0); // <- equivalent to SpriteEffects.FlipHorizontally

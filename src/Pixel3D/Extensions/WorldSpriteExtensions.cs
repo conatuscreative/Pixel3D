@@ -17,7 +17,7 @@ namespace Pixel3D
                 origin.X = sourceRectangle.Width - origin.X - 1; // -1 because the engine flips around the pixel itself, rather than the boundary between pixels
             }
 
-            sb.Draw(texture, position.ToDisplay, sourceRectangle, color, 0, origin, scale, effects, 0);
+            sb.Draw(texture, position.ToDisplay(), sourceRectangle, color, 0, origin, scale, effects, 0);
         }
         
         public static void DrawWorld(this SpriteBatch sb, Sprite sprite, Position position, Color color, bool flipX)
