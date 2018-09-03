@@ -44,9 +44,7 @@ namespace Pixel3D
             values = new T[capacity];
         }
 
-
-
-        #region Value Collection
+		#region Value Collection
 
         public struct ValueCollection : IEnumerable<T>
         {
@@ -116,8 +114,7 @@ namespace Pixel3D
 
         #endregion
 
-
-        #region Rules Collection
+		#region Rules Collection
 
         public struct RuleCollection : IEnumerable<TagSet>
         {
@@ -192,8 +189,7 @@ namespace Pixel3D
 
         #endregion
 
-
-        #region IEnumerable (KeyValuePair)
+		#region IEnumerable (KeyValuePair)
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -242,8 +238,7 @@ namespace Pixel3D
 
         #endregion
 
-
-        public void Add(TagSet rule, T value)
+		public void Add(TagSet rule, T value)
         {
             // Expand if necessary
             if(count == rules.Length)
@@ -278,8 +273,7 @@ namespace Pixel3D
                 countOfMultiTagRules++;
         }
 
-
-        public void RemoveAt(int i)
+	    public void RemoveAt(int i)
         {
             if(i < 0 || i >= count)
                 throw new ArgumentOutOfRangeException();
@@ -300,10 +294,7 @@ namespace Pixel3D
             values[count] = default(T);
         }
 
-
-
-
-        #region Lookup by Context
+		#region Lookup by Context
 
         public T this[string context]
         {
@@ -511,9 +502,7 @@ namespace Pixel3D
                 RemoveAt(Count-1);
         }
 
-
-
-        #region Serialization
+		#region Serialization
 
         // NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagLookup` is *really* stable, and some folks need to directly serialize us)
 
@@ -557,9 +546,7 @@ namespace Pixel3D
 
         #endregion
 
-
-
-        #region Editor Specific
+		#region Editor Specific
 
         public TagSet GetRule(int i)
         {
@@ -599,42 +586,11 @@ namespace Pixel3D
 
         #endregion
 
-
-        internal void NetworkSerializeHelper(SerializeContext context, BinaryWriter bw)
+		internal void NetworkSerializeHelper(SerializeContext context, BinaryWriter bw)
         {
             for(int i = 0; i < count; i++)
                 Field.Serialize(context, bw, ref values[i]);
         }
-
     }
-
-
-    
-    #region Network Serialize
-
-    // Due to a limitation in the serializer generator, this needs to be in a different class to TagLookup<T>
-    // because the generic parameters need to be on the Method and NOT on the Type. (Maybe we should fix this so they can be on either.)
-    public class CustomSerializerForTagLookup
-    {
-        // At last count, TagLookup and its TagSet rules and their strings were taking up ~70% of definition objects.
-        // These are definition-only objects that the game state should never even store references to.
-        // Only thing the game state may care about is the contents of the lookup (values) - so we store that.
-
-        [CustomFieldSerializer]
-        public static void Serialize<T>(SerializeContext context, BinaryWriter bw, TagLookup<T> value)
-        {
-            value.NetworkSerializeHelper(context, bw); // <- so we can access private `count` field directly
-        }
-
-        [CustomFieldSerializer]
-        public static void Deserialize<T>(DeserializeContext context, BinaryReader br, ref TagLookup<T> value)
-        {
-            throw new InvalidOperationException();
-        }
-    }
-    
-    #endregion
-
-
 }
 

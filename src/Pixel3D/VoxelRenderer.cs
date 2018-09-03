@@ -14,11 +14,18 @@ namespace Pixel3D
             CreateBuffers(device, ConstrainBounds(initialDisplayBounds));
         }
 
+	    public void Clear()
+	    {
+		    Array.Clear(zBuffer, 0, zBuffer.Length);
+		    Array.Clear(colorBuffer, 0, colorBuffer.Length);
+		    dirty = true;
+	    }
 
+	    public int DepthBias { get { return depthBias; } set { depthBias = value; } }
+		
+		#region Buffer Management
 
-        #region Buffer Management
-
-        static Rectangle ConstrainBounds(Rectangle bounds)
+		static Rectangle ConstrainBounds(Rectangle bounds)
         {
             // Enforce minimum size
             if(bounds.Width < 1)
@@ -56,24 +63,19 @@ namespace Pixel3D
 
             depthBias = 0; // <- reset every frame
         }
-
-
+		
         /// <summary>Bounds of the rendered area in Display space</summary>
         Rectangle displayBounds;
 
         /// <summary>Bounds of the rendered area in Display space</summary>
         public Rectangle DisplayBounds { get { return displayBounds; } }
 
-
-        int depthBias = 0;
-
+		int depthBias = 0;
         byte[] zBuffer;
         Color[] colorBuffer;
-
         Texture2D texture;
 
-
-        void CreateBuffers(GraphicsDevice device, Rectangle newBounds)
+		void CreateBuffers(GraphicsDevice device, Rectangle newBounds)
         {
             if(texture != null)
                 texture.Dispose();
@@ -86,7 +88,6 @@ namespace Pixel3D
 
             dirty = true;
         }
-
         public void Dispose()
         {
             if(texture != null)
@@ -95,8 +96,7 @@ namespace Pixel3D
 
         #endregion
 
-
-        #region Write Texture
+		#region Write Texture
 
         bool dirty;
 
@@ -117,22 +117,9 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-        public void Clear()
-        {
-            Array.Clear(zBuffer, 0, zBuffer.Length);
-            Array.Clear(colorBuffer, 0, colorBuffer.Length);
-            dirty = true;
-        }
-
-        public int DepthBias { get { return depthBias; } set { depthBias = value; } }
-
-
-
+		
         #region Shameful reuse of voxel renderer for 2D rendering...
-
-        public void DrawWorldZeroPixelBlend(Point position, Color color)
+		public void DrawWorldZeroPixelBlend(Point position, Color color)
         {
             int x = position.X;
             int y = -position.Y - 1; // Convert World to Display coordinates
@@ -187,9 +174,7 @@ namespace Pixel3D
 
         #endregion
 
-
-
-        #region Render Lines
+		#region Render Lines
 
         public void DrawPixel(Position p, Color color, int zTestOffset = 0)
         {
@@ -426,9 +411,7 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
+		
         #region Render Heightmap
 
         /// <summary>Constrain rendering to the display bounds</summary>
@@ -512,9 +495,7 @@ namespace Pixel3D
 
         #endregion
 
-
-
-        #region Render Combined Heightmap (Copy-pasted code! Also very slow!)
+		#region Render Combined Heightmap (Copy-pasted code! Also very slow!)
 
         public void DrawHeightmapSolid(WorldPhysics worldPhysics, Position offset, SortedList<int, Color> heightColorGradient)
         {
@@ -579,9 +560,7 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
+		
         #region Render Depth Bounds
 
         public void DrawDepthSlice(AnimationSet animationSet, Position position, bool flipX, int sliceY, Color frontColor, Color backColor, Color overColor)
@@ -619,9 +598,7 @@ namespace Pixel3D
 
         #endregion
 
-
-
-        #region Ground mask rendering
+		#region Ground mask rendering
 
         // NOTE: Rendering from world heightmap is slow!!
         // NOTE: Much copy-pasted code from normal heightmap rendering
@@ -705,12 +682,5 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
-
-
-
     }
-    
 }

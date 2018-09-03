@@ -2,13 +2,7 @@
 
 namespace Pixel3D.Audio
 {
-	public interface IAudioRandomizer
-	{
-		float _NetworkUnsafe_UseMeForAudioOnly_NextSingle();
-		int Next(int soundCount);
-	}
-
-    /// <summary>
+	/// <summary>
     /// Holds the gameplay-affecting logic for playing a cue
     /// </summary>
     public struct PlayCueParameters

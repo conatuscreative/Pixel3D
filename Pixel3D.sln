@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.Strings", "src\Pixe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.Navigation", "src\Pixel3D.Navigation\Pixel3D.Navigation.csproj", "{914260D9-8ACA-4122-84EA-0776F304F2AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.Common", "src\Pixel3D.Common\Pixel3D.Common.csproj", "{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -173,6 +175,18 @@ Global
 		{914260D9-8ACA-4122-84EA-0776F304F2AD}.Release|x64.Build.0 = Release|Any CPU
 		{914260D9-8ACA-4122-84EA-0776F304F2AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{914260D9-8ACA-4122-84EA-0776F304F2AD}.Release|x86.Build.0 = Release|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Debug|x64.Build.0 = Debug|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Debug|x86.Build.0 = Debug|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Release|x64.ActiveCfg = Release|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Release|x64.Build.0 = Release|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Release|x86.ActiveCfg = Release|Any CPU
+		{9B9C8DE1-4E24-4E53-8F79-14370E3096DC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

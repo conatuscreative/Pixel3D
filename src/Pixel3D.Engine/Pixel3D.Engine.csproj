@@ -128,6 +128,10 @@
       <Project>{52f63851-9353-44be-bbbe-a4a92c353d14}</Project>
       <Name>Pixel3D.Audio</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj">
+      <Project>{9b9c8de1-4e24-4e53-8f79-14370e3096dc}</Project>
+      <Name>Pixel3D.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pixel3D.Navigation\Pixel3D.Navigation.csproj">
       <Project>{914260d9-8aca-4122-84ea-0776f304f2ad}</Project>
       <Name>Pixel3D.Navigation</Name>

@@ -15,15 +15,11 @@ namespace Pixel3D
         /// <summary>True if the mask is logically transformed around X = 0 (index with [-x, y])</summary>
         public bool flipX;
 
-
-
-        public Rectangle Bounds
+		public Rectangle Bounds
         {
             get { return flipX ? maskData.Bounds.FlipXIndexable() : maskData.Bounds; }
         }
-
-
-
+		
         public bool this[int x, int y]
         {
             get { return maskData[flipX ? -x : x, y]; }
@@ -34,9 +30,7 @@ namespace Pixel3D
         {
             return maskData.GetOrDefault(flipX ? -x : x, y, defaultValue);
         }
-
-
-
+		
         public static bool Collide(TransformedMaskData a, TransformedMaskData b)
         {
             Rectangle aRect = a.Bounds;

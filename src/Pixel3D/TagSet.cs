@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Pixel3D.Animations;
 using System.IO;
-using Pixel3D.Serialization;
-using Pixel3D.Serialization.Context;
 
 namespace Pixel3D
 {
@@ -15,8 +13,7 @@ namespace Pixel3D
     {
         public static readonly TagSet Empty = new TagSet();
         
-
-        /// <summary>IMPORTANT: The TagSet takes ownership of the passed array!</summary>
+		/// <summary>IMPORTANT: The TagSet takes ownership of the passed array!</summary>
         public TagSet(params string[] tags)
         {
             // NOTE: The mutable version used to remove duplicates, but it shouldn't actually matter, so let's just ignore the problem.
@@ -62,14 +59,11 @@ namespace Pixel3D
 
             this.tags = allTags;
         }
-
-
-
+		
         private string[] tags;
         public int Count { get { return tags.Length; } }
 
-
-        /// <summary>Get a copy of the underlying tag array</summary>
+		/// <summary>Get a copy of the underlying tag array</summary>
         public string[] ToArray()
         {
             string[] result = new string[tags.Length];
@@ -77,22 +71,18 @@ namespace Pixel3D
             return result;
         }
 
-
-        public string this[int index]
+		public string this[int index]
         {
             get { return tags[index]; }
         }
 
-
-        public override string ToString()
+		public override string ToString()
         {
             if(Count == 0)
                 return "*";
             return string.Join(", ", tags, 0, Count);
         }
-
-
-
+		
         public bool Contains(string tag)
         {
             for(int i = 0; i < Count; i++)
@@ -139,8 +129,7 @@ namespace Pixel3D
             return true;
         }
 
-
-        public bool IsSupersetOf(TagSet subset)
+		public bool IsSupersetOf(TagSet subset)
         {
             // Take advantage of sorted property to search linearly
             int subsetIndex = 0, thisIndex = 0;
@@ -168,8 +157,7 @@ namespace Pixel3D
             return true;
         }
 
-
-        public bool IsEqual(TagSet other)
+	    public bool IsEqual(TagSet other)
         {
             if (other == null)
                 return false;
@@ -183,10 +171,7 @@ namespace Pixel3D
 
             return true;
         }
-
-
-
-
+		
         #region Object Overrides
 
         public override bool Equals(object obj)
@@ -208,9 +193,7 @@ namespace Pixel3D
 
         #endregion
 
-
-
-        #region IEnumerable
+		#region IEnumerable
 
         public struct Enumerator : IEnumerator<string>
         {
@@ -264,10 +247,8 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
-        #region Serialize
+		
+		#region Serialize
 
         // NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagSet` is *really* stable, and some folks need to directly serialize us)
 
@@ -303,19 +284,5 @@ namespace Pixel3D
 
 
         #endregion
-
-
-
-        #region Network Serialize
-
-        // Definition-only at the field level (don't even bother storing it) - see TagLookup
-        [CustomFieldSerializer] public static void Serialize(SerializeContext context, BinaryWriter bw, TagSet value) { }
-        [CustomFieldSerializer] public static void Deserialize(DeserializeContext context, BinaryReader br, ref TagSet value) { throw new InvalidOperationException(); }
-
-        #endregion
-
-
-
     }
-
 }

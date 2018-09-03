@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
     <ProjectReference Include="..\..\..\Pixel3D.Network\src\Pixel3D.Network.Rollback.Input\Pixel3D.Network.Rollback.Input.csproj" />
     <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj" />
+    <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj" />
   </ItemGroup>
 
 </Project>
