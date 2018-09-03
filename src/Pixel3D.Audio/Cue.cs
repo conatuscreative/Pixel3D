@@ -141,7 +141,7 @@ namespace Pixel3D.Audio
         #region Simulation Helpers
 
         /// <param name="random">This parameter will be mutated. Be aware of network-safety!</param>
-        public float SelectPitch(IAudioRandomizer random)
+        public float SelectPitch(XorShift random)
         {
             // Pitch variance:
             var cuePitch = pitch;
@@ -161,7 +161,7 @@ namespace Pixel3D.Audio
 
 		/// <param name="random">This parameter will be mutated. Be aware of network-safety!</param>
 		/// <param name="cueStates">This parameter will be mutated. Be aware of network-safety!</param>
-		public int SelectSound(IAudioRandomizer random, ushort[] cueStates)
+		public int SelectSound(XorShift random, ushort[] cueStates)
         {
             switch(type)
             {

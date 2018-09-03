@@ -47,11 +47,10 @@
     <Compile Include="Actors\Effects\PermanentEffect.cs" />
     <Compile Include="Actors\Effects\SimpleEffect.cs" />
     <Compile Include="AttachmentTracking.cs" />
-    <Compile Include="Audio\AudioRandom.cs" />
     <Compile Include="AudioExtensions.cs" />
     <Compile Include="LineWrapping.cs" />
     <Compile Include="Serialization\SerializeIgnoreAudio.cs" />
-    <Compile Include="Audio\VorbisfileDecoder.cs" />
+    <Compile Include="VorbisfileDecoder.cs" />
     <Compile Include="Collections\MultiDictionary.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />
     <Compile Include="Collections\OrderedDictionary.cs" />
@@ -149,9 +148,6 @@
       <Project>{790b8ab0-e162-4f29-abed-11ad81d4d6f9}</Project>
       <Name>Pixel3D</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Audio\packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

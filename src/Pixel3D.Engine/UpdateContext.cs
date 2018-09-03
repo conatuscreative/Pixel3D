@@ -43,8 +43,7 @@ namespace Pixel3D.Engine
         // Things that must not be retained across frames (clear in Reset method!)
 
         public XorShift random; // <- here so that no one uses it outside of network update methods
-	    public AudioRandom audioRandom;
-
+	    
         /// <summary>The index in the actor list of the actor currently being updated (or -1 when outside the normal actor update loop)</summary>
         public int activeActorIndex = -1;
 
@@ -68,7 +67,7 @@ namespace Pixel3D.Engine
         /// <summary>Play a cue in a world-space position (relative to the camera)</summary>
         public void PlayCueWorld(Cue cue, Actor source)
         {
-            var parameters = PlayCueParameters.GetParameters(cue, audioRandom, GameState.cueStates);
+            var parameters = PlayCueParameters.GetParameters(cue, random, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null && AudioCamera != null)
             {
@@ -119,7 +118,7 @@ namespace Pixel3D.Engine
 	    /// <summary>Play a sound without any position (always plays centred)</summary>
         public void PlayCueGlobal(Cue cue, object source = null) // <- keeping source around, in case it is useful information (will become useful for rollback)
         {
-            var parameters = PlayCueParameters.GetParameters(cue, audioRandom, GameState.cueStates);
+            var parameters = PlayCueParameters.GetParameters(cue, random, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null)
             {
@@ -135,7 +134,7 @@ namespace Pixel3D.Engine
         /// <summary>Play a cue in a world-space position (relative to the camera)</summary>
         public void PlayCueWorld(Cue cue, Position source)
         {
-            var parameters = PlayCueParameters.GetParameters(cue, audioRandom, GameState.cueStates);
+            var parameters = PlayCueParameters.GetParameters(cue, random, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null && AudioCamera != null)
             {
@@ -152,7 +151,7 @@ namespace Pixel3D.Engine
         
         public void PlayCueUI(Cue cue, int playerIndex, bool useHudStereo)
         {
-            var parameters = PlayCueParameters.GetParameters(cue, audioRandom, GameState.cueStates);
+            var parameters = PlayCueParameters.GetParameters(cue, random, GameState.cueStates);
             // ^^^^ Affects gameplay || Local-only vvvv
             if (soundRollbackManager != null)
             {

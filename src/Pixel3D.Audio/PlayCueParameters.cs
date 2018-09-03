@@ -15,7 +15,7 @@ namespace Pixel3D.Audio
 
 
         /// <summary>Potentially gameplay-mutating logic for cue playback (modifies `random` and `cueStates`)</summary>
-        public static PlayCueParameters GetParameters(Cue cue, IAudioRandomizer random, ushort[] cueStates)
+        public static PlayCueParameters GetParameters(Cue cue, XorShift random, ushort[] cueStates)
         {
             if(cue == null)
                 return new PlayCueParameters { soundIndex = PlayCueParameters.NO_SOUND };
