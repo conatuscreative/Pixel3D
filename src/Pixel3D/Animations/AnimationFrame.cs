@@ -15,8 +15,8 @@ namespace Pixel3D.Animations
             masks = new OrderedDictionary<string, Mask>();
 
             outgoingAttachments = new OrderedDictionary<string, OutgoingAttachment>();
-			incomingAttachments = new TagLookup<Position>();
-            triggers = null;
+			incomingAttachments = new OrderedDictionary<string, Position>();
+			triggers = null;
         }
 
 
@@ -48,7 +48,7 @@ namespace Pixel3D.Animations
 	    public readonly OrderedDictionary<string, Mask> masks;
 
 		public OrderedDictionary<string, OutgoingAttachment> outgoingAttachments;
-        public TagLookup<Position> incomingAttachments;
+        public OrderedDictionary<string, Position> incomingAttachments;
 
 		/// <summary>List of symbols, or null for no triggers this frame.</summary>
         public List<string> triggers;
@@ -292,7 +292,7 @@ namespace Pixel3D.Animations
 			masks.SerializeOrderedDictionary(context, m => m.Serialize(context));
 
 			outgoingAttachments.SerializeOrderedDictionary(context, oa => oa.Serialize(context));
-            incomingAttachments.SerializeTagLookup(context, p => context.bw.Write(p));
+            incomingAttachments.SerializeOrderedDictionary(context, p => context.bw.Write(p));
 
             if(triggers == null)
                 context.bw.Write((int)0);
@@ -335,6 +335,7 @@ namespace Pixel3D.Animations
 	        {
 		        masks = context.DeserializeOrderedDictionary(() => new Mask(context));
 		        outgoingAttachments = context.DeserializeOrderedDictionary(() => new OutgoingAttachment(context));
+		        incomingAttachments = context.DeserializeOrderedDictionary(() => context.br.ReadPosition());
 			}
 	        else
 	        {
@@ -361,10 +362,20 @@ namespace Pixel3D.Animations
 				        outgoingAttachments.Add(outgoingAttachment.Key.ToString(), outgoingAttachment.Value);
 			        }
 				}
+
+				//
+				// Incoming Attachments:
+		        {
+					var legacy = context.DeserializeTagLookup(() => context.br.ReadPosition());
+			        incomingAttachments = new OrderedDictionary<string, Position>();
+			        foreach (var incomingAttachment in legacy)
+			        {
+				        Debug.Assert(incomingAttachment.Key.Count < 2, "we don't support multi-tags yet");
+				        incomingAttachments.Add(incomingAttachment.Key.ToString(), incomingAttachment.Value);
+			        }
+				}
 			}
-
-            incomingAttachments = context.DeserializeTagLookup(() => context.br.ReadPosition());
-
+			
             int triggerCount = context.br.ReadInt32();
             if(triggerCount > 0)
             {
@@ -389,7 +400,7 @@ namespace Pixel3D.Animations
                 outgoingAttachments.Add(rule, outgoingAttachment);
         }
 
-        public void AddIncomingAttachment(TagSet rule, Position position)
+        public void AddIncomingAttachment(string rule, Position position)
         {
             if (rule != null)
                 incomingAttachments.Add(rule, position);

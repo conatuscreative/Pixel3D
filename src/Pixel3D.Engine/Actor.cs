@@ -341,7 +341,7 @@ namespace Pixel3D.Engine
             }
 
             var animationContext = outgoingAttachmentView.attachment.targetAnimationContext.MaybeFlip(outgoingAttachmentView.facingLeft != facingLeft);
-            var attachmentContext = outgoingAttachmentView.attachment.targetAttachmentContext.MaybeFlip(outgoingAttachmentView.facingLeft != facingLeft);
+            var attachmentContext = outgoingAttachmentView.attachment.targetAttachmentContext.MaybeFlip(outgoingAttachmentView.facingLeft != facingLeft).ToString();
             
             var animation = animationSet[animationContext];
             var animationFrame = animation.Frames[0];
@@ -371,8 +371,8 @@ namespace Pixel3D.Engine
         {
             var tagFlip = owner.facingLeft != this.facingLeft;
 
-            var attachmentContext = outgoingAttachment.targetAttachmentContext.MaybeFlip(tagFlip);
-            var incomingPosition = this.currentAnimation.CurrentFrame.incomingAttachments[attachmentContext].MaybeFlipX(this.facingLeft);
+            var attachmentContext = outgoingAttachment.targetAttachmentContext.MaybeFlip(tagFlip).ToString();
+            var incomingPosition = this.currentAnimation.CurrentFrame.incomingAttachments.Get(attachmentContext).MaybeFlipX(this.facingLeft);
             var outgoingPosition = outgoingAttachment.position.MaybeFlipX(owner.facingLeft);
 
             this.position = owner.position + (outgoingPosition - incomingPosition);
