@@ -20,8 +20,6 @@ namespace Pixel3D.Animations
             animations = new TagLookup<Animation>();
         }
 
-	    //public TagSet id;
-	    
 	    /// <summary>IMPORTANT: Do not use in gameplay code (not network safe)</summary>
         [NonSerialized]
         public string friendlyName;
@@ -437,16 +435,8 @@ namespace Pixel3D.Animations
                     context.bw.Write(cachedShadowBounds);
                 }
             }
-
-	        //if (context.Version >= 39)
-	        //{
-		       // if (id == null)
-			      //  id = new TagSet();
-		       // id.Serialize(context);
-	        //}
 		}
-
-
+		
         /// <summary>Deserialize into new object instance</summary>
         [SerializationIgnoreDelegates]
         public AnimationSet(AnimationDeserializeContext context)
@@ -509,8 +499,7 @@ namespace Pixel3D.Animations
 
             cue = context.br.ReadNullableString();
 
-
-            // Shadow layers
+			// Shadow layers
             {
                 int shadowLayerCount = context.br.ReadInt32();
                 if(shadowLayerCount <= 0)
@@ -528,12 +517,8 @@ namespace Pixel3D.Animations
                     cachedShadowBounds = context.br.ReadBounds();
                 }
             }
-
-	        //if (context.Version >= 39)
-		       // id = context.DeserializeTagSet();
         }
-
-
+		
         /// <summary>Check that an AnimationSet round-trips through serialization cleanly</summary>
         public void RoundTripCheck(GraphicsDevice graphicsDevice, bool useExternalImages)
         {
@@ -670,8 +655,7 @@ namespace Pixel3D.Animations
         }
 
         #endregion
-
-
+		
 		/// <summary>Create a default animation that is just a single Cel</summary>
         public void AddStaticDefaultAnimation(Cel cel)
         {
@@ -829,32 +813,39 @@ namespace Pixel3D.Animations
                     var frame = animation.Frames[f];
                     bool foundAlphaMask = false;
 
-                    for (int m = 0; m < frame.masks.Count; m++)
-                    {
-                        if (frame.masks.Rules[m].Count == 0)
-                        {
-                            if (!frame.masks.Values[m].isGeneratedAlphaMask)
-                            {
-                                Debug.Assert(!Asserts.enabled || false);
-                                return false;
-                            }
-                            if (foundAlphaMask == true)
-                            {
-                                Debug.Assert(!Asserts.enabled || false);
-                                return false;
-                            }
+					foreach (KeyValuePair<string, Mask> mask in frame.masks)
+	                {
+						if (mask.Value.isGeneratedAlphaMask)
+		                {
+			                foundAlphaMask = true;
+						}
+	                }
 
-                            foundAlphaMask = true;
-                        }
-                        else
-                        {
-                            if (frame.masks.Values[m].isGeneratedAlphaMask)
-                            {
-                                Debug.Assert(!Asserts.enabled || false);
-                                return false;
-                            }
-                        }
-                    }
+                    //for (int m = 0; m < frame.masks.Count; m++)
+                    //{
+                    //    if (frame.masks.Rules[m].Count == 0)
+                    //    {
+                    //        if (!frame.masks.Values[m].isGeneratedAlphaMask)
+                    //        {
+                    //            Debug.Assert(!Asserts.enabled || false);
+                    //            return false;
+                    //        }
+                    //        if (foundAlphaMask)
+                    //        {
+                    //            Debug.Assert(!Asserts.enabled || false);
+                    //            return false;
+                    //        }
+                    //        foundAlphaMask = true;
+                    //    }
+                    //    else
+                    //    {
+                    //        if (frame.masks.Values[m].isGeneratedAlphaMask)
+                    //        {
+                    //            Debug.Assert(!Asserts.enabled || false);
+                    //            return false;
+                    //        }
+                    //    }
+                    //}
 
                     if (!foundAlphaMask)
                     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Pixel3D.Animations.Serialization
 {
@@ -20,7 +21,7 @@ namespace Pixel3D.Animations.Serialization
 
 		#endregion
 
-		#region TagLookup<T>
+		#region TagLookup
 
 		// NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagLookup` is *really* stable, and some folks need to directly serialize us)
 
@@ -34,6 +35,40 @@ namespace Pixel3D.Animations.Serialization
 		{
 			return new TagLookup<T>(context.br, deserializeValue);
 		}
+
+		#endregion
+
+		#region OrderedDictionary
+
+		public static void SerializeOrderedDictionary<T>(this OrderedDictionary<string, T> dictionary, AnimationSerializeContext context, Action<T> serializeValue)
+		{
+			context.bw.WriteSmallInt32(dictionary.Count);
+
+			foreach (var item in dictionary)
+			{
+				string key = item.Key;
+				T value = item.Value;
+				context.bw.Write(key);
+				serializeValue(value);
+			}
+		}
+
+		public static OrderedDictionary<string, T> DeserializeOrderedDictionary<T>(this AnimationDeserializeContext context, Func<T> deserializeValue)
+		{
+			var dictionary = new OrderedDictionary<string, T>();
+
+			int count = context.br.ReadSmallInt32();
+
+			for (int i = 0; i < count; i++)
+			{
+				var key = context.br.ReadString();
+				var value = deserializeValue();
+				dictionary.Add(key, value);
+			}
+
+			return dictionary;
+		}
+
 
 		#endregion
 	}

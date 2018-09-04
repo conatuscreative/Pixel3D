@@ -395,35 +395,34 @@ namespace Pixel3D.Engine
             var p = position;
             if(currentAnimation.tick == 0)
                 p += currentAnimation.CurrentFrame.positionDelta.MaybeFlipX(facingLeft);
-            return CurrentFrame.masks[maskContext].GetTransformedMaskData(p, facingLeft);
+            return CurrentFrame.masks.Get(maskContext).GetTransformedMaskData(p, facingLeft);
         }
 
         public TransformedMaskData GetMask(string maskContext)
         {
-            return CurrentFrame.masks[maskContext].GetTransformedMaskData(position, facingLeft);
+            return CurrentFrame.masks.Get(maskContext).GetTransformedMaskData(position, facingLeft);
         }
 
         public TransformedMaskData GetMask(AnimationFrame frame, string maskContext)
         {
-            return frame.masks[maskContext].GetTransformedMaskData(position, facingLeft);
+            return frame.masks.Get(maskContext).GetTransformedMaskData(position, facingLeft);
         }
 
         public TransformedMaskData GetAlphaMask()
         {
             return CurrentFrame.masks.GetBaseFallback().GetTransformedMaskData(position, facingLeft);
         }
-
-
+		
         // Masks in the XZ plane (represents an infinite volume extruded along the Y axis)
 
-        public TransformedMaskData GetMaskXZ(TagSet maskContext)
+        public TransformedMaskData GetMaskXZ(string symbol)
         {
-            return GetMaskXZ(CurrentFrame, maskContext);
+            return GetMaskXZ(CurrentFrame, symbol);
         }
 
-        public TransformedMaskData GetMaskXZ(AnimationFrame frame, TagSet maskContext)
+        public TransformedMaskData GetMaskXZ(AnimationFrame frame, string symbol)
         {
-            return frame.masks[maskContext].GetTransformedMaskDataXZ(position, facingLeft);
+            return frame.masks.Get(symbol).GetTransformedMaskDataXZ(position, facingLeft);
         }
 
 

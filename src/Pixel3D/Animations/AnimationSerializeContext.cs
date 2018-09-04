@@ -37,7 +37,7 @@ namespace Pixel3D.Animations
         #region Version
 
         /// <summary>Increment this number when anything we serialize changes</summary>
-        public const int formatVersion = 38;
+        public const int formatVersion = 39;
 
         public int Version { get; private set; }
 
