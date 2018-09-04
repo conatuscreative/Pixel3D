@@ -65,6 +65,11 @@ namespace Pixel3D
 
             public T this[int i] { get { return owner.values[i]; } }
 
+            public void EditorReplaceValue(int i, T value)
+            {
+                owner.values[i] = value;
+            }
+
             public struct Enumerator : IEnumerator<T>
             {
                 int i;
