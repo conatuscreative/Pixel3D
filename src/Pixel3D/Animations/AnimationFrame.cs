@@ -14,8 +14,8 @@ namespace Pixel3D.Animations
         {
             masks = new OrderedDictionary<string, Mask>();
 
-            outgoingAttachments = new TagLookup<OutgoingAttachment>();
-            incomingAttachments = new TagLookup<Position>();
+            outgoingAttachments = new OrderedDictionary<string, OutgoingAttachment>();
+			incomingAttachments = new TagLookup<Position>();
             triggers = null;
         }
 
@@ -47,7 +47,7 @@ namespace Pixel3D.Animations
 
 	    public readonly OrderedDictionary<string, Mask> masks;
 
-		public TagLookup<OutgoingAttachment> outgoingAttachments;
+		public OrderedDictionary<string, OutgoingAttachment> outgoingAttachments;
         public TagLookup<Position> incomingAttachments;
 
 		/// <summary>List of symbols, or null for no triggers this frame.</summary>
@@ -291,7 +291,7 @@ namespace Pixel3D.Animations
 
 			masks.SerializeOrderedDictionary(context, m => m.Serialize(context));
 
-			outgoingAttachments.SerializeTagLookup(context, oa => oa.Serialize(context));
+			outgoingAttachments.SerializeOrderedDictionary(context, oa => oa.Serialize(context));
             incomingAttachments.SerializeTagLookup(context, p => context.bw.Write(p));
 
             if(triggers == null)
@@ -334,17 +334,35 @@ namespace Pixel3D.Animations
 	        if (context.Version >= 39)
 	        {
 		        masks = context.DeserializeOrderedDictionary(() => new Mask(context));
+		        outgoingAttachments = context.DeserializeOrderedDictionary(() => new OutgoingAttachment(context));
 			}
 	        else
 	        {
-				var legacy = context.DeserializeTagLookup(() => new Mask(context));
-				masks = new OrderedDictionary<string, Mask>();
-		        foreach (var mask in legacy)
-			        masks.Add(mask.Key.ToString(), mask.Value);
+				//
+				// Masks:
+		        {
+			        var legacy = context.DeserializeTagLookup(() => new Mask(context));
+			        masks = new OrderedDictionary<string, Mask>();
+			        foreach (var mask in legacy)
+			        {
+				        Debug.Assert(mask.Key.Count < 2, "we don't support multi-tags yet");
+						masks.Add(mask.Key.ToString(), mask.Value);
+			        }
+				}
+
+				//
+				// Outgoing Attachments:
+		        {
+					var legacy = context.DeserializeTagLookup(() => new OutgoingAttachment(context));
+			        outgoingAttachments = new OrderedDictionary<string, OutgoingAttachment>();
+			        foreach (var outgoingAttachment in legacy)
+			        {
+						Debug.Assert(outgoingAttachment.Key.Count < 2, "we don't support multi-tags yet");
+				        outgoingAttachments.Add(outgoingAttachment.Key.ToString(), outgoingAttachment.Value);
+			        }
+				}
 			}
-	        
-            
-			outgoingAttachments = context.DeserializeTagLookup(() => new OutgoingAttachment(context));
+
             incomingAttachments = context.DeserializeTagLookup(() => context.br.ReadPosition());
 
             int triggerCount = context.br.ReadInt32();
@@ -365,7 +383,7 @@ namespace Pixel3D.Animations
 
 		#region Attachments
 
-        public void AddOutgoingAttachment(TagSet rule, OutgoingAttachment outgoingAttachment)
+        public void AddOutgoingAttachment(string rule, OutgoingAttachment outgoingAttachment)
         {
             if (rule != null)
                 outgoingAttachments.Add(rule, outgoingAttachment);
@@ -379,16 +397,19 @@ namespace Pixel3D.Animations
 
         public bool RemoveOutgoingAttachment(OutgoingAttachment outgoingAttachment)
         {
-            for (int i = 0; i < outgoingAttachments.Count; i++)
-            {
-                if (ReferenceEquals(outgoingAttachments.Values[i], outgoingAttachment))
-                {
-                    outgoingAttachments.RemoveAt(i);
-                    return true;
-                }
-            }
-
-            return false;
+	        string key = null;
+	        foreach (var entry in outgoingAttachments)
+	        {
+		        if (ReferenceEquals(entry.Value, outgoingAttachment))
+		        {
+			        key = entry.Key;
+		        }
+	        }
+	        if (key != null)
+	        {
+		        return outgoingAttachments.Remove(key);
+	        }
+	        return false;
         }
 
         public bool RemoveMask(Mask mask)
