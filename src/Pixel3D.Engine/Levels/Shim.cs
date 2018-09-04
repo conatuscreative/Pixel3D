@@ -29,7 +29,7 @@ namespace Pixel3D.Engine.Levels
 		
         // TODO: Convert this to null when not in use (it is hardly used at all) (could consider removing and using tag instead)
         /// <summary>Arbitrary thing properties (consumers are expected to parse the strings)</summary>
-        public readonly Collections.OrderedDictionary<string, string> properties = new Collections.OrderedDictionary<string, string>();
+        public readonly OrderedDictionary<string, string> properties = new OrderedDictionary<string, string>();
 		
 	    public Shim(AnimationSet animationSet, Position position, bool facingLeft, float parallaxX, float parallaxY)
         {

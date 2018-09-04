@@ -13,7 +13,7 @@ namespace Pixel3D.Engine
 
 		#region Sound Effects
 
-		protected Collections.OrderedDictionary<string, SafeSoundEffect> soundBank;
+		protected OrderedDictionary<string, SafeSoundEffect> soundBank;
 
         /// <summary>Return a sound effect for the given cue</summary>
         public SafeSoundEffect GetSound(Cue cue, int index)
@@ -65,7 +65,7 @@ namespace Pixel3D.Engine
 
         // TODO: This needs Symbol-like treatment so we aren't looking anything up based on a string
         /// <summary>Lookup of names to cues.</summary>
-        protected Collections.OrderedDictionary<string, Cue> cues;
+        protected OrderedDictionary<string, Cue> cues;
 
         public int cuesWithIds;
 
@@ -90,14 +90,14 @@ namespace Pixel3D.Engine
 
         protected struct LoadCuesResult
         {
-            public Collections.OrderedDictionary<string, Cue> cues;
+            public OrderedDictionary<string, Cue> cues;
             public int cuesWithIds;
         }
 
         protected static LoadCuesResult LoadCues(byte[] header, string filename)
         {
             LoadCuesResult result;
-            result.cues = new Collections.OrderedDictionary<string, Cue>();
+            result.cues = new OrderedDictionary<string, Cue>();
             result.cuesWithIds = 0;
 
             string cuePackagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cues.rcru");
