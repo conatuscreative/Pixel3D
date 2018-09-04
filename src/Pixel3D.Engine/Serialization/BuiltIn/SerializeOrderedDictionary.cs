@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Pixel3D.Engine.Collections;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 

@@ -8,16 +8,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Threading;
 
-namespace Pixel3D.Engine.Collections
+namespace Pixel3D
 {
     // SOURCE: https://github.com/OndrejPetrzilka/Rock.Collections/blob/master/Rock.Collections/OrderedDictionary.cs
     
     [DebuggerTypeProxy(typeof(DictionaryDebugView<,>))]
     [DebuggerDisplay("Count = {Count}")]
-    [System.Runtime.InteropServices.ComVisible(false)]
+    [ComVisible(false)]
     [Serializable]
     public class OrderedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary, ISerializable, IDeserializationCallback
     {

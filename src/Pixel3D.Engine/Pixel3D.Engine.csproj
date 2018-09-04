@@ -53,7 +53,6 @@
     <Compile Include="VorbisfileDecoder.cs" />
     <Compile Include="Collections\MultiDictionary.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />
-    <Compile Include="Collections\OrderedDictionary.cs" />
     <Compile Include="Collections\PriorityQueue.cs" />
     <Compile Include="Collections\ReadOnlyList.cs" />
     <Compile Include="Collections\ShortPriorityQueue.cs" />
