@@ -12,25 +12,21 @@ namespace Pixel3D
     {
         public ShadowReceiver(Heightmap heightmap, Oblique heightmapExtendDirection)
         {
-            if(heightmap == null)
-                throw new ArgumentNullException("heightmap");
-
-            this.heightmap = heightmap;
+	        this.heightmap = heightmap ?? throw new ArgumentNullException(nameof(heightmap));
             this.heightmapExtendDirection = heightmapExtendDirection;
         }
 
         public ShadowReceiver(byte height)
         {
-            this.heightmap = new Heightmap(height); // No data heightmap (single height)
+            heightmap = new Heightmap(height); // No data heightmap (single height)
         }
 
         public readonly Heightmap heightmap;
         public Oblique heightmapExtendDirection;
 
-
-        public ShadowReceiver Clone()
+		public ShadowReceiver Clone()
         {
-            return new ShadowReceiver(this.heightmap.Clone(), this.heightmapExtendDirection);
+            return new ShadowReceiver(heightmap.Clone(), heightmapExtendDirection);
         }
 		
         #region Serialize
@@ -47,8 +43,7 @@ namespace Pixel3D
             heightmap = new Heightmap(context);
             heightmapExtendDirection = context.br.ReadOblique();
         }
-
-
+		
         #endregion
     }
 }

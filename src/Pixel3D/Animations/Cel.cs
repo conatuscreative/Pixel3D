@@ -61,9 +61,7 @@ namespace Pixel3D.Animations
             }
         }
 
-
-
-        #region Serialize
+		#region Serialize
 
         public void Serialize(AnimationSerializeContext context)
         {
@@ -71,7 +69,9 @@ namespace Pixel3D.Animations
             spriteRef.Serialize(context);
 
             if(context.bw.WriteBoolean(shadowReceiver != null))
-                shadowReceiver.Serialize(context);
+            {
+	            shadowReceiver?.Serialize(context);
+            }
         }
 
         /// <summary>Deserialize into new object instance</summary>
@@ -85,8 +85,5 @@ namespace Pixel3D.Animations
         }
 
         #endregion
-
     }
 }
-
-

@@ -37,8 +37,7 @@ namespace Pixel3D.Animations
 
         /// <summary>Used for externally packing masks in the asset packer.</summary>
         public ICustomMaskDataReader customMaskDataReader;
-
-
+		
         #region Shared Item Deserializer
 
         internal T[] DeserializeSharedItems<T>(Func<AnimationDeserializeContext, T> deserializeDelegate)
@@ -55,8 +54,6 @@ namespace Pixel3D.Animations
         }
 
         #endregion
-
-
     }
 
 }

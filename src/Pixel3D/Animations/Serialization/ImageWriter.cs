@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,7 +10,6 @@ namespace Pixel3D.Animations.Serialization
 {
     public class ImageWriter
     {
-
         #region Registration and Serialization
 
         bool imagesLocked = false;
@@ -114,8 +112,6 @@ namespace Pixel3D.Animations.Serialization
         }
 
         #endregion
-
-
 
         #region Packing
 
@@ -451,8 +447,6 @@ namespace Pixel3D.Animations.Serialization
         }
 
         #endregion
-
-
 
         #region Write to file
 

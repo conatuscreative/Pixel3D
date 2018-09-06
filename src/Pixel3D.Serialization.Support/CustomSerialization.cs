@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Pixel3D.Animations.Serialization;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 
@@ -39,6 +40,15 @@ namespace Pixel3D
 				throw new InvalidOperationException();
 			}
 		}
+
+		#endregion
+
+		#region ImageBundle
+
+		[CustomFieldSerializer]
+		public static void Serialize(SerializeContext context, BinaryWriter bw, ImageBundle value) { throw new InvalidOperationException(); }
+		[CustomFieldSerializer]
+		public static void Deserialize(DeserializeContext context, BinaryReader br, ref ImageBundle value) { throw new InvalidOperationException(); }
 
 		#endregion
 	}

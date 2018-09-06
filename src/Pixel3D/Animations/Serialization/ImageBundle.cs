@@ -4,20 +4,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System.Diagnostics;
-using Pixel3D.Serialization;
-using Pixel3D.Serialization.Context;
 
 namespace Pixel3D.Animations.Serialization
 {
-    [DebuggerDisplay("ImageBundle: \"{Name}\"")]
+    [DebuggerDisplay("ImageBundle: \"{" + nameof(Name) + "}\"")]
     public class ImageBundle : IDisposable
     {
-        public string Name { get { return manager != null ? manager.GetBundleName(bundleIndex) : "(no name)"; } }
+        public string Name => manager != null ? manager.GetBundleName(bundleIndex) : "(no name)";
 
-
-        public ImageBundle()
-        {
-        }
+	    public ImageBundle() { }
 
         // This is hacky...
         /// <summary>Create a dummy reader for cases where we don't want to load the texture file (for tooling)</summary>
@@ -55,10 +50,7 @@ namespace Pixel3D.Animations.Serialization
             this.bundleIndex = managedIndex;
             this.liveIndex = -1; // <- not loaded
         }
-
-
-
-
+		
         public void ReadAllImagesOLD(BinaryReader br, GraphicsDevice graphicsDevice, List<TextureData> texturesData = null)
         {
             int version = br.ReadInt32();
@@ -111,8 +103,7 @@ namespace Pixel3D.Animations.Serialization
                 imageSourceRectangles[i] = br.ReadRectangle();
             }
         }
-
-
+		
         /// <summary>Read all images out of a buffer</summary>
         /// <returns>Returns the position after reading, or -1 if we did a "fast" read</returns>
         public unsafe int ReadAllImages(byte[] data, int offset, ITextureLoadHelper loadHelper)
@@ -194,11 +185,7 @@ namespace Pixel3D.Animations.Serialization
         {
             return (*buffer) | (*(buffer + 1) << 8);
         }
-
-
-
-
-
+		
         internal bool IsCachable { get { return manager != null; } }
 
         ImageBundleManager manager;
@@ -209,9 +196,7 @@ namespace Pixel3D.Animations.Serialization
         public byte[] imageTextureIndicies;  // <- NOTE: Only public so the asset packer can see it
         public Rectangle[] imageSourceRectangles;  // <- NOTE: Only public so the asset packer can see it
 
-
-
-        internal Sprite GetSprite(int index, Point origin)
+		internal Sprite GetSprite(int index, Point origin)
         {
             if (index == -1) // <- blank sprite
                 return new Sprite();
@@ -222,31 +207,18 @@ namespace Pixel3D.Animations.Serialization
                 Debug.WriteLine("Loading image bundle: " + manager.GetBundleName(bundleIndex));
                 manager.MakeBundleAlive(this);
             }
-            else if (manager != null)
+            else
             {
-                manager.LiveListTouch(liveIndex);
+	            manager?.LiveListTouch(liveIndex);
             }
 
-            Sprite result;
+	        Sprite result;
             result.texture = textures[imageTextureIndicies != null ? imageTextureIndicies[index] : 0];
             result.sourceRectangle = imageSourceRectangles[index];
             result.origin = origin;
             return result;
         }
-
-
-
-        #region Network Serializer Block
-
-        [CustomFieldSerializer]
-        public static void Serialize(SerializeContext context, BinaryWriter bw, ImageBundle value) { throw new InvalidOperationException(); }
-        [CustomFieldSerializer]
-        public static void Deserialize(DeserializeContext context, BinaryReader br, ref ImageBundle value) { throw new InvalidOperationException(); }
-
-        #endregion
-
-
-
+		
         #region IDisposable Members
 
         public void Dispose()
@@ -273,6 +245,5 @@ namespace Pixel3D.Animations.Serialization
         }
 
         #endregion
-
     }
 }

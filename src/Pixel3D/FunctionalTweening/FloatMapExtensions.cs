@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
-using Microsoft.Xna.Framework;
 
-namespace Common
+namespace Pixel3D.FunctionalTweening
 {
 	public static class FloatMapExtensions
 	{

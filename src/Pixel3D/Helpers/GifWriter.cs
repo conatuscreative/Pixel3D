@@ -11,8 +11,7 @@ using Pixel3D.Animations;
 // http://www.matthewflickinger.com/lab/whatsinagif/animation_and_transparency.asp
 // http://warp.povusers.org/EfficientLZW/index.html
 #endregion
-
-
+	
 namespace Pixel3D
 {
     public class GifWriter

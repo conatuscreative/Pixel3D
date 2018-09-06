@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
 
 namespace Pixel3D.Animations
@@ -16,13 +14,12 @@ namespace Pixel3D.Animations
     /// </remarks>
     public struct LayersList : IList<Cel>
     {
-        public LayersList(AnimationFrame owner)
+		private readonly AnimationFrame owner;
+
+		public LayersList(AnimationFrame owner)
         {
             this.owner = owner;
         }
-
-        AnimationFrame owner;
-
 
         #region IList<Cel> Members
 
@@ -160,8 +157,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-        #region ICollection<Cel> Members
+		#region ICollection<Cel> Members
 
         public void Add(Cel item)
         {
@@ -263,8 +259,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-        #region Compatibility with List<Cel>
+		#region Compatibility with List<Cel>
 
         public void InsertRange(int index, IEnumerable<Cel> collection)
         {
@@ -315,8 +310,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-        #region IEnumerable
+		#region IEnumerable
 
         public struct Enumerator : IEnumerator<Cel>
         {
@@ -358,7 +352,6 @@ namespace Pixel3D.Animations
         }
 
         #endregion
-
     }
 }
 

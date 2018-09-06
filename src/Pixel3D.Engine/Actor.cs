@@ -310,7 +310,7 @@ namespace Pixel3D.Engine
         {
             var animation = animationSet[animationContext];
             var animationFrame = animation.Frames[0];
-            var outgoingAttachment = animationFrame.outgoingAttachments[outgoingAttachmentContext];
+            var outgoingAttachment = animationFrame.outgoingAttachments.Get(outgoingAttachmentContext);
 
             var result = new OutgoingAttachmentView(outgoingAttachment, position + currentAnimation.PositionDeltaThisTick(), facingLeft);
 

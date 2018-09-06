@@ -30,8 +30,6 @@ namespace Pixel3D
             return new Rectangle(startX, startY, Width, Height);
         }
 
-
-
         public static Bounds InfiniteInverse { get { return new Bounds { startX = int.MaxValue, startY = int.MaxValue, endX = int.MinValue, endY = int.MinValue }; } }
 
 
@@ -80,10 +78,7 @@ namespace Pixel3D
             return result;
         }
 
-
-
-
-        public bool Intersects(Bounds other)
+		public bool Intersects(Bounds other)
         {
             return !(this.endX <= other.startX || this.startX >= other.endX || this.endY <= other.startY || this.startY >= other.endY); 
         }
@@ -106,8 +101,7 @@ namespace Pixel3D
             return bounds;
         }
 
-
-        public bool Contains(int x, int y)
+		public bool Contains(int x, int y)
         {
             return x >= startX && x < endX && y >= startY && y < endY;
         }
@@ -117,10 +111,7 @@ namespace Pixel3D
             return !(startX >= other.endX || other.startX >= endX || startY >= other.endY || other.startY >= endY);
         }
 
-
-
-
-        public Bounds FlipX()
+		public Bounds FlipX()
         {
             return new Bounds { startX = -endX +1, endX = -startX +1, startY = startY, endY = endY };
         }
@@ -130,8 +121,7 @@ namespace Pixel3D
             return flipX ? FlipX() : this;
         }
 
-
-        public Bounds Combine(Bounds other)
+		public Bounds Combine(Bounds other)
         {
             return new Bounds
             {
@@ -142,8 +132,7 @@ namespace Pixel3D
             };
         }
 
-
-        public static Bounds Intersection(Bounds a, Bounds b)
+	    public static Bounds Intersection(Bounds a, Bounds b)
         {
             return new Bounds
             {
@@ -164,8 +153,7 @@ namespace Pixel3D
                 endY = Math.Max(a.endY, b.endY),
             };
         }
-
-
+		
         public static Bounds Interpolate(Bounds a, Bounds b, int p, int last)
         {
             if(p == 0)
@@ -186,9 +174,7 @@ namespace Pixel3D
             return result;
         }
 
-
-
-        /// <summary>Expand to contain the pixel at the given position (position is considered to have width and height of 1)</summary>
+		/// <summary>Expand to contain the pixel at the given position (position is considered to have width and height of 1)</summary>
         public Bounds ExpandToContain(Point position)
         {
             Bounds result = this;
@@ -204,8 +190,7 @@ namespace Pixel3D
 
             return result;
         }
-
-
+		
         public Bounds Grow(int p)
         {
             Bounds result = this;
@@ -231,8 +216,7 @@ namespace Pixel3D
         }
     }
 
-
-    public static class BoundsExtensions
+	public static class BoundsExtensions
     {
         public static void Write(this BinaryWriter bw, Bounds bounds)
         {
@@ -253,4 +237,3 @@ namespace Pixel3D
         }
     }
 }
-
