@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Common
+namespace Pixel3D
 {
     public class ReferenceEqualityComparer<T> : IEqualityComparer<T> where T : class
     {
