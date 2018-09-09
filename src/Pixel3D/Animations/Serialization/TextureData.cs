@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Pixel3D.Animations.Serialization
+﻿namespace Pixel3D.Animations.Serialization
 {
     public struct TextureData
     {

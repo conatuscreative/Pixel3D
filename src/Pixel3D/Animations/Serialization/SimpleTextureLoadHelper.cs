@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace Pixel3D.Animations.Serialization
@@ -24,8 +20,7 @@ namespace Pixel3D.Animations.Serialization
         byte[] sharedLoadBuffer;
         GraphicsDevice graphicsDevice;
 
-
-        public byte[] GetSharedLoadBuffer()
+		public byte[] GetSharedLoadBuffer()
         {
             return sharedLoadBuffer;
         }
@@ -36,8 +31,5 @@ namespace Pixel3D.Animations.Serialization
             texture.SetData(0, new Rectangle(0, 0, width, height), buffer, 0, width * height * 4);
             return texture;
         }
-
     }
 }
-
-

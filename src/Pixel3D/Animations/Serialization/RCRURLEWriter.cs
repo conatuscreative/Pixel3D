@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Pixel3D.Animations.Serialization;
 using System.Diagnostics;
-using Microsoft.Xna.Framework;
 using System.IO;
 
 namespace Pixel3D.Animations.Serialization

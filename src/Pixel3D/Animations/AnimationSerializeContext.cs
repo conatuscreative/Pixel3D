@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common;
 using System.IO;
 using Pixel3D.Animations.Serialization;
 
@@ -28,8 +27,7 @@ namespace Pixel3D.Animations
 
         public readonly BinaryWriter bw;
         public readonly ImageWriter imageWriter;
-
-
+		
         // NOTE: ImageWriter doesn't have a "monitor" mode currently (so don't use it for change monitering)
         /// <summary>True for save change monitoring (try to avoid mutation).</summary>
         public bool monitor;
@@ -42,9 +40,7 @@ namespace Pixel3D.Animations
         public int Version { get; private set; }
 
         #endregion
-
-
-
+		
         #region Shared Item Serializer
 
         internal Dictionary<T, int> SerializeSharedItems<T>(IEnumerable<T> itemCollection, Action<T, AnimationSerializeContext> serializeDelegate) where T : class
@@ -66,8 +62,5 @@ namespace Pixel3D.Animations
         }
 
         #endregion
-
-
-
     }
 }
