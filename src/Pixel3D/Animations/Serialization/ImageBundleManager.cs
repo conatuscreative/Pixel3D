@@ -6,8 +6,6 @@ using System.IO.Compression;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using System.Threading;
-using Pixel3D.Serialization;
-using Pixel3D.Serialization.Context;
 
 namespace Pixel3D.Animations.Serialization
 {
@@ -15,8 +13,7 @@ namespace Pixel3D.Animations.Serialization
     {
         private GraphicsDevice graphicsDevice;
 
-
-        int[] offsets; // <- has an extra offset for EOF
+		int[] offsets; // <- has an extra offset for EOF
         string[] names;
         Dictionary<string, int> indexLookupByName;
         int maxTextureSize = 0;
@@ -400,20 +397,5 @@ namespace Pixel3D.Animations.Serialization
             // https://www.youtube.com/watch?v=xos2MnVxe-c
             RegisterAlive(bundle);
         }
-
-
-
-        #region Network Serializer Block
-
-        [CustomFieldSerializer]
-        public static void Serialize(SerializeContext context, BinaryWriter bw, ImageBundleManager value) { throw new InvalidOperationException(); }
-        [CustomFieldSerializer]
-        public static void Deserialize(DeserializeContext context, BinaryReader br, ref ImageBundleManager value) { throw new InvalidOperationException(); }
-
-        #endregion
-
-
-
-
     }
 }

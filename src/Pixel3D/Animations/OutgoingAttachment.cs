@@ -28,8 +28,6 @@ namespace Pixel3D.Animations
             Opposite = 2,
         }
         
-
-
         #region Serialization
 
         public void Serialize(AnimationSerializeContext context)

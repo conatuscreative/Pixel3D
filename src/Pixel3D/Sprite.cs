@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
 using System.Diagnostics;
-using System.IO;
-using Pixel3D.Serialization;
-using Pixel3D.Serialization.Context;
 
 namespace Pixel3D
 {
@@ -81,8 +78,6 @@ namespace Pixel3D
         {
             return !(a == b);
         }
-
-
 
         #region Serialize
 
@@ -172,25 +167,5 @@ namespace Pixel3D
 
 
         #endregion
-
-
-
-        #region Network Serializer
-
-        [CustomSerializer]
-        public static void Serialize(SerializeContext context, BinaryWriter bw, ref Sprite value)
-        {
-            // NOTE: Not visiting the texture object, because it could be deferred (so definitions can't know about it)
-        }
-
-        [CustomSerializer]
-        public static void Deserialize(DeserializeContext context, BinaryReader br, ref Sprite value)
-        {
-            Debug.Assert(false); // Shouldn't happen! (Can't store Sprite in game state)
-            throw new InvalidOperationException();
-        }
-
-        #endregion
-
     }
 }

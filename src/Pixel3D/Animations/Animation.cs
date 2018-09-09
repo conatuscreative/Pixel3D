@@ -32,7 +32,7 @@ namespace Pixel3D.Animations
         }
 
 
-        public List<AnimationFrame> Frames { get; private set; }
+        public List<AnimationFrame> Frames { get; set; }
 
 
         /// <summary>Get the maximum world space bounds of all frames in this animation. EDITOR ONLY!</summary>
@@ -73,61 +73,6 @@ namespace Pixel3D.Animations
         public string cue;
 
         public bool preventDropMotion;
-
-        #region Serialize
-
-        public void Serialize(AnimationSerializeContext context)
-        {
-            context.bw.Write(isLooped);
-            context.bw.WriteNullableString(friendlyName);
-
-            context.bw.Write(Frames.Count);
-            for(int i = 0; i < Frames.Count; i++)
-            {
-                Frames[i].Serialize(context);
-            }
-
-
-            if(!context.monitor)
-                cachedBounds = new Bounds(CalculateGraphicsBounds());
-            if(context.Version >= 35)
-                context.bw.Write(cachedBounds);
-
-
-            context.bw.Write(isShared);
-
-            context.bw.WriteNullableString(cue);
-
-            context.bw.WriteBoolean(preventDropMotion);
-        }
-        
-        /// <summary>Deserialize into new object instance</summary>
-        public Animation(AnimationDeserializeContext context)
-        {
-            isLooped = context.br.ReadBoolean();
-            friendlyName = context.br.ReadNullableString();
-            
-            int frameCount = context.br.ReadInt32();
-            Frames = new List<AnimationFrame>(frameCount);
-            for(int i = 0; i < frameCount; i++)
-            {
-                Frames.Add(new AnimationFrame(context));
-            }
-
-            if(context.Version >= 35)
-                cachedBounds = context.br.ReadBounds();
-            // NOTE: Had to remove call to CalculateGraphicsBounds for old sprites (because we can't get that data at load time in the engine). Time to do a full rewrite.
-
-            isShared = context.br.ReadBoolean();
-
-            cue = context.br.ReadNullableString();
-
-            preventDropMotion = context.br.ReadBoolean();
-        }
-
-        #endregion
-
-
 
         #region Editor Stuff
 
@@ -207,9 +152,7 @@ namespace Pixel3D.Animations
 
         #endregion
 
-
-
-        public static Animation CreateSingleSprite(Sprite sprite)
+		public static Animation CreateSingleSprite(Sprite sprite)
         {
             Animation animation = new Animation();
             Cel cel = new Cel(sprite);

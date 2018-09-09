@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Pixel3D.Audio
+namespace Pixel3D
 {
     // Use this class for debugging - to find where a memory stream mismatches:
-	internal class MemoryCompareStream : Stream
+    public class MemoryCompareStream : Stream
     {
         public MemoryCompareStream(byte[] compareTo)
         {

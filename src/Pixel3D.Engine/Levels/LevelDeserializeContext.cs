@@ -32,38 +32,35 @@ namespace Pixel3D.Engine.Levels
         /// <summary>NOTE: parallel updates between serialize and deserialize</summary>
         public int nextRegionIndex = 0;
 
-        AnimationDeserializeContext animationDeserializeContext;
-        IAssetProvider assetProvider;
-
+	    private readonly AnimationDeserializeContext animationDeserializeContext;
+	    private readonly IAssetProvider assetProvider;
 
         /// <summary>Used to speed up asset packing. Use with extreme care (number of bytes read must match EXACTLY). Produces assets unusable for gameplay.</summary>
         public bool FastReadHack
         {
-            get { return animationDeserializeContext.fastReadHack; }
-            set { animationDeserializeContext.fastReadHack = value; }
+            get => animationDeserializeContext.fastReadHack;
+	        set => animationDeserializeContext.fastReadHack = value;
         }
 
         /// <summary>Used for externally packing masks in the asset packer.</summary>
         public ICustomMaskDataReader CustomMaskDataReader
         {
-            get { return animationDeserializeContext.customMaskDataReader; }
-            set { animationDeserializeContext.customMaskDataReader = value; }
+            get => animationDeserializeContext.customMaskDataReader;
+	        set => animationDeserializeContext.customMaskDataReader = value;
         }
 
 
-        public AnimationSet ReadAnimationSet()
-        {
-            bool externalReference = br.ReadBoolean();
-            if(externalReference)
-            {
-                return assetProvider.Load<AnimationSet>(br.ReadString());
-            }
-            else
-            {
-                return new AnimationSet(animationDeserializeContext);
-            }
-        }
-
-
+	    public AnimationSet ReadAnimationSet()
+	    {
+		    bool externalReference = br.ReadBoolean();
+		    if (externalReference)
+		    {
+			    return assetProvider.Load<AnimationSet>(br.ReadString());
+		    }
+		    else
+		    {
+			    return animationDeserializeContext.DeserializeAnimationSet();
+		    }
+	    }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
-using Pixel3D.Serialization;
-using Pixel3D.Serialization.Context;
 
 namespace Pixel3D
 {
@@ -96,19 +93,5 @@ namespace Pixel3D
 
             return bundle.GetSprite(index, origin);
         }
-
-
-
-
-        #region Network Serializer (definition only)
-
-        // Definition-only (TODO: Maybe we should care that the sprite references match up between players?)
-        [CustomSerializer] public static void Serialize(SerializeContext context, BinaryWriter bw, ref SpriteRef value) { }
-        [CustomSerializer] public static void Deserialize(DeserializeContext context, BinaryReader br, ref SpriteRef value) { throw new InvalidOperationException(); }
-
-        #endregion
-
-
-
     }
 }
