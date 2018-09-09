@@ -4,27 +4,27 @@ using Microsoft.Xna.Framework;
 
 namespace Pixel3D.Animations
 {
-    [DebuggerDisplay("Cel:{EditorName}")]
-    public class Cel : IEditorNameProvider
-    {
-        /// <summary>In theory, this should be null if we are not inside a layer list.</summary>
-        public Cel next;
+	[DebuggerDisplay("Cel:{EditorName}")]
+	public class Cel : IEditorNameProvider
+	{
+		/// <summary>In theory, this should be null if we are not inside a layer list.</summary>
+		public Cel next;
 
-        /// <summary>IMPORTANT: Do not use in gameplay code (not network safe)</summary>
-        [NonSerialized]
-        public string friendlyName;
+		/// <summary>IMPORTANT: Do not use in gameplay code (not network safe)</summary>
+		[NonSerialized] public string friendlyName;
 
-        public SpriteRef spriteRef;
-        public ShadowReceiver shadowReceiver;
-
-
-        public Cel(Sprite sprite)
-        {
-            this.spriteRef = new SpriteRef(sprite);
-        }
+		public SpriteRef spriteRef;
+		public ShadowReceiver shadowReceiver;
 
 
-        public string EditorName
+		public Cel(Sprite sprite)
+		{
+			this.spriteRef = new SpriteRef(sprite);
+		}
+
+		public Cel() { }
+		
+		public string EditorName
         {
             get
             {

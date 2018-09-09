@@ -22,8 +22,7 @@ namespace Pixel3D
         }
 
         public MaskData(uint[] packedData, Rectangle bounds) : this(packedData, bounds.X, bounds.Y, bounds.Width, bounds.Height) { }
-
-
+		
         /// <summary>Create a new data buffer</summary>
         public MaskData(int offsetX, int offsetY, int width, int height)
         {

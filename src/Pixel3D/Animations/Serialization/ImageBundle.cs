@@ -32,7 +32,6 @@ namespace Pixel3D.Animations.Serialization
             return result;
         }
 
-
         public ImageBundle(Sprite sprite)
         {
             manager = null;

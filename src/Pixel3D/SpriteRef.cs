@@ -11,17 +11,16 @@ namespace Pixel3D
 	    public ImageBundle bundle;
 	    public int index;
 	    public Point origin; // <- Stored here because it makes sprite de-duplication simple
-
-
+		
         /// <summary>
         /// Create a reference to the given sprite in a dummy sprite bundle.
         /// NOTE: Expects the texture of the sprite to be either immutable or unshared (won't get uncached or modified)
         /// </summary>
         public SpriteRef(Sprite sprite)
         {
-            this.bundle = new ImageBundle(sprite);
-            this.index = 0;
-            this.origin = sprite.origin;
+            bundle = new ImageBundle(sprite);
+            index = 0;
+            origin = sprite.origin;
         }
 		
         /// <summary>
