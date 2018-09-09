@@ -756,9 +756,7 @@ namespace Pixel3D
 
 		public static MaskData DeserializeMaskData(this BinaryReader br, bool fastReadHack)
 		{
-			var maskData = new MaskData();
-
-			Debug.Assert(maskData.Valid);
+			var maskData = new MaskData(br.ReadRectangle());
 
 			if (maskData.packedData != null)
 			{
@@ -775,6 +773,8 @@ namespace Pixel3D
 					br.ReadBytes(bytesToRead);
 				}
 			}
+
+			Debug.Assert(maskData.Valid);
 
 			return maskData;
 		}
@@ -939,16 +939,11 @@ namespace Pixel3D
 		/// <summary>Deserialize into new object instance</summary>
 		public static Cel DeserializeCel(this AnimationDeserializeContext context)
 		{
-			var sprite = context.DeserializeSprite();
-
-			var cel = new Cel(sprite);
-
+			var cel = new Cel();
 			cel.friendlyName = context.br.ReadNullableString();
 			cel.spriteRef = context.DeserializeSpriteRef();
-
 			if (context.br.ReadBoolean())
 				cel.shadowReceiver = context.DeserializeShadowReceiver();
-
 			return cel;
 		}
 
