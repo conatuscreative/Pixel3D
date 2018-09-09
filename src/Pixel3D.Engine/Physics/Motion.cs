@@ -1,4 +1,6 @@
-﻿namespace Pixel3D.Engine.Physics
+﻿using Pixel3D.Physics;
+
+namespace Pixel3D.Engine.Physics
 {
     /// <summary>Gravity constants in 256-fixed-point, in pixels/frame^2</summary>
     public static class Gravity256

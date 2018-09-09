@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System.Diagnostics;
+using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D.Animations.Serialization
 {

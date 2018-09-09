@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
+using Pixel3D.Extensions;
+using Pixel3D.FrameworkExtensions;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 

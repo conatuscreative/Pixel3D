@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Pixel3D
+namespace Pixel3D.Extensions
 {
 	public static class OrderedDictionaryExtensions
 	{

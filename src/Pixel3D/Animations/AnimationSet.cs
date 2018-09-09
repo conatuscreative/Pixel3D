@@ -4,8 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
-using Common;
 using Pixel3D.Animations.Serialization;
+using Pixel3D.Extensions;
 
 namespace Pixel3D.Animations
 {

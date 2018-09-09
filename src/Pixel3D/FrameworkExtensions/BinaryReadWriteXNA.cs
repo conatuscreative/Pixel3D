@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
+﻿using System.IO;
 using Microsoft.Xna.Framework;
 
-namespace Microsoft.Xna.Framework // Put these methods in the same namespace of their types
+namespace Pixel3D.FrameworkExtensions // Put these methods in the same namespace of their types
 {
     public static class BinaryReadWriteXNAExtensions
     {

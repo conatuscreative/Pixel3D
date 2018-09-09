@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 
-namespace Pixel3D
+namespace Pixel3D.Extensions
 {
     // Extension methods for Data2D<Color>
     public static class ColorDataExtensions

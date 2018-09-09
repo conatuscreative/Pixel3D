@@ -1,4 +1,6 @@
-﻿namespace System
+﻿using System;
+
+namespace Pixel3D.FrameworkExtensions
 {
     public static class RandomExtensions
     {

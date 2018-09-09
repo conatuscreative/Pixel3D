@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using System.IO;
 using System.Diagnostics;
+using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D
 {

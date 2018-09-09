@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using Common;
-using Pixel3D.Animations;
 using System.Runtime.InteropServices;
 using System.Security;
+using Microsoft.Xna.Framework;
+using Pixel3D.Animations;
+using Pixel3D.FrameworkExtensions;
 
-namespace Pixel3D
+namespace Pixel3D.Physics
 {
     //
     // IMPORTANT: Lots of the methods that query the physics state are optimised and copy-pasted between each other.

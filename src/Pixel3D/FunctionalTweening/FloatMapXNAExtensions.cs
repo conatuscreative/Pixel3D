@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Pixel3D
+namespace Pixel3D.FunctionalTweening
 {
 	public static class FloatMapXNAExtensions
 	{

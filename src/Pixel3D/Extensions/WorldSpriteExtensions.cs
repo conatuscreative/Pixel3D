@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace Pixel3D
+namespace Pixel3D.Extensions
 {
     public static class WorldSpriteExtensions
     {

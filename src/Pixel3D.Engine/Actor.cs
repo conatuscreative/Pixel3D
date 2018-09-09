@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using Pixel3D.Animations;
 using Pixel3D.Engine.Levels;
+using Pixel3D.Extensions;
+using Pixel3D.Physics;
 using Pixel3D.Sorting;
 using Pixel3D.StateManagement;
 

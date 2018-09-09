@@ -1,4 +1,5 @@
 using System.IO;
+using Pixel3D.Extensions;
 
 namespace Pixel3D
 {

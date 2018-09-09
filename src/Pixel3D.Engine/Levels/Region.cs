@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Pixel3D.Animations;
-using Pixel3D;
+using Pixel3D.Physics;
 
 namespace Pixel3D.Engine.Levels
 {

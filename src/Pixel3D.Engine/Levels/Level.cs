@@ -9,6 +9,8 @@ using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
 using Pixel3D.AssetManagement;
 using Pixel3D.Engine.Collections;
+using Pixel3D.Extensions;
+using Pixel3D.FrameworkExtensions;
 using Pixel3D.Serialization;
 
 namespace Pixel3D.Engine.Levels

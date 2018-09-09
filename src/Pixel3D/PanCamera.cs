@@ -1,5 +1,5 @@
-﻿using Common.GlobalInput;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Pixel3D.Extensions;
 
 namespace Pixel3D
 {

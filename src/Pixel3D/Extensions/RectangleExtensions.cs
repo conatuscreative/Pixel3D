@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace Pixel3D
+namespace Pixel3D.Extensions
 {
     public static class RectangleExtensions
     {

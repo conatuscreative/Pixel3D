@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
 using System.Diagnostics;
+using Pixel3D.Extensions;
 
 namespace Pixel3D
 {

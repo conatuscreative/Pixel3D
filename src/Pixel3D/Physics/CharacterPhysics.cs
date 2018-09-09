@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using Pixel3D.Animations;
 
-namespace Pixel3D
+namespace Pixel3D.Physics
 {
     public struct CharacterPhysicsInfo
     {

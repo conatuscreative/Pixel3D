@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Pixel3D
+namespace Pixel3D.Helpers
 {
     public class TarWriter : IDisposable
     {

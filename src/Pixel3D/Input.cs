@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 
-namespace Common.GlobalInput // Put this in a different namespace so it doesn't get pulled into network-sensitive gameplay state stuff
+namespace Pixel3D // Put this in a different namespace so it doesn't get pulled into network-sensitive gameplay state stuff
 {
     [Flags]
     public enum Modifiers

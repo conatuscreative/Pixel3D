@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace System // <- include with Int32 and friends
+namespace Pixel3D.FrameworkExtensions // <- include with Int32 and friends
 {
     public static class IntegerExtensions
     {

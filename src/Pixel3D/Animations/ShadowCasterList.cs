@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Pixel3D.Extensions;
 
 namespace Pixel3D.Animations
 {

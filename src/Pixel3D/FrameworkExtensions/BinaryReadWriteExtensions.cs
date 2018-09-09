@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace System
+namespace Pixel3D.FrameworkExtensions
 {
     public static class BinaryReadWriteExtensions
     {

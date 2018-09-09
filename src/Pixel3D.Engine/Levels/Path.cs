@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Pixel3D.Engine.Collections;
 using Pixel3D.Engine.Levels;
+using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D.Engine.Levels
 {

@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using System.Threading;
+using Pixel3D.Helpers;
 
 namespace Pixel3D.Animations.Serialization
 {

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using Common;
 using Microsoft.Xna.Framework;
+using Pixel3D.Extensions;
 
 namespace Pixel3D.Animations
 {

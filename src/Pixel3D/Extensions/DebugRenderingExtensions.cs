@@ -1,8 +1,8 @@
 using System;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace Pixel3D.DebugRendering // <- Separate namespace, so you have to opt-into these
+namespace Pixel3D.Extensions // <- Separate namespace, so you have to opt-into these
 {
     public static class DebugRenderingExtensions
     {
