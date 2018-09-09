@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pixel3D.Engine.Navigation
+namespace Pixel3D.Navigation
 {
     /// <summary>Flags for eight possible directions</summary>
     [Flags]

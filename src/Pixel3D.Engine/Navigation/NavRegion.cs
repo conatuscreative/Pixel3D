@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Pixel3D.Engine.Maths;
+using Pixel3D.Navigation;
 
 namespace Pixel3D.Engine.Navigation
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pixel3D.Strings
+namespace Pixel3D.Engine
 {
     public static class LineWrapping
     {

@@ -1,4 +1,6 @@
-﻿namespace Pixel3D.Engine.Navigation
+﻿using Pixel3D.Navigation;
+
+namespace Pixel3D.Engine.Navigation
 {
     public struct PathClipResult
     {

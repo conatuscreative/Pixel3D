@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Pixel3D.Pipeline
+namespace Pixel3D.Pipeline.Audio
 {
     // REFERENCE: 
     //  https://web.archive.org/web/20141213140451/https://ccrma.stanford.edu/courses/422/projects/WaveFormat/

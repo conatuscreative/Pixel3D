@@ -1,4 +1,6 @@
-﻿namespace System.IO // <- Put in the same namespace as BinaryReader, etc
+﻿using System.IO;
+
+namespace Pixel3D // <- Put in the same namespace as BinaryReader, etc
 {
     public static class BinaryReaderWriterExtensions
     {

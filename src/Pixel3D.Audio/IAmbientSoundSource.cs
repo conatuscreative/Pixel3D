@@ -1,6 +1,4 @@
-﻿using Pixel3D.Audio;
-
-namespace Pixel3D.Engine.Audio
+﻿namespace Pixel3D.Audio
 {
     /// <summary>
     /// Objects that can play back ambient audio

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pixel3D.Engine.Navigation
+namespace Pixel3D.Navigation
 {
     // Packing two signed 2-bit numbers (X in low, Z in high)
     // Using 2 bits as it allows minimal jump tables while retaining simple unpack behaviour

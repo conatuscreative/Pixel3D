@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pixel3D.Engine.Navigation
+namespace Pixel3D.Navigation
 {
     public struct MinMax
     {

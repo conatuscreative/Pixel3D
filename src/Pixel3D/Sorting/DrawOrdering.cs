@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
 using Pixel3D.Animations;
-using Microsoft.Xna.Framework;
 
 namespace Pixel3D.Sorting
 {

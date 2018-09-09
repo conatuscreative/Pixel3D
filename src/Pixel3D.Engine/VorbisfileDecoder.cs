@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Audio;
 using Pixel3D.Audio;
 
-namespace Pixel3D.Engine.Audio
+namespace Pixel3D.Engine
 {
     // Having to use vorbisfile instead of libvorbis directly makes me sad. -AR
     // (See conversations between myself and Ethan about why struct layout cross-platform is annoying,

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Pixel3D.Pipeline
+namespace Pixel3D.Pipeline.Audio
 {
     public struct SoundParameters
     {

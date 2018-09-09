@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Pixel3D.Animations;
 
-namespace Pixel3D
+namespace Pixel3D.Engine
 {
     public class MaskDataReferenceResolver : ICustomMaskDataReader
     {

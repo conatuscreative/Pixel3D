@@ -1,4 +1,4 @@
-namespace Pixel3D
+namespace Pixel3D.Engine
 {
     public static class Log
     {
