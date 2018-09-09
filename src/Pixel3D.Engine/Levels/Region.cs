@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Pixel3D.Animations;
-using Pixel3D.Engine;
+using Pixel3D;
 
 namespace Pixel3D.Engine.Levels
 {
@@ -46,7 +46,7 @@ namespace Pixel3D.Engine.Levels
 
         protected void Deserialize(LevelDeserializeContext context)
         {
-            mask = new MaskData(context.br, context.FastReadHack);
+			mask = context.br.DeserializeMaskData(context.FastReadHack);
 
             if (context.Version >= 15)
             {

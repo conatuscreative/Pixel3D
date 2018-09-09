@@ -137,50 +137,6 @@ namespace Pixel3D
             }
         }
 
-
-        #region Serialization
-
-        public void Serialize(AnimationSerializeContext context)
-        {
-            context.bw.Write(DefaultHeight);
-
-            context.bw.Write(OneWay);
-            context.bw.Write(OneWayThickness);
-
-            if(context.bw.WriteBoolean(HasData))
-            {
-                context.bw.Write(heightmapData.Bounds);
-                context.bw.Write(heightmapData.Data, 0, heightmapData.Width * heightmapData.Height);
-            }
-
-            HeightmapInstructionExtensions.Serialize(instructions, context);
-        }
-
-        public Heightmap(AnimationDeserializeContext context)
-        {
-            DefaultHeight = context.br.ReadByte();
-
-            OneWay = context.br.ReadBoolean();
-            OneWayThickness = context.br.ReadByte();
-
-            if(context.br.ReadBoolean())
-            {
-                Rectangle bounds = context.br.ReadRectangle();
-                byte[] data = context.br.ReadBytes(bounds.Width * bounds.Height);
-                heightmapData = new Data2D<byte>(data, bounds);
-            }
-            else
-            {
-                heightmapData = default(Data2D<byte>);
-            }
-
-            instructions = HeightmapInstructionExtensions.Deserialize(context);
-        }
-
-        #endregion
-
-
-
         #region Write to Heightmap
 
         public void ClearToHeight(byte height)
@@ -412,9 +368,7 @@ namespace Pixel3D
 
 
         #endregion
-
-
-
+		
         #region Methods for creating Shadow Heightmaps
 
         /// <summary>Create a new heightmap that extends its content (non-default heights) out in oblique directions (sutiable for creating shadow heightmaps)</summary>
@@ -571,9 +525,7 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
+		
         #region Queries
 
         /// <summary>
@@ -676,9 +628,7 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
+		
         #region Derived Data
 
         public bool IsObjectHeightmap { get { return DefaultHeight == 0; } }
@@ -699,9 +649,5 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
-
     }
 }

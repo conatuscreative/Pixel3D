@@ -9,9 +9,9 @@ namespace Pixel3D
 	/// <summary>Reference to a <see cref="Sprite"/> stored in a <see cref="ImageBundle"/></summary>
 	public struct SpriteRef
     {
-        private ImageBundle bundle;
-        private int index;
-        private Point origin; // <- Stored here because it makes sprite de-duplication simple
+	    public ImageBundle bundle;
+	    public int index;
+	    public Point origin; // <- Stored here because it makes sprite de-duplication simple
 
 
         /// <summary>
@@ -24,47 +24,7 @@ namespace Pixel3D
             this.index = 0;
             this.origin = sprite.origin;
         }
-
-
-
-        #region Animation Serialization
-
-        public void Serialize(AnimationSerializeContext context)
-        {
-            // Bundling is handled by registering images, keyed on the sprite itself, so we just pass-through:
-            ResolveRequire().Serialize(context);
-        }
-
-        public SpriteRef(AnimationDeserializeContext context)
-        {
-            // IMPORTANT: This method is compatible with Sprite's deserializer
-
-            if(context.imageBundle != null)
-            {
-                this.bundle = context.imageBundle;
-                // NOTE: AssetTool depends on us not actually resolving the sprite during load
-
-                this.index = context.br.ReadInt32();
-                if(index != -1)
-                    this.origin = context.br.ReadPoint();
-                else
-                    this.origin = default(Point);
-            }
-            else // In place sprite
-            {
-                Sprite sprite = new Sprite(context); // Pass through
-
-                this.bundle = new ImageBundle(sprite);
-                this.index = 0;
-                this.origin = sprite.origin;
-            }
-        }
-
-        #endregion
-
-
-
-
+		
         /// <summary>
         /// Resolve this sprite reference, if it is already loaded. Otherwise queue it for loading.
         /// IMPORTANT: The result of this method is not network-safe! Use for rendering only.

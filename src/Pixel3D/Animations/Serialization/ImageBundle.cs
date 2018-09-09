@@ -196,7 +196,7 @@ namespace Pixel3D.Animations.Serialization
         public byte[] imageTextureIndicies;  // <- NOTE: Only public so the asset packer can see it
         public Rectangle[] imageSourceRectangles;  // <- NOTE: Only public so the asset packer can see it
 
-		internal Sprite GetSprite(int index, Point origin)
+	    public Sprite GetSprite(int index, Point origin)
         {
             if (index == -1) // <- blank sprite
                 return new Sprite();

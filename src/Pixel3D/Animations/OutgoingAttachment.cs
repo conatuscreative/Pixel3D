@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Pixel3D.Animations.Serialization;
-
-namespace Pixel3D.Animations
+﻿namespace Pixel3D.Animations
 {
     public class OutgoingAttachment
     {
@@ -28,37 +24,14 @@ namespace Pixel3D.Animations
             Opposite = 2,
         }
         
-        #region Serialization
-
-        public void Serialize(AnimationSerializeContext context)
-        {
-            context.bw.Write(position);
-            targetAnimationContext.SerializeTagSet(context);
-            targetAttachmentContext.SerializeTagSet(context);
-            context.bw.Write(attachRange);
-            context.bw.Write((int)facing);
-        }
-
-        /// <summary>Deserialize into new object instance</summary>
-        public OutgoingAttachment(AnimationDeserializeContext context)
-        {
-            position = context.br.ReadPosition();
-	        targetAnimationContext = context.DeserializeTagSet();
-            targetAttachmentContext = context.DeserializeTagSet();
-			attachRange = context.br.ReadAABB();
-            facing = (Facing)context.br.ReadInt32();
-        }
-
-        #endregion
-
         public OutgoingAttachment Clone()
         {
             var oa = new OutgoingAttachment();
-            oa.position = this.position;
-            oa.attachRange = this.attachRange;
-            oa.facing = this.facing;
-            oa.targetAnimationContext = this.targetAnimationContext;
-            oa.targetAttachmentContext = this.targetAttachmentContext;
+            oa.position = position;
+            oa.attachRange = attachRange;
+            oa.facing = facing;
+            oa.targetAnimationContext = targetAnimationContext;
+            oa.targetAttachmentContext = targetAttachmentContext;
             return oa;
         }
     }

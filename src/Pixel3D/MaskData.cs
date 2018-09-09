@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
-using System.IO;
 
 namespace Pixel3D
 {
@@ -56,8 +55,7 @@ namespace Pixel3D
         /// <summary>The stride of each row of data.</summary>
         public int DataWidth { get { return (Width + 31) >> 5; } }
         public static int WidthToDataWidth(int width) { return (width + 31) >> 5; }
-
-
+		
         public Rectangle Bounds { get { return new Rectangle(OffsetX, OffsetY, Width, Height); } }
 
 
@@ -89,8 +87,7 @@ namespace Pixel3D
                     return packedData.Length == DataWidth * Height;
             }
         }
-
-
+		
         /// <summary>Get a translation of the data to a different position.</summary>
         public MaskData Translated(int x, int y)
         {
@@ -103,9 +100,7 @@ namespace Pixel3D
             return new MaskData(packedData, OffsetX + translation.X, OffsetY + translation.Y, Width, Height);
         }
 
-
-
-        public bool this[int x, int y]
+		public bool this[int x, int y]
         {
             get
             {
@@ -138,8 +133,7 @@ namespace Pixel3D
                 return defaultValue;
         }
 
-
-        public bool IsSetInXRange(int xStart, int xEnd, int y)
+		public bool IsSetInXRange(int xStart, int xEnd, int y)
         {
             y -= OffsetY;
             if((uint)y >= (uint)Height)
@@ -160,9 +154,7 @@ namespace Pixel3D
 
             return false;
         }
-
-
-
+		
         public MaskData MakeFlippedX()
         {
             MaskData flipped = new MaskData(Bounds.FlipXIndexable());
@@ -221,8 +213,7 @@ namespace Pixel3D
             return result.LazyCopyAutoCrop();
         }
 
-
-        public uint CountBitsSet()
+		public uint CountBitsSet()
         {
             uint result = 0;
             for(int i = 0; i < packedData.Length; i++)
@@ -232,8 +223,7 @@ namespace Pixel3D
             return result;
         }
 
-
-        public string OutputImageAsDebugString()
+		public string OutputImageAsDebugString()
         {
             StringBuilder sb = new StringBuilder();
             for(int y = EndY - 1; y >= StartY; y--) // <- Reverse because these are typically in world space (Y is up)
@@ -246,8 +236,7 @@ namespace Pixel3D
             }
             return sb.ToString();
         }
-
-
+		
         #region Bit Shifting
 
         // For high-performance mask comparisons:
@@ -298,9 +287,7 @@ namespace Pixel3D
 
         #endregion
 
-
-
-        #region Modify Bounds
+		#region Modify Bounds
 
         /// <summary>
         /// Copy the data from one region to another (without moving it).
@@ -358,9 +345,7 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
+		
         #region Drawing
 
         public static void DrawPixel(ref MaskData data, int x, int y, bool setTo)
@@ -455,50 +440,5 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-
-        #region Serialization
-
-        // IMPORTANT: Because both levels and animation sets can serialize these, we don't have a version number!
-        //            (Could pass a custom one as a parameter, or use multiple methods, if the need arises...)
-
-        public void Serialize(BinaryWriter bw)
-        {
-            bw.Write(Bounds);
-
-            if(packedData != null)
-            {
-                for(int i = 0; i < packedData.Length; i++)
-                {
-                    bw.Write(packedData[i]);
-                }
-            }
-        }
-
-        public MaskData(BinaryReader br, bool fastReadHack) : this(br.ReadRectangle())
-        {
-            Debug.Assert(Valid);
-
-            if(packedData != null)
-            {
-                if(!fastReadHack)
-                {
-                    for(int i = 0; i < packedData.Length; i++)
-                    {
-                        packedData[i] = br.ReadUInt32();
-                    }
-                }
-                else // FAST READ!
-                {
-                    int bytesToRead = packedData.Length * 4;
-                    br.ReadBytes(bytesToRead);
-                }
-            }
-        }
-
-        #endregion
-
-
     }
 }

@@ -221,93 +221,10 @@ namespace Pixel3D
         }
 
         #endregion
-
-
-        #region Serialization
-
-        // NOTE: Because heightmap instructions will eventually only be stored in the unoptimised data
-        //       we can be a little bit lazy and just serialize all arguments, even if they are not actually
-        //       used by the given op-code.
-
-        // NOTE: Masks are not shared for HeightmapInstruction (otherwise we get a nasty circular dependency through ShadowReceiver)
-
-        public void Serialize(AnimationSerializeContext context)
-        {
-            context.bw.Write((int)Operation);
-
-            context.bw.Write(Height);
-            context.bw.Write(ObliqueDirection);
-            context.bw.Write(FrontEdgeDepth);
-            context.bw.Write(Depth);
-            context.bw.Write(Slope);
-            context.bw.Write(Offset);
-
-            context.bw.Write(Mask != null);
-            if(Mask != null)
-                Mask.Serialize(context);
-        }
-
-        /// <summary>Deserialize into a new object instance</summary>
-        public HeightmapInstruction(AnimationDeserializeContext context)
-        {
-            Operation = (HeightmapOp)context.br.ReadInt32();
-
-            Height = context.br.ReadByte();
-            ObliqueDirection = context.br.ReadOblique();
-            FrontEdgeDepth = context.br.ReadInt32();
-            Depth = context.br.ReadInt32();
-            Slope = context.br.ReadInt32();
-            Offset = context.br.ReadInt32();
-
-            if(context.br.ReadBoolean())
-                Mask = new Mask(context);
-            else
-                Mask = null;
-        }
-
-        #endregion
-
     }
 
-
-    public static class HeightmapInstructionExtensions
+	public static class HeightmapInstructionExtensions
     {
-
-        #region Serialize Instruction List
-
-        public static void Serialize(List<HeightmapInstruction> instructions, AnimationSerializeContext context)
-        {
-            context.bw.Write(instructions != null);
-            if(instructions != null)
-            {
-                context.bw.Write(instructions.Count);
-                for(int i = 0; i < instructions.Count; i++)
-                {
-                    instructions[i].Serialize(context);
-                }
-            }
-        }
-        
-        public static List<HeightmapInstruction> Deserialize(AnimationDeserializeContext context)
-        {
-            if(context.br.ReadBoolean())
-            {
-                int count = context.br.ReadInt32();
-                List<HeightmapInstruction> instructions = new List<HeightmapInstruction>(count);
-                for(int i = 0; i < count; i++)
-                {
-                    instructions.Add(new HeightmapInstruction(context));
-                }
-                return instructions;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        #endregion
-
+		
     }
-
 }

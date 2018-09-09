@@ -132,7 +132,7 @@
       <Name>Pixel3D.Navigation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pixel3D.Serialization.Support\Pixel3D.Serialization.Support.csproj">
-      <Project>{e689afe0-4020-49dc-9768-3bdd5683f2c4}</Project>
+      <Project>{2eff5d87-402d-48da-b075-d7cdbe275dd8}</Project>
       <Name>Pixel3D.Serialization.Support</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj">
