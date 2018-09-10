@@ -7,6 +7,26 @@ namespace Pixel3D.Audio
 {
 	public class Sound
 	{
+		#region REMOVEME
+
+		// required by legacy editor
+
+		// TODO: None of these seem to be used? (Old "AUF" thing?)
+		[Obsolete]
+		public float? pitch;
+
+		[Obsolete]
+		public float? pan;
+
+		[Obsolete]
+		public float? volume;
+
+		/// <summary>TODO: Remove me: this was never actually used properly (it's marked on a few Cues that become Ambient sounds)</summary>
+		[Obsolete]
+		public bool isLooped;
+
+		#endregion
+
 		#region Editor
 
 		public bool muted;
