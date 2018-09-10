@@ -21,9 +21,12 @@ namespace Pixel3D.Strings
 		private readonly List<string> list;
 		private readonly StringBank.StringRange range;
 
-		public int Count => range.count;
+	    public int Count
+	    {
+	        get { return range.count; }
+	    }
 
-		public string this[int index]
+	    public string this[int index]
 		{
 			get
 			{
@@ -55,7 +58,7 @@ namespace Pixel3D.Strings
 			private readonly List<string> list;
 			private readonly StringBank.StringRange range;
 
-			public Enumerator(StringList owner)
+			public Enumerator(StringList owner) : this()
 			{
 				i = 0;
 				Current = null;
@@ -74,9 +77,13 @@ namespace Pixel3D.Strings
 			}
 
 			public string Current { get; private set; }
-			object IEnumerator.Current => Current;
 
-			public bool MoveNext()
+		    object IEnumerator.Current
+		    {
+		        get { return Current; }
+		    }
+
+		    public bool MoveNext()
 			{
 				if (i < range.count)
 				{

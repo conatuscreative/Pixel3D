@@ -319,6 +319,21 @@
     <Compile Include="..\Pixel3D.StateManagement\StateProvider.cs">
       <Link>StateManagement\StateProvider.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Strings\ILocalizationProvider.cs">
+      <Link>Strings\ILocalizationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Strings\StringBank.cs">
+      <Link>Strings\StringBank.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Strings\StringList.cs">
+      <Link>Strings\StringList.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Strings\StringsProvider.cs">
+      <Link>Strings\StringsProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Strings\Tokenizer.cs">
+      <Link>Strings\Tokenizer.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D\AnimationSetExtensions.cs">
       <Link>AnimationSetExtensions.cs</Link>
     </Compile>
@@ -564,9 +579,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Strings\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
