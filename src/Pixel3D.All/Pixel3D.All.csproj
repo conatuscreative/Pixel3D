@@ -68,19 +68,6 @@
     <Compile Include="..\Pixel3D.Audio\SoundState.cs" Link="Audio\SoundState.cs" />
     <Compile Include="..\Pixel3D.Audio\StopSoundEffectInstance.cs" Link="Audio\StopSoundEffectInstance.cs" />
     <Compile Include="..\Pixel3D.Audio\WorldToAudio.cs" Link="Audio\WorldToAudio.cs" />
-    <Compile Include="..\Pixel3D.Common\AABB.cs" Link="Common\AABB.cs" />
-    <Compile Include="..\Pixel3D.Common\BinaryReaderWriterExtensions.cs" Link="Common\BinaryReaderWriterExtensions.cs" />
-    <Compile Include="..\Pixel3D.Common\HashingStream.cs" Link="Common\HashingStream.cs" />
-    <Compile Include="..\Pixel3D.Common\InputState.cs" Link="Common\InputState.cs" />
-    <Compile Include="..\Pixel3D.Common\MemoryCompareStream.cs" Link="Common\MemoryCompareStream.cs" />
-    <Compile Include="..\Pixel3D.Common\MultiInputState.cs" Link="Common\MultiInputState.cs" />
-    <Compile Include="..\Pixel3D.Common\OrderedDictionary.cs" Link="Common\OrderedDictionary.cs" />
-    <Compile Include="..\Pixel3D.Common\OrderedDictionaryExtensions.cs" Link="Common\OrderedDictionaryExtensions.cs" />
-    <Compile Include="..\Pixel3D.Common\Position.cs" Link="Common\Position.cs" />
-    <Compile Include="..\Pixel3D.Common\TagLookup.cs" Link="Common\TagLookup.cs" />
-    <Compile Include="..\Pixel3D.Common\TagSet.cs" Link="Common\TagSet.cs" />
-    <Compile Include="..\Pixel3D.Common\Value128.cs" Link="Common\Value128.cs" />
-    <Compile Include="..\Pixel3D.Common\XorShift.cs" Link="Common\XorShift.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\ByteArrayExtensions.cs" Link="LoopRecorder\ByteArrayExtensions.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\Loop.cs" Link="LoopRecorder\Loop.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\LoopCommand.cs" Link="LoopRecorder\LoopCommand.cs" />
@@ -97,6 +84,8 @@
     <Compile Include="..\Pixel3D.Navigation\MinMax.cs" Link="Navigation\MinMax.cs" />
     <Compile Include="..\Pixel3D.Navigation\NavRegionProjection.cs" Link="Navigation\NavRegionProjection.cs" />
     <Compile Include="..\Pixel3D.Navigation\PathEdge.cs" Link="Navigation\PathEdge.cs" />
+    <Compile Include="..\Pixel3D.Pipeline\Audio\SoundParameters.cs" Link="Pipeline\Audio\SoundParameters.cs" />
+    <Compile Include="..\Pixel3D.Pipeline\Audio\WaveFile.cs" Link="Pipeline\Audio\WaveFile.cs" />
     <Compile Include="..\Pixel3D.Pipeline\ByteArrayDeduplicator.cs" Link="Pipeline\ByteArrayDeduplicator.cs" />
     <Compile Include="..\Pixel3D.Pipeline\CaptureStream.cs" Link="Pipeline\CaptureStream.cs" />
     <Compile Include="..\Pixel3D.Pipeline\ComparableByteArray.cs" Link="Pipeline\ComparableByteArray.cs" />
@@ -293,15 +282,14 @@
     <Folder Include="Navigation\" />
     <Folder Include="MethodProviders\" />
     <Folder Include="AssetManagement\" />
-    <Folder Include="Common\" />
     <Folder Include="Extensions\" />
     <Folder Include="FrameworkExtensions\" />
     <Folder Include="FunctionalTweening\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Pipeline\Audio\" />
     <Folder Include="Serialization.Support\BuiltIn\" />
     <Folder Include="Sorting\" />
     <Folder Include="Physics\" />
-    <Folder Include="Pipeline\" />
     <Folder Include="Serialization\BuiltIn\DelegateHandling\" />
     <Folder Include="Serialization\Context\" />
     <Folder Include="Serialization\Discovery\ReadIL\" />
@@ -328,6 +316,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
+    <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj" />
   </ItemGroup>
 
 </Project>

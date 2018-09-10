@@ -114,6 +114,10 @@
       <Project>{a229580a-8895-46ad-94c8-ae3e6ad94223}</Project>
       <Name>Pixel3D.All</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj">
+      <Project>{1a747b07-7eab-4454-bcfc-ef848cd60a19}</Project>
+      <Name>Pixel3D.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

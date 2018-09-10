@@ -325,6 +325,30 @@
     <Compile Include="..\Pixel3D.Navigation\PathEdge.cs">
       <Link>Navigation\PathEdge.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Pipeline\Audio\SoundParameters.cs">
+      <Link>Pipeline\Audio\SoundParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Pipeline\Audio\WaveFile.cs">
+      <Link>Pipeline\Audio\WaveFile.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Pipeline\ByteArrayDeduplicator.cs">
+      <Link>Pipeline\ByteArrayDeduplicator.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Pipeline\CaptureStream.cs">
+      <Link>Pipeline\CaptureStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Pipeline\ComparableByteArray.cs">
+      <Link>Pipeline\ComparableByteArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Pipeline\MaskReadAndDeduplicate.cs">
+      <Link>Pipeline\MaskReadAndDeduplicate.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Pipeline\PathGatheringAssetProvider.cs">
+      <Link>Pipeline\PathGatheringAssetProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Pipeline\ThreadWriteStream.cs">
+      <Link>Pipeline\ThreadWriteStream.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Serialization.Support\AABBExtensions.cs">
       <Link>Serialization.Support\AABBExtensions.cs</Link>
     </Compile>
