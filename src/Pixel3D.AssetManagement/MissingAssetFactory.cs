@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+using System;
 using System.Collections.Generic;
 
 namespace Pixel3D.AssetManagement
@@ -7,7 +10,8 @@ namespace Pixel3D.AssetManagement
 	{
 		public delegate object CreateMissingAsset(IServiceProvider services, string fullPath);
 
-		private static readonly Dictionary<Type, CreateMissingAsset> CreateRegistry = new Dictionary<Type, CreateMissingAsset>();
+		private static readonly Dictionary<Type, CreateMissingAsset> CreateRegistry =
+			new Dictionary<Type, CreateMissingAsset>();
 
 		public static void Clear()
 		{
@@ -21,10 +25,8 @@ namespace Pixel3D.AssetManagement
 
 		public static T Create<T>(IServiceProvider services, string fullPath) where T : class
 		{
-			if(CreateRegistry.TryGetValue(typeof(T), out var createMissingAsset))
-			{
+			if (CreateRegistry.TryGetValue(typeof(T), out var createMissingAsset))
 				return createMissingAsset(services, fullPath) as T;
-			}
 			throw new InvalidOperationException("Unknown or unsupported asset type");
 		}
 	}
