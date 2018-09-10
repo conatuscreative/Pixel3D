@@ -82,6 +82,45 @@
     <Compile Include="..\Pixel3D.AssetManagement\MissingAssetFactory.cs">
       <Link>AssetManagement\MissingAssetFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Common\AABB.cs">
+      <Link>Common\AABB.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\BinaryReaderWriterExtensions.cs">
+      <Link>Common\BinaryReaderWriterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\HashingStream.cs">
+      <Link>Common\HashingStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\InputState.cs">
+      <Link>Common\InputState.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\MemoryCompareStream.cs">
+      <Link>Common\MemoryCompareStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\MultiInputState.cs">
+      <Link>Common\MultiInputState.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\OrderedDictionary.cs">
+      <Link>Common\OrderedDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\OrderedDictionaryExtensions.cs">
+      <Link>Common\OrderedDictionaryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\Position.cs">
+      <Link>Common\Position.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\TagLookup.cs">
+      <Link>Common\TagLookup.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\TagSet.cs">
+      <Link>Common\TagSet.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\Value128.cs">
+      <Link>Common\Value128.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Common\XorShift.cs">
+      <Link>Common\XorShift.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D\AnimationSetExtensions.cs">
       <Link>AnimationSetExtensions.cs</Link>
     </Compile>
