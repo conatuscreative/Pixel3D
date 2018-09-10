@@ -82,6 +82,165 @@
     <Compile Include="..\Pixel3D.AssetManagement\MissingAssetFactory.cs">
       <Link>AssetManagement\MissingAssetFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Audio\AmbientSound.cs">
+      <Link>Audio\AmbientSound.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\AmbientSoundManager.cs">
+      <Link>Audio\AmbientSoundManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\AudioDevice.cs">
+      <Link>Audio\AudioDevice.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\AudioMath.cs">
+      <Link>Audio\AudioMath.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\AudioRectangle.cs">
+      <Link>Audio\AudioRectangle.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\AudioSystem.cs">
+      <Link>Audio\AudioSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\BinaryReadWriteExtensions.cs">
+      <Link>Audio\BinaryReadWriteExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\CreateSoundEffectFromFile.cs">
+      <Link>Audio\CreateSoundEffectFromFile.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\CreateSoundEffectFromStream.cs">
+      <Link>Audio\CreateSoundEffectFromStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\CreateSoundEffectInstance.cs">
+      <Link>Audio\CreateSoundEffectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\Cue.cs">
+      <Link>Audio\Cue.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\CueDeserializeContext.cs">
+      <Link>Audio\CueDeserializeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\CueSerializeContext.cs">
+      <Link>Audio\CueSerializeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\CueType.cs">
+      <Link>Audio\CueType.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\FadePitchPan.cs">
+      <Link>Audio\FadePitchPan.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\FloatMapExtensions.cs">
+      <Link>Audio\FloatMapExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\GetBoolean.cs">
+      <Link>Audio\GetBoolean.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\GetMaxPlayers.cs">
+      <Link>Audio\GetMaxPlayers.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\GetPlayerAudioPosition.cs">
+      <Link>Audio\GetPlayerAudioPosition.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\GetSingle.cs">
+      <Link>Audio\GetSingle.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\GetSoundState.cs">
+      <Link>Audio\GetSoundState.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\GetString.cs">
+      <Link>Audio\GetString.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\GetTimeSpan.cs">
+      <Link>Audio\GetTimeSpan.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\IAmbientSoundSource.cs">
+      <Link>Audio\IAmbientSoundSource.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\IAudioDefinitions.cs">
+      <Link>Audio\IAudioDefinitions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\IAudioPlayer.cs">
+      <Link>Audio\IAudioPlayer.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\IsAudioDeviceAvailable.cs">
+      <Link>Audio\IsAudioDeviceAvailable.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\ListExtensions.cs">
+      <Link>Audio\ListExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\MissingAudio.cs">
+      <Link>Audio\MissingAudio.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\MusicManager.cs">
+      <Link>Audio\MusicManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\PauseSoundEffectInstance.cs">
+      <Link>Audio\PauseSoundEffectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\PitchPan.cs">
+      <Link>Audio\PitchPan.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\PlayCueParameters.cs">
+      <Link>Audio\PlayCueParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\PlaySoundEffect.cs">
+      <Link>Audio\PlaySoundEffect.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\PlaySoundEffectInstance.cs">
+      <Link>Audio\PlaySoundEffectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\ReadAudioPackage.cs">
+      <Link>Audio\ReadAudioPackage.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\ReferenceEqualityComparer.cs">
+      <Link>Audio\ReferenceEqualityComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\ReportExpectedCue.cs">
+      <Link>Audio\ReportExpectedCue.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\ReportMissingCue.cs">
+      <Link>Audio\ReportMissingCue.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SafeSoundEffect.cs">
+      <Link>Audio\SafeSoundEffect.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SafeSoundEffectInstance.cs">
+      <Link>Audio\SafeSoundEffectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SetBoolean.cs">
+      <Link>Audio\SetBoolean.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SetFadePitchPan.cs">
+      <Link>Audio\SetFadePitchPan.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SetSingle.cs">
+      <Link>Audio\SetSingle.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SetState.cs">
+      <Link>Audio\SetState.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SetString.cs">
+      <Link>Audio\SetString.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SetTimeSpan.cs">
+      <Link>Audio\SetTimeSpan.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\Sound.cs">
+      <Link>Audio\Sound.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SoundEffectManager.cs">
+      <Link>Audio\SoundEffectManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SoundRollbackManager.cs">
+      <Link>Audio\SoundRollbackManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SoundState.cs">
+      <Link>Audio\SoundState.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\StopSoundEffectInstance.cs">
+      <Link>Audio\StopSoundEffectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\WorldToAudio.cs">
+      <Link>Audio\WorldToAudio.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Common\AABB.cs">
       <Link>Common\AABB.cs</Link>
     </Compile>

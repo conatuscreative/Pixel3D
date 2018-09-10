@@ -29,11 +29,17 @@ namespace Pixel3D.Audio
 		public CueType type;
 		public float volume;
 
-		public string EditorName => friendlyName;
+	    public string EditorName
+	    {
+	        get { return friendlyName; }
+	    }
 
-		public int SoundCount => sounds.Count;
+	    public int SoundCount
+	    {
+	        get { return sounds.Count; }
+	    }
 
-		#region Serialization
+	    #region Serialization
 
 		public void Serialize(CueSerializeContext context)
 		{

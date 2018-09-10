@@ -101,7 +101,9 @@ namespace Pixel3D.Audio
 			if (!AudioDevice.Available)
 				return;
 
-			var music = safeMusic?.owner;
+		    IDisposable music = null;
+            if(safeMusic != null)
+			    music = safeMusic.owner;
 
 			// ReSharper disable once PossibleUnintendedReferenceComparison
 			if (activeMusic[priority].music == music)

@@ -18,7 +18,7 @@ namespace Pixel3D.Audio
 				throw new Exception("Tried to load Cue with a version that is too new");
 		}
 
-		public int Version { get; }
+		public int Version { get; private set; }
 
 		public Sound ReadSound()
 		{

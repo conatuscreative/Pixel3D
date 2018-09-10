@@ -23,7 +23,8 @@ namespace Pixel3D.Audio
 				added = MissingCues.Add(name);
 			}
 
-			if (added) AudioSystem.reportMissingCue?.Invoke(name, debugContext);
+			if (added && AudioSystem.reportMissingCue != null)
+			    AudioSystem.reportMissingCue.Invoke(name, debugContext);
 		}
 
 		private class ExpectedCueInfo
@@ -41,7 +42,8 @@ namespace Pixel3D.Audio
 
 			public override bool Equals(object obj)
 			{
-				if (!(obj is ExpectedCueInfo other))
+			    var other = obj as ExpectedCueInfo;
+                if (other == null)
 					return false;
 
 				if (args.Length != other.args.Length)
@@ -70,8 +72,8 @@ namespace Pixel3D.Audio
 				added = ExpectedCues.Add(eci);
 			}
 
-			if (added)
-				AudioSystem.reportExpectedCue?.Invoke(context, args);
+			if (added && AudioSystem.reportExpectedCue != null)
+				AudioSystem.reportExpectedCue.Invoke(context, args);
 		}
 
 		#endregion
@@ -144,7 +146,8 @@ namespace Pixel3D.Audio
 				sound = missingSoundEffect;
 			}
 
-			sound?.Play(fpp.fade, fpp.pitch, fpp.pan);
+            if(sound != null)
+			    sound.Play(fpp.fade, fpp.pitch, fpp.pan);
 		}
 
 		public static SafeSoundEffect GetMissingMusicSound()

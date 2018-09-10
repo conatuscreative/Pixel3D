@@ -50,11 +50,14 @@ namespace Pixel3D.Audio
 			if (!GameIsReceivingAmbientAudio(localPlayerBits))
 				return;
 
-			if (potentialAmbientSoundSource is IAmbientSoundSource ambientSoundSource)
+            var ambientSoundSource = potentialAmbientSoundSource as IAmbientSoundSource;
+			if (ambientSoundSource != null)
 			{
 				var ambientSound = ambientSoundSource.AmbientSound;
 				if (ambientSound == null)
 					return;
+
+                FadePitchPan fpp;
 
 				if (GetPlaybackInfoFor(
 					ambientSoundSource.Bounds,
@@ -66,7 +69,7 @@ namespace Pixel3D.Audio
 					ambientSound.pan,
 					camera,
 					gameState,
-					localPlayerBits, out var fpp))
+					localPlayerBits, out fpp))
 				{
 					// At this point, we have an audible sound. Store it. NOTE: Parallel lists
 					pendingSources.Add(ambientSoundSource);
@@ -103,7 +106,8 @@ namespace Pixel3D.Audio
 
 			for (var i = 0; i < pendingSources.Count;)
 			{
-				if (previousAssociations.TryGetValue(pendingSources[i], out var association))
+			    int association;
+				if (previousAssociations.TryGetValue(pendingSources[i], out association))
 				{
 					var sourceAmbientSound = pendingSources[i].AmbientSound;
 					var liveSound = previousLiveSounds[association];

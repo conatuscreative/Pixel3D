@@ -12,8 +12,12 @@ namespace Pixel3D.Audio
 		{
 		} // <- no external instancing
 
-		public static ReferenceEqualityComparer<T> Instance { get; } = new ReferenceEqualityComparer<T>();
+		public static ReferenceEqualityComparer<T> Instance { get; private set; }
 
+	    static ReferenceEqualityComparer()
+	    {
+	        Instance = new ReferenceEqualityComparer<T>();
+	    }
 
 		public bool Equals(T x, T y)
 		{
