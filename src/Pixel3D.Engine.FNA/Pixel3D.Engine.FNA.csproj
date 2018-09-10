@@ -6,11 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
-    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj" />
-    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.Audio\Pixel3D.Audio.csproj" />
-    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.Engine\Pixel3D.Engine.csproj" />
-    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.LoopRecorder\Pixel3D.LoopRecorder.csproj" />
-    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D\Pixel3D.csproj" />
+    <ProjectReference Include="..\Pixel3D.All\Pixel3D.All.csproj" />
+    <ProjectReference Include="..\Pixel3D.Engine\Pixel3D.Engine.csproj" />
   </ItemGroup>
 
 </Project>

@@ -110,41 +110,9 @@
       <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
       <Name>FNA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj">
-      <Project>{550e1bff-47be-4b1e-9b11-2a1784519626}</Project>
-      <Name>Pixel3D.AssetManagement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj">
-      <Project>{52f63851-9353-44be-bbbe-a4a92c353d14}</Project>
-      <Name>Pixel3D.Audio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj">
-      <Project>{9b9c8de1-4e24-4e53-8f79-14370e3096dc}</Project>
-      <Name>Pixel3D.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pixel3D.Navigation\Pixel3D.Navigation.csproj">
-      <Project>{914260d9-8aca-4122-84ea-0776f304f2ad}</Project>
-      <Name>Pixel3D.Navigation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pixel3D.Serialization.Support\Pixel3D.Serialization.Support.csproj">
-      <Project>{2eff5d87-402d-48da-b075-d7cdbe275dd8}</Project>
-      <Name>Pixel3D.Serialization.Support</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pixel3D.Serialization\Pixel3D.Serialization.csproj">
-      <Project>{3a037f58-d2dc-4636-bc48-47f09c6566e4}</Project>
-      <Name>Pixel3D.Serialization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj">
-      <Project>{6e48fcd0-ad6b-43a4-a2b0-149e53025f74}</Project>
-      <Name>Pixel3D.StateManagement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pixel3D.Strings\Pixel3D.Strings.csproj">
-      <Project>{d05171bf-a7f7-4a43-9ba2-d8643b047209}</Project>
-      <Name>Pixel3D.Strings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pixel3D\Pixel3D.csproj">
-      <Project>{790b8ab0-e162-4f29-abed-11ad81d4d6f9}</Project>
-      <Name>Pixel3D</Name>
+    <ProjectReference Include="..\Pixel3D.All\Pixel3D.All.csproj">
+      <Project>{a229580a-8895-46ad-94c8-ae3e6ad94223}</Project>
+      <Name>Pixel3D.All</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
