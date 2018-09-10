@@ -103,6 +103,9 @@
     <Compile Include="..\Pixel3D.Pipeline\MaskReadAndDeduplicate.cs" Link="Pipeline\MaskReadAndDeduplicate.cs" />
     <Compile Include="..\Pixel3D.Pipeline\PathGatheringAssetProvider.cs" Link="Pipeline\PathGatheringAssetProvider.cs" />
     <Compile Include="..\Pixel3D.Pipeline\ThreadWriteStream.cs" Link="Pipeline\ThreadWriteStream.cs" />
+    <Compile Include="..\Pixel3D.Serialization.Support\AABBExtensions.cs" Link="Serialization.Support\AABBExtensions.cs" />
+    <Compile Include="..\Pixel3D.Serialization.Support\CustomSerialization.cs" Link="Serialization.Support\CustomSerialization.cs" />
+    <Compile Include="..\Pixel3D.Serialization.Support\FileReadWrite.cs" Link="Serialization.Support\FileReadWrite.cs" />
     <Compile Include="..\Pixel3D.Serialization\BuiltIn\DelegateHandling\DelegateMethodInfo.cs" Link="Serialization\BuiltIn\DelegateHandling\DelegateMethodInfo.cs" />
     <Compile Include="..\Pixel3D.Serialization\BuiltIn\DelegateHandling\DelegateSerialization.cs" Link="Serialization\BuiltIn\DelegateHandling\DelegateSerialization.cs" />
     <Compile Include="..\Pixel3D.Serialization\BuiltIn\DelegateHandling\DelegateTypeInfo.cs" Link="Serialization\BuiltIn\DelegateHandling\DelegateTypeInfo.cs" />
@@ -293,6 +296,7 @@
     <Folder Include="FrameworkExtensions\" />
     <Folder Include="FunctionalTweening\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Serialization.Support\" />
     <Folder Include="Sorting\" />
     <Folder Include="Physics\" />
     <Folder Include="Pipeline\" />
