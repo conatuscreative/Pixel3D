@@ -325,6 +325,15 @@
     <Compile Include="..\Pixel3D.Navigation\PathEdge.cs">
       <Link>Navigation\PathEdge.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Serialization.Support\AABBExtensions.cs">
+      <Link>Serialization.Support\AABBExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Serialization.Support\CustomSerialization.cs">
+      <Link>Serialization.Support\CustomSerialization.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Serialization.Support\FileReadWrite.cs">
+      <Link>Serialization.Support\FileReadWrite.cs</Link>
+    </Compile>
     <Compile Include="..\pixel3d.serialization\builtin\delegatehandling\DelegateMethodInfo.cs">
       <Link>Serialization\BuiltIn\DelegateHandling\DelegateMethodInfo.cs</Link>
     </Compile>
@@ -855,9 +864,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Serialization.Support\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
