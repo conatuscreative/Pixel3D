@@ -48,9 +48,6 @@
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib" />
-    <Reference Include="Pixel3D.Serialization">
-      <HintPath>..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\bin\Debug\net40\Pixel3D.Serialization.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -243,15 +240,6 @@
     </Compile>
     <Compile Include="..\Pixel3D.Engine\UpdateContext.cs">
       <Link>UpdateContext.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Serialization.Support\AABBExtensions.cs">
-      <Link>Serialization\Support\AABBExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Serialization.Support\CustomSerialization.cs">
-      <Link>Serialization\Support\CustomSerialization.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Serialization.Support\FileReadWrite.cs">
-      <Link>Serialization\Support\FileReadWrite.cs</Link>
     </Compile>
     <Compile Include="Installer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
