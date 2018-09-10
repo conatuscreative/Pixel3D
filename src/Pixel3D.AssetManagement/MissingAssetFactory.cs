@@ -25,7 +25,8 @@ namespace Pixel3D.AssetManagement
 
 		public static T Create<T>(IServiceProvider services, string fullPath) where T : class
 		{
-			if (CreateRegistry.TryGetValue(typeof(T), out var createMissingAsset))
+		    CreateMissingAsset createMissingAsset;
+			if (CreateRegistry.TryGetValue(typeof(T), out createMissingAsset))
 				return createMissingAsset(services, fullPath) as T;
 			throw new InvalidOperationException("Unknown or unsupported asset type");
 		}

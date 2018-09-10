@@ -32,7 +32,8 @@ namespace Pixel3D.AssetManagement
 		/// <summary>Return the extension for an asset type, including leading period.</summary>
 		public static string Extension(Type type)
 		{
-			if (!ExtensionRegistry.TryGetValue(type, out var extension))
+		    string extension;
+			if (!ExtensionRegistry.TryGetValue(type, out extension))
 				throw new InvalidOperationException("Unknown asset type");
 			return extension;
 		}
@@ -46,7 +47,8 @@ namespace Pixel3D.AssetManagement
 		public static T Read<T>(IAssetProvider assetProvider, IServiceProvider services, string fullPath)
 			where T : class
 		{
-			if (!ReadRegistry.TryGetValue(typeof(T), out var read))
+            ReadFromFile read;
+			if (!ReadRegistry.TryGetValue(typeof(T), out read))
 				throw new InvalidOperationException("Unknown asset type");
 			var serviceObject = serviceObjectProvider(services);
 			return (T) read(fullPath, assetProvider, serviceObject);

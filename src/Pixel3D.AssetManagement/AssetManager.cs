@@ -17,13 +17,14 @@ namespace Pixel3D.AssetManagement
 			RootDirectory = rootDirectory;
 		}
 
-		public IServiceProvider Services { get; }
+		public IServiceProvider Services { get; private set; }
 
 		#region IAssetPathProvider
 
 		public string GetAssetPath<T>(T asset) where T : class
 		{
-			loadedAssetPaths.TryGetValue(asset, out var assetPath);
+		    string assetPath;
+			loadedAssetPaths.TryGetValue(asset, out assetPath);
 			return assetPath;
 		}
 
@@ -36,7 +37,10 @@ namespace Pixel3D.AssetManagement
 		/// <summary>The root directory for managed assets, or null for absolute paths</summary>
 		public string RootDirectory
 		{
-			get => rootDirectory;
+		    get
+		    {
+                return rootDirectory;
+		    }
 			set
 			{
 				if (loadedAssets.Count == 0)
@@ -79,7 +83,8 @@ namespace Pixel3D.AssetManagement
 		{
 			assetPath = CanonicaliseAssetPath(assetPath);
 
-			if (loadedAssets.TryGetValue(assetPath, out var asset)) // Check cache
+            object asset;
+			if (loadedAssets.TryGetValue(assetPath, out asset)) // Check cache
 				return (T) asset;
 
 			if (Locked) throw new InvalidOperationException("Asset manager has been locked, cannot load from disk.");

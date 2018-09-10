@@ -58,6 +58,30 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Pixel3D.AssetManagement\AssetClassification.cs">
+      <Link>AssetManagement\AssetClassification.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.AssetManagement\AssetDetails.cs">
+      <Link>AssetManagement\AssetDetails.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.AssetManagement\AssetManager.cs">
+      <Link>AssetManagement\AssetManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.AssetManagement\AssetReader.cs">
+      <Link>AssetManagement\AssetReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.AssetManagement\IAssetPathProvider.cs">
+      <Link>AssetManagement\IAssetPathProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.AssetManagement\IAssetProvider.cs">
+      <Link>AssetManagement\IAssetProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.AssetManagement\IHasReferencedAssets.cs">
+      <Link>AssetManagement\IHasReferencedAssets.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.AssetManagement\MissingAssetFactory.cs">
+      <Link>AssetManagement\MissingAssetFactory.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D\AnimationSetExtensions.cs">
       <Link>AnimationSetExtensions.cs</Link>
     </Compile>
