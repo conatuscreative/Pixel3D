@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Pixel3D.LoopRecorder
+namespace Pixel3D
 {
 	public class HashingStream : Stream
 	{
