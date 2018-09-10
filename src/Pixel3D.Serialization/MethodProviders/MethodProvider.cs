@@ -8,8 +8,11 @@ namespace Pixel3D.Serialization.MethodProviders
 {
 	internal abstract class MethodProvider
 	{
-		public MethodInfo this[Type type] => GetMethodForType(type);
+	    public MethodInfo this[Type type]
+	    {
+	        get { return GetMethodForType(type); }
+	    }
 
-		public abstract MethodInfo GetMethodForType(Type type);
+	    public abstract MethodInfo GetMethodForType(Type type);
 	}
 }

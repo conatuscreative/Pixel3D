@@ -20,7 +20,14 @@ namespace Pixel3D.Serialization.Generator.ILWriting
 			referenceTypeSerializationMethods = referenceTypeSerializeMethods;
 		}
 
-		public bool Serialize => direction == Direction.Serialize;
-		public bool Deserialize => direction != Direction.Serialize;
+	    public bool Serialize
+	    {
+	        get { return direction == Direction.Serialize; }
+	    }
+
+	    public bool Deserialize
+	    {
+	        get { return direction != Direction.Serialize; }
+	    }
 	}
 }
