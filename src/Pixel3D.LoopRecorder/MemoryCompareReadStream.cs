@@ -103,20 +103,38 @@ namespace Pixel3D.LoopRecorder
 
 		#region Boring Stream Stuff
 
-		public override bool CanRead => true;
-		public override bool CanSeek => true;
-		public override bool CanWrite => false;
+	    public override bool CanRead
+	    {
+	        get { return true; }
+	    }
+		public override bool CanSeek
+		{
+		    get { return true; }
+		}
+		public override bool CanWrite
+		{
+		    get { return false; }
+		}
 
 		public override void Flush()
 		{
 		}
 
-		public override long Length => Math.Min(readBuffer1.LongLength, readBuffer2.LongLength);
+	    public override long Length
+	    {
+	        get { return Math.Min(readBuffer1.LongLength, readBuffer2.LongLength); }
+	    }
 
-		public override long Position
+	    public override long Position
 		{
-			get => position;
-			set => position = value;
+	        get
+	        {
+                return position;
+	        }
+	        set
+	        {
+	            position = value;
+	        }
 		}
 
 		public override void Write(byte[] buffer, int offset, int count)

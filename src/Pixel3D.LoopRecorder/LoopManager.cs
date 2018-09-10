@@ -38,8 +38,12 @@ namespace Pixel3D.LoopRecorder
 			Trace.WriteLine("Definition Hash = " + definitionHash);
 		}
 
-		public bool IsPlaying => playingLoop.HasValue;
-		public int SelectedLoop { get; private set; }
+	    public bool IsPlaying
+	    {
+	        get { return playingLoop.HasValue; }
+	    }
+
+	    public int SelectedLoop { get; private set; }
 
 		public event Action<TGameState> OnGameStateReplaced;
 		public event Func<bool> IsNetworked;
@@ -55,14 +59,14 @@ namespace Pixel3D.LoopRecorder
 		{
 			if (loopSlots[loopToPlay] == null)
 			{
-				Trace.WriteLine($"Loop slot {loopToPlay} is empty.");
+				Trace.WriteLine(string.Format("Loop slot {0} is empty.", loopToPlay));
 				return;
 			}
 
 			if (loopSlots[loopToPlay].definitionHash != definitionHash)
 			{
-				Trace.WriteLine(
-					$"Loop slot {loopToPlay} has hash \"{loopSlots[loopToPlay].definitionHash}\", expected hash \"{definitionHash}\"");
+			    Trace.WriteLine(string.Format("Loop slot {0} has hash \"{1}\", expected hash \"{2}\"", loopToPlay,
+			        loopSlots[loopToPlay].definitionHash, definitionHash));
 				return;
 			}
 
@@ -104,7 +108,7 @@ namespace Pixel3D.LoopRecorder
 			catch (Exception e)
 			{
 				// You probably modified a serializable structure, without a definition change (or something is *seriously* broken)
-				Trace.WriteLine($"Error deserializing snapshot {e}");
+				Trace.WriteLine(string.Format("Error deserializing snapshot {0}", e));
 
 				if (Debugger.IsAttached)
 					Debugger.Break(); // Want to know when this happens (caller should have definition-checked)
@@ -115,7 +119,8 @@ namespace Pixel3D.LoopRecorder
 			if (loopGameState != null)
 			{
 				gameState = loopGameState;
-				OnGameStateReplaced?.Invoke(gameState);
+                if(OnGameStateReplaced != null)
+				    OnGameStateReplaced.Invoke(gameState);
 				return true;
 			}
 
@@ -171,7 +176,7 @@ namespace Pixel3D.LoopRecorder
 
 							var saveState = Serialize();
 
-							loopSlots[i] = Loop.StartRecording($"loop{i}.bin", saveState, definitionHash, "");
+							loopSlots[i] = Loop.StartRecording(string.Format("loop{0}.bin", i), saveState, definitionHash, "");
 							if (command.HasFlag(LoopCommand.SnapshotOnly) || skipLoopsBecauseNetwork)
 								loopSlots[i].StopRecording(); // <- just the snapshot
 						}
@@ -242,13 +247,13 @@ namespace Pixel3D.LoopRecorder
 					var loop = Loop.TryLoadFromFile(filename, ref definitionHash);
 					if (loop == null)
 					{
-						Trace.WriteLine($"Failed to open file \"{filename}\"");
+						Trace.WriteLine(string.Format("Failed to open file \"{0}\"", filename));
 						return;
 					}
 
 					if (!loop.IsValid)
 					{
-						Trace.WriteLine($"Failed to open file \"{filename}\" (invalid)");
+						Trace.WriteLine(string.Format("Failed to open file \"{0}\" (invalid)", filename));
 						return;
 					}
 
@@ -261,7 +266,7 @@ namespace Pixel3D.LoopRecorder
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine($"Failed to open file \"{filename}\" ({e.Message})");
+				Trace.WriteLine(string.Format("Failed to open file \"{0}\" ({1})", filename, e.Message));
 			}
 		}
 
@@ -295,7 +300,9 @@ namespace Pixel3D.LoopRecorder
 			var ms = new MemoryStream(data);
 			var br = new BinaryReader(ms);
 			LoopSystem<TGameState>.deserialize(br, ref gameState, definitionTable);
-			OnGameStateReplaced?.Invoke(gameState);
+
+            if(OnGameStateReplaced != null)
+			    OnGameStateReplaced.Invoke(gameState);
 		}
 
 		public static TGameState SafeDeserialize(byte[] data, object definitionTable)

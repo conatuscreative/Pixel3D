@@ -280,6 +280,30 @@
     <Compile Include="..\Pixel3D.Common\XorShift.cs">
       <Link>Common\XorShift.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.LoopRecorder\ByteArrayExtensions.cs">
+      <Link>LoopRecorder\ByteArrayExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.LoopRecorder\Loop.cs">
+      <Link>LoopRecorder\Loop.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.LoopRecorder\LoopCommand.cs">
+      <Link>LoopRecorder\LoopCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.LoopRecorder\LoopManager.cs">
+      <Link>LoopRecorder\LoopManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.LoopRecorder\LoopSystem.cs">
+      <Link>LoopRecorder\LoopSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.LoopRecorder\MemoryCompareReadStream.cs">
+      <Link>LoopRecorder\MemoryCompareReadStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.LoopRecorder\NaturalStringComparer.cs">
+      <Link>LoopRecorder\NaturalStringComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.LoopRecorder\_Delegates.cs">
+      <Link>LoopRecorder\_Delegates.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Navigation\DirectionFlags.cs">
       <Link>Navigation\DirectionFlags.cs</Link>
     </Compile>

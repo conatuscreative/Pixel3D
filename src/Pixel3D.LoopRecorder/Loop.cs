@@ -25,10 +25,18 @@ namespace Pixel3D.LoopRecorder
 		public BinaryWriter loopWriter;
 
 		public byte[] saveState;
-		public bool IsValid => saveState != null;
-		public bool IsRecording => loopWriter != null;
 
-		public void Dispose()
+	    public bool IsValid
+	    {
+	        get { return saveState != null; }
+	    }
+
+	    public bool IsRecording
+	    {
+	        get { return loopWriter != null; }
+	    }
+
+	    public void Dispose()
 		{
 			StopRecording();
 		}
@@ -87,8 +95,8 @@ namespace Pixel3D.LoopRecorder
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine(
-					$"Loop \"{Path.GetFileNameWithoutExtension(filename)}\": Failed to open file ({e.Message})");
+				Trace.WriteLine(string.Format(
+					"Loop \"{0}\": Failed to open file ({1})", Path.GetFileNameWithoutExtension(filename), e.Message));
 				return null;
 			}
 		}
@@ -150,12 +158,15 @@ namespace Pixel3D.LoopRecorder
 					}
 				}
 
-				Trace.WriteLine(
-					$"Loop \"{Path.GetFileNameWithoutExtension(filename)}\": {(result.saveState == null ? "[INVALID]" : "[OK]")} comment = \"{result.comment}\" definitions = \"{result.definitionHash}\"");
+			    Trace.WriteLine(string.Format(
+			        "Loop \"{0}\": {1} comment = \"{2}\" definitions = \"{3}\"",
+			        Path.GetFileNameWithoutExtension(filename), result.saveState == null ? "[INVALID]" : "[OK]",
+			        result.comment, result.definitionHash
+			    ));
 			}
 			catch (Exception e)
 			{
-				Debug.WriteLine($"Loop \"{Path.GetFileNameWithoutExtension(filename)}\": Corrupt file! ({e.Message})");
+				Trace.WriteLine(string.Format("Loop \"{0}\": Corrupt file! ({1})", Path.GetFileNameWithoutExtension(filename), e.Message));
 				return null;
 			}
 

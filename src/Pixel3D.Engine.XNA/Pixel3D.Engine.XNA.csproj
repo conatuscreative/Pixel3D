@@ -48,16 +48,6 @@
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib" />
-    <Reference Include="Pixel3D.AssetManagement">
-      <HintPath>..\Pixel3D.AssetManagement\bin\Debug\net40\Pixel3D.AssetManagement.dll</HintPath>
-    </Reference>
-    <Reference Include="Pixel3D.Audio">
-      <HintPath>..\Pixel3D.Audio\bin\Debug\net40\Pixel3D.Audio.dll</HintPath>
-    </Reference>
-    <Reference Include="Pixel3D.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Pixel3D.Common\bin\Debug\net40\Pixel3D.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Pixel3D.LoopRecorder">
       <HintPath>..\Pixel3D.LoopRecorder\bin\Debug\net40\Pixel3D.LoopRecorder.dll</HintPath>
     </Reference>
