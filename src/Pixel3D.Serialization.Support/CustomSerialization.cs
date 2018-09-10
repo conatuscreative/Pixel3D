@@ -385,16 +385,16 @@ namespace Pixel3D
 
 			if (context.Version >= 39)
 			{
-				animationFrame.masks = context.DeserializeOrderedDictionary(context.DeserializeMask);
+                animationFrame.masks = context.DeserializeOrderedDictionary(() => context.DeserializeMask());
 				animationFrame.outgoingAttachments =
-					context.DeserializeOrderedDictionary(context.DeserializeOutgoingAttachment);
+					context.DeserializeOrderedDictionary(() => context.DeserializeOutgoingAttachment());
 			}
 			else
 			{
 				//
 				// Masks:
 				{
-					var legacy = context.DeserializeTagLookup(context.DeserializeMask);
+                    var legacy = context.DeserializeTagLookup(() => context.DeserializeMask());
 					animationFrame.masks = new OrderedDictionary<string, Mask>();
 					foreach (var mask in legacy)
 					{
@@ -406,7 +406,7 @@ namespace Pixel3D
 				//
 				// Outgoing Attachments:
 				{
-					var legacy = context.DeserializeTagLookup(context.DeserializeOutgoingAttachment);
+                    var legacy = context.DeserializeTagLookup(() => context.DeserializeOutgoingAttachment());
 					animationFrame.outgoingAttachments = new OrderedDictionary<string, OutgoingAttachment>();
 					foreach (var outgoingAttachment in legacy)
 					{
@@ -583,7 +583,7 @@ namespace Pixel3D
 			if (context.br.ReadBoolean())
 				animationSet.Ceiling = context.DeserializeHeightmap();
 
-			animationSet.animations = context.DeserializeTagLookup(context.DeserializeAnimation);
+            animationSet.animations = context.DeserializeTagLookup(() => context.DeserializeAnimation());
 
 			// Unused Animations
 			{
@@ -668,7 +668,8 @@ namespace Pixel3D
 			deserialized.Serialize(secondSerializeContext);
 
 			// Clean-up:
-			imageBundle?.Dispose();
+            if(imageBundle != null)
+			    imageBundle.Dispose();
 		}
 
 		#endregion
@@ -844,7 +845,9 @@ namespace Pixel3D
 			context.bw.Write(instruction.Offset);
 
 			context.bw.Write(instruction.Mask != null);
-			instruction.Mask?.Serialize(context);
+
+            if(instruction.Mask != null)
+			    instruction.Mask.Serialize(context);
 		}
 
 		/// <summary>Deserialize into a new object instance</summary>
@@ -967,7 +970,10 @@ namespace Pixel3D
 			context.bw.WriteNullableString(cel.friendlyName);
 			cel.spriteRef.Serialize(context);
 
-			if (context.bw.WriteBoolean(cel.shadowReceiver != null)) cel.shadowReceiver?.Serialize(context);
+		    if (context.bw.WriteBoolean(cel.shadowReceiver != null))
+		    {
+		        cel.shadowReceiver.Serialize(context);
+		    }
 		}
 
 		/// <summary>Deserialize into new object instance</summary>

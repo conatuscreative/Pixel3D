@@ -14,8 +14,9 @@ namespace Pixel3D.Engine.Levels
     public sealed class Shim : IEditorObject, IDrawObject, IAmbientSoundSource
     {
         public AnimationSet AnimationSet { get; set; }
-	    public AABB? Bounds => AnimationSet.AsAudioAABB(Position, FacingLeft);
-	    Position IAmbientSoundSource.Position => Position;
+
+        public AABB? Bounds { get { return AnimationSet.AsAudioAABB(Position, FacingLeft); } }
+        Position IAmbientSoundSource.Position { get { return Position; } }
 		public bool FacingLeft { get; set; }
 	    public Position Position { get; set; }
 		
@@ -95,9 +96,12 @@ namespace Pixel3D.Engine.Levels
 
         #endregion
 
-        public int DirectionX => FacingLeft ? -1 : 1;
+        public int DirectionX
+        {
+            get { return FacingLeft ? -1 : 1; }
+        }
 
-	    #region Masks
+        #region Masks
 
         public TransformedMaskData GetAlphaMask()
         {

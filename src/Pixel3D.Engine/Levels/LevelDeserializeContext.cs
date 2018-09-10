@@ -38,15 +38,27 @@ namespace Pixel3D.Engine.Levels
         /// <summary>Used to speed up asset packing. Use with extreme care (number of bytes read must match EXACTLY). Produces assets unusable for gameplay.</summary>
         public bool FastReadHack
         {
-            get => animationDeserializeContext.fastReadHack;
-	        set => animationDeserializeContext.fastReadHack = value;
+            get
+            {
+                return animationDeserializeContext.fastReadHack;
+            }
+            set
+            {
+                animationDeserializeContext.fastReadHack = value;
+            }
         }
 
         /// <summary>Used for externally packing masks in the asset packer.</summary>
         public ICustomMaskDataReader CustomMaskDataReader
         {
-            get => animationDeserializeContext.customMaskDataReader;
-	        set => animationDeserializeContext.customMaskDataReader = value;
+            get
+            {
+                return animationDeserializeContext.customMaskDataReader;
+            }
+            set
+            {
+                animationDeserializeContext.customMaskDataReader = value;
+            }
         }
 
 
