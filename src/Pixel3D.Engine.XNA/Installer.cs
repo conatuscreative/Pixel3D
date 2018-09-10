@@ -74,6 +74,8 @@ namespace Pixel3D.Engine.XNA
                 AudioSystem.getIsLooped = owner => ((SoundEffectInstance) owner).IsLooped;
                 AudioSystem.setIsLooped = (owner, value) => ((SoundEffectInstance) owner).IsLooped = value;
 
+                AudioSystem.getIsDisposed = owner => ((SoundEffectInstance)owner).IsDisposed;
+
                 AudioSystem.getVolume = owner => ((SoundEffectInstance) owner).Volume;
                 AudioSystem.setVolume = (owner, value) => ((SoundEffectInstance) owner).Volume = value;
 
