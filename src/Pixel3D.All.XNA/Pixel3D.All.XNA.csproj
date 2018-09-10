@@ -121,6 +121,21 @@
     <Compile Include="..\Pixel3D.Common\XorShift.cs">
       <Link>Common\XorShift.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.StateManagement\AlwaysNullCheckedAttribute.cs">
+      <Link>StateManagement\AlwaysNullCheckedAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.StateManagement\EnumerableExtensions.cs">
+      <Link>StateManagement\EnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.StateManagement\ReadOnlyList.cs">
+      <Link>StateManagement\ReadOnlyList.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.StateManagement\StateMachine.cs">
+      <Link>StateManagement\StateMachine.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.StateManagement\StateProvider.cs">
+      <Link>StateManagement\StateProvider.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D\AnimationSetExtensions.cs">
       <Link>AnimationSetExtensions.cs</Link>
     </Compile>

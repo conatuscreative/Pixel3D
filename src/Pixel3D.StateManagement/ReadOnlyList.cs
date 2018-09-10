@@ -16,8 +16,15 @@ namespace Pixel3D.StateManagement
 			this.list = list;
 		}
 
-		public int Count => list.Count;
-		public T this[int index] => list[index];
+	    public int Count
+	    {
+	        get { return list.Count; }
+	    }
+
+	    public T this[int index]
+	    {
+	        get { return list[index]; }
+	    }
 
 		// List already has a perfectly serviceable non-allocating enumerator:
 		public List<T>.Enumerator GetEnumerator()

@@ -13,8 +13,12 @@ namespace Pixel3D.StateManagement
 			CurrentState = GetState<State>();
 		}
 
-		public MethodTable StateMethods => (MethodTable) CurrentState.methodTable;
-		public State CurrentState { get; private set; }
+	    public MethodTable StateMethods
+	    {
+	        get { return (MethodTable) CurrentState.methodTable; }
+	    }
+
+	    public State CurrentState { get; private set; }
 
 
 		public override string ToString()
@@ -35,10 +39,14 @@ namespace Pixel3D.StateManagement
 			if (!allowStateRestart && ReferenceEquals(CurrentState, nextState))
 				return; // Don't re-enter the same state
 
-			StateMethods.EndState?.Invoke(this, updateContext, nextState);
+		    if(StateMethods.EndState != null)
+			    StateMethods.EndState.Invoke(this, updateContext, nextState);
+
 			var previousState = CurrentState;
 			CurrentState = nextState;
-			StateMethods.BeginState?.Invoke(this, updateContext, previousState);
+
+            if(StateMethods.BeginState != null)
+			    StateMethods.BeginState.Invoke(this, updateContext, previousState);
 		}
 
 
