@@ -1,3 +1,6 @@
+// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,14 +18,6 @@ namespace Pixel3D
 {
 	public static class CustomSerialization
 	{
-		#region Tag Set
-
-		// Definition-only at the field level (don't even bother storing it) - see TagLookup
-		[CustomFieldSerializer] public static void Serialize(SerializeContext context, BinaryWriter bw, TagSet value) { }
-		[CustomFieldSerializer] public static void Deserialize(DeserializeContext context, BinaryReader br, ref TagSet value) { throw new InvalidOperationException(); }
-
-		#endregion
-
 		#region Tag Lookup
 
 		// Due to a limitation in the serializer generator, this needs to be in a different class to TagLookup<T>
@@ -37,7 +32,7 @@ namespace Pixel3D
 			[CustomFieldSerializer]
 			public static void Serialize<T>(SerializeContext context, BinaryWriter bw, TagLookup<T> value)
 			{
-				for (int i = 0; i < value.Count; i++)
+				for (var i = 0; i < value.Count; i++)
 					Field.Serialize(context, bw, ref value.values[i]);
 			}
 
@@ -50,30 +45,67 @@ namespace Pixel3D
 
 		#endregion
 
+		#region Tag Set
+
+		// Definition-only at the field level (don't even bother storing it) - see TagLookup
+		[CustomFieldSerializer]
+		public static void Serialize(SerializeContext context, BinaryWriter bw, TagSet value)
+		{
+		}
+
+		[CustomFieldSerializer]
+		public static void Deserialize(DeserializeContext context, BinaryReader br, ref TagSet value)
+		{
+			throw new InvalidOperationException();
+		}
+
+		#endregion
+
 		#region ImageBundle
 
 		[CustomFieldSerializer]
-		public static void Serialize(SerializeContext context, BinaryWriter bw, ImageBundle value) { throw new InvalidOperationException(); }
+		public static void Serialize(SerializeContext context, BinaryWriter bw, ImageBundle value)
+		{
+			throw new InvalidOperationException();
+		}
+
 		[CustomFieldSerializer]
-		public static void Deserialize(DeserializeContext context, BinaryReader br, ref ImageBundle value) { throw new InvalidOperationException(); }
+		public static void Deserialize(DeserializeContext context, BinaryReader br, ref ImageBundle value)
+		{
+			throw new InvalidOperationException();
+		}
 
 		#endregion
 
 		#region ImageBundleManager
 
 		[CustomFieldSerializer]
-		public static void Serialize(SerializeContext context, BinaryWriter bw, ImageBundleManager value) { throw new InvalidOperationException(); }
+		public static void Serialize(SerializeContext context, BinaryWriter bw, ImageBundleManager value)
+		{
+			throw new InvalidOperationException();
+		}
 
 		[CustomFieldSerializer]
-		public static void Deserialize(DeserializeContext context, BinaryReader br, ref ImageBundleManager value) { throw new InvalidOperationException(); }
+		public static void Deserialize(DeserializeContext context, BinaryReader br, ref ImageBundleManager value)
+		{
+			throw new InvalidOperationException();
+		}
 
 		#endregion
 
 		#region SpriteRef
 
 		// Definition-only (TODO: Maybe we should care that the sprite references match up between players?)
-		[CustomSerializer] public static void Serialize(SerializeContext context, BinaryWriter bw, ref SpriteRef value) { }
-		[CustomSerializer] public static void Deserialize(DeserializeContext context, BinaryReader br, ref SpriteRef value) { throw new InvalidOperationException(); }
+		[CustomSerializer]
+		public static void Serialize(SerializeContext context, BinaryWriter bw, ref SpriteRef value)
+		{
+		}
+
+		[CustomSerializer]
+		public static void Deserialize(DeserializeContext context, BinaryReader br, ref SpriteRef value)
+		{
+			throw new InvalidOperationException();
+		}
 
 		#region Animation Serialization
 
@@ -101,7 +133,7 @@ namespace Pixel3D
 			}
 			else // In place sprite
 			{
-				Sprite sprite = context.DeserializeSprite(); // Pass through
+				var sprite = context.DeserializeSprite(); // Pass through
 
 				spriteRef.bundle = new ImageBundle(sprite);
 				spriteRef.index = 0;
@@ -142,7 +174,6 @@ namespace Pixel3D
 
 				if (index >= 0)
 					context.bw.Write(sprite.origin);
-
 			}
 			else // In-place sprite
 			{
@@ -152,7 +183,7 @@ namespace Pixel3D
 				}
 				else
 				{
-					byte[] data = new byte[sprite.sourceRectangle.Width * sprite.sourceRectangle.Height * 4];
+					var data = new byte[sprite.sourceRectangle.Width * sprite.sourceRectangle.Height * 4];
 					sprite.texture.GetData<byte>(0, sprite.sourceRectangle, data, 0, data.Length);
 
 					// Only write the size (we intentionally lose the source rectangle's position)
@@ -203,10 +234,12 @@ namespace Pixel3D
 					if (context.GraphicsDevice != null) // <- Allow loading headless
 					{
 						sprite.texture = new Texture2D(context.GraphicsDevice, width, height);
-						((Texture2D)sprite.texture).SetData(data);
+						((Texture2D) sprite.texture).SetData(data);
 					}
 					else
+					{
 						sprite.texture = null;
+					}
 
 					sprite.origin = context.br.ReadPoint();
 				}
@@ -237,13 +270,15 @@ namespace Pixel3D
 
 		// NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagLookup` is *really* stable, and some folks need to directly serialize us)
 
-		public static void SerializeTagLookup<T>(this TagLookup<T> tagLookup, AnimationSerializeContext context, Action<T> serializeValue)
+		public static void SerializeTagLookup<T>(this TagLookup<T> tagLookup, AnimationSerializeContext context,
+			Action<T> serializeValue)
 		{
 			tagLookup.Serialize(context.bw, serializeValue);
 		}
 
 		/// <summary>Deserialize into new object instance</summary>
-		public static TagLookup<T> DeserializeTagLookup<T>(this AnimationDeserializeContext context, Func<T> deserializeValue)
+		public static TagLookup<T> DeserializeTagLookup<T>(this AnimationDeserializeContext context,
+			Func<T> deserializeValue)
 		{
 			return new TagLookup<T>(context.br, deserializeValue);
 		}
@@ -252,26 +287,28 @@ namespace Pixel3D
 
 		#region OrderedDictionary
 
-		public static void SerializeOrderedDictionary<T>(this OrderedDictionary<string, T> dictionary, AnimationSerializeContext context, Action<T> serializeValue)
+		public static void SerializeOrderedDictionary<T>(this OrderedDictionary<string, T> dictionary,
+			AnimationSerializeContext context, Action<T> serializeValue)
 		{
 			context.bw.WriteSmallInt32(dictionary.Count);
 
 			foreach (var item in dictionary)
 			{
-				string key = item.Key;
-				T value = item.Value;
+				var key = item.Key;
+				var value = item.Value;
 				context.bw.Write(key);
 				serializeValue(value);
 			}
 		}
 
-		public static OrderedDictionary<string, T> DeserializeOrderedDictionary<T>(this AnimationDeserializeContext context, Func<T> deserializeValue)
+		public static OrderedDictionary<string, T> DeserializeOrderedDictionary<T>(
+			this AnimationDeserializeContext context, Func<T> deserializeValue)
 		{
 			var dictionary = new OrderedDictionary<string, T>();
 
 			int count = context.br.ReadSmallInt32();
 
-			for (int i = 0; i < count; i++)
+			for (var i = 0; i < count; i++)
 			{
 				var key = context.br.ReadString();
 				var value = deserializeValue();
@@ -280,7 +317,6 @@ namespace Pixel3D
 
 			return dictionary;
 		}
-
 
 		#endregion
 
@@ -307,11 +343,13 @@ namespace Pixel3D
 			animationFrame.incomingAttachments.SerializeTagLookup(context, p => context.bw.Write(p));
 
 			if (animationFrame.triggers == null)
-				context.bw.Write((int)0);
+			{
+				context.bw.Write(0);
+			}
 			else
 			{
 				context.bw.Write(animationFrame.triggers.Count);
-				for (int i = 0; i < animationFrame.triggers.Count; i++)
+				for (var i = 0; i < animationFrame.triggers.Count; i++)
 					context.bw.Write(animationFrame.triggers[i]);
 			}
 
@@ -338,7 +376,7 @@ namespace Pixel3D
 			{
 				Cel currentCel;
 				animationFrame.firstLayer = currentCel = context.DeserializeCel();
-				for (int i = 1; i < layersCount; i++)
+				for (var i = 1; i < layersCount; i++)
 				{
 					currentCel.next = context.DeserializeCel();
 					currentCel = currentCel.next;
@@ -348,7 +386,8 @@ namespace Pixel3D
 			if (context.Version >= 39)
 			{
 				animationFrame.masks = context.DeserializeOrderedDictionary(context.DeserializeMask);
-				animationFrame.outgoingAttachments = context.DeserializeOrderedDictionary(context.DeserializeOutgoingAttachment);
+				animationFrame.outgoingAttachments =
+					context.DeserializeOrderedDictionary(context.DeserializeOutgoingAttachment);
 			}
 			else
 			{
@@ -372,7 +411,8 @@ namespace Pixel3D
 					foreach (var outgoingAttachment in legacy)
 					{
 						Debug.Assert(outgoingAttachment.Key.Count < 2, "we don't support multi-tags yet");
-						animationFrame.outgoingAttachments.Add(outgoingAttachment.Key.ToString(), outgoingAttachment.Value);
+						animationFrame.outgoingAttachments.Add(outgoingAttachment.Key.ToString(),
+							outgoingAttachment.Value);
 					}
 				}
 			}
@@ -383,7 +423,7 @@ namespace Pixel3D
 			if (triggerCount > 0)
 			{
 				animationFrame.triggers = new List<string>(triggerCount);
-				for (int i = 0; i < triggerCount; i++)
+				for (var i = 0; i < triggerCount; i++)
 					animationFrame.triggers.Add(context.br.ReadString());
 			}
 
@@ -403,7 +443,8 @@ namespace Pixel3D
 		public static void Serialize(this AnimationSet animationSet, AnimationSerializeContext context)
 		{
 			if (Asserts.enabled && !animationSet.ValidateAlphaMasks())
-				throw new InvalidOperationException("Attempting to save animation set with missing or invalid alpha masks");
+				throw new InvalidOperationException(
+					"Attempting to save animation set with missing or invalid alpha masks");
 
 			context.bw.WriteNullableString(animationSet.friendlyName);
 			context.bw.Write(animationSet.importOrigin);
@@ -414,16 +455,17 @@ namespace Pixel3D
 
 
 			// If you don't seem to have set any physics bounds, I will just generate them...
-			if ((animationSet.physicsStartX == 0 && animationSet.physicsEndX == 1 && animationSet.physicsStartZ == 0 && animationSet.physicsEndZ == 1 && animationSet.physicsHeight == 0) || animationSet.physicsEndX - animationSet.physicsStartX <= 0)
-			{
+			if (animationSet.physicsStartX == 0 && animationSet.physicsEndX == 1 && animationSet.physicsStartZ == 0 &&
+			    animationSet.physicsEndZ == 1 && animationSet.physicsHeight == 0 ||
+			    animationSet.physicsEndX - animationSet.physicsStartX <= 0)
 				animationSet.AutoGeneratePhysicsAndDepthBounds();
-			}
 
 
 			// NOTE: only writing out values that cannot be auto-generated
 			if (animationSet.Heightmap != null)
 			{
-				Debug.Assert(!Asserts.enabled || animationSet.Heightmap.IsObjectHeightmap || animationSet.physicsHeight == 0);
+				Debug.Assert(!Asserts.enabled || animationSet.Heightmap.IsObjectHeightmap ||
+				             animationSet.physicsHeight == 0);
 				context.bw.Write(animationSet.physicsHeight);
 				if (animationSet.physicsHeight > 0)
 					animationSet.depthBounds.Serialize(context);
@@ -451,11 +493,13 @@ namespace Pixel3D
 				animationSet.Ceiling.Serialize(context);
 
 			animationSet.animations.SerializeTagLookup(context, a => a.Serialize(context));
-			
+
 			// Unused Animations
 			{
 				if (animationSet.unusedAnimations == null)
+				{
 					context.bw.Write(0); // unused animations is lazy-initialized
+				}
 				else
 				{
 					context.bw.Write(animationSet.unusedAnimations.Count);
@@ -470,7 +514,9 @@ namespace Pixel3D
 			// Shadow layers:
 			{
 				if (animationSet.shadowLayers == null)
-					context.bw.Write((int)0);
+				{
+					context.bw.Write(0);
+				}
 				else
 				{
 					context.bw.Write(animationSet.shadowLayers.Count);
@@ -510,7 +556,8 @@ namespace Pixel3D
 				animationSet.physicsHeight = context.br.ReadInt32();
 				if (animationSet.physicsHeight > 0)
 					animationSet.depthBounds = new DepthBounds(context);
-				animationSet.flatDirection = context.br.ReadOblique(); // <- for the sake of editing, keep this value around
+				animationSet.flatDirection =
+					context.br.ReadOblique(); // <- for the sake of editing, keep this value around
 			}
 			else
 			{
@@ -521,7 +568,8 @@ namespace Pixel3D
 				animationSet.flatDirection = context.br.ReadOblique();
 
 				if (animationSet.physicsHeight == 0)
-					animationSet.physicsEndZ = context.br.ReadInt32(); // physicsEndZ gets auto-set during regen, except for carpets
+					animationSet.physicsEndZ =
+						context.br.ReadInt32(); // physicsEndZ gets auto-set during regen, except for carpets
 
 				animationSet.RegenerateDepthBounds(); // <- Know this is reasonably fast to generate
 			}
@@ -536,14 +584,14 @@ namespace Pixel3D
 				animationSet.Ceiling = context.DeserializeHeightmap();
 
 			animationSet.animations = context.DeserializeTagLookup(context.DeserializeAnimation);
-			
+
 			// Unused Animations
 			{
 				int count = context.br.ReadInt32();
 				if (count > 0) // unusedAnimations is lazy-initialized
 				{
 					animationSet.unusedAnimations = new List<Animation>(count);
-					for (int i = 0; i < count; i++)
+					for (var i = 0; i < count; i++)
 						animationSet.unusedAnimations.Add(context.DeserializeAnimation());
 				}
 			}
@@ -554,16 +602,16 @@ namespace Pixel3D
 			{
 				int shadowLayerCount = context.br.ReadInt32();
 				if (shadowLayerCount <= 0)
+				{
 					animationSet.shadowLayers = null;
+				}
 				else
 				{
 					animationSet.shadowLayers = new List<ShadowLayer>();
-					for (int i = 0; i < shadowLayerCount; i++)
-					{
+					for (var i = 0; i < shadowLayerCount; i++)
 						animationSet.shadowLayers.Add(new ShadowLayer(
-								context.br.ReadInt32(),
-								context.DeserializeSpriteRef()));
-					}
+							context.br.ReadInt32(),
+							context.DeserializeSpriteRef()));
 
 					animationSet.cachedShadowBounds = context.br.ReadBounds();
 				}
@@ -573,11 +621,12 @@ namespace Pixel3D
 		}
 
 		/// <summary>Check that an AnimationSet round-trips through serialization cleanly</summary>
-		public static void RoundTripCheck(this AnimationSet animationSet, GraphicsDevice graphicsDevice, bool useExternalImages)
+		public static void RoundTripCheck(this AnimationSet animationSet, GraphicsDevice graphicsDevice,
+			bool useExternalImages)
 		{
 			// Serialize a first time
-			MemoryStream firstMemoryStream = new MemoryStream();
-			BinaryWriter firstBinaryWriter = new BinaryWriter(firstMemoryStream);
+			var firstMemoryStream = new MemoryStream();
+			var firstBinaryWriter = new BinaryWriter(firstMemoryStream);
 			ImageWriter firstImageWriter = null;
 			if (useExternalImages)
 			{
@@ -585,26 +634,28 @@ namespace Pixel3D
 				animationSet.RegisterImages(firstImageWriter);
 				firstImageWriter.WriteOutAllImages(firstMemoryStream);
 			}
-			AnimationSerializeContext firstSerializeContext = new AnimationSerializeContext(firstBinaryWriter, firstImageWriter);
+
+			var firstSerializeContext = new AnimationSerializeContext(firstBinaryWriter, firstImageWriter);
 			animationSet.Serialize(firstSerializeContext);
-			byte[] originalData = firstMemoryStream.ToArray();
+			var originalData = firstMemoryStream.ToArray();
 
 			// Then deserialize that data
-			BinaryReader br = new BinaryReader(new MemoryStream(originalData));
+			var br = new BinaryReader(new MemoryStream(originalData));
 			ImageBundle imageBundle = null;
 			if (useExternalImages)
 			{
 				var helper = new SimpleTextureLoadHelper(graphicsDevice);
 				imageBundle = new ImageBundle();
-				br.BaseStream.Position = imageBundle.ReadAllImages(originalData, (int)br.BaseStream.Position, helper);
+				br.BaseStream.Position = imageBundle.ReadAllImages(originalData, (int) br.BaseStream.Position, helper);
 			}
-			AnimationDeserializeContext deserializeContext = new AnimationDeserializeContext(br, imageBundle, graphicsDevice);
-			AnimationSet deserialized = deserializeContext.DeserializeAnimationSet();
+
+			var deserializeContext = new AnimationDeserializeContext(br, imageBundle, graphicsDevice);
+			var deserialized = deserializeContext.DeserializeAnimationSet();
 
 			// Then serialize that deserialized data and see if it matches
 			// (Ideally we'd recursivly check the AnimationSet to figure out if it matches, but that's a bit too hard)
-			MemoryCompareStream secondMemoryStream = new MemoryCompareStream(originalData);
-			BinaryWriter secondBinaryWriter = new BinaryWriter(secondMemoryStream);
+			var secondMemoryStream = new MemoryCompareStream(originalData);
+			var secondBinaryWriter = new BinaryWriter(secondMemoryStream);
 			ImageWriter secondImageWriter = null;
 			if (useExternalImages)
 			{
@@ -612,7 +663,8 @@ namespace Pixel3D
 				deserialized.RegisterImages(secondImageWriter);
 				secondImageWriter.WriteOutAllImages(secondMemoryStream);
 			}
-			AnimationSerializeContext secondSerializeContext = new AnimationSerializeContext(secondBinaryWriter, secondImageWriter);
+
+			var secondSerializeContext = new AnimationSerializeContext(secondBinaryWriter, secondImageWriter);
 			deserialized.Serialize(secondSerializeContext);
 
 			// Clean-up:
@@ -629,10 +681,7 @@ namespace Pixel3D
 			context.bw.WriteNullableString(animation.friendlyName);
 
 			context.bw.Write(animation.Frames.Count);
-			for (int i = 0; i < animation.Frames.Count; i++)
-			{
-				animation.Frames[i].Serialize(context);
-			}
+			for (var i = 0; i < animation.Frames.Count; i++) animation.Frames[i].Serialize(context);
 
 
 			if (!context.monitor)
@@ -656,10 +705,7 @@ namespace Pixel3D
 
 			int frameCount = context.br.ReadInt32();
 			animation.Frames = new List<AnimationFrame>(frameCount);
-			for (int i = 0; i < frameCount; i++)
-			{
-				animation.Frames.Add(context.DeserializeAnimationFrame());
-			}
+			for (var i = 0; i < frameCount; i++) animation.Frames.Add(context.DeserializeAnimationFrame());
 
 			if (context.Version >= 35)
 				animation.cachedBounds = context.br.ReadBounds();
@@ -683,7 +729,7 @@ namespace Pixel3D
 			oa.targetAnimationContext.SerializeTagSet(context);
 			oa.targetAttachmentContext.SerializeTagSet(context);
 			context.bw.Write(oa.attachRange);
-			context.bw.Write((int)oa.facing);
+			context.bw.Write((int) oa.facing);
 		}
 
 		/// <summary>Deserialize into new object instance</summary>
@@ -694,7 +740,7 @@ namespace Pixel3D
 			oa.targetAnimationContext = context.DeserializeTagSet();
 			oa.targetAttachmentContext = context.DeserializeTagSet();
 			oa.attachRange = context.br.ReadAABB();
-			oa.facing = (OutgoingAttachment.Facing)context.br.ReadInt32();
+			oa.facing = (OutgoingAttachment.Facing) context.br.ReadInt32();
 			return oa;
 		}
 
@@ -731,13 +777,15 @@ namespace Pixel3D
 					context.customMaskDataReader.Read(MaskData.WidthToDataWidth(rect.Width) * rect.Height), rect);
 			}
 			else
+			{
 				mask.data = context.br.DeserializeMaskData(context.fastReadHack);
+			}
 
 			return mask;
 		}
 
 		#endregion
-		
+
 		#region MaskData
 
 		// IMPORTANT: Because both levels and animation sets can serialize these, we don't have a version number!
@@ -748,12 +796,8 @@ namespace Pixel3D
 			bw.Write(maskData.Bounds);
 
 			if (maskData.packedData != null)
-			{
-				for (int i = 0; i < maskData.packedData.Length; i++)
-				{
+				for (var i = 0; i < maskData.packedData.Length; i++)
 					bw.Write(maskData.packedData[i]);
-				}
-			}
 		}
 
 		public static MaskData DeserializeMaskData(this BinaryReader br, bool fastReadHack)
@@ -764,14 +808,11 @@ namespace Pixel3D
 			{
 				if (!fastReadHack)
 				{
-					for (int i = 0; i < maskData.packedData.Length; i++)
-					{
-						maskData.packedData[i] = br.ReadUInt32();
-					}
+					for (var i = 0; i < maskData.packedData.Length; i++) maskData.packedData[i] = br.ReadUInt32();
 				}
 				else // FAST READ!
 				{
-					int bytesToRead = maskData.packedData.Length * 4;
+					var bytesToRead = maskData.packedData.Length * 4;
 					br.ReadBytes(bytesToRead);
 				}
 			}
@@ -782,7 +823,7 @@ namespace Pixel3D
 		}
 
 		#endregion
-		
+
 		#region HeightmapInstruction
 
 		// NOTE: Because heightmap instructions will eventually only be stored in the unoptimised data
@@ -793,7 +834,7 @@ namespace Pixel3D
 
 		public static void Serialize(this HeightmapInstruction instruction, AnimationSerializeContext context)
 		{
-			context.bw.Write((int)instruction.Operation);
+			context.bw.Write((int) instruction.Operation);
 
 			context.bw.Write(instruction.Height);
 			context.bw.Write(instruction.ObliqueDirection);
@@ -834,29 +875,22 @@ namespace Pixel3D
 			if (instructions != null)
 			{
 				context.bw.Write(instructions.Count);
-				for (int i = 0; i < instructions.Count; i++)
-				{
-					instructions[i].Serialize(context);
-				}
+				for (var i = 0; i < instructions.Count; i++) instructions[i].Serialize(context);
 			}
 		}
 
-		public static List<HeightmapInstruction> DeserializeHeightmapInstructions(this AnimationDeserializeContext context)
+		public static List<HeightmapInstruction> DeserializeHeightmapInstructions(
+			this AnimationDeserializeContext context)
 		{
 			if (context.br.ReadBoolean())
 			{
 				int count = context.br.ReadInt32();
-				List<HeightmapInstruction> instructions = new List<HeightmapInstruction>(count);
-				for (int i = 0; i < count; i++)
-				{
-					instructions.Add(context.DeserializeHeightmapInstruction());
-				}
+				var instructions = new List<HeightmapInstruction>(count);
+				for (var i = 0; i < count; i++) instructions.Add(context.DeserializeHeightmapInstruction());
 				return instructions;
 			}
-			else
-			{
-				return null;
-			}
+
+			return null;
 		}
 
 		#endregion
@@ -873,7 +907,8 @@ namespace Pixel3D
 			if (context.bw.WriteBoolean(heightmap.HasData))
 			{
 				context.bw.Write(heightmap.heightmapData.Bounds);
-				context.bw.Write(heightmap.heightmapData.Data, 0, heightmap.heightmapData.Width * heightmap.heightmapData.Height);
+				context.bw.Write(heightmap.heightmapData.Data, 0,
+					heightmap.heightmapData.Width * heightmap.heightmapData.Height);
 			}
 
 			heightmap.instructions.Serialize(context);
@@ -932,10 +967,7 @@ namespace Pixel3D
 			context.bw.WriteNullableString(cel.friendlyName);
 			cel.spriteRef.Serialize(context);
 
-			if (context.bw.WriteBoolean(cel.shadowReceiver != null))
-			{
-				cel.shadowReceiver?.Serialize(context);
-			}
+			if (context.bw.WriteBoolean(cel.shadowReceiver != null)) cel.shadowReceiver?.Serialize(context);
 		}
 
 		/// <summary>Deserialize into new object instance</summary>

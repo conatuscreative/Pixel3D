@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+using System;
 using System.IO;
 using System.IO.Compression;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,9 +16,9 @@ namespace Pixel3D
 
 		public static void WriteToFile(this AnimationSet animationSet, string path)
 		{
-			ImageWriter imageWriter = new ImageWriter();
+			var imageWriter = new ImageWriter();
 			animationSet.RegisterImages(imageWriter);
-			string texturePath = Path.ChangeExtension(path, ".tex");
+			var texturePath = Path.ChangeExtension(path, ".tex");
 
 #if false // OLD FORMAT
             using(var stream = File.Create(texturePath))
@@ -30,7 +33,7 @@ namespace Pixel3D
                 }
             }
 #else
-			MemoryStream ms = new MemoryStream();
+			var ms = new MemoryStream();
 			ms.WriteByte(0); // <- version
 			imageWriter.WriteOutAllImages(ms);
 			ms.Position = 0;
@@ -51,7 +54,7 @@ namespace Pixel3D
 
 		public static AnimationSet ReadFromFile(string path, GraphicsDevice graphicsDevice)
 		{
-			string texturePath = Path.ChangeExtension(path, ".tex");
+			var texturePath = Path.ChangeExtension(path, ".tex");
 			ImageBundle imageBundle = null;
 			if (File.Exists(texturePath))
 			{
@@ -71,7 +74,7 @@ namespace Pixel3D
 #if !WINDOWS
 				texturePath = texturePath.Replace('\\', '/');
 #endif
-				byte[] data = File.ReadAllBytes(texturePath);
+				var data = File.ReadAllBytes(texturePath);
 				if (data[0] != 0)
 					throw new Exception("Bad version number");
 

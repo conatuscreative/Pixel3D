@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,24 +12,24 @@ namespace Pixel3D.Strings
 {
 	public class StringBank
 	{
+		private readonly TagLookup<StringRange> lookup;
+		private readonly List<string> lowercase;
+		private readonly List<string> uppercase;
+
 		/// <summary>Represents a range of strings (so we don't need an individual list for every string!)</summary>
 		public struct StringRange
 		{
 			public int start, count;
 		}
 
-		TagLookup<StringRange> lookup;
-		List<string> lowercase;
-		List<string> uppercase;
-		
 		#region Constructor and Serialization
 
 		/// <summary>Construct from text file lines</summary>
 		public StringBank(IEnumerable<string> inputLines, bool generateUpperCase = false)
 		{
 			// This is so we can collate the strings per tag set:
-			Dictionary<TagSet, List<string>> temporaryLookup = new Dictionary<TagSet, List<string>>();
-			int stringCount = 0;
+			var temporaryLookup = new Dictionary<TagSet, List<string>>();
+			var stringCount = 0;
 
 			// Load all of the localized lines and collate them:
 			foreach (var line in inputLines)
@@ -63,7 +66,7 @@ namespace Pixel3D.Strings
 			lowercase = new List<string>(stringCount);
 			foreach (var kvp in temporaryLookup)
 			{
-				StringRange sr = new StringRange {start = lowercase.Count, count = kvp.Value.Count};
+				var sr = new StringRange {start = lowercase.Count, count = kvp.Value.Count};
 				lowercase.AddRange(kvp.Value);
 				Debug.Assert(lowercase.Count == sr.start + sr.count);
 				lookup.Add(kvp.Key, sr);
@@ -71,30 +74,24 @@ namespace Pixel3D.Strings
 
 			// Now that all strings are loaded, swap out any reference tags, 
 			// i.e. "I am a <BeardedDragon>" -> "I am a Bearded Dragon"
-			Regex tagsPattern = new Regex(@"<(\w*)>", RegexOptions.Compiled);
-			for (int i = 0; i < lowercase.Count; i++)
-			{
+			var tagsPattern = new Regex(@"<(\w*)>", RegexOptions.Compiled);
+			for (var i = 0; i < lowercase.Count; i++)
 				lowercase[i] = tagsPattern.Replace(lowercase[i], m =>
 				{
 					List<string> replacements;
 					if (temporaryLookup.TryGetValue(new TagSet(m.Groups[1].Captures[0].Value), out replacements)
 					) // <- NOTE: doing dictionary lookup, not tag lookup
-					{
 						return replacements[0];
-					}
-					else
-					{
-						Console.WriteLine("Failed to find string replacement for \"{0}\"", m.Value);
-						return m.Value;
-					}
+
+					Console.WriteLine("Failed to find string replacement for \"{0}\"", m.Value);
+					return m.Value;
 				});
-			}
 
 			// If you ask nicely, we'll generate upper-case strings as well...
 			if (generateUpperCase)
 			{
 				uppercase = new List<string>(lowercase.Count);
-				for (int i = 0; i < lowercase.Count; i++)
+				for (var i = 0; i < lowercase.Count; i++)
 					uppercase.Add(lowercase[i].ToUpperInvariant());
 			}
 		}
@@ -107,7 +104,7 @@ namespace Pixel3D.Strings
 
 		public static string ButtonGlyphReplacement(string input)
 		{
-			int index = input.IndexOf('[');
+			var index = input.IndexOf('[');
 			if (index == -1)
 				return input;
 			return ButtonGlyphReplacementHelper(input, index);
@@ -115,12 +112,12 @@ namespace Pixel3D.Strings
 
 		private static string ButtonGlyphReplacementHelper(string input, int fromIndex)
 		{
-			StringBuilder builder = new StringBuilder(input.Length);
+			var builder = new StringBuilder(input.Length);
 			builder.Append(input, 0, fromIndex);
 
-			for (int i = fromIndex; i < input.Length; i++)
+			for (var i = fromIndex; i < input.Length; i++)
 			{
-				if (input[i] == '[' && (i + 2 <= input.Length) && input[i + 2] == ']')
+				if (input[i] == '[' && i + 2 <= input.Length && input[i + 2] == ']')
 				{
 					switch (input[i + 1])
 					{
@@ -188,23 +185,19 @@ namespace Pixel3D.Strings
 		/// <summary>Reverse the glyph replacement for situations where we need to output normal text</summary>
 		public static string ButtonGlyphsToPlainText(string input)
 		{
-			for (int i = 0; i < input.Length; i++)
-			{
+			for (var i = 0; i < input.Length; i++)
 				if (input[i] >= '\uE000' && input[i] <= '\uF8FF') // <- Unicode Private Use Area
 					return ButtonGlyphsToPlainTextHelper(input, i);
-			}
 			return input;
 		}
 
 		private static string ButtonGlyphsToPlainTextHelper(string input, int fromIndex)
 		{
-			StringBuilder builder = new StringBuilder(input.Length);
+			var builder = new StringBuilder(input.Length);
 			builder.Append(input, 0, fromIndex);
 
-			for (int i = fromIndex; i < input.Length; i++)
-			{
+			for (var i = fromIndex; i < input.Length; i++)
 				if (input[i] >= '\uE000' && input[i] <= '\uF8FF') // <- Unicode Private Use Area
-				{
 					switch (input[i])
 					{
 						// NOTE: Matches table in "rcru.xbdf"
@@ -258,14 +251,11 @@ namespace Pixel3D.Strings
 							builder.Append("]");
 							break;
 					}
-				}
 				else
 					builder.Append(input[i]);
-			}
 
 			return builder.ToString();
 		}
-
 
 
 		/// <summary>Write to binary stream</summary>
@@ -278,7 +268,7 @@ namespace Pixel3D.Strings
 			});
 
 			bw.Write(lowercase.Count);
-			for (int i = 0; i < lowercase.Count; i++)
+			for (var i = 0; i < lowercase.Count; i++)
 				bw.Write(lowercase[i]);
 			// NOTE: we generate upper-case at load time (for performance)
 		}
@@ -286,27 +276,28 @@ namespace Pixel3D.Strings
 		/// <summary>Construct from binary stream</summary>
 		public StringBank(BinaryReader br)
 		{
-			lookup = new TagLookup<StringRange>(br, () => new StringRange {start = br.ReadInt32(), count = br.ReadInt32()});
+			lookup = new TagLookup<StringRange>(br,
+				() => new StringRange {start = br.ReadInt32(), count = br.ReadInt32()});
 
-			int count = br.ReadInt32();
+			var count = br.ReadInt32();
 			lowercase = new List<string>(count);
 			uppercase = new List<string>(count);
-			for (int i = 0; i < count; i++)
+			for (var i = 0; i < count; i++)
 			{
-				string s = br.ReadString();
+				var s = br.ReadString();
 				lowercase.Add(s);
 				uppercase.Add(s.ToUpperInvariant());
 			}
 		}
 
 		#endregion
-		
+
 		#region Getters (by TagSet)
 
 		public int GetStringCount(TagSet tagSet)
 		{
 			StringRange sr;
-			bool result = lookup.TryGetBestValue(tagSet, out sr);
+			var result = lookup.TryGetBestValue(tagSet, out sr);
 			Debug.Assert(result || sr.count == 0);
 			return sr.count;
 		}
@@ -320,6 +311,7 @@ namespace Pixel3D.Strings
 				Debug.Assert(sr.count > 0);
 				return lowercase[sr.start];
 			}
+
 			return null;
 		}
 
@@ -331,6 +323,7 @@ namespace Pixel3D.Strings
 				Debug.Assert(sr.count > 0);
 				return uppercase[sr.start];
 			}
+
 			return null;
 		}
 
@@ -343,6 +336,7 @@ namespace Pixel3D.Strings
 				Debug.Assert(sr.count > 0);
 				return new StringList(lowercase, sr);
 			}
+
 			return new StringList();
 		}
 
@@ -354,6 +348,7 @@ namespace Pixel3D.Strings
 				Debug.Assert(sr.count > 0);
 				return new StringList(uppercase, sr);
 			}
+
 			return new StringList();
 		}
 
@@ -364,8 +359,9 @@ namespace Pixel3D.Strings
 			if (lookup.TryGetBestValue(tagSet, out sr))
 			{
 				Debug.Assert(sr.count > 0);
-				return lowercase[sr.start + (choiceIndex % sr.count)];
+				return lowercase[sr.start + choiceIndex % sr.count];
 			}
+
 			return null;
 		}
 
@@ -375,19 +371,20 @@ namespace Pixel3D.Strings
 			if (lookup.TryGetBestValue(tagSet, out sr))
 			{
 				Debug.Assert(sr.count > 0);
-				return uppercase[sr.start + (choiceIndex % sr.count)];
+				return uppercase[sr.start + choiceIndex % sr.count];
 			}
+
 			return null;
 		}
 
 		#endregion
-		
+
 		#region Getters (by string) -- NOTE: Copy-pasted!
 
 		public int GetStringCount(string tagSet)
 		{
 			StringRange sr;
-			bool result = lookup.TryGetBestValue(tagSet, out sr);
+			var result = lookup.TryGetBestValue(tagSet, out sr);
 			Debug.Assert(result || sr.count == 0);
 			return sr.count;
 		}
@@ -401,6 +398,7 @@ namespace Pixel3D.Strings
 				Debug.Assert(sr.count > 0);
 				return lowercase[sr.start];
 			}
+
 			return null;
 		}
 
@@ -412,6 +410,7 @@ namespace Pixel3D.Strings
 				Debug.Assert(sr.count > 0);
 				return uppercase[sr.start];
 			}
+
 			return null;
 		}
 
@@ -424,6 +423,7 @@ namespace Pixel3D.Strings
 				Debug.Assert(sr.count > 0);
 				return new StringList(lowercase, sr);
 			}
+
 			return new StringList();
 		}
 
@@ -435,6 +435,7 @@ namespace Pixel3D.Strings
 				Debug.Assert(sr.count > 0);
 				return new StringList(uppercase, sr);
 			}
+
 			return new StringList();
 		}
 
@@ -445,8 +446,9 @@ namespace Pixel3D.Strings
 			if (lookup.TryGetBestValue(tagSet, out sr))
 			{
 				Debug.Assert(sr.count > 0);
-				return lowercase[sr.start + (choiceIndex % sr.count)];
+				return lowercase[sr.start + choiceIndex % sr.count];
 			}
+
 			return null;
 		}
 
@@ -456,8 +458,9 @@ namespace Pixel3D.Strings
 			if (lookup.TryGetBestValue(tagSet, out sr))
 			{
 				Debug.Assert(sr.count > 0);
-				return uppercase[sr.start + (choiceIndex % sr.count)];
+				return uppercase[sr.start + choiceIndex % sr.count];
 			}
+
 			return null;
 		}
 
