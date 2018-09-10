@@ -280,6 +280,30 @@
     <Compile Include="..\Pixel3D.Common\XorShift.cs">
       <Link>Common\XorShift.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Navigation\DirectionFlags.cs">
+      <Link>Navigation\DirectionFlags.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Navigation\DirectionFlagsExtensions.cs">
+      <Link>Navigation\DirectionFlagsExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Navigation\DriveDirection.cs">
+      <Link>Navigation\DriveDirection.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Navigation\DriveDirectionExtensions.cs">
+      <Link>Navigation\DriveDirectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Navigation\IExcludeInDefaultNav.cs">
+      <Link>Navigation\IExcludeInDefaultNav.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Navigation\MinMax.cs">
+      <Link>Navigation\MinMax.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Navigation\NavRegionProjection.cs">
+      <Link>Navigation\NavRegionProjection.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Navigation\PathEdge.cs">
+      <Link>Navigation\PathEdge.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.StateManagement\AlwaysNullCheckedAttribute.cs">
       <Link>StateManagement\AlwaysNullCheckedAttribute.cs</Link>
     </Compile>
@@ -540,7 +564,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Strings\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
