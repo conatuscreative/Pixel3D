@@ -68,70 +68,7 @@ namespace Pixel3D.Animations
 
             return slices[i];
         }
-
-
-
-
-        #region Serialize
-
-        public void Serialize(AnimationSerializeContext context)
-        {
-            Debug.Assert(slices != null); // <- should never serialize an empty depth bound (check in caller)
-
-            if(heights == null)
-            {
-                context.bw.Write((int)0);
-            }
-            else
-            {
-                context.bw.Write(heights.Length);
-                context.bw.Write(heights);
-            }
-
-            // NOTE: slices.Length is implicit
-            for(int i = 0; i < slices.Length; i++)
-            {
-                context.bw.Write(slices[i].xOffset);
-                context.bw.Write(slices[i].zOffset);
-
-                context.bw.Write(slices[i].depths.Length);
-                for(int j = 0; j < slices[i].depths.Length; j++)
-                {
-                    context.bw.Write(slices[i].depths[j].front);
-                    context.bw.Write(slices[i].depths[j].back);
-                }
-            }
-        }
-
-        /// <summary>Deserialize.</summary>
-        public DepthBounds(AnimationDeserializeContext context)
-        {
-            int heightCount = context.br.ReadInt32();
-            heights = (heightCount == 0) ? null : context.br.ReadBytes(heightCount);
-
-            slices = new DepthSlice[heightCount + 1];
-            for(int i = 0; i < slices.Length; i++)
-            {
-                slices[i] = new DepthSlice() 
-                {
-                    xOffset = context.br.ReadInt32(),
-                    zOffset = context.br.ReadInt32(),
-                    depths = new FrontBack[context.br.ReadInt32()],
-                };
-
-                for(int j = 0; j < slices[i].depths.Length; j++)
-                {
-                    slices[i].depths[j].front = context.br.ReadByte();
-                    slices[i].depths[j].back = context.br.ReadByte();
-                }
-            }
-        }
-
-        #endregion
-
-
-
-
+		
         #region Generate for Flats
 
         public static int CalculateFlatPhysicsDepth(int physicsWidth, Oblique flatDirection)
@@ -172,8 +109,6 @@ namespace Pixel3D.Animations
         }
 
         #endregion
-
-
 
         #region Generate for Heightmaps
 
@@ -516,8 +451,5 @@ namespace Pixel3D.Animations
         }
 
         #endregion
-
-
     }
-
 }

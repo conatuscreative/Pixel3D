@@ -555,7 +555,7 @@ namespace Pixel3D
 				// Assume that reading is faster than walking the heightmap:
 				animationSet.physicsHeight = context.br.ReadInt32();
 				if (animationSet.physicsHeight > 0)
-					animationSet.depthBounds = new DepthBounds(context);
+					animationSet.depthBounds = context.DeserializeDepthBounds();
 				animationSet.flatDirection =
 					context.br.ReadOblique(); // <- for the sake of editing, keep this value around
 			}
@@ -985,6 +985,67 @@ namespace Pixel3D
 			if (context.br.ReadBoolean())
 				cel.shadowReceiver = context.DeserializeShadowReceiver();
 			return cel;
+		}
+
+		#endregion
+		
+		#region DepthBounds
+
+		public static void Serialize(this DepthBounds bounds, AnimationSerializeContext context)
+		{
+			Debug.Assert(bounds.slices != null); // <- should never serialize an empty depth bound (check in caller)
+
+			if (bounds.heights == null)
+			{
+				context.bw.Write((int)0);
+			}
+			else
+			{
+				context.bw.Write(bounds.heights.Length);
+				context.bw.Write(bounds.heights);
+			}
+
+			// NOTE: slices.Length is implicit
+			for (int i = 0; i < bounds.slices.Length; i++)
+			{
+				context.bw.Write(bounds.slices[i].xOffset);
+				context.bw.Write(bounds.slices[i].zOffset);
+
+				context.bw.Write(bounds.slices[i].depths.Length);
+				for (int j = 0; j < bounds.slices[i].depths.Length; j++)
+				{
+					context.bw.Write(bounds.slices[i].depths[j].front);
+					context.bw.Write(bounds.slices[i].depths[j].back);
+				}
+			}
+		}
+
+		/// <summary>Deserialize.</summary>
+		public static DepthBounds DeserializeDepthBounds(this AnimationDeserializeContext context)
+		{
+			var bounds = new DepthBounds();
+
+			int heightCount = context.br.ReadInt32();
+			bounds.heights = (heightCount == 0) ? null : context.br.ReadBytes(heightCount);
+
+			bounds.slices = new DepthSlice[heightCount + 1];
+			for (int i = 0; i < bounds.slices.Length; i++)
+			{
+				bounds.slices[i] = new DepthSlice()
+				{
+					xOffset = context.br.ReadInt32(),
+					zOffset = context.br.ReadInt32(),
+					depths = new FrontBack[context.br.ReadInt32()],
+				};
+
+				for (int j = 0; j < bounds.slices[i].depths.Length; j++)
+				{
+					bounds.slices[i].depths[j].front = context.br.ReadByte();
+					bounds.slices[i].depths[j].back = context.br.ReadByte();
+				}
+			}
+
+			return bounds;
 		}
 
 		#endregion
