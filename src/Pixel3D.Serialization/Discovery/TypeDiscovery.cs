@@ -61,10 +61,13 @@ namespace Pixel3D.Serialization.Discovery
 				AddAssembly(a); // Pre-fill with initial assemblies
 		}
 
-		public IEnumerable<Assembly> Assemblies => _assemblies;
+	    public IEnumerable<Assembly> Assemblies
+	    {
+	        get { return _assemblies; }
+	    }
 
 
-		public bool FoundDelegates { get; private set; }
+	    public bool FoundDelegates { get; private set; }
 
 		private void AddAssembly(Assembly assembly)
 		{

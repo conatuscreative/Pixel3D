@@ -8,7 +8,7 @@ namespace Pixel3D.Serialization.BuiltIn.DelegateHandling
 	public struct InvocationList
 	{
 		// Invocation list mode
-		internal InvocationList(object[] invocationList, int invocationCount)
+		internal InvocationList(object[] invocationList, int invocationCount) : this()
 		{
 			this.invocationList = invocationList;
 			Count = invocationCount;
@@ -16,7 +16,7 @@ namespace Pixel3D.Serialization.BuiltIn.DelegateHandling
 		}
 
 		// Single mode
-		internal InvocationList(MulticastDelegate theDelegate)
+		internal InvocationList(MulticastDelegate theDelegate) : this()
 		{
 			invocationList = null;
 			Count = 1;
@@ -31,7 +31,7 @@ namespace Pixel3D.Serialization.BuiltIn.DelegateHandling
 			return new InvocationListEnumerator(invocationList, Count, theDelegate);
 		}
 
-		public int Count { get; }
+        public int Count { get; private set; }
 
 		public Delegate this[int index]
 		{

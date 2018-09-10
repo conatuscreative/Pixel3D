@@ -46,7 +46,7 @@ namespace Pixel3D.Serialization.Context
 			visitedObjectTable = fillObjectTable ? new List<object>() : null;
 		}
 
-		public BinaryWriter BinaryWriter { get; }
+        public BinaryWriter BinaryWriter { get; private set; }
 
 
 		public DefinitionObjectTable GetAsDefinitionObjectTable()

@@ -25,7 +25,7 @@ namespace Pixel3D.Serialization.Context
 				definitionObjectTable = new List<object>();
 		}
 
-		public BinaryReader BinaryReader { get; }
+        public BinaryReader BinaryReader { get; private set; }
 
 		public void Reset()
 		{

@@ -35,7 +35,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\x86\Release</OutputPath>
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <DefineConstants>TRACE;WINDOWS;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>true</NoStdLib>
@@ -48,9 +48,6 @@
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib" />
-    <Reference Include="Pixel3D.Common">
-      <HintPath>..\Pixel3D.Common\bin\Debug\net40\Pixel3D.Common.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -328,6 +325,261 @@
     <Compile Include="..\Pixel3D.Navigation\PathEdge.cs">
       <Link>Navigation\PathEdge.cs</Link>
     </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\delegatehandling\DelegateMethodInfo.cs">
+      <Link>Serialization\BuiltIn\DelegateHandling\DelegateMethodInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\delegatehandling\DelegateSerialization.cs">
+      <Link>Serialization\BuiltIn\DelegateHandling\DelegateSerialization.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\delegatehandling\DelegateTypeInfo.cs">
+      <Link>Serialization\BuiltIn\DelegateHandling\DelegateTypeInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\delegatehandling\InvocationList.cs">
+      <Link>Serialization\BuiltIn\DelegateHandling\InvocationList.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\delegatehandling\InvocationListEnumerator.cs">
+      <Link>Serialization\BuiltIn\DelegateHandling\InvocationListEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\delegatehandling\MulticastDelegateExtensions.cs">
+      <Link>Serialization\BuiltIn\DelegateHandling\MulticastDelegateExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeArray.cs">
+      <Link>Serialization\BuiltIn\SerializeArray.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeDictionary.cs">
+      <Link>Serialization\BuiltIn\SerializeDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeHashSet.cs">
+      <Link>Serialization\BuiltIn\SerializeHashSet.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeLinkedList.cs">
+      <Link>Serialization\BuiltIn\SerializeLinkedList.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeList.cs">
+      <Link>Serialization\BuiltIn\SerializeList.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializePrimitives.cs">
+      <Link>Serialization\BuiltIn\SerializePrimitives.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeQueue.cs">
+      <Link>Serialization\BuiltIn\SerializeQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeSortedDictionary.cs">
+      <Link>Serialization\BuiltIn\SerializeSortedDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeStack.cs">
+      <Link>Serialization\BuiltIn\SerializeStack.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeString.cs">
+      <Link>Serialization\BuiltIn\SerializeString.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeStringBuilder.cs">
+      <Link>Serialization\BuiltIn\SerializeStringBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\builtin\SerializeType.cs">
+      <Link>Serialization\BuiltIn\SerializeType.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\context\Constants.cs">
+      <Link>Serialization\Context\Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\context\DefinitionObjectTable.cs">
+      <Link>Serialization\Context\DefinitionObjectTable.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\context\DeserializeContext.cs">
+      <Link>Serialization\Context\DeserializeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\context\ReferenceEqualityComparer.cs">
+      <Link>Serialization\Context\ReferenceEqualityComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\context\SerializeContext.cs">
+      <Link>Serialization\Context\SerializeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\context\SerializeContextWithStatistics.cs">
+      <Link>Serialization\Context\SerializeContextWithStatistics.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\CustomFieldSerializerAttribute.cs">
+      <Link>Serialization\CustomFieldSerializerAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\CustomInitializerAttribute.cs">
+      <Link>Serialization\CustomInitializerAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\CustomSerializerAttribute.cs">
+      <Link>Serialization\CustomSerializerAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\CustomMethodDiscovery.cs">
+      <Link>Serialization\Discovery\CustomMethodDiscovery.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\DelegateClassification.cs">
+      <Link>Serialization\Discovery\DelegateClassification.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\DelegateDiscovery.cs">
+      <Link>Serialization\Discovery\DelegateDiscovery.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\DelegateUsage.cs">
+      <Link>Serialization\Discovery\DelegateUsage.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\DelegateUsageInternal.cs">
+      <Link>Serialization\Discovery\DelegateUsageInternal.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\readil\BinaryReadOpCodeExtensions.cs">
+      <Link>Serialization\Discovery\ReadIL\BinaryReadOpCodeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\readil\OpCodeExtensions.cs">
+      <Link>Serialization\Discovery\ReadIL\OpCodeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\readil\OpCodeValues.cs">
+      <Link>Serialization\Discovery\ReadIL\OpCodeValues.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\readil\ResolveExtensions.cs">
+      <Link>Serialization\Discovery\ReadIL\ResolveExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\readil\ResolveToStringExtensions.cs">
+      <Link>Serialization\Discovery\ReadIL\ResolveToStringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\TypeClassifier.cs">
+      <Link>Serialization\Discovery\TypeClassifier.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\discovery\TypeDiscovery.cs">
+      <Link>Serialization\Discovery\TypeDiscovery.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\EnumerableExtensions.cs">
+      <Link>Serialization\EnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\Field.cs">
+      <Link>Serialization\Field.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\FieldDeserializeMethod.cs">
+      <Link>Serialization\FieldDeserializeMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\FieldSerializeMethod.cs">
+      <Link>Serialization\FieldSerializeMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\GeneratorReports.cs">
+      <Link>Serialization\GeneratorReports.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\DeserializeDispatchDelegate.cs">
+      <Link>Serialization\Generator\DeserializeDispatchDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\Direction.cs">
+      <Link>Serialization\Generator\Direction.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\DirectionExtensionMethods.cs">
+      <Link>Serialization\Generator\DirectionExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\DynamicMethodCreator.cs">
+      <Link>Serialization\Generator\DynamicMethodCreator.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\DynamicMethodCreatorCreator.cs">
+      <Link>Serialization\Generator\DynamicMethodCreatorCreator.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\GeneratorResult.cs">
+      <Link>Serialization\Generator\GeneratorResult.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\GeneratorSequence.cs">
+      <Link>Serialization\Generator\GeneratorSequence.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\ilwriting\ILGenContext.cs">
+      <Link>Serialization\Generator\ILWriting\ILGenContext.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\ilwriting\Methods.cs">
+      <Link>Serialization\Generator\ILWriting\Methods.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\ilwriting\TypeSerializeILGeneration.cs">
+      <Link>Serialization\Generator\ILWriting\TypeSerializeILGeneration.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\MethodBuilderCreator.cs">
+      <Link>Serialization\Generator\MethodBuilderCreator.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\MethodBuilderCreatorCreator.cs">
+      <Link>Serialization\Generator\MethodBuilderCreatorCreator.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\MethodCreator.cs">
+      <Link>Serialization\Generator\MethodCreator.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\MethodCreatorCreator.cs">
+      <Link>Serialization\Generator\MethodCreatorCreator.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\MethodInfoExtensions.cs">
+      <Link>Serialization\Generator\MethodInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\SerializeDispatchDelegate.cs">
+      <Link>Serialization\Generator\SerializeDispatchDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\generator\SerializerMethodGenerator.cs">
+      <Link>Serialization\Generator\SerializerMethodGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\methodproviders\EmptyMethodProvider.cs">
+      <Link>Serialization\MethodProviders\EmptyMethodProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\methodproviders\FallbackMethodProvider.cs">
+      <Link>Serialization\MethodProviders\FallbackMethodProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\methodproviders\LookupMethodProvider.cs">
+      <Link>Serialization\MethodProviders\LookupMethodProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\methodproviders\MethodProvider.cs">
+      <Link>Serialization\MethodProviders\MethodProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\ReferenceFieldDeserializeMethod.cs">
+      <Link>Serialization\ReferenceFieldDeserializeMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\ReferenceFieldSerializeMethod.cs">
+      <Link>Serialization\ReferenceFieldSerializeMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\ReferenceTypeDeserializeMethod.cs">
+      <Link>Serialization\ReferenceTypeDeserializeMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\ReferenceTypeInitializeMethod.cs">
+      <Link>Serialization\ReferenceTypeInitializeMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\ReferenceTypeSerializeMethod.cs">
+      <Link>Serialization\ReferenceTypeSerializeMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\SerializableDelegateAttribute.cs">
+      <Link>Serialization\SerializableDelegateAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\SerializationIgnoreAttribute.cs">
+      <Link>Serialization\SerializationIgnoreAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\SerializationIgnoreDelegatesAttribute.cs">
+      <Link>Serialization\SerializationIgnoreDelegatesAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\SerializationMethodProviders.cs">
+      <Link>Serialization\SerializationMethodProviders.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\SerializationRootAttribute.cs">
+      <Link>Serialization\SerializationRootAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\Serializer.cs">
+      <Link>Serialization\Serializer.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\static\FieldDeserializerCache.cs">
+      <Link>Serialization\Static\FieldDeserializerCache.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\static\FieldSerializerCache.cs">
+      <Link>Serialization\Static\FieldSerializerCache.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\static\ReferenceTypeDeserializerCache.cs">
+      <Link>Serialization\Static\ReferenceTypeDeserializerCache.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\static\ReferenceTypeSerializerCache.cs">
+      <Link>Serialization\Static\ReferenceTypeSerializerCache.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\static\StaticDelegateTable.cs">
+      <Link>Serialization\Static\StaticDelegateTable.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\static\StaticDispatchTable.cs">
+      <Link>Serialization\Static\StaticDispatchTable.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\static\StaticModuleTable.cs">
+      <Link>Serialization\Static\StaticModuleTable.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\ValueTypeDeserializeMethod.cs">
+      <Link>Serialization\ValueTypeDeserializeMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d.serialization\ValueTypeSerializeMethod.cs">
+      <Link>Serialization\ValueTypeSerializeMethod.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.StateManagement\AlwaysNullCheckedAttribute.cs">
       <Link>StateManagement\AlwaysNullCheckedAttribute.cs</Link>
     </Compile>
@@ -603,7 +855,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Serialization.Support\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

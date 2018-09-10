@@ -24,11 +24,18 @@ namespace Pixel3D.Serialization.Discovery
 		}
 
 
-		public HashSet<Type> ValueTypes => typeDiscovery.valueTypes;
-		public HashSet<Type> ReferenceTypes => typeDiscovery.referenceTypes;
+	    public HashSet<Type> ValueTypes
+	    {
+	        get { return typeDiscovery.valueTypes; }
+	    }
+
+	    public HashSet<Type> ReferenceTypes
+	    {
+	        get { return typeDiscovery.referenceTypes; }
+	    }
 
 
-		public void RunClassification()
+	    public void RunClassification()
 		{
 			foreach (var fieldType in typeDiscovery.referenceFieldTypes)
 			{

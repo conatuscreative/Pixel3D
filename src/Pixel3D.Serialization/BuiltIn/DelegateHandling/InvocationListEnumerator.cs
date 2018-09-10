@@ -7,7 +7,7 @@ namespace Pixel3D.Serialization.BuiltIn.DelegateHandling
 {
 	public struct InvocationListEnumerator
 	{
-		internal InvocationListEnumerator(object[] invocationList, int invocationCount, Delegate theDelegate)
+		internal InvocationListEnumerator(object[] invocationList, int invocationCount, Delegate theDelegate) : this()
 		{
 			this.invocationList = invocationList;
 			this.invocationCount = invocationCount;

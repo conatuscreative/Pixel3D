@@ -15,13 +15,13 @@ namespace Pixel3D.Serialization
 	{
 		#region Method Providers
 
-		public MethodProvider ValueTypeSerializeMethods { get; }
-		public MethodProvider ValueTypeDeserializeMethods { get; }
-		public MethodProvider ReferenceTypeSerializeMethods { get; }
-		public MethodProvider ReferenceTypeDeserializeMethods { get; }
-		public MethodProvider ReferenceFieldSerializeMethods { get; }
-		public MethodProvider ReferenceFieldDeserializeMethods { get; }
-		public MethodProvider ReferenceTypeInitializeMethods { get; }
+        public MethodProvider ValueTypeSerializeMethods { get; private set; }
+        public MethodProvider ValueTypeDeserializeMethods { get; private set; }
+        public MethodProvider ReferenceTypeSerializeMethods { get; private set; }
+        public MethodProvider ReferenceTypeDeserializeMethods { get; private set; }
+        public MethodProvider ReferenceFieldSerializeMethods { get; private set; }
+        public MethodProvider ReferenceFieldDeserializeMethods { get; private set; }
+        public MethodProvider ReferenceTypeInitializeMethods { get; private set; }
 
 
 		public SerializationMethodProviders(
