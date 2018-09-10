@@ -1,102 +1,106 @@
-﻿using System.Collections.Generic;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Pixel3D.Audio
 {
-    // IMPORTANT: This class is thread-safe.
-    public static class MissingAudio
-    {
+	// IMPORTANT: This class is thread-safe.
+	public static class MissingAudio
+	{
 		#region Reporting
 
 		private static readonly HashSet<string> MissingCues = new HashSet<string>();
 
-	    public static void ReportMissingCue(string name, object debugContext)
-        {
-	        bool added;
-	        lock (MissingCues)
-		        added = MissingCues.Add(name);
+		public static void ReportMissingCue(string name, object debugContext)
+		{
+			bool added;
+			lock (MissingCues)
+			{
+				added = MissingCues.Add(name);
+			}
 
-	        if (added)
-	        {
-		        AudioSystem.reportMissingCue?.Invoke(name, debugContext);
-	        }
+			if (added) AudioSystem.reportMissingCue?.Invoke(name, debugContext);
 		}
 
-        class ExpectedCueInfo
-        {
-            public string context;
-
+		private class ExpectedCueInfo
+		{
 			public object[] args;
+			public string context;
 
-            public override int GetHashCode()
-            {
-	            var hashCode = context.GetHashCode();
-	            foreach (var arg in args)
-		            hashCode ^= RuntimeHelpers.GetHashCode(arg);
-	            return hashCode;
-            }
+			public override int GetHashCode()
+			{
+				var hashCode = context.GetHashCode();
+				foreach (var arg in args)
+					hashCode ^= RuntimeHelpers.GetHashCode(arg);
+				return hashCode;
+			}
 
-            public override bool Equals(object obj)
-            {
-	            if(!(obj is ExpectedCueInfo other))
-	                return false;
+			public override bool Equals(object obj)
+			{
+				if (!(obj is ExpectedCueInfo other))
+					return false;
 
-	            if (args.Length != other.args.Length)
-		            return false;
+				if (args.Length != other.args.Length)
+					return false;
 
-	            var equals = context == other.context;
-	            for (var i = 0; i < args.Length; i++)
+				var equals = context == other.context;
+				for (var i = 0; i < args.Length; i++)
 					equals &= ReferenceEquals(args[i], other.args[i]);
 
 				return equals;
-            }
-        }
-
-        private static readonly HashSet<ExpectedCueInfo> ExpectedCues = new HashSet<ExpectedCueInfo>();
-
-        public static void ReportExpectedCue(string context, params object[] args)
-        {
-	        var eci = new ExpectedCueInfo
-	        {
-		        context = context,
-		        args = args
-	        };
-	        bool added;
-	        lock (ExpectedCues)
-		        added = ExpectedCues.Add(eci);
-	        if (added)
-		        AudioSystem.reportExpectedCue?.Invoke(context, args);
+			}
 		}
 
-        #endregion
+		private static readonly HashSet<ExpectedCueInfo> ExpectedCues = new HashSet<ExpectedCueInfo>();
 
-        #region Nonsense Sounds (DEVELOPER only)
+		public static void ReportExpectedCue(string context, params object[] args)
+		{
+			var eci = new ExpectedCueInfo
+			{
+				context = context,
+				args = args
+			};
+			bool added;
+			lock (ExpectedCues)
+			{
+				added = ExpectedCues.Add(eci);
+			}
 
-        private static readonly object LockObject = new object();
+			if (added)
+				AudioSystem.reportExpectedCue?.Invoke(context, args);
+		}
 
-        private static bool initialized;
+		#endregion
 
-        public static void ActivateAudibleMissingSounds()
-        {
-            if(!AudioDevice.Available)
-                return; // Don't even bother with setup, if we have no device
+		#region Nonsense Sounds (DEVELOPER only)
 
-            lock(LockObject)
-            {
-                if(initialized)
-                    return;
-                initialized = true;
-            }
+		private static readonly object LockObject = new object();
 
-            Debug.WriteLine("Enabling Developer Audio");
-            Thread thread = new Thread(InternalInitializeMissingSounds);
-            thread.Start();
-        }
+		private static bool initialized;
 
-        private static void InternalInitializeMissingSounds()
-        {
+		public static void ActivateAudibleMissingSounds()
+		{
+			if (!AudioDevice.Available)
+				return; // Don't even bother with setup, if we have no device
+
+			lock (LockObject)
+			{
+				if (initialized)
+					return;
+				initialized = true;
+			}
+
+			Debug.WriteLine("Enabling Developer Audio");
+			var thread = new Thread(InternalInitializeMissingSounds);
+			thread.Start();
+		}
+
+		private static void InternalInitializeMissingSounds()
+		{
 #if false // TODO: Add the missing sound sounds back in (need to decode through vorbisfile)
             {
                 string nelsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Nelson.ogg");
@@ -128,25 +132,29 @@ namespace Pixel3D.Audio
                 }
             }
 #endif
-        }
+		}
 
 		private static SafeSoundEffect missingSoundEffect, missingMusic;
 
 		public static void TriedToPlayMissingCue(FadePitchPan fpp)
-        {
-            SafeSoundEffect sound;
-            lock(LockObject)
-                sound = missingSoundEffect;
+		{
+			SafeSoundEffect sound;
+			lock (LockObject)
+			{
+				sound = missingSoundEffect;
+			}
 
-	        sound?.Play(fpp.fade, fpp.pitch, fpp.pan);
-        }
+			sound?.Play(fpp.fade, fpp.pitch, fpp.pan);
+		}
 
 		public static SafeSoundEffect GetMissingMusicSound()
-        {
-            lock(LockObject)
-                return missingMusic;
-        }
+		{
+			lock (LockObject)
+			{
+				return missingMusic;
+			}
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

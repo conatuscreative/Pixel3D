@@ -1,3 +1,6 @@
+// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
 namespace Pixel3D.Audio
 {
 	public static class AudioMath
@@ -12,10 +15,10 @@ namespace Pixel3D.Audio
 		public static float Clamp(float value, float min, float max)
 		{
 			// First we check to see if we're greater than the max.
-			value = (value > max) ? max : value;
+			value = value > max ? max : value;
 
 			// Then we check to see if we're less than the min.
-			value = (value < min) ? min : value;
+			value = value < min ? min : value;
 
 			// There's no check to see if min > max.
 			return value;

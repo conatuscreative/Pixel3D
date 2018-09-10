@@ -3,7 +3,5 @@
 
 namespace Pixel3D.Audio
 {
-	public struct AudioRectangle
-	{
-	}
+	public delegate void ReportExpectedCue(string context, params object[] args);
 }

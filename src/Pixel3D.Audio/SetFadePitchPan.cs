@@ -3,7 +3,5 @@
 
 namespace Pixel3D.Audio
 {
-	public struct AudioRectangle
-	{
-	}
+	public delegate void SetFadePitchPan(SafeSoundEffectInstance owner, float volume, float pitch, float pan);
 }

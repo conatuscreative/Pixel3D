@@ -1,33 +1,38 @@
+// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
 using System.IO;
 
 namespace Pixel3D.Audio
 {
-    public partial class CueSerializeContext
-    {
-        public CueSerializeContext(BinaryWriter bw) : this(bw, formatVersion) { } // Default to writing current version
+	public class CueSerializeContext
+	{
+		public readonly BinaryWriter bw;
 
-        public CueSerializeContext(BinaryWriter bw, int version)
-        {
-            this.bw = bw;
-            this.Version = version;
+		public CueSerializeContext(BinaryWriter bw) : this(bw, formatVersion)
+		{
+		} // Default to writing current version
 
-            bw.Write(Version);
-        }
+		public CueSerializeContext(BinaryWriter bw, int version)
+		{
+			this.bw = bw;
+			Version = version;
 
-        public readonly BinaryWriter bw;
+			bw.Write(Version);
+		}
 
-        #region Version
+		public void WriteSound(Sound sound)
+		{
+			sound.Serialize(this);
+		}
 
-        /// <summary>Increment this number when anything we serialize changes</summary>
-        public const int formatVersion = 4;
+		#region Version
 
-        public int Version { get; private set; }
+		/// <summary>Increment this number when anything we serialize changes</summary>
+		public const int formatVersion = 4;
 
-        #endregion
+		public int Version { get; }
 
-        public void WriteSound(Sound sound)
-        {
-            sound.Serialize(this);
-        }
-    }
+		#endregion
+	}
 }

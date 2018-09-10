@@ -1,313 +1,306 @@
-﻿using System;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+using System;
 using System.Collections.Generic;
 
 namespace Pixel3D.Audio
 {
-    public static class MusicManager
-    {
-        // Public methods are thread-safe (must lock)
-        private static readonly object lockObject = new object();
-		
-        const float fadeTime = 0.8f; // seconds
-        const float sufficientFadeOutToStart = 0.2f;
-        const float sufficientFadeOutToFadeIn = 0.75f;
+	public static class MusicManager
+	{
+		private const float fadeTime = 0.8f; // seconds
+		private const float sufficientFadeOutToStart = 0.2f;
+		private const float sufficientFadeOutToFadeIn = 0.75f;
 
-        public const float DefaultVolume = 0.7f;
-        private static float _volume = DefaultVolume; // <- good default (keeps the sound effects above the music)
-        public static float Volume
-        {
-            get { lock(lockObject) return _volume; }
-            set
-            {
-                lock(lockObject)
-                {
-                    _volume = value;
-                    if(!AudioDevice.Available)
-                        return;
+		public const float DefaultVolume = 0.7f;
 
-	                foreach (var a in activeMusic)
-	                {
-		                if (a.instance != null)
-		                {
-			                AudioSystem.setVolume(a.instance, a.fade.StepNES() * _volume);
-		                }
-	                }
+		// Public methods are thread-safe (must lock)
+		private static readonly object lockObject = new object();
+		private static float _volume = DefaultVolume; // <- good default (keeps the sound effects above the music)
 
-	                foreach (var f in fadingOutMusic)
-	                {
-		                AudioSystem.setVolume(f.instance, f.fade.StepNES() * _volume);
-	                }
-                }
-            }
-        }
+		public static float Volume
+		{
+			get
+			{
+				lock (lockObject)
+				{
+					return _volume;
+				}
+			}
+			set
+			{
+				lock (lockObject)
+				{
+					_volume = value;
+					if (!AudioDevice.Available)
+						return;
 
+					foreach (var a in activeMusic)
+						if (a.instance != null)
+							AudioSystem.setVolume(a.instance, a.fade.StepNES() * _volume);
 
-        /// <summary>Volume stepping like a NES (16 levels)</summary>
-        public static float StepNES(this float value)
-        {
-            return (float)(Math.Round(value * 16.0) / 16.0);
-        }
+					foreach (var f in fadingOutMusic) AudioSystem.setVolume(f.instance, f.fade.StepNES() * _volume);
+				}
+			}
+		}
 
 
-        #region Active Music
+		/// <summary>Volume stepping like a NES (16 levels)</summary>
+		public static float StepNES(this float value)
+		{
+			return (float) (Math.Round(value * 16.0) / 16.0);
+		}
 
-        /// <param name="synchronise">Start music immediately, don't wait for fade</param>
-        public static void SetMenuMusic(SafeSoundEffect music, bool loop = true, bool synchronise = false)
-        {
-            lock(lockObject)
-            {
-                SetMusic(music, 0, loop, synchronise);
-            }
-        }
 
-        /// <param name="synchronise">Start music immediately, don't wait for fade</param>
-        public static void SetGameMusic(SafeSoundEffect music, bool loop = true, bool synchronise = false)
-        {
-            lock(lockObject)
-            {
-                SetMusic(music, 1, loop, synchronise);
-            }
-        }
+		#region Active Music
 
-	    private struct ActiveMusic
-        {
-            public IDisposable music; // <- used to indicate "exists" ("has value")
-            public IDisposable instance;
-            public float fade;
-            public bool loop;
-            public bool synchronise;
-        }
+		/// <param name="synchronise">Start music immediately, don't wait for fade</param>
+		public static void SetMenuMusic(SafeSoundEffect music, bool loop = true, bool synchronise = false)
+		{
+			lock (lockObject)
+			{
+				SetMusic(music, 0, loop, synchronise);
+			}
+		}
 
-        // Active music at different priorities (lower index is higher priority)
-        private static readonly ActiveMusic[] activeMusic = new ActiveMusic[2];
+		/// <param name="synchronise">Start music immediately, don't wait for fade</param>
+		public static void SetGameMusic(SafeSoundEffect music, bool loop = true, bool synchronise = false)
+		{
+			lock (lockObject)
+			{
+				SetMusic(music, 1, loop, synchronise);
+			}
+		}
 
-        private static int BestPriority
-        {
-            get
-            {
-                int i;
-                for(i = 0; i < activeMusic.Length; i++)
-                    if(activeMusic[i].music != null)
-                        break;
-                return i;
-            }
-        }
-		
-        private static void SetMusic(SafeSoundEffect safeMusic, int priority, bool loop, bool synchronise)
-        {
-            if(!AudioDevice.Available)
-                return;
+		private struct ActiveMusic
+		{
+			public IDisposable music; // <- used to indicate "exists" ("has value")
+			public IDisposable instance;
+			public float fade;
+			public bool loop;
+			public bool synchronise;
+		}
 
-            var music = safeMusic?.owner;
+		// Active music at different priorities (lower index is higher priority)
+		private static readonly ActiveMusic[] activeMusic = new ActiveMusic[2];
 
-	        // ReSharper disable once PossibleUnintendedReferenceComparison
-	        if(activeMusic[priority].music == music)
-                return; // Already playing this song
+		private static int BestPriority
+		{
+			get
+			{
+				int i;
+				for (i = 0; i < activeMusic.Length; i++)
+					if (activeMusic[i].music != null)
+						break;
+				return i;
+			}
+		}
 
-            // Get rid of music currently set at this level (possibly with a fade-out, if it is still playing)
-            if(activeMusic[priority].music != null)
-            {
-                if(activeMusic[priority].instance != null)
-                {
-                    if(activeMusic[priority].fade == 0)
-                        activeMusic[priority].instance.Dispose();
-                    else
-                        fadingOutMusic.Add(new FadingOutMusic
-                        {
-	                        fade = activeMusic[priority].fade,
-	                        instance = activeMusic[priority].instance
-                        });
-                }
+		private static void SetMusic(SafeSoundEffect safeMusic, int priority, bool loop, bool synchronise)
+		{
+			if (!AudioDevice.Available)
+				return;
 
-                activeMusic[priority] = default(ActiveMusic);
-            }
+			var music = safeMusic?.owner;
 
-            if(music == null)
-                return; // Nothing to play
+			// ReSharper disable once PossibleUnintendedReferenceComparison
+			if (activeMusic[priority].music == music)
+				return; // Already playing this song
 
-            activeMusic[priority].music = music;
-            activeMusic[priority].loop = loop;
-            activeMusic[priority].synchronise = synchronise;
+			// Get rid of music currently set at this level (possibly with a fade-out, if it is still playing)
+			if (activeMusic[priority].music != null)
+			{
+				if (activeMusic[priority].instance != null)
+				{
+					if (activeMusic[priority].fade == 0)
+						activeMusic[priority].instance.Dispose();
+					else
+						fadingOutMusic.Add(new FadingOutMusic
+						{
+							fade = activeMusic[priority].fade,
+							instance = activeMusic[priority].instance
+						});
+				}
 
-			if(synchronise && priority >= BestPriority)
-                DoFastFade(); // Make the most of the synced music opening
+				activeMusic[priority] = default(ActiveMusic);
+			}
 
-            if(synchronise)
-                StartPlaying(priority, priority >= BestPriority ? 1f : 0f); // <- synced music starts immediately (even if it is at zero volume)
-            else if(CanStartSong(priority, sufficientFadeOutToStart))
-                StartPlaying(priority);
-        }
-		
-        private static void StartPlaying(int priority, float fade = 1f)
-        {
-	        var instance = AudioSystem.createSoundEffectInstance(activeMusic[priority].music);
+			if (music == null)
+				return; // Nothing to play
 
-	        var sei = new SafeSoundEffectInstance(instance);
-            activeMusic[priority].instance = instance;
-            activeMusic[priority].fade = fade;
-			
+			activeMusic[priority].music = music;
+			activeMusic[priority].loop = loop;
+			activeMusic[priority].synchronise = synchronise;
+
+			if (synchronise && priority >= BestPriority)
+				DoFastFade(); // Make the most of the synced music opening
+
+			if (synchronise)
+				StartPlaying(priority,
+					priority >= BestPriority
+						? 1f
+						: 0f); // <- synced music starts immediately (even if it is at zero volume)
+			else if (CanStartSong(priority, sufficientFadeOutToStart))
+				StartPlaying(priority);
+		}
+
+		private static void StartPlaying(int priority, float fade = 1f)
+		{
+			var instance = AudioSystem.createSoundEffectInstance(activeMusic[priority].music);
+
+			var sei = new SafeSoundEffectInstance(instance);
+			activeMusic[priority].instance = instance;
+			activeMusic[priority].fade = fade;
+
 			sei.Volume = _volume * fade;
-            sei.IsLooped = activeMusic[priority].loop;
-            sei.Play();
-        }
+			sei.IsLooped = activeMusic[priority].loop;
+			sei.Play();
+		}
 
 		private static bool CanStartSong(int priority, float sufficientFade)
-        {
-            if(fadingOutMusic.Count > 0 && fadingOutMusic[fadingOutMusic.Count-1].fade > sufficientFade)
-                return false;
+		{
+			if (fadingOutMusic.Count > 0 && fadingOutMusic[fadingOutMusic.Count - 1].fade > sufficientFade)
+				return false;
 
-            for(int i = 0; i < activeMusic.Length; i++)
-            {
-                if(activeMusic[i].music != null)
-                {
-                    if(i < priority)
-                        return false; // never start playing something when we have a higher priority to play
-                    else if(i > priority)
-                    {
-                        if(activeMusic[i].fade > sufficientFade)
-                            return false; // waiting to fade out
-                    }
-                }
-            }
+			for (var i = 0; i < activeMusic.Length; i++)
+				if (activeMusic[i].music != null)
+				{
+					if (i < priority)
+						return false; // never start playing something when we have a higher priority to play
+					if (i > priority)
+						if (activeMusic[i].fade > sufficientFade)
+							return false; // waiting to fade out
+				}
 
-            return true;
-        }
+			return true;
+		}
 
-	    public static void Update(TimeSpan elapsedTime)
-        {
-            if(!AudioDevice.Available)
-                return;
+		public static void Update(TimeSpan elapsedTime)
+		{
+			if (!AudioDevice.Available)
+				return;
 
-            lock(lockObject)
-            {
-                float seconds = (float)elapsedTime.TotalSeconds;
+			lock (lockObject)
+			{
+				var seconds = (float) elapsedTime.TotalSeconds;
 
-                UpdateFadeOuts(seconds);
+				UpdateFadeOuts(seconds);
 
-                // Fade in/out the active music:
-                int bestPriority = activeMusic.Length;
-                for(int i = 0; i < activeMusic.Length; i++) // highest to lowest priority
-                {
-                    if(activeMusic[i].music != null)
-                    {
-
-                        if(i < bestPriority)
-                            bestPriority = i;
+				// Fade in/out the active music:
+				var bestPriority = activeMusic.Length;
+				for (var i = 0; i < activeMusic.Length; i++) // highest to lowest priority
+					if (activeMusic[i].music != null)
+					{
+						if (i < bestPriority)
+							bestPriority = i;
 
 
-                        if(i == bestPriority)
-                        {
-                            if(activeMusic[i].instance == null)
-                            {
-                                // NOTE: synced music does not get a chance to restart (should never happen anyway)
-                                if(!activeMusic[i].synchronise && CanStartSong(i, sufficientFadeOutToStart))
-                                    StartPlaying(i);
-                            }
-                            else if(activeMusic[i].fade < 1f)
-                            {
-                                if(activeMusic[i].fade == 0f)
-                                {
-                                    if(CanStartSong(i, sufficientFadeOutToFadeIn))
-                                    {
-	                                    if (activeMusic[i].loop) // NOTE: only looping music gets paused when silent
-		                                    Pixel3D.Audio.AudioSystem.playSoundEffectInstance(activeMusic[i].instance); // unpause
-                                    }
-                                    else
-                                        continue;
-                                }
+						if (i == bestPriority)
+						{
+							if (activeMusic[i].instance == null)
+							{
+								// NOTE: synced music does not get a chance to restart (should never happen anyway)
+								if (!activeMusic[i].synchronise && CanStartSong(i, sufficientFadeOutToStart))
+									StartPlaying(i);
+							}
+							else if (activeMusic[i].fade < 1f)
+							{
+								if (activeMusic[i].fade == 0f)
+								{
+									if (CanStartSong(i, sufficientFadeOutToFadeIn))
+									{
+										if (activeMusic[i].loop) // NOTE: only looping music gets paused when silent
+											AudioSystem.playSoundEffectInstance(activeMusic[i].instance); // unpause
+									}
+									else
+									{
+										continue;
+									}
+								}
 
-                                activeMusic[i].fade += (seconds / fadeTime); // fade in
-                                if(activeMusic[i].fade > 1f)
-                                    activeMusic[i].fade = 1f;
+								activeMusic[i].fade += seconds / fadeTime; // fade in
+								if (activeMusic[i].fade > 1f)
+									activeMusic[i].fade = 1f;
 
-	                            Pixel3D.Audio.AudioSystem.setVolume(activeMusic[i].instance,
-		                            _volume * activeMusic[i].fade.StepNES());
-                            }
-                        }
+								AudioSystem.setVolume(activeMusic[i].instance,
+									_volume * activeMusic[i].fade.StepNES());
+							}
+						}
 
 
-                        if(i > bestPriority)
-                        {
-                            if(activeMusic[i].instance != null)
-                            {
-                                if(activeMusic[i].fade > 0f)
-                                {
-                                    activeMusic[i].fade -= (seconds / fadeTime); // fade out
-                                    if(activeMusic[i].fade <= 0f)
-                                    {
-                                        activeMusic[i].fade = 0f;
+						if (i > bestPriority)
+							if (activeMusic[i].instance != null)
+								if (activeMusic[i].fade > 0f)
+								{
+									activeMusic[i].fade -= seconds / fadeTime; // fade out
+									if (activeMusic[i].fade <= 0f)
+									{
+										activeMusic[i].fade = 0f;
 
-	                                    Pixel3D.Audio.AudioSystem.setVolume(activeMusic[i].instance, 0f);
+										AudioSystem.setVolume(activeMusic[i].instance, 0f);
 
-	                                    if (activeMusic[i].loop) // NOTE: only looping music gets paused when silent
-	                                    {
-		                                    Pixel3D.Audio.AudioSystem.pauseSoundEffectInstance(activeMusic[i].instance);
-	                                    }
-                                    }
-                                    else
-                                    {
-	                                    Pixel3D.Audio.AudioSystem.setVolume(activeMusic[i].instance, _volume * activeMusic[i].fade.StepNES());
-                                    }
-                                }
-                            }
-                        }
+										if (activeMusic[i].loop) // NOTE: only looping music gets paused when silent
+											AudioSystem.pauseSoundEffectInstance(activeMusic[i].instance);
+									}
+									else
+									{
+										AudioSystem.setVolume(activeMusic[i].instance,
+											_volume * activeMusic[i].fade.StepNES());
+									}
+								}
+					}
+			}
+		}
 
-                    }
-                } // <- end for each active music
-            }
-        }
+		#endregion
 
-        #endregion
-		
-        #region Fading Out Music
+		#region Fading Out Music
 
-        private struct FadingOutMusic
-        {
-            public float fade;
-            public IDisposable instance;
-            public bool fastFade;
-        }
+		private struct FadingOutMusic
+		{
+			public float fade;
+			public IDisposable instance;
+			public bool fastFade;
+		}
 
-        // This acts as a queue
-        private static readonly List<FadingOutMusic> fadingOutMusic = new List<FadingOutMusic>();
+		// This acts as a queue
+		private static readonly List<FadingOutMusic> fadingOutMusic = new List<FadingOutMusic>();
 
-        private static void DoFastFade()
-        {
-            for(int i = 0; i < fadingOutMusic.Count; i++)
-            {
-                var f = fadingOutMusic[i];
-                f.fastFade = true;
-                fadingOutMusic[i] = f;
-            }
-        }
-		
-        private static void UpdateFadeOuts(float seconds)
-        {
-            for(int i = 0; i < fadingOutMusic.Count;) // NOTE: in-loop removal
-            {
-                FadingOutMusic f = fadingOutMusic[i];
+		private static void DoFastFade()
+		{
+			for (var i = 0; i < fadingOutMusic.Count; i++)
+			{
+				var f = fadingOutMusic[i];
+				f.fastFade = true;
+				fadingOutMusic[i] = f;
+			}
+		}
 
-                float fadeOutBy = (seconds / fadeTime);
-                if(f.fastFade)
-                    fadeOutBy *= 3;
-                f.fade -= fadeOutBy;
+		private static void UpdateFadeOuts(float seconds)
+		{
+			for (var i = 0; i < fadingOutMusic.Count;) // NOTE: in-loop removal
+			{
+				var f = fadingOutMusic[i];
 
-                if(f.fade <= 0)
-                {
-                    f.instance.Dispose(); // stops the sound
-                    fadingOutMusic.RemoveAt(i);
-                    continue;
-                }
-                else
-                {
-	                Pixel3D.Audio.AudioSystem.setVolume(f.instance, _volume * f.fade.StepNES());
-                    fadingOutMusic[i] = f;
-                }
+				var fadeOutBy = seconds / fadeTime;
+				if (f.fastFade)
+					fadeOutBy *= 3;
+				f.fade -= fadeOutBy;
 
-                i++;
-            }
-        }
+				if (f.fade <= 0)
+				{
+					f.instance.Dispose(); // stops the sound
+					fadingOutMusic.RemoveAt(i);
+					continue;
+				}
 
-        #endregion
-    }
+				AudioSystem.setVolume(f.instance, _volume * f.fade.StepNES());
+				fadingOutMusic[i] = f;
+
+				i++;
+			}
+		}
+
+		#endregion
+	}
 }

@@ -1,3 +1,6 @@
+// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
 using System.IO;
 
 namespace Pixel3D.Audio
@@ -8,8 +11,7 @@ namespace Pixel3D.Audio
 		{
 			if (br.ReadBoolean())
 				return br.ReadSingle();
-			else
-				return null;
+			return null;
 		}
 
 		public static void WriteNullableSingle(this BinaryWriter bw, float? value)
@@ -22,8 +24,7 @@ namespace Pixel3D.Audio
 		{
 			if (br.ReadBoolean())
 				return br.ReadString();
-			else
-				return null;
+			return null;
 		}
 
 		public static void WriteNullableStringNonBlank(this BinaryWriter bw, string value)
