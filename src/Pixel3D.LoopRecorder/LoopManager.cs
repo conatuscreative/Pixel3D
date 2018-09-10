@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -6,25 +9,21 @@ namespace Pixel3D.LoopRecorder
 {
 	public class LoopManager<TGameState>
 	{
+		private readonly object definitionTable;
 		private readonly Loop[] loopSlots;
 		private Value128 definitionHash;
-		private readonly object definitionTable;
-		private int? playingLoop;
-		private int loopPlaybackPosition;
+
+		private string droppedLoopFilename;
 
 		private TGameState gameState;
+		private int loopPlaybackPosition;
+		private int? playingLoop;
 
-		public event Action<TGameState> OnGameStateReplaced;
-		public event Func<bool> IsNetworked;
-
-		public bool IsPlaying => playingLoop.HasValue;
-		public int SelectedLoop { get; private set; }
-
-		public LoopManager(int slots, 
-			Value128 definitionHash, 
-			object definitionTable, 
+		public LoopManager(int slots,
+			Value128 definitionHash,
+			object definitionTable,
 			TGameState gameState,
-			Action<TGameState> onGameStateReplaced, 
+			Action<TGameState> onGameStateReplaced,
 			Func<bool> isNetworked)
 		{
 			loopSlots = new Loop[slots];
@@ -33,19 +32,23 @@ namespace Pixel3D.LoopRecorder
 			this.definitionTable = definitionTable;
 
 			this.gameState = gameState;
-			this.OnGameStateReplaced = onGameStateReplaced;
-			this.IsNetworked = isNetworked;
+			OnGameStateReplaced = onGameStateReplaced;
+			IsNetworked = isNetworked;
 
 			Trace.WriteLine("Definition Hash = " + definitionHash);
 		}
-		
+
+		public bool IsPlaying => playingLoop.HasValue;
+		public int SelectedLoop { get; private set; }
+
+		public event Action<TGameState> OnGameStateReplaced;
+		public event Func<bool> IsNetworked;
+
 		public void LoopStopAllRecording()
 		{
 			for (var i = 0; i < loopSlots.Length; i++)
-			{
 				if (loopSlots[i] != null)
 					loopSlots[i].StopRecording();
-			}
 		}
 
 		private void LoopStartPlaying(int loopToPlay)
@@ -56,9 +59,10 @@ namespace Pixel3D.LoopRecorder
 				return;
 			}
 
-			if (loopSlots[loopToPlay].definitionHash != this.definitionHash)
+			if (loopSlots[loopToPlay].definitionHash != definitionHash)
 			{
-				Trace.WriteLine($"Loop slot {loopToPlay} has hash \"{loopSlots[loopToPlay].definitionHash}\", expected hash \"{this.definitionHash}\"");
+				Trace.WriteLine(
+					$"Loop slot {loopToPlay} has hash \"{loopSlots[loopToPlay].definitionHash}\", expected hash \"{definitionHash}\"");
 				return;
 			}
 
@@ -101,7 +105,7 @@ namespace Pixel3D.LoopRecorder
 			{
 				// You probably modified a serializable structure, without a definition change (or something is *seriously* broken)
 				Trace.WriteLine($"Error deserializing snapshot {e}");
-				
+
 				if (Debugger.IsAttached)
 					Debugger.Break(); // Want to know when this happens (caller should have definition-checked)
 
@@ -130,16 +134,14 @@ namespace Pixel3D.LoopRecorder
 					loopPlaybackPosition = 0;
 				}
 
-				MultiInputState original = userInput;
+				var original = userInput;
 				userInput = loopSlots[playingLoop.Value].inputFrames[loopPlaybackPosition++];
 			}
 
 			// Recording
 			foreach (var loop in loopSlots)
-			{
 				if (loop != null && loop.IsRecording)
 					loop.RecordInput(userInput);
-			}
 
 			// Send to game
 			return userInput;
@@ -157,9 +159,7 @@ namespace Pixel3D.LoopRecorder
 			}
 
 			if (command.HasFlag(LoopCommand.RecordHasFocus))
-			{
-				for (int i = 0; i < loopSlots.Length; i++)
-				{
+				for (var i = 0; i < loopSlots.Length; i++)
 					if (slotIndex.HasValue && slotIndex.Value == i)
 					{
 						// Record the loop (can't record to the playing loop!)
@@ -178,31 +178,27 @@ namespace Pixel3D.LoopRecorder
 
 						SelectedLoop = i;
 					}
-				}
-			}
 
 			if (skipLoopsBecauseNetwork)
 				return;
 
 			if (droppedLoopFilename != null)
-			{
 				if (command.HasFlag(LoopCommand.NextLoop) || command.HasFlag(LoopCommand.PreviousLoop))
 				{
 					var dir = Path.GetDirectoryName(droppedLoopFilename);
 					var files = Directory.GetFiles(dir, "*.bin", SearchOption.TopDirectoryOnly);
 					Array.Sort(files, new NaturalStringComparer());
-					int index = Array.IndexOf(files, droppedLoopFilename);
+					var index = Array.IndexOf(files, droppedLoopFilename);
 					if (index >= 0)
 					{
 						if (command == LoopCommand.NextLoop)
 							index += 1;
 						else
-							index += (files.Length - 1);
+							index += files.Length - 1;
 						index %= files.Length;
 						HandleDroppedLoop(files[index]);
 					}
 				}
-			}
 
 			if (command.HasFlag(LoopCommand.Stop))
 			{
@@ -215,7 +211,7 @@ namespace Pixel3D.LoopRecorder
 				// Lazy-load from working directory:
 				if (loopSlots[SelectedLoop] == null)
 				{
-					string filename = "loop" + SelectedLoop + ".bin";
+					var filename = "loop" + SelectedLoop + ".bin";
 					if (File.Exists(filename))
 						loopSlots[SelectedLoop] = Loop.TryLoadFromFile(filename, ref definitionHash);
 				}
@@ -223,8 +219,6 @@ namespace Pixel3D.LoopRecorder
 				LoopStartPlaying(SelectedLoop);
 			}
 		}
-
-		private string droppedLoopFilename;
 
 		public void SaveSnapshotOf(TGameState gameState, string filename)
 		{
@@ -245,7 +239,7 @@ namespace Pixel3D.LoopRecorder
 				{
 					fileStream.Position = 0;
 
-					Loop loop = Loop.TryLoadFromFile(filename, ref definitionHash);
+					var loop = Loop.TryLoadFromFile(filename, ref definitionHash);
 					if (loop == null)
 					{
 						Trace.WriteLine($"Failed to open file \"{filename}\"");
@@ -281,8 +275,8 @@ namespace Pixel3D.LoopRecorder
 
 				return loopInput;
 			}
-			else
-				return original;
+
+			return original;
 		}
 
 		#region Serialization 
@@ -308,7 +302,7 @@ namespace Pixel3D.LoopRecorder
 		{
 			var ms = new MemoryStream(data);
 			var br = new BinaryReader(ms);
-			
+
 			var result = default(TGameState);
 			LoopSystem<TGameState>.deserialize(br, ref result, definitionTable);
 			return result;
