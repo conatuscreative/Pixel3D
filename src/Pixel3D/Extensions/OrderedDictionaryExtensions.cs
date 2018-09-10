@@ -4,8 +4,6 @@ namespace Pixel3D.Extensions
 {
 	public static class OrderedDictionaryExtensions
 	{
-		private const string FallbackKey = "*";
-
 		public static bool HasBaseFallback<T>(this OrderedDictionary<string, T> dictionary)
 		{
 			return dictionary.ContainsKey("*");
@@ -13,17 +11,17 @@ namespace Pixel3D.Extensions
 
 		public static T GetBaseFallback<T>(this OrderedDictionary<string, T> dictionary)
 		{
-			return dictionary[FallbackKey];
+			return dictionary[Pixel3D.OrderedDictionaryExtensions.FallbackKey];
 		}
 
 		public static bool TryRemoveBaseFallBack<T>(this OrderedDictionary<string, T> dictionary)
 		{
-			return dictionary.Remove(FallbackKey);
+			return dictionary.Remove(Pixel3D.OrderedDictionaryExtensions.FallbackKey);
 		}
 
 		public static void AddBaseFallback<T>(this OrderedDictionary<string, T> dictionary, T value)
 		{
-			dictionary.Add(FallbackKey, value);
+			dictionary.Add(Pixel3D.OrderedDictionaryExtensions.FallbackKey, value);
 		}
 
 		public static T Get<T>(this OrderedDictionary<string, T> dictionary, string context)

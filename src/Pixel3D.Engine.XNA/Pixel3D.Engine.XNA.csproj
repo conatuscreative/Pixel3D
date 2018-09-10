@@ -158,6 +158,9 @@
     <Compile Include="..\Pixel3D.Engine\Levels\IEditorObject.cs">
       <Link>Levels\IEditorObject.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Engine\Levels\IIgnoreParallax.cs">
+      <Link>Levels\IIgnoreParallax.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Engine\Levels\ILevelSubBehaviour.cs">
       <Link>Levels\ILevelSubBehaviour.cs</Link>
     </Compile>

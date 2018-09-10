@@ -11,11 +11,10 @@ using Pixel3D.AssetManagement;
 using Pixel3D.Engine.Collections;
 using Pixel3D.Extensions;
 using Pixel3D.FrameworkExtensions;
-using Pixel3D.Serialization;
 
 namespace Pixel3D.Engine.Levels
 {
-    public class Level : IHasReferencedAssets, IEditorNameProvider
+	public class Level : IHasReferencedAssets, IEditorNameProvider
     {
         private Level()
         {

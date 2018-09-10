@@ -1,11 +1,9 @@
 ﻿using Pixel3D.Animations;
-using Pixel3D.Engine;
 using Pixel3D.Engine.Collections;
-using Pixel3D.Engine.Levels;
 
 namespace Pixel3D.Engine.Levels
 {
-    public class LevelBehaviour
+	public class LevelBehaviour
     {
         public ReadOnlyList<ILevelSubBehaviour> subBehaviours;
 

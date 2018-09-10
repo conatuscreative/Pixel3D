@@ -549,7 +549,7 @@ namespace Pixel3D
 			{
 				animationSet.physicsStartX = animationSet.Heightmap.StartX;
 				animationSet.physicsEndX = animationSet.Heightmap.EndX;
-				animationSet.physicsStartZ = animationSet.Heightmap.StartZ;
+				animationSet.physicsStartZ = animationSet.Heightmap.StartZ; 
 				animationSet.physicsEndZ = animationSet.Heightmap.EndZ;
 
 				// Assume that reading is faster than walking the heightmap:
