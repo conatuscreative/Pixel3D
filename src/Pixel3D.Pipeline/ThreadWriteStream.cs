@@ -31,14 +31,13 @@ namespace Pixel3D.Pipeline
 			thread.Start();
 		}
 
+        public override long Position
+	    {
+	        get { return streamPosition; }
+	        set { throw new InvalidOperationException(); }
+	    }
 
-		public override long Position
-		{
-			get => streamPosition;
-			set => throw new InvalidOperationException();
-		}
-
-		public override void Write(byte[] buffer, int offset, int count)
+	    public override void Write(byte[] buffer, int offset, int count)
 		{
 			streamPosition += count;
 
@@ -138,11 +137,25 @@ namespace Pixel3D.Pipeline
 
 		#region Stream Guff
 
-		public override bool CanRead => false;
-		public override bool CanSeek => false;
-		public override bool CanWrite => true;
+	    public override bool CanRead
+	    {
+	        get { return false; }
+	    }
 
-		public override long Length => Position;
+	    public override bool CanSeek
+	    {
+	        get { return false; }
+	    }
+
+		public override bool CanWrite
+		{
+		    get { return true; }
+		}
+
+		public override long Length
+		{
+		    get { return Position; }
+		}
 
 		public override int Read(byte[] buffer, int offset, int count)
 		{

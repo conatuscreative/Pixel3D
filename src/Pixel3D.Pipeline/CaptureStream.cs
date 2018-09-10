@@ -19,26 +19,40 @@ namespace Pixel3D.Pipeline
 			CaptureTarget = captureTarget;
 		}
 
-		public Stream StreamToCapture { get; }
-		public Stream CaptureTarget { get; }
+		public Stream StreamToCapture { get; private set; }
+        public Stream CaptureTarget { get; private set; }
 
 
-		public override bool CanRead => StreamToCapture.CanRead;
-		public override bool CanSeek => false;
-		public override bool CanWrite => false;
+	    public override bool CanRead
+	    {
+	        get { return StreamToCapture.CanRead; }
+	    }
 
-		public override long Length => StreamToCapture.Length;
+	    public override bool CanSeek
+	    {
+	        get { return false; }
+	    }
 
-		public override long Position
+		public override bool CanWrite
 		{
-			get => StreamToCapture.Position;
-			set => StreamToCapture.Position = value;
+		    get { return false; }
 		}
 
+	    public override long Length
+	    {
+	        get { return StreamToCapture.Length; }
+	    }
 
-		protected override void Dispose(bool disposing)
+	    public override long Position
+	    {
+	        get { return StreamToCapture.Position; }
+	        set { StreamToCapture.Position = value; }
+	    }
+
+	    protected override void Dispose(bool disposing)
 		{
-			if (disposing) StreamToCapture?.Dispose();
+			if (disposing && StreamToCapture != null)
+			    StreamToCapture.Dispose();
 			base.Dispose(disposing);
 		}
 
@@ -54,7 +68,8 @@ namespace Pixel3D.Pipeline
 			Debug.Assert(bytesRead <= count);
 
 			// Copy that data to the capture buffer:
-			CaptureTarget?.Write(buffer, offset, bytesRead);
+            if(CaptureTarget != null)
+			    CaptureTarget.Write(buffer, offset, bytesRead);
 
 			return bytesRead;
 		}
