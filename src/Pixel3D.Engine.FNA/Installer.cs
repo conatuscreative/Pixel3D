@@ -18,12 +18,17 @@ namespace Pixel3D.Engine.FNA
 	/// </summary>
 	public static class Installer
 	{
-		public static void Install<TGameState>(int maxPlayers)
+		public static void Install(int maxPlayers)
 		{
 			AssetReader.serviceObjectProvider = services =>
 				((IGraphicsDeviceService)services.GetService(typeof(IGraphicsDeviceService))).GraphicsDevice;
 
 			InstallAudioSystem(maxPlayers);
+		}
+
+		public static void Install<TGameState>(int maxPlayers)
+		{
+			Install(maxPlayers);
 
 			InstallLoopSystem<TGameState>();
 		}
