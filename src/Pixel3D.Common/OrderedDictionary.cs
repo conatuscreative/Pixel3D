@@ -184,7 +184,14 @@ namespace Pixel3D
             }
         }
 
-        public void Add(TKey key, TValue value)
+		internal TKey GetKey(int i)
+	    {
+		    if (i >= 0)
+			    return entries[i].key;
+		    throw new ArgumentOutOfRangeException();
+		}
+
+		public void Add(TKey key, TValue value)
         {
             Insert(key, value, true);
         }
