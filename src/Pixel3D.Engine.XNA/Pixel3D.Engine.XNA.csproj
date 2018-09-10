@@ -217,12 +217,6 @@
     <Compile Include="..\Pixel3D.Engine\Physics\MoveSpeed.cs">
       <Link>Physics\MoveSpeed.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\Serialization\BuiltIn\SerializeDictionary.cs">
-      <Link>Serialization\BuiltIn\SerializeDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Serialization\BuiltIn\SerializeOrderedDictionary.cs">
-      <Link>Serialization\BuiltIn\SerializeOrderedDictionary.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\Serialization\SerializeIgnoreAudio.cs">
       <Link>Serialization\SerializeIgnoreAudio.cs</Link>
     </Compile>

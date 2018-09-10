@@ -328,8 +328,14 @@
     <Compile Include="..\Pixel3D.Serialization.Support\AABBExtensions.cs">
       <Link>Serialization.Support\AABBExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Serialization.Support\CustomSerialization.cs">
-      <Link>Serialization.Support\CustomSerialization.cs</Link>
+    <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeDictionary.cs">
+      <Link>Serialization.Support\BuiltIn\SerializeDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeOrderedDictionary.cs">
+      <Link>Serialization.Support\BuiltIn\SerializeOrderedDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Serialization.Support\CustomFieldSerialization.cs">
+      <Link>Serialization.Support\BuiltIn\CustomFieldSerialization.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.Serialization.Support\FileReadWrite.cs">
       <Link>Serialization.Support\FileReadWrite.cs</Link>

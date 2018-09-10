@@ -3,7 +3,7 @@ using System.IO;
 using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 
-namespace Pixel3D.Engine.Serialization.BuiltIn
+namespace Pixel3D.BuiltIn
 {
     static class SerializeOrderedDictionary
     {
