@@ -11,7 +11,9 @@ namespace Pixel3D
     {
         public ShadowReceiver(Heightmap heightmap, Oblique heightmapExtendDirection)
         {
-	        this.heightmap = heightmap ?? throw new ArgumentNullException(nameof(heightmap));
+            if (heightmap == null)
+                throw new ArgumentNullException("heightmap");
+            this.heightmap = heightmap;
             this.heightmapExtendDirection = heightmapExtendDirection;
         }
 

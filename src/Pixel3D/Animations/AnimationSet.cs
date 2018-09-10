@@ -20,9 +20,9 @@ namespace Pixel3D.Animations
         [NonSerialized]
         public string friendlyName;
 
-        public string EditorName => friendlyName;
+        public string EditorName { get { return friendlyName; } }
 
-	    /// <summary>Class name of default class to spawn for this AnimationSet</summary>
+        /// <summary>Class name of default class to spawn for this AnimationSet</summary>
         public string behaviour;
 
         /// <summary>General purpose cue; used for ambient sounds, boss sounds, level animation sounds, etc. </summary>
@@ -361,14 +361,23 @@ namespace Pixel3D.Animations
             animationSet.FinishGeneration();
             return animationSet;
         }
-		
+
         [Browsable(false)]
-        public Animation DefaultAnimation => animations.GetBaseFallback();
+        public Animation DefaultAnimation
+        {
+            get { return animations.GetBaseFallback(); }
+        }
 
-	    [Browsable(false)]
-        public bool HasDefaultAnimation => animations.HasBaseFallback;
+        [Browsable(false)]
+        public bool HasDefaultAnimation
+        {
+            get
+            {
+                return animations.HasBaseFallback;
+            }
+        }
 
-	    #region All Animations
+        #region All Animations
 
         /// <summary>Return all animations and their TagSets, including animations without assigned TagSets (gives a key of null)</summary>
         public IEnumerable<KeyValuePair<TagSet, Animation>> GetAllAnimations()

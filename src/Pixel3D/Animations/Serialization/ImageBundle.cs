@@ -8,12 +8,15 @@ using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D.Animations.Serialization
 {
-    [DebuggerDisplay("ImageBundle: \"{" + nameof(Name) + "}\"")]
+    [DebuggerDisplay("ImageBundle: \"{Name}\"")]
     public class ImageBundle : IDisposable
     {
-        public string Name => manager != null ? manager.GetBundleName(bundleIndex) : "(no name)";
+        public string Name
+        {
+            get { return manager != null ? manager.GetBundleName(bundleIndex) : "(no name)"; }
+        }
 
-	    public ImageBundle() { }
+        public ImageBundle() { }
 
         // This is hacky...
         /// <summary>Create a dummy reader for cases where we don't want to load the texture file (for tooling)</summary>
@@ -209,7 +212,8 @@ namespace Pixel3D.Animations.Serialization
             }
             else
             {
-	            manager?.LiveListTouch(liveIndex);
+                if(manager != null)
+	                manager.LiveListTouch(liveIndex);
             }
 
 	        Sprite result;

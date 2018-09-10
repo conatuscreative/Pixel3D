@@ -49,9 +49,7 @@ namespace Pixel3D
 
         public override bool Equals(object obj)
         {
-            if(obj is Value128 value128)
-                return value128 == this;
-            return false;
+            return obj is Value128 && (Value128) obj == this;
         }
 
         public override int GetHashCode()
@@ -61,7 +59,7 @@ namespace Pixel3D
 
         public override string ToString()
         {
-            return $"{v1:X8}{v2:X8}{v3:X8}{v4:X8}";
+            return string.Format("{0:X8}{1:X8}{2:X8}{3:X8}", v1, v2, v3, v4);
         }
 
         #endregion
