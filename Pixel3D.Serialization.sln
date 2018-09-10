@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{9392DB84-BBE9-407C-9D5E-78B9AA571A05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC584B93-FCA9-4804-97C8-0C39A1BB0339}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF0314D4-B0DF-444B-AD5E-F485EC18CEF5}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.Serialization.Demo", "test\Pixel3D.Serialization.Demo\Pixel3D.Serialization.Demo.csproj", "{4DEFE15C-6852-4409-8665-D8F16965227A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Serialization", "src\Pixel3D.Serialization\Pixel3D.Serialization.csproj", "{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Common", "..\Pixel3D\src\Pixel3D.Common\Pixel3D.Common.csproj", "{9BD6801F-4F5A-4680-B282-CF4F224BC378}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DEFE15C-6852-4409-8665-D8F16965227A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DEFE15C-6852-4409-8665-D8F16965227A}.Debug|x86.ActiveCfg = Debug|x86
+		{4DEFE15C-6852-4409-8665-D8F16965227A}.Debug|x86.Build.0 = Debug|x86
+		{4DEFE15C-6852-4409-8665-D8F16965227A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DEFE15C-6852-4409-8665-D8F16965227A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DEFE15C-6852-4409-8665-D8F16965227A}.Release|x86.ActiveCfg = Release|x86
+		{4DEFE15C-6852-4409-8665-D8F16965227A}.Release|x86.Build.0 = Release|x86
+		{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB}.Debug|x86.Build.0 = Debug|Any CPU
+		{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB}.Release|x86.Build.0 = Release|Any CPU
+		{9BD6801F-4F5A-4680-B282-CF4F224BC378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BD6801F-4F5A-4680-B282-CF4F224BC378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BD6801F-4F5A-4680-B282-CF4F224BC378}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9BD6801F-4F5A-4680-B282-CF4F224BC378}.Debug|x86.Build.0 = Debug|Any CPU
+		{9BD6801F-4F5A-4680-B282-CF4F224BC378}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BD6801F-4F5A-4680-B282-CF4F224BC378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BD6801F-4F5A-4680-B282-CF4F224BC378}.Release|x86.ActiveCfg = Release|Any CPU
+		{9BD6801F-4F5A-4680-B282-CF4F224BC378}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4DEFE15C-6852-4409-8665-D8F16965227A} = {9392DB84-BBE9-407C-9D5E-78B9AA571A05}
+		{7C16C8AF-2F2B-4F90-BA86-BB68B50F25EB} = {BC584B93-FCA9-4804-97C8-0C39A1BB0339}
+		{9BD6801F-4F5A-4680-B282-CF4F224BC378} = {BC584B93-FCA9-4804-97C8-0C39A1BB0339}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3E18327F-CEF5-4C22-854A-DE0967353D8E}
+	EndGlobalSection
+EndGlobal

@@ -112,10 +112,6 @@
       <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
       <Name>FNA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj">
-      <Project>{eedbf0f2-9594-4164-a37f-081a944c0bb0}</Project>
-      <Name>Pixel3D.Serialization</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj">
       <Project>{550e1bff-47be-4b1e-9b11-2a1784519626}</Project>
       <Name>Pixel3D.AssetManagement</Name>
@@ -135,6 +131,10 @@
     <ProjectReference Include="..\Pixel3D.Serialization.Support\Pixel3D.Serialization.Support.csproj">
       <Project>{2eff5d87-402d-48da-b075-d7cdbe275dd8}</Project>
       <Name>Pixel3D.Serialization.Support</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pixel3D.Serialization\Pixel3D.Serialization.csproj">
+      <Project>{3a037f58-d2dc-4636-bc48-47f09c6566e4}</Project>
+      <Name>Pixel3D.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj">
       <Project>{6e48fcd0-ad6b-43a4-a2b0-149e53025f74}</Project>

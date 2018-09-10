@@ -63,14 +63,13 @@ namespace Pixel3D.Engine
 
         #region Cues
 
-        // TODO: This needs Symbol-like treatment so we aren't looking anything up based on a string
         /// <summary>Lookup of names to cues.</summary>
         protected OrderedDictionary<string, Cue> cues;
 
         public int cuesWithIds;
 
         /// <summary>Sentinel value for when we cannot find a requested cue</summary>
-        public Cue missingCue = new Cue() { friendlyName = "[missing cue]" };
+        public Cue missingCue = new Cue { friendlyName = "[missing cue]" };
 
         public Cue GetCue(string name, object debugContext)
         {
@@ -100,7 +99,7 @@ namespace Pixel3D.Engine
             result.cues = new OrderedDictionary<string, Cue>();
             result.cuesWithIds = 0;
 
-            string cuePackagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cues.rcru");
+            string cuePackagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
             using (var fs = File.OpenRead(cuePackagePath))
             {
                 for (int i = 0; i < header.Length; i++)

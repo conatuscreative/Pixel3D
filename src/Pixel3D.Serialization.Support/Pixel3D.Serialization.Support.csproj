@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Pixel3D.Serialization\src\Pixel3D.Serialization\Pixel3D.Serialization.csproj" />
+    <ProjectReference Include="..\Pixel3D.Serialization\Pixel3D.Serialization.csproj" />
     <ProjectReference Include="..\Pixel3D\Pixel3D.csproj" />
   </ItemGroup>
 
