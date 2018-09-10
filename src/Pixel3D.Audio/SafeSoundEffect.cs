@@ -17,6 +17,11 @@ namespace Pixel3D.Audio
 		/// <summary>The underlying sound effect (can be null)</summary>
 		public IDisposable owner;
 
+	    static SafeSoundEffect()
+	    {
+	        SoundEffectVolume = 1.0f;
+	    }
+
 		public SafeSoundEffect()
 		{
 		}
@@ -28,7 +33,8 @@ namespace Pixel3D.Audio
 
 		public void Dispose()
 		{
-			owner?.Dispose();
+            if(owner != null)
+			   owner.Dispose();
 		}
 
 		/// <summary>How long is this sound effect in frames at a given pitch (NOTE: this value is not network-safe)</summary>
@@ -48,8 +54,14 @@ namespace Pixel3D.Audio
 
 		public string Name
 		{
-			get => AudioSystem.getName(owner);
-			set => AudioSystem.setName(owner, value);
+		    get
+		    {
+                return AudioSystem.getName(owner);
+		    }
+		    set
+		    {
+		        AudioSystem.setName(owner, value);
+		    }
 		}
 
 		public bool Play()
@@ -132,7 +144,10 @@ namespace Pixel3D.Audio
 
 		public static float MasterVolume
 		{
-			get => AudioDevice.Available ? AudioSystem.getMasterVolume(null) : 0f;
+		    get
+		    {
+                return AudioDevice.Available ? AudioSystem.getMasterVolume(null) : 0f;
+		    }
 			set
 			{
 				if (AudioDevice.Available && AudioSystem.getMasterVolume(null) != value
@@ -141,7 +156,7 @@ namespace Pixel3D.Audio
 			}
 		}
 
-		public static float SoundEffectVolume { get; set; } = 1.0f;
+		public static float SoundEffectVolume { get; set; }
 
 		#endregion
 	}

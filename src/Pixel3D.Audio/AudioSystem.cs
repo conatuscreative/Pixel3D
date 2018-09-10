@@ -18,6 +18,7 @@ namespace Pixel3D.Audio
 		public static SetString setName;
 		public static GetBoolean getIsLooped;
 		public static SetBoolean setIsLooped;
+		public static GetBoolean getIsDisposed;
 		public static GetSingle getVolume;
 		public static SetSingle setVolume;
 		public static GetSingle getPitch;

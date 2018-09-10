@@ -15,32 +15,64 @@ namespace Pixel3D.Audio
 			this.owner = owner;
 		}
 
-		public SoundState State => AudioSystem.getSoundState(owner);
+	    public SoundState State { get { return AudioSystem.getSoundState(owner); } }
 
 		#region Wrapper
 
 		public float Volume
 		{
-			get => AudioSystem.getVolume(owner);
-			set => AudioSystem.setVolume(owner, value);
+		    get
+		    {
+		        return AudioSystem.getVolume(owner);
+		    }
+		    set
+		    {
+		        AudioSystem.setVolume(owner, value);
+		    }
 		}
 
 		public float Pitch
 		{
-			get => AudioSystem.getPitch(owner);
-			set => AudioSystem.setPitch(owner, value);
+		    get
+		    {
+                return AudioSystem.getPitch(owner);
+		    }
+		    set
+		    {
+		        AudioSystem.setPitch(owner, value);
+		    }
 		}
 
 		public float Pan
 		{
-			get => AudioSystem.getPan(owner);
-			set => AudioSystem.setPan(owner, value);
+		    get
+		    {
+                return AudioSystem.getPan(owner);
+		    }
+		    set
+		    {
+		        AudioSystem.setPan(owner, value);
+		    }
 		}
 
 		public bool IsLooped
 		{
-			get => AudioSystem.getIsLooped(owner);
-			set => AudioSystem.setIsLooped(owner, value);
+		    get
+		    {
+                return AudioSystem.getIsLooped(owner);
+		    }
+		    set
+		    {
+		        AudioSystem.setIsLooped(owner, value);
+		    }
+		}
+
+		public bool IsDisposed
+		{
+		    get
+		    {
+                return AudioSystem.getIsDisposed(owner);
+		    }
 		}
 
 		public void Play()
@@ -60,7 +92,8 @@ namespace Pixel3D.Audio
 
 		public void Dispose()
 		{
-			owner?.Dispose();
+            if(owner != null)
+               owner.Dispose();
 		}
 
 		#endregion
