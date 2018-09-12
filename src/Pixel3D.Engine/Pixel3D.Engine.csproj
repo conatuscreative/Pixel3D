@@ -43,10 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor.cs" />
-    <Compile Include="Actors\Effects\MovingSimpleEffect.cs" />
-    <Compile Include="Actors\Effects\PermanentEffect.cs" />
-    <Compile Include="Actors\Effects\SimpleEffect.cs" />
-    <Compile Include="AttachmentTracking.cs" />
+    <Compile Include="Effects\MovingSimpleEffect.cs" />
+    <Compile Include="Effects\PermanentEffect.cs" />
+    <Compile Include="Effects\SimpleEffect.cs" />
     <Compile Include="AudioExtensions.cs" />
     <Compile Include="Levels\IIgnoreParallax.cs" />
     <Compile Include="LineWrapping.cs" />

@@ -67,9 +67,6 @@
     <Compile Include="..\Pixel3D.Engine\Actors\Effects\SimpleEffect.cs">
       <Link>Actors\Effects\SimpleEffect.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\AttachmentTracking.cs">
-      <Link>AttachmentTracking.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\AudioExtensions.cs">
       <Link>AudioExtensions.cs</Link>
     </Compile>

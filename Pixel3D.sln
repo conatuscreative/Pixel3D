@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.All", "src\Pixel3D.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Serialization", "src\Pixel3D.Serialization\Pixel3D.Serialization.csproj", "{3A037F58-D2DC-4636-BC48-47F09C6566E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.ActorManagement", "src\Pixel3D.ActorManagement\Pixel3D.ActorManagement.csproj", "{8FED1866-79FC-46BB-9172-F417A2B8A3B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -229,6 +231,18 @@ Global
 		{3A037F58-D2DC-4636-BC48-47F09C6566E4}.Release|x64.Build.0 = Release|Any CPU
 		{3A037F58-D2DC-4636-BC48-47F09C6566E4}.Release|x86.ActiveCfg = Release|Any CPU
 		{3A037F58-D2DC-4636-BC48-47F09C6566E4}.Release|x86.Build.0 = Release|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Debug|x64.Build.0 = Debug|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Debug|x86.Build.0 = Debug|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Release|x64.ActiveCfg = Release|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Release|x64.Build.0 = Release|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Release|x86.ActiveCfg = Release|Any CPU
+		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
