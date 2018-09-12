@@ -68,13 +68,14 @@
     <Compile Include="..\Pixel3D.Audio\StopSoundEffectInstance.cs" Link="Audio\StopSoundEffectInstance.cs" />
     <Compile Include="..\Pixel3D.Audio\WorldToAudio.cs" Link="Audio\WorldToAudio.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\ByteArrayExtensions.cs" Link="LoopRecorder\ByteArrayExtensions.cs" />
+    <Compile Include="..\Pixel3D.LoopRecorder\Deserialize.cs" Link="LoopRecorder\Deserialize.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\Loop.cs" Link="LoopRecorder\Loop.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\LoopCommand.cs" Link="LoopRecorder\LoopCommand.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\LoopManager.cs" Link="LoopRecorder\LoopManager.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\LoopSystem.cs" Link="LoopRecorder\LoopSystem.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\MemoryCompareReadStream.cs" Link="LoopRecorder\MemoryCompareReadStream.cs" />
     <Compile Include="..\Pixel3D.LoopRecorder\NaturalStringComparer.cs" Link="LoopRecorder\NaturalStringComparer.cs" />
-    <Compile Include="..\Pixel3D.LoopRecorder\_Delegates.cs" Link="LoopRecorder\_Delegates.cs" />
+    <Compile Include="..\Pixel3D.LoopRecorder\Serialize.cs" Link="LoopRecorder\Serialize.cs" />
     <Compile Include="..\Pixel3D.Navigation\DirectionFlags.cs" Link="Navigation\DirectionFlags.cs" />
     <Compile Include="..\Pixel3D.Navigation\DirectionFlagsExtensions.cs" Link="Navigation\DirectionFlagsExtensions.cs" />
     <Compile Include="..\Pixel3D.Navigation\DriveDirection.cs" Link="Navigation\DriveDirection.cs" />

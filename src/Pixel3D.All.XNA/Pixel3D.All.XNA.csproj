@@ -187,9 +187,6 @@
     <Compile Include="..\Pixel3D.Audio\ReadAudioPackage.cs">
       <Link>Audio\ReadAudioPackage.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Audio\ReferenceEqualityComparer.cs">
-      <Link>Audio\ReferenceEqualityComparer.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Audio\ReportExpectedCue.cs">
       <Link>Audio\ReportExpectedCue.cs</Link>
     </Compile>
@@ -265,6 +262,9 @@
     <Compile Include="..\Pixel3D.Common\Position.cs">
       <Link>Common\Position.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Common\ReferenceEqualityComparer.cs">
+      <Link>Common\ReferenceEqualityComparer.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Common\TagLookup.cs">
       <Link>Common\TagLookup.cs</Link>
     </Compile>
@@ -279,6 +279,9 @@
     </Compile>
     <Compile Include="..\Pixel3D.LoopRecorder\ByteArrayExtensions.cs">
       <Link>LoopRecorder\ByteArrayExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.LoopRecorder\Deserialize.cs">
+      <Link>LoopRecorder\Deserialize.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.LoopRecorder\Loop.cs">
       <Link>LoopRecorder\Loop.cs</Link>
@@ -298,8 +301,8 @@
     <Compile Include="..\Pixel3D.LoopRecorder\NaturalStringComparer.cs">
       <Link>LoopRecorder\NaturalStringComparer.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.LoopRecorder\_Delegates.cs">
-      <Link>LoopRecorder\_Delegates.cs</Link>
+    <Compile Include="..\Pixel3D.LoopRecorder\Serialize.cs">
+      <Link>LoopRecorder\Serialize.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.Navigation\DirectionFlags.cs">
       <Link>Navigation\DirectionFlags.cs</Link>
@@ -426,9 +429,6 @@
     </Compile>
     <Compile Include="..\pixel3d.serialization\context\DeserializeContext.cs">
       <Link>Serialization\Context\DeserializeContext.cs</Link>
-    </Compile>
-    <Compile Include="..\pixel3d.serialization\context\ReferenceEqualityComparer.cs">
-      <Link>Serialization\Context\ReferenceEqualityComparer.cs</Link>
     </Compile>
     <Compile Include="..\pixel3d.serialization\context\SerializeContext.cs">
       <Link>Serialization\Context\SerializeContext.cs</Link>
@@ -858,9 +858,6 @@
     </Compile>
     <Compile Include="..\Pixel3D\Range.cs">
       <Link>Range.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D\ReferenceEqualityComparer.cs">
-      <Link>ReferenceEqualityComparer.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D\ShadowReceiver.cs">
       <Link>ShadowReceiver.cs</Link>
