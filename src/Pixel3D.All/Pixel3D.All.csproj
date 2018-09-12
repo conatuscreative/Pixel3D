@@ -51,7 +51,6 @@
     <Compile Include="..\Pixel3D.Audio\PlaySoundEffect.cs" Link="Audio\PlaySoundEffect.cs" />
     <Compile Include="..\Pixel3D.Audio\PlaySoundEffectInstance.cs" Link="Audio\PlaySoundEffectInstance.cs" />
     <Compile Include="..\Pixel3D.Audio\ReadAudioPackage.cs" Link="Audio\ReadAudioPackage.cs" />
-    <Compile Include="..\Pixel3D.Audio\ReferenceEqualityComparer.cs" Link="Audio\ReferenceEqualityComparer.cs" />
     <Compile Include="..\Pixel3D.Audio\ReportExpectedCue.cs" Link="Audio\ReportExpectedCue.cs" />
     <Compile Include="..\Pixel3D.Audio\ReportMissingCue.cs" Link="Audio\ReportMissingCue.cs" />
     <Compile Include="..\Pixel3D.Audio\SafeSoundEffect.cs" Link="Audio\SafeSoundEffect.cs" />
@@ -118,7 +117,6 @@
     <Compile Include="..\Pixel3D.Serialization\Context\Constants.cs" Link="Serialization\Context\Constants.cs" />
     <Compile Include="..\Pixel3D.Serialization\Context\DefinitionObjectTable.cs" Link="Serialization\Context\DefinitionObjectTable.cs" />
     <Compile Include="..\Pixel3D.Serialization\Context\DeserializeContext.cs" Link="Serialization\Context\DeserializeContext.cs" />
-    <Compile Include="..\Pixel3D.Serialization\Context\ReferenceEqualityComparer.cs" Link="Serialization\Context\ReferenceEqualityComparer.cs" />
     <Compile Include="..\Pixel3D.Serialization\Context\SerializeContext.cs" Link="Serialization\Context\SerializeContext.cs" />
     <Compile Include="..\Pixel3D.Serialization\Context\SerializeContextWithStatistics.cs" Link="Serialization\Context\SerializeContextWithStatistics.cs" />
     <Compile Include="..\Pixel3D.Serialization\CustomFieldSerializerAttribute.cs" Link="Serialization\CustomFieldSerializerAttribute.cs" />
@@ -262,7 +260,6 @@
     <Compile Include="..\Pixel3D\Physics\CharacterPhysics.cs" Link="Physics\CharacterPhysics.cs" />
     <Compile Include="..\Pixel3D\Physics\WorldPhysics.cs" Link="Physics\WorldPhysics.cs" />
     <Compile Include="..\Pixel3D\Range.cs" Link="Range.cs" />
-    <Compile Include="..\Pixel3D\ReferenceEqualityComparer.cs" Link="ReferenceEqualityComparer.cs" />
     <Compile Include="..\Pixel3D\ShadowReceiver.cs" Link="ShadowReceiver.cs" />
     <Compile Include="..\Pixel3D\Sorting\DrawOrdering.cs" Link="Sorting\DrawOrdering.cs" />
     <Compile Include="..\Pixel3D\Sorting\EdgeBits.cs" Link="Sorting\EdgeBits.cs" />
