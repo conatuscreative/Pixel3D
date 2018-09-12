@@ -50,6 +50,7 @@
     <Compile Include="Levels\IIgnoreParallax.cs" />
     <Compile Include="LineWrapping.cs" />
     <Compile Include="Serialization\SerializeIgnoreAudio.cs" />
+    <Compile Include="UpdateContext.cs" />
     <Compile Include="VorbisfileDecoder.cs" />
     <Compile Include="Collections\MultiDictionary.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />
@@ -59,7 +60,6 @@
     <Compile Include="Collections\TransientList.cs" />
     <Compile Include="Collections\UniqueList.cs" />
     <Compile Include="DeferredAttachment.cs" />
-    <Compile Include="Definitions.cs" />
     <Compile Include="GamePhysics.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="HideableActor.cs" />
@@ -101,7 +101,6 @@
     <Compile Include="SmoothingIdentifiers.cs" />
     <Compile Include="Symbols.cs" />
     <Compile Include="TagSetExtensions.cs" />
-    <Compile Include="UpdateContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj">

@@ -85,9 +85,6 @@
     <Compile Include="..\Pixel3D.Engine\DeferredAttachment.cs">
       <Link>DeferredAttachment.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\Definitions.cs">
-      <Link>Definitions.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\Effects\MovingSimpleEffect.cs">
       <Link>Effects\MovingSimpleEffect.cs</Link>
     </Compile>

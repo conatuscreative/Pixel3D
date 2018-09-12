@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Include="..\Pixel3D.ActorManagement\AttachmentTracking.cs" Link="ActorManagement\AttachmentTracking.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\Definitions.cs" Link="ActorManagement\Definitions.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\IGameState.cs" Link="ActorManagement\IGameState.cs" />
     <Compile Include="..\Pixel3D.AssetManagement\AssetClassification.cs" Link="AssetManagement\AssetClassification.cs" />
     <Compile Include="..\Pixel3D.AssetManagement\AssetDetails.cs" Link="AssetManagement\AssetDetails.cs" />
