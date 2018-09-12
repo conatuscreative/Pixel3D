@@ -58,15 +58,6 @@
     <Compile Include="..\Pixel3D.Engine\Actor.cs">
       <Link>Actor.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\Actors\Effects\MovingSimpleEffect.cs">
-      <Link>Actors\Effects\MovingSimpleEffect.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Actors\Effects\PermanentEffect.cs">
-      <Link>Actors\Effects\PermanentEffect.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Actors\Effects\SimpleEffect.cs">
-      <Link>Actors\Effects\SimpleEffect.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\AudioExtensions.cs">
       <Link>AudioExtensions.cs</Link>
     </Compile>
@@ -97,6 +88,15 @@
     <Compile Include="..\Pixel3D.Engine\Definitions.cs">
       <Link>Definitions.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Engine\Effects\MovingSimpleEffect.cs">
+      <Link>Effects\MovingSimpleEffect.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Engine\Effects\PermanentEffect.cs">
+      <Link>Effects\PermanentEffect.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Engine\Effects\SimpleEffect.cs">
+      <Link>Effects\SimpleEffect.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Engine\GamePhysics.cs">
       <Link>GamePhysics.cs</Link>
     </Compile>
@@ -108,9 +108,6 @@
     </Compile>
     <Compile Include="..\Pixel3D.Engine\IFullScreenEffect.cs">
       <Link>IFullScreenEffect.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\IGameState.cs">
-      <Link>IGameState.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.Engine\ILogger.cs">
       <Link>ILogger.cs</Link>

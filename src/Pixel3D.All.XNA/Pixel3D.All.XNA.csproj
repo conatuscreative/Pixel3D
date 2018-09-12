@@ -58,6 +58,9 @@
     <Compile Include="..\Pixel3D.ActorManagement\AttachmentTracking.cs">
       <Link>ActorManagement\AttachmentTracking.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\IGameState.cs">
+      <Link>ActorManagement\IGameState.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.AssetManagement\AssetClassification.cs">
       <Link>AssetManagement\AssetClassification.cs</Link>
     </Compile>

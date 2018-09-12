@@ -64,7 +64,6 @@
     <Compile Include="GameState.cs" />
     <Compile Include="HideableActor.cs" />
     <Compile Include="IFullScreenEffect.cs" />
-    <Compile Include="IGameState.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Levels\CreateLevelBehaviourCache.cs" />
     <Compile Include="Levels\CreateThingCache.cs" />
