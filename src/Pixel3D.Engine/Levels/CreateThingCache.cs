@@ -20,7 +20,7 @@ namespace Pixel3D.Engine.Levels
             {
                 foreach (var type in assembly.GetTypes())
                 {
-                    if (typeof(Actor).IsAssignableFrom(type))
+	                if (typeof(Actor).IsAssignableFrom(type))
                     {
                         var constructor = type.GetConstructor(constructorTypes);
                         if (constructor != null)
@@ -37,7 +37,10 @@ namespace Pixel3D.Engine.Levels
                         }
                         else
                         {
-	                        Debug.WriteLine("Warning: No 'Thing' constructor for " + type);
+							if (type.IsAbstract || typeof(ISuppressThingWarning).IsAssignableFrom(type))
+		                        continue;
+
+							Debug.WriteLine("Warning: No 'Thing' constructor for " + type);
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 using Pixel3D.Animations;
+using Pixel3D.Engine.Levels;
 
 namespace Pixel3D.Engine.Actors.Effects
 {
@@ -12,8 +13,8 @@ namespace Pixel3D.Engine.Actors.Effects
     //
 
     /// <summary>Stateless, self-destructing visual effect.</summary>
-    public class SimpleEffect : Actor
-    {
+    public class SimpleEffect : Actor, ISuppressThingWarning
+	{
         /// <summary>NOTE: Caller is responsible for setting position and then calling SetAnimation or AnimationDidChange</summary>
         public SimpleEffect(AnimationSet animationSet) : base(animationSet) { }
 

@@ -14,11 +14,11 @@
     <Compile Include="..\Pixel3D.ActorManagement\GamePhysics.cs" Link="ActorManagement\GamePhysics.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\GameState.cs" Link="ActorManagement\GameState.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\IGameState.cs" Link="ActorManagement\IGameState.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\MultiDictionary.cs" Link="ActorManagement\MultiDictionary.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\SmoothingIdentifiers.cs" Link="ActorManagement\SmoothingIdentifiers.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\Symbols.cs" Link="ActorManagement\Symbols.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\TagSetExtensions.cs" Link="ActorManagement\TagSetExtensions.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\TEMP\IEditorObject.cs" Link="ActorManagement\TEMP\IEditorObject.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\TEMP\MultiDictionary.cs" Link="ActorManagement\TEMP\MultiDictionary.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\TEMP\Thing.cs" Link="ActorManagement\TEMP\Thing.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\UpdateContext.cs" Link="ActorManagement\UpdateContext.cs" />
     <Compile Include="..\Pixel3D.AssetManagement\AssetClassification.cs" Link="AssetManagement\AssetClassification.cs" />
