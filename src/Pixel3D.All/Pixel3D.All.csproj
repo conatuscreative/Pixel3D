@@ -7,9 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\Pixel3D.ActorManagement\Actor.cs" Link="ActorManagement\Actor.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\AttachmentTracking.cs" Link="ActorManagement\AttachmentTracking.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\DeferredAttachment.cs" Link="ActorManagement\DeferredAttachment.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\Definitions.cs" Link="ActorManagement\Definitions.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\GamePhysics.cs" Link="ActorManagement\GamePhysics.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\GameState.cs" Link="ActorManagement\GameState.cs" />
     <Compile Include="..\Pixel3D.ActorManagement\IGameState.cs" Link="ActorManagement\IGameState.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\SmoothingIdentifiers.cs" Link="ActorManagement\SmoothingIdentifiers.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\Symbols.cs" Link="ActorManagement\Symbols.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\TagSetExtensions.cs" Link="ActorManagement\TagSetExtensions.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\TEMP\IEditorObject.cs" Link="ActorManagement\TEMP\IEditorObject.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\TEMP\MultiDictionary.cs" Link="ActorManagement\TEMP\MultiDictionary.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\TEMP\Thing.cs" Link="ActorManagement\TEMP\Thing.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement\UpdateContext.cs" Link="ActorManagement\UpdateContext.cs" />
     <Compile Include="..\Pixel3D.AssetManagement\AssetClassification.cs" Link="AssetManagement\AssetClassification.cs" />
     <Compile Include="..\Pixel3D.AssetManagement\AssetDetails.cs" Link="AssetManagement\AssetDetails.cs" />
     <Compile Include="..\Pixel3D.AssetManagement\AssetManager.cs" Link="AssetManagement\AssetManager.cs" />
@@ -277,7 +288,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ActorManagement\" />
+    <Folder Include="ActorManagement\TEMP\" />
     <Folder Include="Animations\Serialization\" />
     <Folder Include="Audio\" />
     <Folder Include="LoopRecorder\" />

@@ -256,7 +256,7 @@ namespace Pixel3D.Engine.Levels
                 int thingsCount = context.br.ReadInt32();
                 things = new List<Thing>(thingsCount);
                 for (int i = 0; i < thingsCount; i++)
-                    things.Add(new Thing(context));
+                    things.Add(context.DeserializeThing());
             }
 
             // Geometry

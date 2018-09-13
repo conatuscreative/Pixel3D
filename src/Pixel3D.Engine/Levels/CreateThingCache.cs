@@ -37,7 +37,7 @@ namespace Pixel3D.Engine.Levels
                         }
                         else
                         {
-                            Debug.WriteLine("Warning: No 'Thing' constructor for " + type);
+	                        Debug.WriteLine("Warning: No 'Thing' constructor for " + type);
                         }
                     }
                 }
