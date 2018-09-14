@@ -41,7 +41,6 @@
     <Compile Include="Maths\Fixed65536.cs" />
     <Compile Include="Maths\Fraction.cs" />
     <Compile Include="Maths\PackedVelocity.cs" />
-    <Compile Include="Physics\ThreeDVelocity.cs" />
     <Compile Include="Serialization\SerializeIgnoreAudio.cs" />
     <Compile Include="VorbisfileDecoder.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />
