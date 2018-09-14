@@ -118,9 +118,6 @@
     <Compile Include="..\Pixel3D.Engine\Navigation\WalkmapTools.cs">
       <Link>Navigation\WalkmapTools.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\Physics\CharacterMoveRate.cs">
-      <Link>Physics\CharacterMoveRate.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\Physics\Motion.cs">
       <Link>Physics\Motion.cs</Link>
     </Compile>

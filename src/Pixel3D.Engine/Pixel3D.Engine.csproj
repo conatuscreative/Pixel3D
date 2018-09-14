@@ -62,7 +62,6 @@
     <Compile Include="Navigation\NavRegion.cs" />
     <Compile Include="Navigation\PathfindingResults.cs" />
     <Compile Include="Navigation\WalkmapTools.cs" />
-    <Compile Include="Physics\CharacterMoveRate.cs" />
     <Compile Include="Physics\Motion.cs" />
     <Compile Include="Physics\MoveSpeed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
