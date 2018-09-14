@@ -55,14 +55,44 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Pixel3D.ActorManagement\Actor.cs">
+      <Link>ActorManagement\Actor.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.ActorManagement\AttachmentTracking.cs">
       <Link>ActorManagement\AttachmentTracking.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\DeferredAttachment.cs">
+      <Link>ActorManagement\DeferredAttachment.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.ActorManagement\Definitions.cs">
       <Link>ActorManagement\Definitions.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\GamePhysics.cs">
+      <Link>ActorManagement\GamePhysics.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\GameState.cs">
+      <Link>ActorManagement\GameState.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\IGameObjectDefinition.cs">
+      <Link>ActorManagement\IGameObjectDefinition.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.ActorManagement\IGameState.cs">
       <Link>ActorManagement\IGameState.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\MultiDictionary.cs">
+      <Link>ActorManagement\MultiDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\SmoothingIdentifiers.cs">
+      <Link>ActorManagement\SmoothingIdentifiers.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\Symbols.cs">
+      <Link>ActorManagement\Symbols.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\TagSetExtensions.cs">
+      <Link>ActorManagement\TagSetExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.ActorManagement\UpdateContext.cs">
+      <Link>ActorManagement\UpdateContext.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.AssetManagement\AssetClassification.cs">
       <Link>AssetManagement\AssetClassification.cs</Link>
@@ -286,6 +316,60 @@
     <Compile Include="..\Pixel3D.Common\XorShift.cs">
       <Link>Common\XorShift.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Levels\CreateLevelBehaviourCache.cs">
+      <Link>Levels\CreateLevelBehaviourCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\CreateThingCache.cs">
+      <Link>Levels\CreateThingCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\IIgnoreParallax.cs">
+      <Link>Levels\IIgnoreParallax.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\ILevelSubBehaviour.cs">
+      <Link>Levels\ILevelSubBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\ISuppressThingWarning.cs">
+      <Link>Levels\ISuppressThingWarning.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\Level.cs">
+      <Link>Levels\Level.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\LevelBehaviour.cs">
+      <Link>Levels\LevelBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\LevelDeserializeContext.cs">
+      <Link>Levels\LevelDeserializeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\LevelPosition.cs">
+      <Link>Levels\LevelPosition.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\LevelSerializeContext.cs">
+      <Link>Levels\LevelSerializeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\LevelSerializeContextExtensions.cs">
+      <Link>Levels\LevelSerializeContextExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\LevelSubBehaviour.cs">
+      <Link>Levels\LevelSubBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\Path.cs">
+      <Link>Levels\Path.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\PropertiesExtensions.cs">
+      <Link>Levels\PropertiesExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\Region.cs">
+      <Link>Levels\Region.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\Shim.cs">
+      <Link>Levels\Shim.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\Teleporter.cs">
+      <Link>Levels\Teleporter.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Levels\Thing.cs">
+      <Link>Levels\Thing.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.LoopRecorder\ByteArrayExtensions.cs">
       <Link>LoopRecorder\ByteArrayExtensions.cs</Link>
     </Compile>
@@ -373,8 +457,14 @@
     <Compile Include="..\Pixel3D.Serialization.Support\CustomFieldSerialization.cs">
       <Link>Serialization.Support\BuiltIn\CustomFieldSerialization.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Serialization.Support\CustomFieldSerialization.Levels.cs">
+      <Link>Serialization.Support\CustomFieldSerialization.Levels.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Serialization.Support\FileReadWrite.cs">
       <Link>Serialization.Support\FileReadWrite.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Serialization.Support\FileReadWrite.Levels.cs">
+      <Link>Serialization.Support\FileReadWrite.Levels.cs</Link>
     </Compile>
     <Compile Include="..\pixel3d.serialization\builtin\delegatehandling\DelegateMethodInfo.cs">
       <Link>Serialization\BuiltIn\DelegateHandling\DelegateMethodInfo.cs</Link>

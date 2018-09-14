@@ -55,15 +55,6 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Pixel3D.Engine\Actor.cs">
-      <Link>Actor.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\AudioExtensions.cs">
-      <Link>AudioExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Collections\MultiDictionary.cs">
-      <Link>Collections\MultiDictionary.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\Collections\MultiDictionaryExtensions.cs">
       <Link>Collections\MultiDictionaryExtensions.cs</Link>
     </Compile>
@@ -82,9 +73,6 @@
     <Compile Include="..\Pixel3D.Engine\Collections\UniqueList.cs">
       <Link>Collections\UniqueList.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\DeferredAttachment.cs">
-      <Link>DeferredAttachment.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\Effects\MovingSimpleEffect.cs">
       <Link>Effects\MovingSimpleEffect.cs</Link>
     </Compile>
@@ -94,12 +82,6 @@
     <Compile Include="..\Pixel3D.Engine\Effects\SimpleEffect.cs">
       <Link>Effects\SimpleEffect.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\GamePhysics.cs">
-      <Link>GamePhysics.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\GameState.cs">
-      <Link>GameState.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\HideableActor.cs">
       <Link>HideableActor.cs</Link>
     </Compile>
@@ -108,57 +90,6 @@
     </Compile>
     <Compile Include="..\Pixel3D.Engine\ILogger.cs">
       <Link>ILogger.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\CreateLevelBehaviourCache.cs">
-      <Link>Levels\CreateLevelBehaviourCache.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\CreateThingCache.cs">
-      <Link>Levels\CreateThingCache.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\IEditorObject.cs">
-      <Link>Levels\IEditorObject.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\IIgnoreParallax.cs">
-      <Link>Levels\IIgnoreParallax.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\ILevelSubBehaviour.cs">
-      <Link>Levels\ILevelSubBehaviour.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\Level.cs">
-      <Link>Levels\Level.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\LevelBehaviour.cs">
-      <Link>Levels\LevelBehaviour.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\LevelDeserializeContext.cs">
-      <Link>Levels\LevelDeserializeContext.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\LevelPosition.cs">
-      <Link>Levels\LevelPosition.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\LevelSerializeContext.cs">
-      <Link>Levels\LevelSerializeContext.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\LevelSubBehaviour.cs">
-      <Link>Levels\LevelSubBehaviour.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\Path.cs">
-      <Link>Levels\Path.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\PropertiesExtensions.cs">
-      <Link>Levels\PropertiesExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\Region.cs">
-      <Link>Levels\Region.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\Shim.cs">
-      <Link>Levels\Shim.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\Teleporter.cs">
-      <Link>Levels\Teleporter.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Levels\Thing.cs">
-      <Link>Levels\Thing.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.Engine\LineWrapping.cs">
       <Link>LineWrapping.cs</Link>
@@ -213,18 +144,6 @@
     </Compile>
     <Compile Include="..\Pixel3D.Engine\Serialization\SerializeIgnoreStateManagement.cs">
       <Link>Serialization\SerializeIgnoreStateManagement.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\SmoothingIdentifiers.cs">
-      <Link>SmoothingIdentifiers.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Symbols.cs">
-      <Link>Symbols.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\TagSetExtensions.cs">
-      <Link>TagSetExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\UpdateContext.cs">
-      <Link>UpdateContext.cs</Link>
     </Compile>
     <Compile Include="Installer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

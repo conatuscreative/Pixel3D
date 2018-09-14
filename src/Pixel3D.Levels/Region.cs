@@ -2,7 +2,6 @@
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 
 using Pixel3D.ActorManagement;
-using Pixel3D.Engine;
 using Pixel3D.Physics;
 
 namespace Pixel3D.Levels

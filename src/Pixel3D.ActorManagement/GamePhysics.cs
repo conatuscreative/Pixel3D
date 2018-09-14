@@ -438,7 +438,7 @@ namespace Pixel3D.ActorManagement
 
 			public struct Enumerator : IEnumerator<Actor>
 			{
-				public Enumerator(GamePhysics owner, int nextIndex)
+				public Enumerator(GamePhysics owner, int nextIndex) : this()
 				{
 					this.owner = owner;
 					Current = null;
@@ -841,7 +841,7 @@ namespace Pixel3D.ActorManagement
 
 			public struct Enumerator : IEnumerator<Actor>
 			{
-				public Enumerator(GamePhysics owner, MaskData maskData)
+				public Enumerator(GamePhysics owner, MaskData maskData) : this()
 				{
 					this.owner = owner;
 					this.maskData = maskData;

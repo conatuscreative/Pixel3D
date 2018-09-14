@@ -9,9 +9,9 @@ using Path = System.IO.Path;
 
 namespace Pixel3D
 {
-	partial class FileReadWrite
+	public partial class FileReadWrite
 	{
-		public static Level ReadFromFile(string path, IAssetProvider assetProvider, GraphicsDevice graphicsDevice)
+		public static Level ReadLevelFromFile(string path, IAssetProvider assetProvider, GraphicsDevice graphicsDevice)
 		{
 			string texturePath = Path.ChangeExtension(path, ".tex");
 			ImageBundle imageBundle = null;

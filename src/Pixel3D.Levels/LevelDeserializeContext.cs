@@ -38,7 +38,7 @@ namespace Pixel3D.Levels
 				new AnimationDeserializeContext(br, imageBundle, device); // <- Reads out animation set version
 		}
 
-		public int Version { get; }
+		public int Version { get; private set; }
 
 		/// <summary>
 		///     Used to speed up asset packing. Use with extreme care (number of bytes read must match EXACTLY). Produces
