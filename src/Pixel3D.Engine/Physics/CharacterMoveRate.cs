@@ -73,26 +73,7 @@ namespace Pixel3D.Engine.Physics
 		}
 
 
-		#region Prevent Serialization
-
-		// IMPORTANT: This is currently a code-only class. If we need to store it anywhere, it needs to get added to definitions.
-		//            These custom serializers are protect against accidentally storing in state.
-
-		[CustomSerializer]
-		public static void Serialize(SerializeContext context, BinaryWriter bw, CharacterMoveRate value)
-		{
-			Debug.Assert(false); // Shouldn't happen!
-			throw new InvalidOperationException();
-		}
-
-		[CustomSerializer]
-		public static void Deserialize(DeserializeContext context, BinaryReader br, CharacterMoveRate value)
-		{
-			Debug.Assert(false); // Shouldn't happen!
-			throw new InvalidOperationException();
-		}
-
-		#endregion
+		
 
 	}
 }

@@ -2,32 +2,7 @@
 
 namespace Pixel3D.Engine.Physics
 {
-    /// <summary>Gravity constants in 256-fixed-point, in pixels/frame^2</summary>
-    public static class Gravity256
-    {
-        // NOTE: Expecting the compiler to make these integers at compile time
-        public const int None     = 0;
-        public const int Floaty   = (int)(-0.07 * 256);
-        public const int Freefall = (int)(-0.16 * 256);
-        public const int JumpUp   = (int)(-0.18 * 256);
-        public const int Object   = (int)(-0.2  * 256);
-        public const int JumpDown = (int)(-0.4  * 256);
-        public const int Diving   = (int)(-0.6  * 256);
-        public const int Extreme  = (int)(-0.9  * 256);
-        public const int Shark    = (int)(-1.0  * 256);
-    }
-
-
-    public enum MotionResult
-    {
-        None = 0,
-        HitCeiling,
-        HitGround,
-        HitBottomOfPit,
-        HitWall,
-    }
-
-    public static class Motion
+	public static class Motion
     {
         public static MotionResult PhysicsStepVertical(ref CharacterPhysicsInfo cpi,
                 ref Position position, ref ThreeDVelocity velocity,

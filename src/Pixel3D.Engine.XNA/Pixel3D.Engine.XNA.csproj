@@ -73,15 +73,6 @@
     <Compile Include="..\Pixel3D.Engine\Collections\UniqueList.cs">
       <Link>Collections\UniqueList.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\Effects\MovingSimpleEffect.cs">
-      <Link>Effects\MovingSimpleEffect.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Effects\PermanentEffect.cs">
-      <Link>Effects\PermanentEffect.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Effects\SimpleEffect.cs">
-      <Link>Effects\SimpleEffect.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\HideableActor.cs">
       <Link>HideableActor.cs</Link>
     </Compile>
@@ -127,17 +118,20 @@
     <Compile Include="..\Pixel3D.Engine\Navigation\WalkmapTools.cs">
       <Link>Navigation\WalkmapTools.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\Physics\Ballistics.cs">
-      <Link>Physics\Ballistics.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\Physics\CharacterMoveRate.cs">
       <Link>Physics\CharacterMoveRate.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.Engine\Physics\Motion.cs">
       <Link>Physics\Motion.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Engine\Physics\MotionResult.cs">
+      <Link>Physics\MotionResult.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Engine\Physics\MoveSpeed.cs">
       <Link>Physics\MoveSpeed.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Engine\Physics\ThreeDVelocity.cs">
+      <Link>Physics\ThreeDVelocity.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.Engine\Serialization\SerializeIgnoreAudio.cs">
       <Link>Serialization\SerializeIgnoreAudio.cs</Link>

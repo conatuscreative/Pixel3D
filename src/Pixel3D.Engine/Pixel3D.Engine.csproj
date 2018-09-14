@@ -38,6 +38,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LineWrapping.cs" />
+    <Compile Include="Maths\Fixed65536.cs" />
+    <Compile Include="Maths\Fraction.cs" />
+    <Compile Include="Maths\PackedVelocity.cs" />
+    <Compile Include="Physics\MotionResult.cs" />
+    <Compile Include="Physics\ThreeDVelocity.cs" />
     <Compile Include="Serialization\SerializeIgnoreAudio.cs" />
     <Compile Include="VorbisfileDecoder.cs" />
     <Compile Include="Collections\MultiDictionaryExtensions.cs" />
@@ -51,16 +56,12 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MaskDataReferenceResolver.cs" />
-    <Compile Include="Maths\Fixed65536.cs" />
-    <Compile Include="Maths\Fraction.cs" />
-    <Compile Include="Maths\PackedVelocity.cs" />
     <Compile Include="Navigation\DirectionNumber.cs" />
     <Compile Include="Navigation\MovePreference.cs" />
     <Compile Include="Navigation\NavEdge.cs" />
     <Compile Include="Navigation\NavRegion.cs" />
     <Compile Include="Navigation\PathfindingResults.cs" />
     <Compile Include="Navigation\WalkmapTools.cs" />
-    <Compile Include="Physics\Ballistics.cs" />
     <Compile Include="Physics\CharacterMoveRate.cs" />
     <Compile Include="Physics\Motion.cs" />
     <Compile Include="Physics\MoveSpeed.cs" />
