@@ -2,4 +2,5 @@
 	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright © Conatus Creative, Inc. All rights reserved.&#xD;
 Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.&#xD;
 </s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=AABB/@EntryIndexedValue">AABB</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=PrivateInstanceFields/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="aaBb" /&gt;</s:String></wpf:ResourceDictionary>

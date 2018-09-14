@@ -27,41 +27,5 @@ namespace Pixel3D.Engine.Levels
 
         /// <summary>Set to true if you never want this teleporter to appear in random (or nearest/furthest) selections</summary>
         public bool neverSelectAtRandom;
-
-
-
-        #region Serialization
-
-        public override void Serialize(LevelSerializeContext context)
-        {
-            if (TargetLevel != null)
-                TargetLevel = TargetLevel.ToLowerInvariant();
-            context.bw.WriteNullableString(TargetLevel);
-            context.bw.WriteNullableString(targetSpawn);
-
-            if(context.Version >= 18)
-                context.bw.Write(neverSelectAtRandom);
-
-            base.Serialize(context);
-        }
-
-
-        /// <summary>Deserialize into new object instance</summary>
-        public Teleporter(LevelDeserializeContext context)
-        {
-            TargetLevel = context.br.ReadNullableString();
-            if (TargetLevel != null)
-                TargetLevel = TargetLevel.ToLowerInvariant();
-            targetSpawn = context.br.ReadNullableString();
-
-            if(context.Version >= 18)
-                neverSelectAtRandom = context.br.ReadBoolean();
-
-            base.Deserialize(context);
-        }
-
-        #endregion
-
-        
     }
 }

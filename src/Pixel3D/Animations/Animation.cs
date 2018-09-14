@@ -16,7 +16,6 @@ namespace Pixel3D.Animations
             Frames = new List<AnimationFrame>();
         }
 
-
         /// <summary>The number of frames in this animation</summary>
         [Browsable(false)]
         public int FrameCount { get { return Frames.Count; } }
@@ -31,8 +30,7 @@ namespace Pixel3D.Animations
             return (flipX ? cachedBounds.FlipX() : cachedBounds) + position.ToWorldZero();
         }
 
-
-        public List<AnimationFrame> Frames { get; set; }
+	    public List<AnimationFrame> Frames { get; set; }
 
 
         /// <summary>Get the maximum world space bounds of all frames in this animation. EDITOR ONLY!</summary>
@@ -46,8 +44,7 @@ namespace Pixel3D.Animations
             return maxBounds;
         }
 
-
-        /// <summary>EDITOR ONLY!</summary>
+		/// <summary>EDITOR ONLY!</summary>
         public Rectangle GetSoftRenderBounds(bool accountForGameplayMotion)
         {
             Rectangle output = Rectangle.Empty;

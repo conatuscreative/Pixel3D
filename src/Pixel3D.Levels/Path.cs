@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Pixel3D.Engine.Collections;
+﻿using System.Collections.Generic;
 using Pixel3D.Engine.Levels;
 using Pixel3D.FrameworkExtensions;
 
-namespace Pixel3D.Engine.Levels
+namespace Pixel3D.Levels
 {
     public class Path
     {

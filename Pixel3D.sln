@@ -39,7 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.All", "src\Pixel3D.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Serialization", "src\Pixel3D.Serialization\Pixel3D.Serialization.csproj", "{3A037F58-D2DC-4636-BC48-47F09C6566E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel3D.ActorManagement", "src\Pixel3D.ActorManagement\Pixel3D.ActorManagement.csproj", "{8FED1866-79FC-46BB-9172-F417A2B8A3B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.ActorManagement", "src\Pixel3D.ActorManagement\Pixel3D.ActorManagement.csproj", "{8FED1866-79FC-46BB-9172-F417A2B8A3B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixel3D.Levels", "src\Pixel3D.Levels\Pixel3D.Levels.csproj", "{C7041F43-346A-4D75-865B-672221B2DC86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -243,6 +245,18 @@ Global
 		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Release|x64.Build.0 = Release|Any CPU
 		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Release|x86.ActiveCfg = Release|Any CPU
 		{8FED1866-79FC-46BB-9172-F417A2B8A3B7}.Release|x86.Build.0 = Release|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Debug|x64.Build.0 = Debug|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Debug|x86.Build.0 = Debug|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Release|x64.ActiveCfg = Release|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Release|x64.Build.0 = Release|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Release|x86.ActiveCfg = Release|Any CPU
+		{C7041F43-346A-4D75-865B-672221B2DC86}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

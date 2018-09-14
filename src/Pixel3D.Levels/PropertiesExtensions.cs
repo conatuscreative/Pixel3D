@@ -1,7 +1,6 @@
 ﻿using System;
-using Pixel3D.Engine.Collections;
 
-namespace Pixel3D.Engine.Levels
+namespace Pixel3D.Levels
 {
     public static class PropertiesExtensions
     {

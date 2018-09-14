@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using Pixel3D.ActorManagement;
 using Pixel3D.Animations;
-using Pixel3D.Engine.Levels;
 using Pixel3D.Extensions;
 using Pixel3D.Physics;
 using Pixel3D.Sorting;
@@ -17,7 +17,7 @@ namespace Pixel3D.Engine
             this.currentAnimation = new AnimationPlayer(animationSet.DefaultAnimation);
         }
 
-        public Actor(Thing thing, UpdateContext updateContext)
+        public Actor(IGameObjectDefinition thing, UpdateContext updateContext)
         {
             this.animationSet = thing.AnimationSet;
             this.position = thing.Position;

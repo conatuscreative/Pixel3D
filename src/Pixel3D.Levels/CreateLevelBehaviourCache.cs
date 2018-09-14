@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 using Pixel3D.Engine.Collections;
+using Pixel3D.Levels;
+using Pixel3D.StateManagement;
 
 namespace Pixel3D.Engine.Levels
 {

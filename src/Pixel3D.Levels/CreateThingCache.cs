@@ -10,10 +10,10 @@ namespace Pixel3D.Engine.Levels
     {
         delegate Actor CreateThingDelegate(Thing thing, UpdateContext context);
         static Dictionary<string, CreateThingDelegate> cache = new Dictionary<string, CreateThingDelegate>();
-
+		
         public static void Initialize(params Assembly[] assemblies)
         {
-            // This should match CreateThingDelegate
+            // This should match CreateThingDelegate (explicit definition of Thing)
             Type[] constructorTypes = { typeof(Thing), typeof(UpdateContext) };
 
             foreach (var assembly in assemblies)

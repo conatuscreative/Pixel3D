@@ -47,28 +47,8 @@ namespace Pixel3D.Engine.Levels
         public int nextRegionIndex = 0;
 
         public readonly AnimationSerializeContext animationSerializeContext;
-        IAssetPathProvider assetPathProvider;
+	    public IAssetPathProvider assetPathProvider;
 
-        /// <summary>IMPORTANT: Must match with calls to RegisterImages</summary>
-        public void WriteAnimationSet(AnimationSet animationSet)
-        {
-            string name = assetPathProvider.GetAssetPath(animationSet);
-
-            Debug.Assert(name == null || !name.StartsWith("\\"));
-
-            if(name != null)
-            {
-                // Write a reference
-                bw.Write(true);
-                bw.Write(name);
-            }
-            else
-            {
-                // Embed the animation
-                bw.Write(false);
-                animationSet.Serialize(animationSerializeContext);
-            }
-        }
-
+        
     }
 }

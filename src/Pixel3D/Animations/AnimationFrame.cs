@@ -16,8 +16,7 @@ namespace Pixel3D.Animations
 			incomingAttachments = new TagLookup<Position>();
             triggers = null;
         }
-
-
+		
         public Cel firstLayer;
 
         public LayersList layers { get { return new LayersList(this); } }

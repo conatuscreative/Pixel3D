@@ -16,7 +16,7 @@ using Pixel3D.Serialization.Context;
 
 namespace Pixel3D
 {
-	public static class CustomFieldSerialization
+	public static partial class CustomFieldSerialization
 	{
 		#region Tag Lookup
 

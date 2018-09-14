@@ -32,8 +32,8 @@ namespace Pixel3D.Engine.Levels
         /// <summary>NOTE: parallel updates between serialize and deserialize</summary>
         public int nextRegionIndex = 0;
 
-	    private readonly AnimationDeserializeContext animationDeserializeContext;
-	    private readonly IAssetProvider assetProvider;
+	    public readonly AnimationDeserializeContext animationDeserializeContext;
+	    public readonly IAssetProvider assetProvider;
 
         /// <summary>Used to speed up asset packing. Use with extreme care (number of bytes read must match EXACTLY). Produces assets unusable for gameplay.</summary>
         public bool FastReadHack
@@ -60,19 +60,5 @@ namespace Pixel3D.Engine.Levels
                 animationDeserializeContext.customMaskDataReader = value;
             }
         }
-
-
-	    public AnimationSet ReadAnimationSet()
-	    {
-		    bool externalReference = br.ReadBoolean();
-		    if (externalReference)
-		    {
-			    return assetProvider.Load<AnimationSet>(br.ReadString());
-		    }
-		    else
-		    {
-			    return animationDeserializeContext.DeserializeAnimationSet();
-		    }
-	    }
     }
 }

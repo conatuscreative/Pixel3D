@@ -10,10 +10,8 @@ using Pixel3D.Animations.Serialization;
 
 namespace Pixel3D
 {
-	public static class FileReadWrite
+	public static partial class FileReadWrite
 	{
-		#region File Read/Write
-
 		public static void WriteToFile(this AnimationSet animationSet, string path)
 		{
 			var imageWriter = new ImageWriter();
@@ -52,7 +50,7 @@ namespace Pixel3D
 			}
 		}
 
-		public static AnimationSet ReadFromFile(string path, GraphicsDevice graphicsDevice)
+		public static AnimationSet ReadAnimationSetFromFile(string path, GraphicsDevice graphicsDevice)
 		{
 			var texturePath = Path.ChangeExtension(path, ".tex");
 			ImageBundle imageBundle = null;
@@ -96,7 +94,5 @@ namespace Pixel3D
 				}
 			}
 		}
-
-		#endregion
 	}
 }

@@ -1,21 +1,20 @@
-using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Pixel3D.ActorManagement;
 using Pixel3D.Animations;
 using Pixel3D.Audio;
 using Pixel3D.Extensions;
-using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D.Engine.Levels
 {
     // NOTE: "sealed" isn't really a hard requirement. Need to consider what to make virtual (eg: drawing) if making unsealed.
 
     [DebuggerDisplay("shim:{AnimationSet.EditorName}")]
-    public sealed class Shim : IEditorObject, IDrawObject, IAmbientSoundSource
+    public sealed class Shim : IGameObjectDefinition, IDrawObject, IAmbientSoundSource
     {
         public AnimationSet AnimationSet { get; set; }
 
-        public AABB? Bounds { get { return AnimationSet.AsAudioAABB(Position, FacingLeft); } }
+        public AABB? Bounds { get { return AnimationSet.AsAABB(Position, FacingLeft); } }
         Position IAmbientSoundSource.Position { get { return Position; } }
 		public bool FacingLeft { get; set; }
 	    public Position Position { get; set; }
@@ -44,57 +43,6 @@ namespace Pixel3D.Engine.Levels
         }
 
         public AmbientSound AmbientSound { get; set; }
-
-        #region Serialization
-
-        public void Serialize(LevelSerializeContext context)
-        {
-            context.WriteAnimationSet(AnimationSet);
-            context.bw.Write(Position);
-            context.bw.Write(FacingLeft);
-            context.bw.Write(parallaxX);
-            context.bw.Write(parallaxY);
-            context.bw.Write(animationNumber);
-            context.bw.WriteNullableString(ambientSoundSource);
-
-            if(context.Version >= 14)
-                context.bw.Write(tag);
-
-            if (context.Version >= 16)
-            {
-                context.bw.Write(properties.Count);
-                foreach (var kvp in properties)
-                {
-                    context.bw.Write(kvp.Key);
-                    context.bw.Write(kvp.Value ?? string.Empty); // (null value should probably be blocked by editor, but being safe...)
-                }
-            }
-        }
-
-        public Shim(LevelDeserializeContext context)
-        {
-            AnimationSet = context.ReadAnimationSet();
-            Position = context.br.ReadPosition();
-            FacingLeft = context.br.ReadBoolean();
-            parallaxX = context.br.ReadSingle();
-            parallaxY = context.br.ReadSingle();
-            animationNumber = context.br.ReadInt32();
-            ambientSoundSource = context.br.ReadNullableString();
-
-            if (context.Version >= 14)
-                tag = context.br.ReadInt32();
-
-            if (context.Version >= 16)
-            {
-                int count = context.br.ReadInt32();
-                for (int i = 0; i < count; i++)
-                {
-                    properties.Add(context.br.ReadString(), context.br.ReadString());
-                }
-            }
-        }
-
-        #endregion
 
         public int DirectionX
         {
