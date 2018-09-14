@@ -41,7 +41,6 @@
     <Compile Include="Maths\Fixed65536.cs" />
     <Compile Include="Maths\Fraction.cs" />
     <Compile Include="Maths\PackedVelocity.cs" />
-    <Compile Include="Physics\MotionResult.cs" />
     <Compile Include="Physics\ThreeDVelocity.cs" />
     <Compile Include="Serialization\SerializeIgnoreAudio.cs" />
     <Compile Include="VorbisfileDecoder.cs" />
@@ -61,7 +60,6 @@
     <Compile Include="Navigation\NavRegion.cs" />
     <Compile Include="Navigation\PathfindingResults.cs" />
     <Compile Include="Navigation\WalkmapTools.cs" />
-    <Compile Include="Physics\Motion.cs" />
     <Compile Include="Physics\MoveSpeed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\SerializeIgnoreStateManagement.cs" />
