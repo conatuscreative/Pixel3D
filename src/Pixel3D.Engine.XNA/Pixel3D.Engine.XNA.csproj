@@ -88,9 +88,6 @@
     <Compile Include="..\Pixel3D.Engine\Log.cs">
       <Link>Log.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\MaskDataReferenceResolver.cs">
-      <Link>MaskDataReferenceResolver.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\Maths\Fixed65536.cs">
       <Link>Maths\Fixed65536.cs</Link>
     </Compile>

@@ -120,6 +120,7 @@
     <Compile Include="..\Pixel3D.Pipeline\ByteArrayDeduplicator.cs" Link="Pipeline\ByteArrayDeduplicator.cs" />
     <Compile Include="..\Pixel3D.Pipeline\CaptureStream.cs" Link="Pipeline\CaptureStream.cs" />
     <Compile Include="..\Pixel3D.Pipeline\ComparableByteArray.cs" Link="Pipeline\ComparableByteArray.cs" />
+    <Compile Include="..\Pixel3D.Pipeline\MaskDataReferenceResolver.cs" Link="Pipeline\MaskDataReferenceResolver.cs" />
     <Compile Include="..\Pixel3D.Pipeline\MaskReadAndDeduplicate.cs" Link="Pipeline\MaskReadAndDeduplicate.cs" />
     <Compile Include="..\Pixel3D.Pipeline\PathGatheringAssetProvider.cs" Link="Pipeline\PathGatheringAssetProvider.cs" />
     <Compile Include="..\Pixel3D.Pipeline\ThreadWriteStream.cs" Link="Pipeline\ThreadWriteStream.cs" />

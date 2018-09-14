@@ -55,7 +55,6 @@
     <Compile Include="IFullScreenEffect.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="MaskDataReferenceResolver.cs" />
     <Compile Include="Navigation\DirectionNumber.cs" />
     <Compile Include="Navigation\MovePreference.cs" />
     <Compile Include="Navigation\NavEdge.cs" />
