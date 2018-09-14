@@ -1,38 +1,45 @@
-﻿using System.Collections.Generic;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 
-namespace Pixel3D.Engine
+using System.Collections.Generic;
+
+namespace Pixel3D.ActorManagement
 {
-    public abstract class GameState : IGameState
-    {
-        public readonly ushort[] cueStates;
-        public readonly Definitions definitions;
+	public abstract class GameState : IGameState
+	{
+		#region Actor Lists
 
-        public abstract int MaxPlayers { get; }
-        public virtual Definitions Definitions { get { return definitions; } }
-        public abstract Position? GetPlayerPosition(int playerIndex);
+		/// <summary>List of actors that currently exist in the world</summary>
+		public readonly List<Actor> actors = new List<Actor>();
 
-        // Host derived content
-        public byte language = 0;
+		#endregion
 
-        public GameState(Definitions definitions)
-        {
-            this.definitions = definitions;
-            cueStates = new ushort[definitions.cuesWithIds];
-        }
+		public readonly ushort[] cueStates;
+		public readonly Definitions definitions;
 
-        // can be used for duty cycling (i.e recover 2 hp every 15 ticks) (not suitable for timers)
-        public int frameCounter;
+		// can be used for duty cycling (i.e recover 2 hp every 15 ticks) (not suitable for timers)
+		public int frameCounter;
 
-        public virtual void Update(UpdateContext updateContext, MultiInputState currentRawInput)
-        {
-            frameCounter++;
-        }
+		// Host derived content
+		public byte language = 0;
 
-        #region Actor Lists
+		public GameState(Definitions definitions)
+		{
+			this.definitions = definitions;
+			cueStates = new ushort[definitions.cuesWithIds];
+		}
 
-        /// <summary>List of actors that currently exist in the world</summary>
-        public readonly List<Actor> actors = new List<Actor>();
+		public virtual Definitions Definitions
+		{
+			get { return definitions; }
+		}
 
-        #endregion
-    }
+		public abstract int MaxPlayers { get; }
+		public abstract Position? GetPlayerPosition(int playerIndex);
+
+		public virtual void Update(UpdateContext updateContext, MultiInputState currentRawInput)
+		{
+			frameCounter++;
+		}
+	}
 }
