@@ -115,18 +115,6 @@
     <Compile Include="..\Pixel3D.Engine\Navigation\WalkmapTools.cs">
       <Link>Navigation\WalkmapTools.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Engine\Physics\Motion.cs">
-      <Link>Physics\Motion.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Physics\MotionResult.cs">
-      <Link>Physics\MotionResult.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Physics\MoveSpeed.cs">
-      <Link>Physics\MoveSpeed.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.Engine\Physics\ThreeDVelocity.cs">
-      <Link>Physics\ThreeDVelocity.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Engine\Serialization\SerializeIgnoreAudio.cs">
       <Link>Serialization\SerializeIgnoreAudio.cs</Link>
     </Compile>
