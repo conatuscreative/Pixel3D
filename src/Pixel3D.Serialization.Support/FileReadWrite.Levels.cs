@@ -4,7 +4,8 @@ using System.IO.Compression;
 using Microsoft.Xna.Framework.Graphics;
 using Pixel3D.Animations.Serialization;
 using Pixel3D.AssetManagement;
-using Pixel3D.Engine.Levels;
+using Pixel3D.Levels;
+using Path = System.IO.Path;
 
 namespace Pixel3D
 {

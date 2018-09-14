@@ -7,9 +7,9 @@ using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
 using Pixel3D.AssetManagement;
 using Pixel3D.Engine.Collections;
-using Pixel3D.Engine.Levels;
 using Pixel3D.Extensions;
 using Pixel3D.FrameworkExtensions;
+using Pixel3D.Levels;
 using Pixel3D.Physics;
 using Path = Pixel3D.Levels.Path;
 
@@ -187,13 +187,13 @@ namespace Pixel3D
 
 		public static Shim DeserializeShim(this LevelDeserializeContext context)
 		{
-			var AnimationSet = context.ReadAnimationSet();
-			var Position = context.br.ReadPosition();
-			var FacingLeft = context.br.ReadBoolean();
+			var animationSet = context.ReadAnimationSet();
+			var position = context.br.ReadPosition();
+			var facingLeft = context.br.ReadBoolean();
 			var parallaxX = context.br.ReadSingle();
 			var parallaxY = context.br.ReadSingle();
 
-			var shim = new Shim(AnimationSet, Position, FacingLeft, parallaxX, parallaxY);
+			var shim = new Shim(animationSet, position, facingLeft, parallaxX, parallaxY);
 			
 			shim.animationNumber = context.br.ReadInt32();
 			shim.ambientSoundSource = context.br.ReadNullableString();
@@ -211,6 +211,42 @@ namespace Pixel3D
 			}
 
 			return shim;
+		}
+
+		#endregion
+
+		#region Path
+
+		public static void Serialize(this Path path, LevelSerializeContext context)
+		{
+			context.bw.WriteBoolean(path.looped);
+			context.bw.Write(path.positions.Count);
+			foreach (var position in path.positions)
+				position.Serialize(context);
+
+			context.bw.Write(path.properties.Count);
+			foreach (var kvp in path.properties)
+			{
+				context.bw.Write(kvp.Key);
+				context.bw.Write(kvp.Value ?? string.Empty); // (null value should probably be blocked by editor, but being safe...)
+			}
+		}
+
+		public static Path DeserializePath(this LevelDeserializeContext context)
+		{
+			var path = new Path();
+
+			path.looped = context.br.ReadBoolean();
+			var positionsCount = context.br.ReadInt32();
+			path.positions = new List<LevelPosition>(positionsCount);
+			for (var i = 0; i < positionsCount; i++)
+				path.positions.Add(new LevelPosition(context));
+
+			var count = context.br.ReadInt32();
+			for (var i = 0; i < count; i++)
+				path.properties.Add(context.br.ReadString(), context.br.ReadString());
+
+			return path;
 		}
 
 		#endregion
@@ -400,7 +436,7 @@ namespace Pixel3D
 					level.paths = new OrderedDictionary<string, Path>(count);
 					for (int i = 0; i < count; i++)
 					{
-						level.paths.Add(context.br.ReadString(), new Path(context));
+						level.paths.Add(context.br.ReadString(), context.DeserializePath());
 					}
 				}
 

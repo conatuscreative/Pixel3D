@@ -1,10 +1,9 @@
-﻿using Pixel3D.Extensions;
-using Pixel3D.FrameworkExtensions;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 
-namespace Pixel3D.Engine.Levels
+namespace Pixel3D.Levels
 {
 	public static class LevelSerializeContextExtensions
 	{
-		
 	}
 }

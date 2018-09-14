@@ -1,54 +1,62 @@
-﻿using System;
-using System.Diagnostics;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+using System;
 using System.IO;
 using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
 using Pixel3D.AssetManagement;
 
-namespace Pixel3D.Engine.Levels
+namespace Pixel3D.Levels
 {
-    public partial class LevelSerializeContext
-    {
-        public LevelSerializeContext(BinaryWriter bw, ImageWriter imageWriter, IAssetPathProvider assetPathProvider) : this(bw, imageWriter, assetPathProvider, formatVersion) { } // Default to writing current version
+	public class LevelSerializeContext
+	{
+		public readonly AnimationSerializeContext animationSerializeContext;
 
-        public LevelSerializeContext(BinaryWriter bw, ImageWriter imageWriter, IAssetPathProvider assetPathProvider, int version)
-        {
-            this.bw = bw;
-            this.assetPathProvider = assetPathProvider;
-            this.Version = version;
+		public readonly BinaryWriter bw;
+		public IAssetPathProvider assetPathProvider;
 
-            if(Version > LevelSerializeContext.formatVersion)
-                throw new Exception("Tried to save Level with a version that is too new");
-            if(Version < 13)
-                throw new Exception("Level version too old!");
-            
-            bw.Write(Version);
-
-            animationSerializeContext = new AnimationSerializeContext(bw, imageWriter); // <- writes out animation version number
-        }
-
-        public readonly BinaryWriter bw;
-
-        /// <summary>True for save change monitoring (try to avoid mutation). Must set AnimationSerializeContext.monitor independently.</summary>
-        public bool monitor;
+		/// <summary>
+		///     True for save change monitoring (try to avoid mutation). Must set AnimationSerializeContext.monitor
+		///     independently.
+		/// </summary>
+		public bool monitor;
 
 
-        #region Version
+		/// <summary>NOTE: parallel updates between serialize and deserialize</summary>
+		public int nextRegionIndex = 0;
 
-        /// <summary>Increment this number when anything we serialize changes</summary>
-        public const int formatVersion = 20;
+		public LevelSerializeContext(BinaryWriter bw, ImageWriter imageWriter, IAssetPathProvider assetPathProvider) :
+			this(bw, imageWriter, assetPathProvider, formatVersion)
+		{
+		} // Default to writing current version
 
-        public int Version { get; private set; }
+		public LevelSerializeContext(BinaryWriter bw, ImageWriter imageWriter, IAssetPathProvider assetPathProvider,
+			int version)
+		{
+			this.bw = bw;
+			this.assetPathProvider = assetPathProvider;
+			Version = version;
 
-        #endregion
+			if (Version > formatVersion)
+				throw new Exception("Tried to save Level with a version that is too new");
+			if (Version < 13)
+				throw new Exception("Level version too old!");
+
+			bw.Write(Version);
+
+			animationSerializeContext =
+				new AnimationSerializeContext(bw, imageWriter); // <- writes out animation version number
+		}
 
 
-        /// <summary>NOTE: parallel updates between serialize and deserialize</summary>
-        public int nextRegionIndex = 0;
+		#region Version
 
-        public readonly AnimationSerializeContext animationSerializeContext;
-	    public IAssetPathProvider assetPathProvider;
+		/// <summary>Increment this number when anything we serialize changes</summary>
+		public const int formatVersion = 20;
 
-        
-    }
+		public int Version { get; }
+
+		#endregion
+	}
 }
