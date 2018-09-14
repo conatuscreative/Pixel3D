@@ -37,9 +37,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Effects\MovingSimpleEffect.cs" />
-    <Compile Include="Effects\PermanentEffect.cs" />
-    <Compile Include="Effects\SimpleEffect.cs" />
     <Compile Include="LineWrapping.cs" />
     <Compile Include="Serialization\SerializeIgnoreAudio.cs" />
     <Compile Include="VorbisfileDecoder.cs" />
