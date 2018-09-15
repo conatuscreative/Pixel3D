@@ -3,7 +3,7 @@ using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 using Pixel3D.StateManagement;
 
-namespace Pixel3D.Engine.Serialization
+namespace Pixel3D.BuiltIn
 {
 	public static class SerializeIgnoreStateManagement
 	{

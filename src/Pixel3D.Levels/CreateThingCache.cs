@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 using Pixel3D.ActorManagement;
-using Pixel3D.Engine;
 
 namespace Pixel3D.Levels
 {

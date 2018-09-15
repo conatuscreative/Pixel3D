@@ -20,7 +20,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pixel3D.Engine.Collections
+namespace Pixel3D.ActorManagement
 {
     /// <summary>
     /// A dictionary that allows multiple pairs with the same key.
