@@ -7,7 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
     <ProjectReference Include="..\Pixel3D.All\Pixel3D.All.csproj" />
-    <ProjectReference Include="..\Pixel3D.Engine\Pixel3D.Engine.csproj" />
   </ItemGroup>
 
 </Project>

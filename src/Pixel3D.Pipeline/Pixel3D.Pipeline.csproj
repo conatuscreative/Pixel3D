@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj" />
+    <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj" />
     <ProjectReference Include="..\Pixel3D\Pixel3D.csproj" />
   </ItemGroup>
 

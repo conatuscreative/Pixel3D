@@ -116,6 +116,7 @@
     <Compile Include="..\Pixel3D.Navigation\NavRegionProjection.cs" Link="Navigation\NavRegionProjection.cs" />
     <Compile Include="..\Pixel3D.Navigation\PathEdge.cs" Link="Navigation\PathEdge.cs" />
     <Compile Include="..\Pixel3D.Pipeline\Audio\SoundParameters.cs" Link="Pipeline\Audio\SoundParameters.cs" />
+    <Compile Include="..\Pixel3D.Pipeline\Audio\VorbisfileDecoder.cs" Link="Pipeline\Audio\VorbisfileDecoder.cs" />
     <Compile Include="..\Pixel3D.Pipeline\Audio\WaveFile.cs" Link="Pipeline\Audio\WaveFile.cs" />
     <Compile Include="..\Pixel3D.Pipeline\ByteArrayDeduplicator.cs" Link="Pipeline\ByteArrayDeduplicator.cs" />
     <Compile Include="..\Pixel3D.Pipeline\CaptureStream.cs" Link="Pipeline\CaptureStream.cs" />
