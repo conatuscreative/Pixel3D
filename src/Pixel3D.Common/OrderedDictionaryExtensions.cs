@@ -1,4 +1,7 @@
-﻿namespace Pixel3D
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+namespace Pixel3D
 {
 	public static class OrderedDictionaryExtensions
 	{
@@ -9,11 +12,9 @@
 			for (var i = 0; i < dictionary.Count; i++)
 			{
 				var rule = dictionary[dictionary.GetKey(i)];
-				if (value.Equals(rule))
-				{
-					return i;
-				}
+				if (value.Equals(rule)) return i;
 			}
+
 			return -1;
 		}
 
@@ -32,8 +33,9 @@
 		{
 			return dictionary.Remove(dictionary.GetKey(i));
 		}
-		
-		public static bool TryGetExactValue<TKey, TValue>(this OrderedDictionary<TKey, TValue> dictionary, string context, out TValue value, out int index)
+
+		public static bool TryGetExactValue<TKey, TValue>(this OrderedDictionary<TKey, TValue> dictionary,
+			string context, out TValue value, out int index)
 		{
 			for (var i = 0; i < dictionary.Count; i++)
 			{
@@ -44,6 +46,7 @@
 				index = i;
 				return true;
 			}
+
 			value = default(TValue);
 			index = -1;
 			return false;

@@ -10,6 +10,7 @@
     <ProjectReference Include="..\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj" />
     <ProjectReference Include="..\Pixel3D.Levels\Pixel3D.Levels.csproj" />
     <ProjectReference Include="..\Pixel3D.Serialization\Pixel3D.Serialization.csproj" />
+    <ProjectReference Include="..\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj" />
     <ProjectReference Include="..\Pixel3D\Pixel3D.csproj" />
   </ItemGroup>
 

@@ -39,6 +39,8 @@ namespace Pixel3D.Levels
 
 		public List<Thing> things;
 
+		public int RegionCount { get; protected set; }
+
 		public Level()
 		{
 			teleporters = new List<Teleporter>();

@@ -169,7 +169,7 @@ namespace Pixel3D.Engine.FNA
 			catch (Exception e)
 			{
 				Debug.WriteLine("Exception during audio device testing. XNA or something under it doing something dumb.");
-				Log.Current.Warn(e, "Exception during audio device testing");
+				Log.Current.WarnException("Exception during audio device testing", e);
 				return false;
 			}
 		}

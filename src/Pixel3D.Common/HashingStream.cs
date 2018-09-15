@@ -214,26 +214,34 @@ namespace Pixel3D
 
 		#region Boring Stream Stuff
 
-	    public override bool CanRead { get { return false; } } 
-
-	    public override bool CanSeek { get { return false; } }
-
-		public override bool CanWrite { get { return true; } }
-
-		public override void Flush() { }
-
-	    public override long Length { get { return position; } }
-
-	    public override long Position
+		public override bool CanRead
 		{
-	        get
-	        {
-	            return position;
-	        }
-	        set
-	        {
-	            throw new InvalidOperationException();
-	        }
+			get { return false; }
+		}
+
+		public override bool CanSeek
+		{
+			get { return false; }
+		}
+
+		public override bool CanWrite
+		{
+			get { return true; }
+		}
+
+		public override void Flush()
+		{
+		}
+
+		public override long Length
+		{
+			get { return position; }
+		}
+
+		public override long Position
+		{
+			get { return position; }
+			set { throw new InvalidOperationException(); }
 		}
 
 		public override int Read(byte[] buffer, int offset, int count)

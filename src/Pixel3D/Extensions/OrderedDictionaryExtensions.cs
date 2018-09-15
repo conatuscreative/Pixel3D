@@ -27,7 +27,7 @@ namespace Pixel3D.Extensions
 		public static T Get<T>(this OrderedDictionary<string, T> dictionary, string context)
 		{
 		    T value;
-			if (dictionary.TryGetValue(context, out value))
+			if (context != null && dictionary.TryGetValue(context, out value))
 				return value;
 
 			if (dictionary.HasBaseFallback())

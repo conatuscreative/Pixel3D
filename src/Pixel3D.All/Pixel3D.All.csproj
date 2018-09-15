@@ -126,6 +126,8 @@
     <Compile Include="..\Pixel3D.Pipeline\ThreadWriteStream.cs" Link="Pipeline\ThreadWriteStream.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\AABBExtensions.cs" Link="Serialization.Support\AABBExtensions.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeDictionary.cs" Link="Serialization.Support\BuiltIn\SerializeDictionary.cs" />
+    <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeIgnoreAudio.cs" Link="Serialization.Support\SerializeIgnoreAudio.cs" />
+    <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeIgnoreStateManagement.cs" Link="Serialization.Support\SerializeIgnoreStateManagement.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeOrderedDictionary.cs" Link="Serialization.Support\BuiltIn\SerializeOrderedDictionary.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\CustomFieldSerialization.cs" Link="Serialization.Support\CustomFieldSerialization.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\CustomFieldSerialization.Levels.cs" Link="Serialization.Support\CustomFieldSerialization.Levels.cs" />
