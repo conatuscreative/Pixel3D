@@ -13,6 +13,8 @@ namespace Pixel3D.Levels
 {
 	public class CreateLevelBehaviourCache
 	{
+		private static readonly char[] CommaSeparator = { ',' };
+
 		private static readonly Dictionary<string, CreateLevelBehaviourDelegate> levelCache =
 			new Dictionary<string, CreateLevelBehaviourDelegate>();
 
@@ -21,8 +23,6 @@ namespace Pixel3D.Levels
 
 		private static readonly Dictionary<string, CreateLevelSubBehaviourDelegate> globalSubCache =
 			new Dictionary<string, CreateLevelSubBehaviourDelegate>();
-
-		private static readonly char[] CommaSeparator = {','};
 
 		private static readonly ReadOnlyList<ILevelSubBehaviour> NoSubBehaviours =
 			new ReadOnlyList<ILevelSubBehaviour>(new List<ILevelSubBehaviour>(0));
@@ -43,70 +43,88 @@ namespace Pixel3D.Levels
 			//
 			// Add all global sub-behaviours; in the future, these can be managed through better tools
 			//
-			foreach (var subBehaviour in globalSubBehaviours) RegisterSubBehaviourType(globalSubCache, subBehaviour);
+			foreach (var subBehaviour in globalSubBehaviours)
+				RegisterSubBehaviourType(globalSubCache, subBehaviour, delegateArgumentTypes, parameterTypeSets);
 
 			//
 			// Look in all assemblies, as we may have content scattered across multiple WADs...
 			//
 
 			foreach (var assembly in scanAssemblies)
-			foreach (var type in assembly.GetTypes())
 			{
-				if (typeof(ILevelSubBehaviour).IsAssignableFrom(type) && type != typeof(LevelSubBehaviour) &&
-				    !type.IsAbstract) RegisterSubBehaviourType(levelSubCache, type);
-
-				if (typeof(LevelBehaviour).IsAssignableFrom(type) && type != typeof(LevelBehaviour) && !type.IsAbstract)
+				foreach (var type in assembly.GetTypes())
 				{
-					foreach (var parameterTypes in parameterTypeSets)
+					if (typeof(ILevelSubBehaviour).IsAssignableFrom(type) && type != typeof(LevelSubBehaviour) && !type.IsAbstract)
+						RegisterSubBehaviourType(levelSubCache, type, delegateArgumentTypes, parameterTypeSets);
+
+					if (typeof(LevelBehaviour).IsAssignableFrom(type) && type != typeof(LevelBehaviour) && !type.IsAbstract)
 					{
-						var constructor = type.GetConstructor(parameterTypes);
-						if (constructor != null)
+						foreach (var parameterTypes in parameterTypeSets)
 						{
-							// No way to convert a constructor to a delegate directly. And we want to select parameters. To IL we go!
-							var dm = new DynamicMethod("Create_" + type.Name, typeof(LevelBehaviour),
-								delegateArgumentTypes, type);
-							var il = dm.GetILGenerator();
+							var constructor = type.GetConstructor(parameterTypes);
+							if (constructor != null)
+							{
+								// No way to convert a constructor to a delegate directly. And we want to select parameters. To IL we go!
+								var dm = new DynamicMethod("Create_" + type.Name, typeof(LevelBehaviour), delegateArgumentTypes, type);
+								var il = dm.GetILGenerator();
 
-							// Map delegate parameters to constructor parameters
-							foreach (var parameterType in parameterTypes)
-								if (parameterType == typeof(Level))
-									il.Emit(OpCodes.Ldarg_0); // <- depends on order of delegate arguments!
-								else if (parameterType == typeof(UpdateContext))
-									il.Emit(OpCodes.Ldarg_1); // <- depends on order of delegate arguments!
-								else
-									throw new InvalidOperationException(); // <- should be impossible
+								// Map delegate parameters to constructor parameters
+								foreach (var parameterType in parameterTypes)
+									if (parameterType == typeof(Level))
+										il.Emit(OpCodes.Ldarg_0); // <- depends on order of delegate arguments!
+									else if (parameterType == typeof(UpdateContext))
+										il.Emit(OpCodes.Ldarg_1); // <- depends on order of delegate arguments!
+									else
+										throw new InvalidOperationException(); // <- should be impossible
 
-							il.Emit(OpCodes.Newobj, constructor);
-							il.Emit(OpCodes.Ret);
+								il.Emit(OpCodes.Newobj, constructor);
+								il.Emit(OpCodes.Ret);
 
-							levelCache[type.Name] =
-								(CreateLevelBehaviourDelegate) dm.CreateDelegate(typeof(CreateLevelBehaviourDelegate));
-							goto foundValidConstructor;
+								levelCache[type.Name] = (CreateLevelBehaviourDelegate) dm.CreateDelegate(typeof(CreateLevelBehaviourDelegate));
+								goto foundValidConstructor;
+							}
 						}
+
+						Debug.WriteLine("WARNING: No valid constructor to create level behaviour: " + type);
+
+						foundValidConstructor: ; // done
 					}
-
-					Debug.WriteLine("WARNING: No valid constructor to create level behaviour: " + type);
-
-					foundValidConstructor: ; // done
 				}
 			}
 		}
 
 		private static void RegisterSubBehaviourType(IDictionary<string, CreateLevelSubBehaviourDelegate> cache,
-			Type type)
+			Type type, Type[] delegateArgumentTypes, Type[][] parameterTypeSets)
 		{
-			var constructor = type.GetConstructor(Type.EmptyTypes);
-			if (constructor != null)
+			foreach (var parameterTypes in parameterTypeSets)
 			{
-				var dm = new DynamicMethod("Create_" + type.Name, type, Type.EmptyTypes);
-				var il = dm.GetILGenerator();
-				il.Emit(OpCodes.Newobj, constructor);
-				il.Emit(OpCodes.Ret);
+				var constructor = type.GetConstructor(parameterTypes);
+				if (constructor != null)
+				{
+					var dm = new DynamicMethod("Create_" + type.Name, type, delegateArgumentTypes, type);
+					var il = dm.GetILGenerator();
 
-				var key = type.Name.Replace("SubBehaviour", string.Empty);
-				cache[key] =
-					(CreateLevelSubBehaviourDelegate) dm.CreateDelegate(typeof(CreateLevelSubBehaviourDelegate));
+					// Map delegate parameters to constructor parameters
+					foreach (var parameterType in parameterTypes)
+						if (parameterType == typeof(Level))
+							il.Emit(OpCodes.Ldarg_0); // <- depends on order of delegate arguments!
+						else if (parameterType == typeof(UpdateContext))
+							il.Emit(OpCodes.Ldarg_1); // <- depends on order of delegate arguments!
+						else
+							throw new InvalidOperationException(); // <- should be impossible
+
+					il.Emit(OpCodes.Newobj, constructor);
+					il.Emit(OpCodes.Ret);
+					
+					var key = type.Name.Replace("SubBehaviour", string.Empty);
+					cache[key] = (CreateLevelSubBehaviourDelegate)
+						dm.CreateDelegate(typeof(CreateLevelSubBehaviourDelegate));
+
+					goto foundValidConstructor;
+				}
 			}
+
+			foundValidConstructor:; // done
 		}
 
 		public static LevelBehaviour CreateLevelBehaviour(string behaviour, Level level, UpdateContext context)
@@ -119,7 +137,7 @@ namespace Pixel3D.Levels
 			{
 				var levelBehaviour = createMethod(level, context);
 
-				InjectSubBehaviours(level, levelBehaviour);
+				InjectSubBehaviours(level, levelBehaviour, context);
 
 				return levelBehaviour;
 			}
@@ -128,7 +146,7 @@ namespace Pixel3D.Levels
 			return new LevelBehaviour();
 		}
 
-		private static void InjectSubBehaviours(Level level, LevelBehaviour levelBehaviour)
+		private static void InjectSubBehaviours(Level level, LevelBehaviour levelBehaviour, UpdateContext context)
 		{
 			var hasGlobalSubBehaviours = globalSubCache != null && globalSubCache.Count > 0;
 
@@ -154,13 +172,14 @@ namespace Pixel3D.Levels
 
 			if (hasGlobalSubBehaviours)
 				foreach (var globalSubBehaviour in globalSubCache)
-					subList.Add(globalSubBehaviour.Value());
+					subList.Add(globalSubBehaviour.Value(level, context));
 
 			if (subBehaviours != null)
 				foreach (var subBehaviour in subBehaviours)
 				{
 					CreateLevelSubBehaviourDelegate createSubMethod;
-					if (levelSubCache.TryGetValue(subBehaviour, out createSubMethod)) subList.Add(createSubMethod());
+					if (levelSubCache.TryGetValue(subBehaviour, out createSubMethod))
+						subList.Add(createSubMethod(level, context));
 				}
 
 			levelBehaviour.subBehaviours = new ReadOnlyList<ILevelSubBehaviour>(subList);
@@ -168,6 +187,6 @@ namespace Pixel3D.Levels
 
 		private delegate LevelBehaviour CreateLevelBehaviourDelegate(Level level, UpdateContext context);
 
-		private delegate ILevelSubBehaviour CreateLevelSubBehaviourDelegate();
+		private delegate ILevelSubBehaviour CreateLevelSubBehaviourDelegate(Level level, UpdateContext context);
 	}
 }
