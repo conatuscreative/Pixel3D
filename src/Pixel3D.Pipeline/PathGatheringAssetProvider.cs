@@ -32,7 +32,8 @@ namespace Pixel3D.Pipeline
 			var fileNamePaths = paths.Select(x =>
 				x.Replace(Path.GetPathRoot(x), "").Replace(Path.GetFileName(x), Path.GetFileNameWithoutExtension(x)));
 
-			foreach (var assetPath in fileNamePaths) yield return Load<T>(assetPath);
+			foreach (var assetPath in fileNamePaths)
+				yield return Load<T>(assetPath);
 		}
 	}
 }

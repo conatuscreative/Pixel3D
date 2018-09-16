@@ -21,8 +21,7 @@ namespace Pixel3D.Engine.FNA
 	{
 		public static void Install(int maxPlayers)
 		{
-			AssetReader.serviceObjectProvider = services =>
-				((IGraphicsDeviceService)services.GetService(typeof(IGraphicsDeviceService))).GraphicsDevice;
+			AssetReader.serviceObjectProvider = services => ((IGraphicsDeviceService)services.GetService(typeof(IGraphicsDeviceService))).GraphicsDevice;
 
 			InstallAudioSystem(maxPlayers);
 		}
@@ -115,6 +114,8 @@ namespace Pixel3D.Engine.FNA
 				}
 			};
 
+			//
+			// Audio Diagnostics:
 			AudioSystem.reportMissingCue = (name, debugContext) =>
 			{
 				string c;
@@ -131,7 +132,6 @@ namespace Pixel3D.Engine.FNA
 				Debug.WriteLine(message);
 				Log.Current.Warn(message);
 			};
-
 			AudioSystem.reportExpectedCue = (context, args) =>
 			{
 				AnimationSet animationSet = args[0] as AnimationSet;

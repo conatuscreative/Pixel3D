@@ -63,6 +63,10 @@
       <Project>{98D429E8-8760-457A-8E27-E43E2987EC6A}</Project>
       <Name>Pixel3D.All.XNA</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pixel3D.Common.XNA\Pixel3D.Common.XNA.csproj">
+      <Project>{46B612AA-9A31-4949-AA6D-7188DBF0CD2D}</Project>
+      <Name>Pixel3D.Common.XNA</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
