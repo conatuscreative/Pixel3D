@@ -2,9 +2,11 @@
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using Pixel3D.Animations;
 using Pixel3D.Audio;
 using Pixel3D.Strings;
 
@@ -127,6 +129,26 @@ namespace Pixel3D.ActorManagement
 			}
 
 			return result;
+		}
+
+		#endregion
+		
+		#region AnimationSets
+
+		// NOTE: these are grouped by behaviour
+		public OrderedDictionary<string, List<AnimationSet>> animationSets;
+
+		public AnimationSet this[string symbol]
+		{
+			get
+			{
+				List<AnimationSet> list;
+				if (!animationSets.TryGetValue(symbol, out list))
+					throw new NullReferenceException("could not find AnimationSet with name " + symbol + " in definitions!");
+				if (list.Count > 1)
+					throw new ArgumentException("there is more than one AnimationSet linked to " + symbol + " in definitions!");
+				return list[0];
+			}
 		}
 
 		#endregion
