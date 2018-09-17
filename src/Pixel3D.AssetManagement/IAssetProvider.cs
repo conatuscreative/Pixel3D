@@ -8,6 +8,6 @@ namespace Pixel3D.AssetManagement
 	public interface IAssetProvider
 	{
 		T Load<T>(string assetPath) where T : class;
-		IEnumerable<T> LoadAll<T>() where T : class;
+		ICollection<T> LoadAll<T>() where T : class;
 	}
 }

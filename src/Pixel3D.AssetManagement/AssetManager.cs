@@ -99,26 +99,34 @@ namespace Pixel3D.AssetManagement
 			return typedAsset;
 		}
 
-		public IEnumerable<T> LoadAll<T>() where T : class
+		public ICollection<T> LoadAll<T>() where T : class
+		{
+			return YieldAssetsOfType<T>().ToArray();
+		}
+
+		private IEnumerable<T> YieldAssetsOfType<T>() where T : class
 		{
 			//
 			// Load from packages (already loaded):
 			if (rootDirectory == null)
 			{
 				Debug.Assert(Locked && loadedAssets.Count > 0);
-				foreach(var asset in loadedAssets)
+				foreach (var asset in loadedAssets)
 				{
 					var typed = asset.Value as T;
 					if (typed != null)
 						yield return typed;
 				}
+
 				yield break;
 			}
 
 			//
 			// Load from loose assets on disk:
-			var filePaths = Directory.GetFiles(rootDirectory, "*." + AssetReader.Extension<T>(), SearchOption.AllDirectories);
-			var assetPaths = filePaths.Select(filePath => filePath.Replace(Path.GetPathRoot(filePath), "").Replace(Path.GetFileName(filePath), Path.GetFileNameWithoutExtension(filePath)));
+			var starDotExtension = "*" + AssetReader.Extension<T>();
+			var filePaths = Directory.GetFiles(rootDirectory, starDotExtension, SearchOption.AllDirectories);
+			var assetPaths = filePaths.Select(filePath => filePath.Replace(RootDirectory, "").Replace(Path.GetFileName(filePath), Path.GetFileNameWithoutExtension(filePath)));
+
 			foreach (var assetPath in assetPaths)
 				yield return Load<T>(assetPath);
 		}

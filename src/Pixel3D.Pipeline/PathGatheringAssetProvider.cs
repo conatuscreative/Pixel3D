@@ -1,6 +1,7 @@
 ﻿// Copyright © Conatus Creative, Inc. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,15 +26,22 @@ namespace Pixel3D.Pipeline
 			return null;
 		}
 
-		public IEnumerable<T> LoadAll<T>() where T : class
+		public ICollection<T> LoadAll<T>() where T : class
 		{
-			var paths = Directory.GetFiles(assetRoot, "*." + AssetReader.Extension<T>(), SearchOption.AllDirectories);
+			return YieldAssetsOfType<T>().ToArray();
+		}
 
-			var fileNamePaths = paths.Select(x =>
-				x.Replace(Path.GetPathRoot(x), "").Replace(Path.GetFileName(x), Path.GetFileNameWithoutExtension(x)));
-
-			foreach (var assetPath in fileNamePaths)
+		private IEnumerable<T> YieldAssetsOfType<T>() where T : class
+		{
+			var starDotExtension = "*" + AssetReader.Extension<T>();
+			var paths = Directory.GetFiles(assetRoot, starDotExtension, SearchOption.AllDirectories);
+			foreach (var path in paths)
+			{
+				var assetPath = path
+					.Replace(assetRoot, string.Empty)
+					.Replace(Path.GetFileName(path), Path.GetFileNameWithoutExtension(path));
 				yield return Load<T>(assetPath);
+			}
 		}
 	}
 }
