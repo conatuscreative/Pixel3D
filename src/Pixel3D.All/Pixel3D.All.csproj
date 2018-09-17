@@ -82,7 +82,6 @@
     <Compile Include="..\Pixel3D.Audio\WorldToAudio.cs" Link="Audio\WorldToAudio.cs" />
     <Compile Include="..\Pixel3D.Levels\CreateLevelBehaviourCache.cs" Link="Levels\CreateLevelBehaviourCache.cs" />
     <Compile Include="..\Pixel3D.Levels\CreateThingCache.cs" Link="Levels\CreateThingCache.cs" />
-    <Compile Include="..\Pixel3D.Levels\IGroundQueryable.cs" Link="Levels\IGroundQueryable.cs" />
     <Compile Include="..\Pixel3D.Levels\IIgnoreParallax.cs" Link="Levels\IIgnoreParallax.cs" />
     <Compile Include="..\Pixel3D.Levels\ILevelSubBehaviour.cs" Link="Levels\ILevelSubBehaviour.cs" />
     <Compile Include="..\Pixel3D.Levels\ISuppressThingWarning.cs" Link="Levels\ISuppressThingWarning.cs" />
