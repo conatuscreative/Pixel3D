@@ -280,6 +280,9 @@
     <Compile Include="..\Pixel3D.Levels\CreateThingCache.cs">
       <Link>Levels\CreateThingCache.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Levels\IGroundQueryable.cs">
+      <Link>Levels\IGroundQueryable.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Levels\IIgnoreParallax.cs">
       <Link>Levels\IIgnoreParallax.cs</Link>
     </Compile>

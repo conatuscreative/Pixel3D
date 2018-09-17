@@ -12,11 +12,7 @@ using Pixel3D.Extensions;
 
 namespace Pixel3D.Levels
 {
-	public interface IGroundQueryable
-	{
-		bool IsGroundAPit(UpdateContext updateContext);
-	}
-	
+
 	public class Level : IHasReferencedAssets, IEditorNameProvider
 	{
 		/// <summary>Arbitrary level properties (consumers are expected to parse the strings)</summary>
