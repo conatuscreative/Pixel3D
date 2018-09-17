@@ -59,10 +59,28 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Pixel3D.Editing\IntrospectAnimationSetBehaviours.cs">
+      <Link>IntrospectAnimationSetBehaviours.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Editing\IntrospectBehaviours.cs">
+      <Link>IntrospectBehaviours.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Editing\Introspection.cs">
       <Link>Introspection.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Editing\IntrospectLevelBehaviours.cs">
+      <Link>IntrospectLevelBehaviours.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Editing\IntrospectSymbols.cs">
+      <Link>IntrospectSymbols.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pixel3D.All.XNA\Pixel3D.All.XNA.csproj">
+      <Project>{98D429E8-8760-457A-8E27-E43E2987EC6A}</Project>
+      <Name>Pixel3D.All.XNA</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
