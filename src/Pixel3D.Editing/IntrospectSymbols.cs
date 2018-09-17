@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Pixel3D.Editing
 {
@@ -22,10 +21,7 @@ namespace Pixel3D.Editing
             this.symbolClassNames = symbolClassNames;
         }
 
-        public IntrospectSymbols() : this("Symbols")
-        {
-
-        }
+        public IntrospectSymbols() : this("Symbols") { }
 
         public void Execute(string introspectionDir, Func<Assembly, bool> introspectAssemblyFilter)
         {
@@ -41,12 +37,13 @@ namespace Pixel3D.Editing
             var types = new ConcurrentBag<Type>();
             try
             {
-                Parallel.ForEach(Types.Where(type => type.IsSealed && type.IsAbstract).Where(type => symbolClassNames.Contains(type.Name)), type =>
-                {
+	            var available = Types.Where(type => type.IsSealed && type.IsAbstract).Where(type => symbolClassNames.Contains(type.Name));
+				foreach(var type in available)
+				{
                     foreach (var value in type.GetMembers(BindingFlags.Public | BindingFlags.Static).Select(m => m.Name))
                         symbols.Add(value);
                     types.Add(type);
-                });
+                }
             }
             catch (Exception e)
             {

@@ -5,7 +5,5 @@ using Pixel3D.ActorManagement;
 
 namespace Pixel3D.Editing
 {
-    public class IntrospectAnimationSetBehaviours : IntrospectBehaviours<Actor>
-    {
-    }
+    public class IntrospectAnimationSetBehaviours : IntrospectBehaviours<Actor> { }
 }
