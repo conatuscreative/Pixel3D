@@ -38,7 +38,7 @@ namespace Pixel3D.Serialization
 		private static bool staticInitializeFinished;
 		private static Thread staticInitializeThread;
 
-		public static void BeginStaticInitialize(Assembly[] subjectAssemblies, Type[] suplementalRootTypes,
+		public static void BeginStaticInitialize(Assembly[] subjectAssemblies, Type[] supplementalRootTypes,
 			bool generateReport)
 		{
 			lock (staticLockObject)
@@ -51,7 +51,7 @@ namespace Pixel3D.Serialization
 				{
 					using (var reports = generateReport ? new GeneratorReports("Serializer Generation Report") : null)
 					{
-						var generatorResult = GenerateDynamicMethods(subjectAssemblies, suplementalRootTypes, reports);
+						var generatorResult = GenerateDynamicMethods(subjectAssemblies, supplementalRootTypes, reports);
 						_staticMethodLookup = generatorResult.serializationMethods;
 						StaticDispatchTable.serializeDispatchTable = generatorResult.serializeDispatchTable;
 						StaticDispatchTable.deserializeDispatchDelegate = generatorResult.deserializeDispatch;

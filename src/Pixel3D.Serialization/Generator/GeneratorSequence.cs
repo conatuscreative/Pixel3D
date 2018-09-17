@@ -63,10 +63,13 @@ namespace Pixel3D.Serialization.Generator
 			#region Search for [SerializationRoot] attributes
 
 			var rootTypes = new HashSet<Type>();
+
 			foreach (var assembly in assemblies)
-			foreach (var type in assembly.GetTypes()
-				.Where(t => t.GetCustomAttributes(typeof(SerializationRootAttribute), false).Length > 0))
-				rootTypes.Add(type);
+			{
+				var types = assembly.GetTypes();
+				foreach (var type in types.Where(t => t.GetCustomAttributes(typeof(SerializationRootAttribute), false).Length > 0))
+					rootTypes.Add(type);
+			}
 
 			if (predefinedRoots != null)
 				foreach (var type in predefinedRoots)

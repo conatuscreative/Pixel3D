@@ -174,7 +174,7 @@ namespace Pixel3D.Serialization.Discovery
 		}
 
 
-		// Calling this method is equivelent to generating a serializer for the given type
+		// Calling this method is equivalent to generating a serializer for the given type
 		private void ConsiderType(Type type, StreamWriter report, StreamWriter errors)
 		{
 			Debug.Assert(!type.ContainsGenericParameters);

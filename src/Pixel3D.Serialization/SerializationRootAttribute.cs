@@ -14,7 +14,7 @@ namespace Pixel3D.Serialization
 	}
 
 
-	// TODO: Document these:
+	// TODO: Document attributes
 
 
 	// TODO: Make this work for auto-properties?
