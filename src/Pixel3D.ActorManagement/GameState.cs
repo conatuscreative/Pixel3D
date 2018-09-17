@@ -7,12 +7,8 @@ namespace Pixel3D.ActorManagement
 {
 	public abstract class GameState : IGameState
 	{
-		#region Actor Lists
-
 		/// <summary>List of actors that currently exist in the world</summary>
 		public readonly List<Actor> actors = new List<Actor>();
-
-		#endregion
 
 		public readonly ushort[] cueStates;
 		public readonly Definitions definitions;
