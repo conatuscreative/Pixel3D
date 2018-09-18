@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using Pixel3D.Animations;
 using Pixel3D.Audio;
 using Pixel3D.Strings;
@@ -133,22 +134,50 @@ namespace Pixel3D.ActorManagement
 
 		#endregion
 		
-		#region AnimationSets
+		#region AnimationSet Lookups
 
-		// NOTE: these are grouped by behaviour
-		public OrderedDictionary<string, List<AnimationSet>> animationSets;
+		public MultiDictionary<string,  AnimationSet> animationSetsByBehaviour;
+		public OrderedDictionary<string, AnimationSet> animationSetsByAssetPath;
 
-		public AnimationSet this[string symbol]
+		public AnimationSet GetSingleAnimationSetByBehaviour(string behaviour)
 		{
-			get
+			var list = GetAnimationSetsByBehaviour(behaviour);
+			if (list.Count > 1)
 			{
-				List<AnimationSet> list;
-				if (!animationSets.TryGetValue(symbol, out list))
-					throw new NullReferenceException("could not find AnimationSet with name " + symbol + " in definitions!");
 				if (list.Count > 1)
-					throw new ArgumentException("there is more than one AnimationSet linked to " + symbol + " in definitions!");
-				return list[0];
+				{
+					var duplicateItems = from x in list
+						group x by x into grouped
+						where grouped.Count() > 1
+						select grouped.Key;
+
+					if (duplicateItems.Any())
+						Debug.WriteLine("found duplicate assets in behaviour-grouped list");
+
+					foreach (var animationSet in animationSetsByAssetPath)
+						if (list.Contains(animationSet.Value))
+							Debug.WriteLine(animationSet.Key);
+
+					throw new ArgumentException("there is more than one AnimationSet linked to behaviour '" + behaviour + "' in definitions!");
+				}
 			}
+			return list[0];
+		}
+
+		public List<AnimationSet> GetAnimationSetsByBehaviour(string behaviour)
+		{
+			List<AnimationSet> list;
+			if (!animationSetsByBehaviour.TryGetValue(behaviour, out list))
+				throw new NullReferenceException("could not find AnimationSet with behaviour '" + behaviour + "' in definitions!");
+			return list;
+		}
+
+		public AnimationSet GetAnimationSetByAssetPath(string assetPath)
+		{
+			AnimationSet animationSet;
+			if(!animationSetsByAssetPath.TryGetValue(assetPath, out animationSet))
+				throw new NullReferenceException("could not find AnimationSet with asset path '" + assetPath + "' in definitions!");
+			return animationSet;
 		}
 
 		#endregion
