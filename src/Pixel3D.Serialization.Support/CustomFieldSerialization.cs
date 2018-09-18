@@ -530,6 +530,17 @@ namespace Pixel3D
 					context.bw.Write(animationSet.cachedShadowBounds);
 				}
 			}
+
+			// Properties:
+			if(context.Version >= 40)
+			{
+				context.bw.Write(animationSet.properties.Count);
+				foreach (var kvp in animationSet.properties)
+				{
+					context.bw.Write(kvp.Key);
+					context.bw.Write(kvp.Value ?? string.Empty); // (null value should probably be blocked by editor, but being safe...)
+				}
+			}
 		}
 
 		/// <summary>Deserialize into new object instance</summary>
@@ -615,6 +626,14 @@ namespace Pixel3D
 
 					animationSet.cachedShadowBounds = context.br.ReadBounds();
 				}
+			}
+
+			// Properties:
+			if (context.Version >= 40)
+			{
+				int count = context.br.ReadInt32();
+				for (int i = 0; i < count; i++)
+					animationSet.properties.Add(context.br.ReadString(), context.br.ReadString());
 			}
 
 			return animationSet;

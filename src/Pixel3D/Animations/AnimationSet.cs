@@ -11,7 +11,10 @@ namespace Pixel3D.Animations
 {
     public class AnimationSet : IEditorNameProvider
     {
-        public AnimationSet()
+	    /// <summary>Arbitrary properties (consumers are expected to parse the strings)</summary>
+	    public readonly OrderedDictionary<string, string> properties = new OrderedDictionary<string, string>();
+
+		public AnimationSet()
         {
             animations = new TagLookup<Animation>();
         }

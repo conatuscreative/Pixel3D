@@ -125,7 +125,7 @@ namespace Pixel3D
 
 			context.bw.Write(thing.includeInNavigation);
 
-			// Properties
+			// Properties:
 			{
 				context.bw.Write(thing.properties.Count);
 				foreach (var kvp in thing.properties)
@@ -147,7 +147,7 @@ namespace Pixel3D
 			thing.overrideBehaviour = context.br.ReadNullableString();
 			thing.includeInNavigation = context.br.ReadBoolean();
 
-			// Properties
+			// Properties:
 			int count = context.br.ReadInt32();
 			for (int i = 0; i < count; i++)
 			{
