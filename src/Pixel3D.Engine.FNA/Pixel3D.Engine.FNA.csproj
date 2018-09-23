@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
-    <ProjectReference Include="..\Pixel3D.All\Pixel3D.All.csproj" />
+    <ProjectReference Include="..\Pixel3D.All.FNA\Pixel3D.All.FNA.csproj" />
   </ItemGroup>
 
 </Project>
