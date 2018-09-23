@@ -231,6 +231,7 @@
     <Compile Include="..\Pixel3D.UI\IAbandonChanges.cs" Link="UI\IAbandonChanges.cs" />
     <Compile Include="..\Pixel3D.UI\IReadOnlyContext.cs" Link="UI\IReadOnlyContext.cs" />
     <Compile Include="..\Pixel3D.UI\IResetToDefaults.cs" Link="UI\IResetToDefaults.cs" />
+    <Compile Include="..\Pixel3D.UI\ISubMenu.cs" Link="UI\ISubMenu.cs" />
     <Compile Include="..\Pixel3D\AnimationSetExtensions.cs" Link="AnimationSetExtensions.cs" />
     <Compile Include="..\Pixel3D\Animations\Animation.cs" Link="Animations\Animation.cs" />
     <Compile Include="..\Pixel3D\Animations\AnimationDeserializeContext.cs" Link="Animations\AnimationDeserializeContext.cs" />
