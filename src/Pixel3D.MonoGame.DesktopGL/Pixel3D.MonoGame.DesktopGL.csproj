@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9A86875F-663A-4FC4-8A58-E1B6C3593BE7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pixel3D.MonoGame.Desktop</RootNamespace>
+    <AssemblyName>Pixel3D.MonoGame.Desktop</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MonoGamePlatform>DesktopGL</MonoGamePlatform>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;LINUX</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Pixel3D\AnimationSetExtensions.cs">
+      <Link>AnimationSetExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\Animation.cs">
+      <Link>Animations\Animation.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\AnimationDeserializeContext.cs">
+      <Link>Animations\AnimationDeserializeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\AnimationFrame.cs">
+      <Link>Animations\AnimationFrame.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\AnimationPlayer.cs">
+      <Link>Animations\AnimationPlayer.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\AnimationSerializeContext.cs">
+      <Link>Animations\AnimationSerializeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\AnimationSet.cs">
+      <Link>Animations\AnimationSet.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\Asserts.cs">
+      <Link>Animations\Asserts.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\Cel.cs">
+      <Link>Animations\Cel.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\DepthBounds.cs">
+      <Link>Animations\DepthBounds.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\DrawContext.cs">
+      <Link>Animations\DrawContext.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\ICustomMaskDataReader.cs">
+      <Link>Animations\ICustomMaskDataReader.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\LayersList.cs">
+      <Link>Animations\LayersList.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\Mask.cs">
+      <Link>Animations\Mask.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\OutgoingAttachment.cs">
+      <Link>Animations\OutgoingAttachment.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\OutgoingAttachmentView.cs">
+      <Link>Animations\OutgoingAttachmentView.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\ComparableImageData.cs">
+      <Link>Animations\Serialization\ComparableImageData.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\ImageBundle.cs">
+      <Link>Animations\Serialization\ImageBundle.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\ImageBundleManager.cs">
+      <Link>Animations\Serialization\ImageBundleManager.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\ImageKey.cs">
+      <Link>Animations\Serialization\ImageKey.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\ImageWriter.cs">
+      <Link>Animations\Serialization\ImageWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\ITextureLoadHelper.cs">
+      <Link>Animations\Serialization\ITextureLoadHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\RCRURLEReader.cs">
+      <Link>Animations\Serialization\RCRURLEReader.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\RCRURLEWriter.cs">
+      <Link>Animations\Serialization\RCRURLEWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\SimpleTextureLoadHelper.cs">
+      <Link>Animations\Serialization\SimpleTextureLoadHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\serialization\TextureData.cs">
+      <Link>Animations\Serialization\TextureData.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\ShadowCasterList.cs">
+      <Link>Animations\ShadowCasterList.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\animations\ShadowLayer.cs">
+      <Link>Animations\ShadowLayer.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Bounds.cs">
+      <Link>Bounds.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Camera.cs">
+      <Link>Camera.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\ColorGradient.cs">
+      <Link>ColorGradient.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\CombinedHeightmap.cs">
+      <Link>CombinedHeightmap.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\CubeCornerColors.cs">
+      <Link>CubeCornerColors.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Data2D.cs">
+      <Link>Data2D.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Data2DExtensions.cs">
+      <Link>Data2DExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\DebugColors.cs">
+      <Link>DebugColors.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\DrawableFrame.cs">
+      <Link>DrawableFrame.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\extensions\ColorDataExtensions.cs">
+      <Link>Extensions\ColorDataExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\extensions\DebugRenderingExtensions.cs">
+      <Link>Extensions\DebugRenderingExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\extensions\OrderedDictionaryExtensions.cs">
+      <Link>Extensions\OrderedDictionaryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\extensions\PointExtensions.cs">
+      <Link>Extensions\PointExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\extensions\PositionExtensions.cs">
+      <Link>Extensions\PositionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\extensions\RectangleExtensions.cs">
+      <Link>Extensions\RectangleExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\extensions\WorldSpriteExtensions.cs">
+      <Link>Extensions\WorldSpriteExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\FadeEffect.cs">
+      <Link>FadeEffect.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Fader.cs">
+      <Link>Fader.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\frameworkextensions\BinaryReadWriteExtensions.cs">
+      <Link>FrameworkExtensions\BinaryReadWriteExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\frameworkextensions\BinaryReadWriteXNA.cs">
+      <Link>FrameworkExtensions\BinaryReadWriteXNA.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\frameworkextensions\IntegerExtensions.cs">
+      <Link>FrameworkExtensions\IntegerExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\frameworkextensions\ListExtensions.cs">
+      <Link>FrameworkExtensions\ListExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\frameworkextensions\RandomExtensions.cs">
+      <Link>FrameworkExtensions\RandomExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\functionaltweening\FloatMapXNAExtensions.cs">
+      <Link>FunctionalTweening\FloatMapXNAExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Heightmap.cs">
+      <Link>Heightmap.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\HeightmapInstruction.cs">
+      <Link>HeightmapInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\HeightmapView.cs">
+      <Link>HeightmapView.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\helpers\GifWriter.cs">
+      <Link>Helpers\GifWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\helpers\TarWriter.cs">
+      <Link>Helpers\TarWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\IDrawObject.cs">
+      <Link>IDrawObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\IEditorNameProvider.cs">
+      <Link>IEditorNameProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\IHasDrawableFrame.cs">
+      <Link>IHasDrawableFrame.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Input.cs">
+      <Link>Input.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\IntMatrix2.cs">
+      <Link>IntMatrix2.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\ISmoothProvider.cs">
+      <Link>ISmoothProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\MaskData.cs">
+      <Link>MaskData.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Oblique.cs">
+      <Link>Oblique.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Palette.cs">
+      <Link>Palette.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\PanCamera.cs">
+      <Link>PanCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\physics\CharacterPhysics.cs">
+      <Link>Physics\CharacterPhysics.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\physics\WorldPhysics.cs">
+      <Link>Physics\WorldPhysics.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Range.cs">
+      <Link>Range.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\ShadowReceiver.cs">
+      <Link>ShadowReceiver.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\sorting\DrawOrdering.cs">
+      <Link>Sorting\DrawOrdering.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\sorting\EdgeBits.cs">
+      <Link>Sorting\EdgeBits.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\sorting\ForgivingTopologicalSort.cs">
+      <Link>Sorting\ForgivingTopologicalSort.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\sorting\SortedDrawList.cs">
+      <Link>Sorting\SortedDrawList.cs</Link>
+    </Compile>
+    <Compile Include="..\pixel3d\sorting\TarjansAlgorithm.cs">
+      <Link>Sorting\TarjansAlgorithm.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\Sprite.cs">
+      <Link>Sprite.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\SpriteRef.cs">
+      <Link>SpriteRef.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\TransformedMaskData.cs">
+      <Link>TransformedMaskData.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D\VoxelRenderer.cs">
+      <Link>VoxelRenderer.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\x86\SDL2.dll">
+      <Link>x86\SDL2.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\x64\SDL2.dll">
+      <Link>x64\SDL2.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\x86\soft_oal.dll">
+      <Link>x86\soft_oal.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\x64\soft_oal.dll">
+      <Link>x64\soft_oal.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\x86\libSDL2-2.0.so.0">
+      <Link>x86\libSDL2-2.0.so.0</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\x64\libSDL2-2.0.so.0">
+      <Link>x64\libSDL2-2.0.so.0</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\x86\libopenal.so.1">
+      <Link>x86\libopenal.so.1</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\x64\libopenal.so.1">
+      <Link>x64\libopenal.so.1</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\libSDL2-2.0.0.dylib">
+      <Link>libSDL2-2.0.0.dylib</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\libopenal.1.dylib">
+      <Link>libopenal.1.dylib</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll.config">
+      <Link>MonoGame.Framework.dll.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj">
+      <Project>{9b9c8de1-4e24-4e53-8f79-14370e3096dc}</Project>
+      <Name>Pixel3D.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
