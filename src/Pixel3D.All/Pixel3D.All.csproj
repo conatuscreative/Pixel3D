@@ -228,6 +228,9 @@
     <Compile Include="..\Pixel3D.Strings\StringList.cs" Link="Strings\StringList.cs" />
     <Compile Include="..\Pixel3D.Strings\StringsProvider.cs" Link="Strings\StringsProvider.cs" />
     <Compile Include="..\Pixel3D.Strings\Tokenizer.cs" Link="Strings\Tokenizer.cs" />
+    <Compile Include="..\Pixel3D.UI\IAbandonChanges.cs" Link="UI\IAbandonChanges.cs" />
+    <Compile Include="..\Pixel3D.UI\IReadOnlyContext.cs" Link="UI\IReadOnlyContext.cs" />
+    <Compile Include="..\Pixel3D.UI\IResetToDefaults.cs" Link="UI\IResetToDefaults.cs" />
     <Compile Include="..\Pixel3D\AnimationSetExtensions.cs" Link="AnimationSetExtensions.cs" />
     <Compile Include="..\Pixel3D\Animations\Animation.cs" Link="Animations\Animation.cs" />
     <Compile Include="..\Pixel3D\Animations\AnimationDeserializeContext.cs" Link="Animations\AnimationDeserializeContext.cs" />
@@ -321,6 +324,7 @@
     <Folder Include="FrameworkExtensions\" />
     <Folder Include="FunctionalTweening\" />
     <Folder Include="Helpers\" />
+    <Folder Include="UI\" />
     <Folder Include="Pipeline\Audio\" />
     <Folder Include="Serialization.Support\BuiltIn\" />
     <Folder Include="Sorting\" />
