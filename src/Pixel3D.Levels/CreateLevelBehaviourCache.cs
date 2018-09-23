@@ -27,7 +27,7 @@ namespace Pixel3D.Levels
 		private static readonly ReadOnlyList<ILevelSubBehaviour> NoSubBehaviours =
 			new ReadOnlyList<ILevelSubBehaviour>(new List<ILevelSubBehaviour>(0));
 
-		public static void Initialize(Assembly[] scanAssemblies, params Type[] globalSubBehaviours)
+		public static void Initialize(Assembly[] assemblies)
 		{
 			Type[] delegateArgumentTypes = {typeof(Level), typeof(UpdateContext)};
 
@@ -41,20 +41,19 @@ namespace Pixel3D.Levels
 			};
 
 			//
-			// Add all global sub-behaviours; in the future, these can be managed through better tools
-			//
-			foreach (var subBehaviour in globalSubBehaviours)
-				RegisterSubBehaviourType(globalSubCache, subBehaviour, delegateArgumentTypes, parameterTypeSets);
-
-			//
 			// Look in all assemblies, as we may have content scattered across multiple WADs...
 			//
 
-			foreach (var assembly in scanAssemblies)
+			foreach (var assembly in assemblies)
 			{
 				foreach (var type in assembly.GetTypes())
 				{
-					if (typeof(ILevelSubBehaviour).IsAssignableFrom(type) && type != typeof(LevelSubBehaviour) && !type.IsAbstract)
+					var validInterface = typeof(ILevelSubBehaviour).IsAssignableFrom(type) &&
+					                     type != typeof(LevelSubBehaviour) && !type.IsAbstract;
+
+					if (validInterface && typeof(IGlobalLevelSubBehaviour).IsAssignableFrom(type))
+						RegisterSubBehaviourType(globalSubCache, type, delegateArgumentTypes, parameterTypeSets);
+					else if (validInterface)
 						RegisterSubBehaviourType(levelSubCache, type, delegateArgumentTypes, parameterTypeSets);
 
 					if (typeof(LevelBehaviour).IsAssignableFrom(type) && type != typeof(LevelBehaviour) && !type.IsAbstract)

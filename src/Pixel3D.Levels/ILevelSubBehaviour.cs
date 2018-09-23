@@ -6,6 +6,8 @@ using Pixel3D.Animations;
 
 namespace Pixel3D.Levels
 {
+	public interface IGlobalLevelSubBehaviour { }
+
 	public interface ILevelSubBehaviour
 	{
 		void BeforeBeginLevel(UpdateContext updateContext);
