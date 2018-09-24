@@ -195,16 +195,16 @@
     <Compile Include="..\Pixel3D.Navigation\MinMax.cs" Link="Navigation\MinMax.cs" />
     <Compile Include="..\Pixel3D.Navigation\NavRegionProjection.cs" Link="Navigation\NavRegionProjection.cs" />
     <Compile Include="..\Pixel3D.Navigation\PathEdge.cs" Link="Navigation\PathEdge.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\Audio\SoundParameters.cs" Link="Pipeline\Audio\SoundParameters.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\Audio\VorbisfileDecoder.cs" Link="Pipeline\Audio\VorbisfileDecoder.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\Audio\WaveFile.cs" Link="Pipeline\Audio\WaveFile.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\ByteArrayDeduplicator.cs" Link="Pipeline\ByteArrayDeduplicator.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\CaptureStream.cs" Link="Pipeline\CaptureStream.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\ComparableByteArray.cs" Link="Pipeline\ComparableByteArray.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\MaskDataReferenceResolver.cs" Link="Pipeline\MaskDataReferenceResolver.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\MaskReadAndDeduplicate.cs" Link="Pipeline\MaskReadAndDeduplicate.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\PathGatheringAssetProvider.cs" Link="Pipeline\PathGatheringAssetProvider.cs" />
-    <Compile Include="..\Pixel3D.Pipeline\ThreadWriteStream.cs" Link="Pipeline\ThreadWriteStream.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\Audio\SoundParameters.cs" Link="Pipeline\Audio\SoundParameters.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\Audio\VorbisfileDecoder.cs" Link="Pipeline\Audio\VorbisfileDecoder.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\Audio\WaveFile.cs" Link="Pipeline\Audio\WaveFile.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\ByteArrayDeduplicator.cs" Link="Pipeline\ByteArrayDeduplicator.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\CaptureStream.cs" Link="Pipeline\CaptureStream.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\ComparableByteArray.cs" Link="Pipeline\ComparableByteArray.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\MaskDataReferenceResolver.cs" Link="Pipeline\MaskDataReferenceResolver.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\MaskReadAndDeduplicate.cs" Link="Pipeline\MaskReadAndDeduplicate.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\PathGatheringAssetProvider.cs" Link="Pipeline\PathGatheringAssetProvider.cs" />
+    <Compile Include="..\Pixel3D.Pipeline.FNA\ThreadWriteStream.cs" Link="Pipeline\ThreadWriteStream.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\AABBExtensions.cs" Link="Serialization.Support\AABBExtensions.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeDictionary.cs" Link="Serialization.Support\BuiltIn\SerializeDictionary.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeIgnoreAudio.cs" Link="Serialization.Support\SerializeIgnoreAudio.cs" />
