@@ -7,19 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Pixel3D.ActorManagement\Actor.cs" Link="ActorManagement\Actor.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\AttachmentTracking.cs" Link="ActorManagement\AttachmentTracking.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\DeferredAttachment.cs" Link="ActorManagement\DeferredAttachment.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\Definitions.cs" Link="ActorManagement\Definitions.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\GamePhysics.cs" Link="ActorManagement\GamePhysics.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\GameState.cs" Link="ActorManagement\GameState.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\IGameObjectDefinition.cs" Link="ActorManagement\IGameObjectDefinition.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\IGameState.cs" Link="ActorManagement\IGameState.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\MultiDictionary.cs" Link="ActorManagement\MultiDictionary.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\SmoothingIdentifiers.cs" Link="ActorManagement\SmoothingIdentifiers.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\Symbols.cs" Link="ActorManagement\Symbols.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\TagSetExtensions.cs" Link="ActorManagement\TagSetExtensions.cs" />
-    <Compile Include="..\Pixel3D.ActorManagement\UpdateContext.cs" Link="ActorManagement\UpdateContext.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\Actor.cs" Link="AssetManagement\Actor.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\AttachmentTracking.cs" Link="AssetManagement\AttachmentTracking.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\DeferredAttachment.cs" Link="AssetManagement\DeferredAttachment.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\Definitions.cs" Link="AssetManagement\Definitions.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\GamePhysics.cs" Link="AssetManagement\GamePhysics.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\GameState.cs" Link="AssetManagement\GameState.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\IGameObjectDefinition.cs" Link="AssetManagement\IGameObjectDefinition.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\IGameState.cs" Link="AssetManagement\IGameState.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\MultiDictionary.cs" Link="AssetManagement\MultiDictionary.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\SmoothingIdentifiers.cs" Link="AssetManagement\SmoothingIdentifiers.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\Symbols.cs" Link="AssetManagement\Symbols.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\TagSetExtensions.cs" Link="AssetManagement\TagSetExtensions.cs" />
+    <Compile Include="..\Pixel3D.ActorManagement.FNA\UpdateContext.cs" Link="AssetManagement\UpdateContext.cs" />
     <Compile Include="..\Pixel3D.AssetManagement\AssetClassification.cs" Link="AssetManagement\AssetClassification.cs" />
     <Compile Include="..\Pixel3D.AssetManagement\AssetDetails.cs" Link="AssetManagement\AssetDetails.cs" />
     <Compile Include="..\Pixel3D.AssetManagement\AssetManager.cs" Link="AssetManagement\AssetManager.cs" />

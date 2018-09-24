@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
-    <ProjectReference Include="..\Pixel3D.ActorManagement\Pixel3D.ActorManagement.csproj" />
+    <ProjectReference Include="..\Pixel3D.ActorManagement.FNA\Pixel3D.ActorManagement.FNA.csproj" />
     <ProjectReference Include="..\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj" />
     <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj" />
     <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj" />

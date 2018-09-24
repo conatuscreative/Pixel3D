@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pixel3D.ActorManagement\Pixel3D.ActorManagement.csproj" />
     <ProjectReference Include="..\Pixel3D.Levels\Pixel3D.Levels.csproj" />
   </ItemGroup>
 
