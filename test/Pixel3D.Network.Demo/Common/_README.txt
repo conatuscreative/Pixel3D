@@ -1,0 +1,1 @@
+﻿These files are copied from `Pixel3D/Common`, to avoid requiring taking a dependency on `Pixel3D` just for the networking layer.

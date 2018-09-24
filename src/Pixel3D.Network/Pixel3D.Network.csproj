@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>Pixel3D networking xna monogame fna</PackageTags>
+    <Copyright>(c) 2014 - 2018 Conatus Creative Inc.</Copyright>
+    <PackageProjectUrl>https://github.com/conatuscreative/Pixel3D.Network</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/conatuscreative/Pixel3D.Network/blob/master/LICENSE</PackageLicenseUrl>
+    <Description>Efficient peer-to-peer, rollback-based networking with host migration for up to 4 players.</Description>
+    <Company>Conatus Creative Inc.</Company>
+    <Authors>Conatus Creative Inc.</Authors>
+    <Version>1.0.5</Version>
+    <PackageReleaseNotes>- add .net standard 2.0 support</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/conatuscreative/Pixel3D.Network</RepositoryUrl>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
+    <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.Common\Pixel3D.Common.csproj" />
+    <ProjectReference Include="..\Lidgren.Network\Lidgren.Network.csproj" />
+    <ProjectReference Include="..\Pixel3D.Network.Rollback\Pixel3D.Network.Rollback.csproj" />
+    <ProjectReference Include="..\Pixel3D.P2P\Pixel3D.P2P.csproj" />
+  </ItemGroup>
+
+</Project>
