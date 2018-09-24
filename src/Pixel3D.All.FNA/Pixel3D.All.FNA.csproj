@@ -80,6 +80,86 @@
     <Compile Include="..\Pixel3D.Audio\SoundState.cs" Link="Audio\SoundState.cs" />
     <Compile Include="..\Pixel3D.Audio\StopSoundEffectInstance.cs" Link="Audio\StopSoundEffectInstance.cs" />
     <Compile Include="..\Pixel3D.Audio\WorldToAudio.cs" Link="Audio\WorldToAudio.cs" />
+    <Compile Include="..\Pixel3D.FNA\AnimationSetExtensions.cs" Link="_Main\AnimationSetExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Animation.cs" Link="_Main\Animations\Animation.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\AnimationDeserializeContext.cs" Link="_Main\Animations\AnimationDeserializeContext.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\AnimationFrame.cs" Link="_Main\Animations\AnimationFrame.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\AnimationPlayer.cs" Link="_Main\Animations\AnimationPlayer.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\AnimationSerializeContext.cs" Link="_Main\Animations\AnimationSerializeContext.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\AnimationSet.cs" Link="_Main\Animations\AnimationSet.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Asserts.cs" Link="_Main\Animations\Asserts.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Cel.cs" Link="_Main\Animations\Cel.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\DepthBounds.cs" Link="_Main\Animations\DepthBounds.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\DrawContext.cs" Link="_Main\Animations\DrawContext.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\ICustomMaskDataReader.cs" Link="_Main\Animations\ICustomMaskDataReader.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\LayersList.cs" Link="_Main\Animations\LayersList.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Mask.cs" Link="_Main\Animations\Mask.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\OutgoingAttachment.cs" Link="_Main\Animations\OutgoingAttachment.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\OutgoingAttachmentView.cs" Link="_Main\Animations\OutgoingAttachmentView.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\ComparableImageData.cs" Link="_Main\Animations\Serialization\ComparableImageData.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\ImageBundle.cs" Link="_Main\Animations\Serialization\ImageBundle.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\ImageBundleManager.cs" Link="_Main\Animations\Serialization\ImageBundleManager.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\ImageKey.cs" Link="_Main\Animations\Serialization\ImageKey.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\ImageWriter.cs" Link="_Main\Animations\Serialization\ImageWriter.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\ITextureLoadHelper.cs" Link="_Main\Animations\Serialization\ITextureLoadHelper.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\RCRURLEReader.cs" Link="_Main\Animations\Serialization\RCRURLEReader.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\RCRURLEWriter.cs" Link="_Main\Animations\Serialization\RCRURLEWriter.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\SimpleTextureLoadHelper.cs" Link="_Main\Animations\Serialization\SimpleTextureLoadHelper.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\Serialization\TextureData.cs" Link="_Main\Animations\Serialization\TextureData.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\ShadowCasterList.cs" Link="_Main\Animations\ShadowCasterList.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\ShadowLayer.cs" Link="_Main\Animations\ShadowLayer.cs" />
+    <Compile Include="..\Pixel3D.FNA\Bounds.cs" Link="_Main\Bounds.cs" />
+    <Compile Include="..\Pixel3D.FNA\Camera.cs" Link="_Main\Camera.cs" />
+    <Compile Include="..\Pixel3D.FNA\ColorGradient.cs" Link="_Main\ColorGradient.cs" />
+    <Compile Include="..\Pixel3D.FNA\CombinedHeightmap.cs" Link="_Main\CombinedHeightmap.cs" />
+    <Compile Include="..\Pixel3D.FNA\CubeCornerColors.cs" Link="_Main\CubeCornerColors.cs" />
+    <Compile Include="..\Pixel3D.FNA\Data2D.cs" Link="_Main\Data2D.cs" />
+    <Compile Include="..\Pixel3D.FNA\Data2DExtensions.cs" Link="_Main\Data2DExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\DebugColors.cs" Link="_Main\DebugColors.cs" />
+    <Compile Include="..\Pixel3D.FNA\DrawableFrame.cs" Link="_Main\DrawableFrame.cs" />
+    <Compile Include="..\Pixel3D.FNA\Extensions\ColorDataExtensions.cs" Link="Extensions\ColorDataExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\Extensions\DebugRenderingExtensions.cs" Link="Extensions\DebugRenderingExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\Extensions\OrderedDictionaryExtensions.cs" Link="Extensions\OrderedDictionaryExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\Extensions\PointExtensions.cs" Link="Extensions\PointExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\Extensions\PositionExtensions.cs" Link="Extensions\PositionExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\Extensions\RectangleExtensions.cs" Link="Extensions\RectangleExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\Extensions\WorldSpriteExtensions.cs" Link="Extensions\WorldSpriteExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\FadeEffect.cs" Link="_Main\FadeEffect.cs" />
+    <Compile Include="..\Pixel3D.FNA\Fader.cs" Link="_Main\Fader.cs" />
+    <Compile Include="..\Pixel3D.FNA\FrameworkExtensions\BinaryReadWriteExtensions.cs" Link="_Main\FrameworkExtensions\BinaryReadWriteExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\FrameworkExtensions\BinaryReadWriteXNA.cs" Link="_Main\FrameworkExtensions\BinaryReadWriteXNA.cs" />
+    <Compile Include="..\Pixel3D.FNA\FrameworkExtensions\IntegerExtensions.cs" Link="_Main\FrameworkExtensions\IntegerExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\FrameworkExtensions\ListExtensions.cs" Link="_Main\FrameworkExtensions\ListExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\FrameworkExtensions\RandomExtensions.cs" Link="_Main\FrameworkExtensions\RandomExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\FunctionalTweening\FloatMapXNAExtensions.cs" Link="_Main\FunctionalTweening\FloatMapXNAExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\Heightmap.cs" Link="_Main\Heightmap.cs" />
+    <Compile Include="..\Pixel3D.FNA\HeightmapInstruction.cs" Link="_Main\HeightmapInstruction.cs" />
+    <Compile Include="..\Pixel3D.FNA\HeightmapView.cs" Link="_Main\HeightmapView.cs" />
+    <Compile Include="..\Pixel3D.FNA\Helpers\GifWriter.cs" Link="_Main\Helpers\GifWriter.cs" />
+    <Compile Include="..\Pixel3D.FNA\Helpers\TarWriter.cs" Link="_Main\Helpers\TarWriter.cs" />
+    <Compile Include="..\Pixel3D.FNA\IDrawObject.cs" Link="_Main\IDrawObject.cs" />
+    <Compile Include="..\Pixel3D.FNA\IEditorNameProvider.cs" Link="_Main\IEditorNameProvider.cs" />
+    <Compile Include="..\Pixel3D.FNA\IHasDrawableFrame.cs" Link="_Main\IHasDrawableFrame.cs" />
+    <Compile Include="..\Pixel3D.FNA\Input.cs" Link="_Main\Input.cs" />
+    <Compile Include="..\Pixel3D.FNA\IntMatrix2.cs" Link="_Main\IntMatrix2.cs" />
+    <Compile Include="..\Pixel3D.FNA\ISmoothProvider.cs" Link="_Main\ISmoothProvider.cs" />
+    <Compile Include="..\Pixel3D.FNA\MaskData.cs" Link="_Main\MaskData.cs" />
+    <Compile Include="..\Pixel3D.FNA\Oblique.cs" Link="_Main\Oblique.cs" />
+    <Compile Include="..\Pixel3D.FNA\Palette.cs" Link="_Main\Palette.cs" />
+    <Compile Include="..\Pixel3D.FNA\PanCamera.cs" Link="_Main\PanCamera.cs" />
+    <Compile Include="..\Pixel3D.FNA\Physics\CharacterPhysics.cs" Link="_Main\Physics\CharacterPhysics.cs" />
+    <Compile Include="..\Pixel3D.FNA\Physics\WorldPhysics.cs" Link="_Main\Physics\WorldPhysics.cs" />
+    <Compile Include="..\Pixel3D.FNA\Range.cs" Link="_Main\Range.cs" />
+    <Compile Include="..\Pixel3D.FNA\ShadowReceiver.cs" Link="_Main\ShadowReceiver.cs" />
+    <Compile Include="..\Pixel3D.FNA\Sorting\DrawOrdering.cs" Link="_Main\Sorting\DrawOrdering.cs" />
+    <Compile Include="..\Pixel3D.FNA\Sorting\EdgeBits.cs" Link="_Main\Sorting\EdgeBits.cs" />
+    <Compile Include="..\Pixel3D.FNA\Sorting\ForgivingTopologicalSort.cs" Link="_Main\Sorting\ForgivingTopologicalSort.cs" />
+    <Compile Include="..\Pixel3D.FNA\Sorting\SortedDrawList.cs" Link="_Main\Sorting\SortedDrawList.cs" />
+    <Compile Include="..\Pixel3D.FNA\Sorting\TarjansAlgorithm.cs" Link="_Main\Sorting\TarjansAlgorithm.cs" />
+    <Compile Include="..\Pixel3D.FNA\Sprite.cs" Link="_Main\Sprite.cs" />
+    <Compile Include="..\Pixel3D.FNA\SpriteRef.cs" Link="_Main\SpriteRef.cs" />
+    <Compile Include="..\Pixel3D.FNA\TransformedMaskData.cs" Link="_Main\TransformedMaskData.cs" />
+    <Compile Include="..\Pixel3D.FNA\VoxelRenderer.cs" Link="_Main\VoxelRenderer.cs" />
     <Compile Include="..\Pixel3D.Levels\CreateLevelBehaviourCache.cs" Link="Levels\CreateLevelBehaviourCache.cs" />
     <Compile Include="..\Pixel3D.Levels\CreateThingCache.cs" Link="Levels\CreateThingCache.cs" />
     <Compile Include="..\Pixel3D.Levels\IIgnoreParallax.cs" Link="Levels\IIgnoreParallax.cs" />
@@ -235,103 +315,24 @@
     <Compile Include="..\Pixel3D.UI\IResetToDefaults.cs" Link="UI\IResetToDefaults.cs" />
     <Compile Include="..\Pixel3D.UI\ISubMenu.cs" Link="UI\ISubMenu.cs" />
     <Compile Include="..\Pixel3D.UI\TransitionDirection.cs" Link="UI\TransitionDirection.cs" />
-    <Compile Include="..\Pixel3D\AnimationSetExtensions.cs" Link="AnimationSetExtensions.cs" />
-    <Compile Include="..\Pixel3D\Animations\Animation.cs" Link="Animations\Animation.cs" />
-    <Compile Include="..\Pixel3D\Animations\AnimationDeserializeContext.cs" Link="Animations\AnimationDeserializeContext.cs" />
-    <Compile Include="..\Pixel3D\Animations\AnimationFrame.cs" Link="Animations\AnimationFrame.cs" />
-    <Compile Include="..\Pixel3D\Animations\AnimationPlayer.cs" Link="Animations\AnimationPlayer.cs" />
-    <Compile Include="..\Pixel3D\Animations\AnimationSerializeContext.cs" Link="Animations\AnimationSerializeContext.cs" />
-    <Compile Include="..\Pixel3D\Animations\AnimationSet.cs" Link="Animations\AnimationSet.cs" />
-    <Compile Include="..\Pixel3D\Animations\Asserts.cs" Link="Animations\Asserts.cs" />
-    <Compile Include="..\Pixel3D\Animations\Cel.cs" Link="Animations\Cel.cs" />
-    <Compile Include="..\Pixel3D\Animations\DepthBounds.cs" Link="Animations\DepthBounds.cs" />
-    <Compile Include="..\Pixel3D\Animations\DrawContext.cs" Link="Animations\DrawContext.cs" />
-    <Compile Include="..\Pixel3D\Animations\ICustomMaskDataReader.cs" Link="Animations\ICustomMaskDataReader.cs" />
-    <Compile Include="..\Pixel3D\Animations\LayersList.cs" Link="Animations\LayersList.cs" />
-    <Compile Include="..\Pixel3D\Animations\Mask.cs" Link="Animations\Mask.cs" />
-    <Compile Include="..\Pixel3D\Animations\OutgoingAttachment.cs" Link="Animations\OutgoingAttachment.cs" />
-    <Compile Include="..\Pixel3D\Animations\OutgoingAttachmentView.cs" Link="Animations\OutgoingAttachmentView.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\ComparableImageData.cs" Link="Animations\Serialization\ComparableImageData.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\ImageBundle.cs" Link="Animations\Serialization\ImageBundle.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\ImageBundleManager.cs" Link="Animations\Serialization\ImageBundleManager.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\ImageKey.cs" Link="Animations\Serialization\ImageKey.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\ImageWriter.cs" Link="Animations\Serialization\ImageWriter.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\ITextureLoadHelper.cs" Link="Animations\Serialization\ITextureLoadHelper.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\RCRURLEReader.cs" Link="Animations\Serialization\RCRURLEReader.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\RCRURLEWriter.cs" Link="Animations\Serialization\RCRURLEWriter.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\SimpleTextureLoadHelper.cs" Link="Animations\Serialization\SimpleTextureLoadHelper.cs" />
-    <Compile Include="..\Pixel3D\Animations\Serialization\TextureData.cs" Link="Animations\Serialization\TextureData.cs" />
-    <Compile Include="..\Pixel3D\Animations\ShadowCasterList.cs" Link="Animations\ShadowCasterList.cs" />
-    <Compile Include="..\Pixel3D\Animations\ShadowLayer.cs" Link="Animations\ShadowLayer.cs" />
-    <Compile Include="..\Pixel3D\Bounds.cs" Link="Bounds.cs" />
-    <Compile Include="..\Pixel3D\Camera.cs" Link="Camera.cs" />
-    <Compile Include="..\Pixel3D\ColorGradient.cs" Link="ColorGradient.cs" />
-    <Compile Include="..\Pixel3D\CombinedHeightmap.cs" Link="CombinedHeightmap.cs" />
-    <Compile Include="..\Pixel3D\CubeCornerColors.cs" Link="CubeCornerColors.cs" />
-    <Compile Include="..\Pixel3D\Data2D.cs" Link="Data2D.cs" />
-    <Compile Include="..\Pixel3D\Data2DExtensions.cs" Link="Data2DExtensions.cs" />
-    <Compile Include="..\Pixel3D\DebugColors.cs" Link="DebugColors.cs" />
-    <Compile Include="..\Pixel3D\DrawableFrame.cs" Link="DrawableFrame.cs" />
-    <Compile Include="..\Pixel3D\Extensions\ColorDataExtensions.cs" Link="Extensions\ColorDataExtensions.cs" />
-    <Compile Include="..\Pixel3D\Extensions\DebugRenderingExtensions.cs" Link="Extensions\DebugRenderingExtensions.cs" />
-    <Compile Include="..\Pixel3D\Extensions\OrderedDictionaryExtensions.cs" Link="Extensions\OrderedDictionaryExtensions.cs" />
-    <Compile Include="..\Pixel3D\Extensions\PointExtensions.cs" Link="Extensions\PointExtensions.cs" />
-    <Compile Include="..\Pixel3D\Extensions\PositionExtensions.cs" Link="Extensions\PositionExtensions.cs" />
-    <Compile Include="..\Pixel3D\Extensions\RectangleExtensions.cs" Link="Extensions\RectangleExtensions.cs" />
-    <Compile Include="..\Pixel3D\Extensions\WorldSpriteExtensions.cs" Link="Extensions\WorldSpriteExtensions.cs" />
-    <Compile Include="..\Pixel3D\FadeEffect.cs" Link="FadeEffect.cs" />
-    <Compile Include="..\Pixel3D\Fader.cs" Link="Fader.cs" />
-    <Compile Include="..\Pixel3D\FrameworkExtensions\BinaryReadWriteExtensions.cs" Link="FrameworkExtensions\BinaryReadWriteExtensions.cs" />
-    <Compile Include="..\Pixel3D\FrameworkExtensions\BinaryReadWriteXNA.cs" Link="FrameworkExtensions\BinaryReadWriteXNA.cs" />
-    <Compile Include="..\Pixel3D\FrameworkExtensions\IntegerExtensions.cs" Link="FrameworkExtensions\IntegerExtensions.cs" />
-    <Compile Include="..\Pixel3D\FrameworkExtensions\ListExtensions.cs" Link="FrameworkExtensions\ListExtensions.cs" />
-    <Compile Include="..\Pixel3D\FrameworkExtensions\RandomExtensions.cs" Link="FrameworkExtensions\RandomExtensions.cs" />
-    <Compile Include="..\Pixel3D\FunctionalTweening\FloatMapXNAExtensions.cs" Link="FunctionalTweening\FloatMapXNAExtensions.cs" />
-    <Compile Include="..\Pixel3D\Heightmap.cs" Link="Heightmap.cs" />
-    <Compile Include="..\Pixel3D\HeightmapInstruction.cs" Link="HeightmapInstruction.cs" />
-    <Compile Include="..\Pixel3D\HeightmapView.cs" Link="HeightmapView.cs" />
-    <Compile Include="..\Pixel3D\Helpers\GifWriter.cs" Link="Helpers\GifWriter.cs" />
-    <Compile Include="..\Pixel3D\Helpers\TarWriter.cs" Link="Helpers\TarWriter.cs" />
-    <Compile Include="..\Pixel3D\IDrawObject.cs" Link="IDrawObject.cs" />
-    <Compile Include="..\Pixel3D\IEditorNameProvider.cs" Link="IEditorNameProvider.cs" />
-    <Compile Include="..\Pixel3D\IHasDrawableFrame.cs" Link="IHasDrawableFrame.cs" />
-    <Compile Include="..\Pixel3D\Input.cs" Link="Input.cs" />
-    <Compile Include="..\Pixel3D\IntMatrix2.cs" Link="IntMatrix2.cs" />
-    <Compile Include="..\Pixel3D\ISmoothProvider.cs" Link="ISmoothProvider.cs" />
-    <Compile Include="..\Pixel3D\MaskData.cs" Link="MaskData.cs" />
-    <Compile Include="..\Pixel3D\Oblique.cs" Link="Oblique.cs" />
-    <Compile Include="..\Pixel3D\Palette.cs" Link="Palette.cs" />
-    <Compile Include="..\Pixel3D\PanCamera.cs" Link="PanCamera.cs" />
-    <Compile Include="..\Pixel3D\Physics\CharacterPhysics.cs" Link="Physics\CharacterPhysics.cs" />
-    <Compile Include="..\Pixel3D\Physics\WorldPhysics.cs" Link="Physics\WorldPhysics.cs" />
-    <Compile Include="..\Pixel3D\Range.cs" Link="Range.cs" />
-    <Compile Include="..\Pixel3D\ShadowReceiver.cs" Link="ShadowReceiver.cs" />
-    <Compile Include="..\Pixel3D\Sorting\DrawOrdering.cs" Link="Sorting\DrawOrdering.cs" />
-    <Compile Include="..\Pixel3D\Sorting\EdgeBits.cs" Link="Sorting\EdgeBits.cs" />
-    <Compile Include="..\Pixel3D\Sorting\ForgivingTopologicalSort.cs" Link="Sorting\ForgivingTopologicalSort.cs" />
-    <Compile Include="..\Pixel3D\Sorting\SortedDrawList.cs" Link="Sorting\SortedDrawList.cs" />
-    <Compile Include="..\Pixel3D\Sorting\TarjansAlgorithm.cs" Link="Sorting\TarjansAlgorithm.cs" />
-    <Compile Include="..\Pixel3D\Sprite.cs" Link="Sprite.cs" />
-    <Compile Include="..\Pixel3D\SpriteRef.cs" Link="SpriteRef.cs" />
-    <Compile Include="..\Pixel3D\TransformedMaskData.cs" Link="TransformedMaskData.cs" />
-    <Compile Include="..\Pixel3D\VoxelRenderer.cs" Link="VoxelRenderer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Animations\Serialization\" />
+    <Folder Include="_Main\Animations\Serialization\" />
     <Folder Include="Audio\" />
     <Folder Include="LoopRecorder\" />
     <Folder Include="Navigation\" />
     <Folder Include="MethodProviders\" />
     <Folder Include="AssetManagement\" />
     <Folder Include="Extensions\" />
-    <Folder Include="FrameworkExtensions\" />
-    <Folder Include="FunctionalTweening\" />
-    <Folder Include="Helpers\" />
+    <Folder Include="_Main\FrameworkExtensions\" />
+    <Folder Include="_Main\FunctionalTweening\" />
+    <Folder Include="_Main\Helpers\" />
+    <Folder Include="_Main\" />
     <Folder Include="Pipeline\Audio\" />
     <Folder Include="Serialization.Support\BuiltIn\" />
-    <Folder Include="Sorting\" />
-    <Folder Include="Physics\" />
+    <Folder Include="_Main\Sorting\" />
+    <Folder Include="_Main\Physics\" />
     <Folder Include="Serialization\BuiltIn\DelegateHandling\" />
     <Folder Include="Serialization\Context\" />
     <Folder Include="Serialization\Discovery\ReadIL\" />

@@ -8,7 +8,6 @@
     <ProjectReference Include="..\Pixel3D.ActorManagement\Pixel3D.ActorManagement.csproj" />
     <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj" />
     <ProjectReference Include="..\Pixel3D.Strings\Pixel3D.Strings.csproj" />
-    <ProjectReference Include="..\Pixel3D\Pixel3D.csproj" />
   </ItemGroup>
 
 </Project>

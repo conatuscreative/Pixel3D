@@ -10,9 +10,9 @@
     <ProjectReference Include="..\Pixel3D.AssetManagement\Pixel3D.AssetManagement.csproj" />
     <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj" />
     <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj" />
+    <ProjectReference Include="..\Pixel3D.FNA\Pixel3D.FNA.csproj" />
     <ProjectReference Include="..\Pixel3D.LoopRecorder\Pixel3D.LoopRecorder.csproj" />
     <ProjectReference Include="..\Pixel3D.Serialization\Pixel3D.Serialization.csproj" />
-    <ProjectReference Include="..\Pixel3D\Pixel3D.csproj" />
   </ItemGroup>
 
 </Project>
