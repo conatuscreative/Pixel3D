@@ -28,15 +28,12 @@ namespace Pixel3D.UI
 		bool UseDefaultPagingInput { get; }
 
 		Position DrawItemAt(int itemIndex, ref Position itemPosition, Position offset, DrawContext drawContext, bool blink);
-		bool SelectItemAt(int itemIndex, IReadOnlyContext context, Definitions definitions, IAudioPlayer audioPlayer,
-			ILocalizationProvider loc, int playerIndex);
-		bool CancelItemAt(int itemIndex, IReadOnlyContext context, Definitions definitions, IAudioPlayer audioPlayer,
-			ILocalizationProvider loc, int playerIndex);
+		bool SelectItemAt(int itemIndex, IReadOnlyContext context, Definitions definitions, IAudioPlayer audioPlayer, ILocalizationProvider loc, int playerIndex);
+		bool CancelItemAt(int itemIndex, IReadOnlyContext context, Definitions definitions, IAudioPlayer audioPlayer, ILocalizationProvider loc, int playerIndex);
 		bool OnNextItem(IReadOnlyContext context, int previousIndex, IAudioPlayer audioPlayer);
 		bool OnPreviousItem(IReadOnlyContext context, int previousIndex, IAudioPlayer audioPlayer);
 
 		// Mouse Simulation:
 		Rectangle? GetItemHitZone(Position start, int itemIndex);
-		
 	}
 }
