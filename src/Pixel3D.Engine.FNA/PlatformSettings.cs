@@ -9,7 +9,7 @@ namespace Pixel3D.Engine.FNA
 {
 	public static class PlatformSettings
 	{
-		public static string GetPlatformSettingsDir()
+		public static string GetPlatformSettingsDir(string gameTitlePath)
 		{
 			string os = SDL.SDL_GetPlatform();
 			if (os.Equals("Linux"))
@@ -23,10 +23,10 @@ namespace Pixel3D.Engine.FNA
 						return @"."; // Oh well.
 					}
 
-					return CreateAndReturnDir(Path.Combine(osDir, ".config/RiverCityRansomUnderground"));
+					return CreateAndReturnDir(Path.Combine(osDir, ".config/" + gameTitlePath));
 				}
 
-				return CreateAndReturnDir(Path.Combine(osDir, "RiverCityRansomUnderground"));
+				return CreateAndReturnDir(Path.Combine(osDir, gameTitlePath));
 			}
 
 			if (os.Equals("Mac OS X"))
@@ -38,7 +38,7 @@ namespace Pixel3D.Engine.FNA
 				}
 
 				return CreateAndReturnDir(Path.Combine(osDir,
-					"Library/Application Support/RiverCityRansomUnderground"));
+					"Library/Application Support/" + gameTitlePath));
 			}
 
 			if (!os.Equals("Windows"))
