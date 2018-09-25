@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+
+using Microsoft.Xna.Framework;
 using Pixel3D.ActorManagement;
 using Pixel3D.Animations;
 using Pixel3D.Audio;
