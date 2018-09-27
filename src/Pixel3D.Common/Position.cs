@@ -2,6 +2,7 @@
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 
 using System;
+using System.IO;
 
 namespace Pixel3D
 {
@@ -45,7 +46,7 @@ namespace Pixel3D
 		public override bool Equals(object obj)
 		{
 			if (obj is Position)
-				return (Position) obj == this;
+				return (Position)obj == this;
 			return false;
 		}
 
@@ -166,6 +167,24 @@ namespace Pixel3D
 			}
 
 			return false;
+		}
+
+		#endregion
+
+		#region Serialization
+
+		public void Serialize(BinaryWriter bw)
+		{
+			bw.Write(X);
+			bw.Write(Y);
+			bw.Write(Z);
+		}
+
+		public Position(BinaryReader br)
+		{
+			X = br.ReadInt32();
+			Y = br.ReadInt32();
+			Z = br.ReadInt32();
 		}
 
 		#endregion

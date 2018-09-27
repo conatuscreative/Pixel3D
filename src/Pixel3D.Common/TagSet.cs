@@ -248,11 +248,11 @@ namespace Pixel3D
             return GetEnumerator();
         }
 
-        #endregion
-		
+		#endregion
+
 		#region Serialize
 
-        public void Serialize(BinaryWriter bw)
+	    public void Serialize(BinaryWriter bw)
         {
             bw.Write(Count);
             for(int i = 0; i < Count; i++)
@@ -270,7 +270,6 @@ namespace Pixel3D
                 tags[i] = br.ReadString();
             }
         }
-
 
         #endregion
     }

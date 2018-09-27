@@ -55,6 +55,41 @@ namespace Pixel3D
 
 		#endregion
 
+		#region TagSet
+
+		// NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagSet` is *really* stable, and some folks need to directly serialize us)
+
+		public static void SerializeTagSet(this TagSet tagSet, AnimationSerializeContext context)
+		{
+			tagSet.Serialize(context.bw);
+		}
+
+		public static TagSet DeserializeTagSet(this AnimationDeserializeContext context)
+		{
+			return new TagSet(context.br);
+		}
+
+		#endregion
+
+		#region TagLookup
+
+		// NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagLookup` is *really* stable, and some folks need to directly serialize us)
+
+		public static void SerializeTagLookup<T>(this TagLookup<T> tagLookup, AnimationSerializeContext context,
+			Action<T> serializeValue)
+		{
+			tagLookup.Serialize(context.bw, serializeValue);
+		}
+
+		/// <summary>Deserialize into new object instance</summary>
+		public static TagLookup<T> DeserializeTagLookup<T>(this AnimationDeserializeContext context,
+			Func<T> deserializeValue)
+		{
+			return new TagLookup<T>(context.br, deserializeValue);
+		}
+
+		#endregion
+
 		#region ImageBundle
 
 		[CustomFieldSerializer]
@@ -114,41 +149,6 @@ namespace Pixel3D
 		{
 			Debug.Assert(false); // Shouldn't happen! (Can't store Sprite in game state)
 			throw new InvalidOperationException();
-		}
-
-		#endregion
-
-		#region TagSet
-
-		// NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagSet` is *really* stable, and some folks need to directly serialize us)
-
-		public static void SerializeTagSet(this TagSet tagSet, AnimationSerializeContext context)
-		{
-			tagSet.Serialize(context.bw);
-		}
-
-		public static TagSet DeserializeTagSet(this AnimationDeserializeContext context)
-		{
-			return new TagSet(context.br);
-		}
-
-		#endregion
-
-		#region TagLookup
-
-		// NOTE: Pass-through the animation serializer to a simple binary serializer (the format of `TagLookup` is *really* stable, and some folks need to directly serialize us)
-
-		public static void SerializeTagLookup<T>(this TagLookup<T> tagLookup, AnimationSerializeContext context,
-			Action<T> serializeValue)
-		{
-			tagLookup.Serialize(context.bw, serializeValue);
-		}
-
-		/// <summary>Deserialize into new object instance</summary>
-		public static TagLookup<T> DeserializeTagLookup<T>(this AnimationDeserializeContext context,
-			Func<T> deserializeValue)
-		{
-			return new TagLookup<T>(context.br, deserializeValue);
 		}
 
 		#endregion
@@ -254,7 +254,7 @@ namespace Pixel3D
 			if (context.Version >= 39)
 			{
                 animationFrame.masks = context.DeserializeOrderedDictionary(() => new Mask(context));
-				animationFrame.outgoingAttachments = context.DeserializeOrderedDictionary(() => context.DeserializeOutgoingAttachment());
+				animationFrame.outgoingAttachments = context.DeserializeOrderedDictionary(() => new OutgoingAttachment(context));
 			}
 			else
 			{
@@ -273,7 +273,7 @@ namespace Pixel3D
 				//
 				// Outgoing Attachments:
 				{
-                    var legacy = context.DeserializeTagLookup(() => context.DeserializeOutgoingAttachment());
+                    var legacy = context.DeserializeTagLookup(() => new OutgoingAttachment(context));
 					animationFrame.outgoingAttachments = new OrderedDictionary<string, OutgoingAttachment>();
 					foreach (var outgoingAttachment in legacy)
 					{
@@ -602,31 +602,6 @@ namespace Pixel3D
 			animation.preventDropMotion = context.br.ReadBoolean();
 
 			return animation;
-		}
-
-		#endregion
-
-		#region OutgoingAttachment
-
-		public static void Serialize(this OutgoingAttachment oa, AnimationSerializeContext context)
-		{
-			context.bw.Write(oa.position);
-			oa.targetAnimationContext.SerializeTagSet(context);
-			oa.targetAttachmentContext.SerializeTagSet(context);
-			context.bw.Write(oa.attachRange);
-			context.bw.Write((int) oa.facing);
-		}
-
-		/// <summary>Deserialize into new object instance</summary>
-		public static OutgoingAttachment DeserializeOutgoingAttachment(this AnimationDeserializeContext context)
-		{
-			var oa = new OutgoingAttachment();
-			oa.position = context.br.ReadPosition();
-			oa.targetAnimationContext = context.DeserializeTagSet();
-			oa.targetAttachmentContext = context.DeserializeTagSet();
-			oa.attachRange = context.br.ReadAABB();
-			oa.facing = (OutgoingAttachment.Facing) context.br.ReadInt32();
-			return oa;
 		}
 
 		#endregion

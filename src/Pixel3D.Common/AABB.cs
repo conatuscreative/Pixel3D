@@ -1,6 +1,8 @@
 // Copyright © Conatus Creative, Inc. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 
+using System.IO;
+
 namespace Pixel3D
 {
 	public struct AABB
@@ -156,5 +158,21 @@ namespace Pixel3D
 
 			return xDistance * xDistance + yDistance * yDistance + zDistance * zDistance;
 		}
+
+		#region Serialization
+
+		public void Serialize(BinaryWriter bw)
+		{
+			min.Serialize(bw);
+			max.Serialize(bw);
+		}
+
+		public AABB(BinaryReader br)
+		{
+			min = new Position(br);
+			max = new Position(br);
+		}
+
+		#endregion
 	}
 }

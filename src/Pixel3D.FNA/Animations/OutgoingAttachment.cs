@@ -1,4 +1,6 @@
-﻿namespace Pixel3D.Animations
+﻿using Pixel3D.Extensions;
+
+namespace Pixel3D.Animations
 {
     public class OutgoingAttachment
     {
@@ -34,5 +36,31 @@
             oa.targetAttachmentContext = targetAttachmentContext;
             return oa;
         }
-    }
+
+		#region Serialization
+
+	    #region OutgoingAttachment
+
+	    public void Serialize(AnimationSerializeContext context)
+	    {
+		    context.bw.Write(position);
+			targetAnimationContext.Serialize(context.bw);
+		    targetAttachmentContext.Serialize(context.bw);
+		    attachRange.Serialize(context.bw);
+		    context.bw.Write((int)facing);
+	    }
+
+	    public OutgoingAttachment(AnimationDeserializeContext context)
+	    {
+		    position = context.br.ReadPosition();
+		    targetAnimationContext = new TagSet(context.br);
+		    targetAttachmentContext = new TagSet(context.br);
+			attachRange = new AABB(context.br);
+		    facing = (Facing)context.br.ReadInt32();
+	    }
+
+	    #endregion
+
+		#endregion
+	}
 }
