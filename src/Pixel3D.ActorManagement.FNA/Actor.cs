@@ -289,7 +289,8 @@ namespace Pixel3D.ActorManagement
 		/// <param name="animationTags">Tags for the animation. Will have context added.</param>
 		public void SetAnimation(TagSet animationTags, UpdateContext updateContext)
 		{
-			SetAnimationNoCues(animationTags, updateContext);
+			var animation = animationSet[AddContextTo(animationTags)];
+			currentAnimation.SetWithoutRestart(animation);
 			AnimationDidChange(updateContext);
 		}
 
