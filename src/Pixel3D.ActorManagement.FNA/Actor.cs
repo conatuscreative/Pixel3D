@@ -35,6 +35,11 @@ namespace Pixel3D.ActorManagement
 			return tagSet;
 		}
 
+		public virtual TagSet AddContextTo(string tagSet)
+		{
+			return new TagSet(tagSet);
+		}
+
 		#endregion
 
 		#region Events
@@ -288,18 +293,28 @@ namespace Pixel3D.ActorManagement
 			AnimationDidChange(updateContext);
 		}
 
+		public void SetAnimation(string animationTags, UpdateContext updateContext)
+		{
+			SetAnimationNoCues(animationTags, updateContext);
+			AnimationDidChange(updateContext);
+		}
+
 		public void SetAnimationNoCues(TagSet animationTags, UpdateContext updateContext)
 		{
-			animationTags = AddContextTo(animationTags);
-			var animation = animationSet[animationTags];
+			var animation = animationSet[AddContextTo(animationTags)];
+			currentAnimation.SetWithoutRestart(animation);
+		}
+
+		public void SetAnimationNoCues(string animationTags, UpdateContext updateContext)
+		{
+			var animation = animationSet[AddContextTo(animationTags)];
 			currentAnimation.SetWithoutRestart(animation);
 		}
 
 		/// <param name="animationTags">Tags for the animation. Will have context added.</param>
 		public void ResetAnimation(TagSet animationTags, UpdateContext updateContext)
 		{
-			animationTags = AddContextTo(animationTags);
-			var animation = animationSet[animationTags];
+			var animation = animationSet[AddContextTo(animationTags)];
 			currentAnimation = new AnimationPlayer(animation);
 			AnimationDidChange(updateContext);
 		}
