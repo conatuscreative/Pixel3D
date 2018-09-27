@@ -58,5 +58,39 @@ namespace Pixel3D.Engine.FNA
 
 			return dir;
 		}
+
+		public static string GetLoggingDir()
+		{
+			string os = SDL2.SDL.SDL_GetPlatform();
+			if (os.Equals("Linux"))
+			{
+				string osDir = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME");
+				if (string.IsNullOrEmpty(osDir))
+				{
+					osDir = Environment.GetEnvironmentVariable("HOME");
+					if (string.IsNullOrEmpty(osDir))
+					{
+						return @"."; // Oh well.
+					}
+					return PlatformSettings.CreateAndReturnDir(Path.Combine(osDir, ".config/RiverCityRansomUnderground"));
+				}
+				return PlatformSettings.CreateAndReturnDir(Path.Combine(osDir, "RiverCityRansomUnderground"));
+			}
+			if (os.Equals("Mac OS X"))
+			{
+				string osDir = Environment.GetEnvironmentVariable("HOME");
+				if (string.IsNullOrEmpty(osDir))
+				{
+					return @"."; // Oh well.
+				}
+				return PlatformSettings.CreateAndReturnDir(Path.Combine(osDir, "Library/Application Support/RiverCityRansomUnderground"));
+			}
+			if (!os.Equals("Windows"))
+			{
+				throw new NotSupportedException("Unhandled SDL2 platform!");
+			}
+			
+			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Conatus Creative", "RCRU");
+		}
 	}
 }
