@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using Pixel3D.Extensions;
+using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D.Animations
 {
@@ -67,5 +68,39 @@ namespace Pixel3D.Animations
             // NOTE: Don't take into account Y axis. This is safe, because there is a direct conversion from Y to Z in world space.
             return GetTransformedMaskData(new Position(transformPosition.X, 0, transformPosition.Z), transformFlipX);
         }
-    }
+
+	    #region Serialization
+
+	    public void Serialize(AnimationSerializeContext context)
+	    {
+		    if (context.Version < 37)
+			    context.bw.WriteNullableString(string.Empty); // was friendly name
+
+		    context.bw.Write(isGeneratedAlphaMask);
+
+		    Debug.Assert(!Asserts.enabled || data.Valid);
+		    data.Serialize(context.bw);
+	    }
+
+	    public Mask(AnimationDeserializeContext context)
+	    {
+		    if (context.Version < 37)
+			    context.br.ReadNullableString(); // was friendly name
+
+		    isGeneratedAlphaMask = context.br.ReadBoolean();
+
+		    if (context.customMaskDataReader != null)
+		    {
+			    // NOTE: Matches MaskData deserializing constructor:
+			    var rect = context.br.ReadRectangle();
+			    data = new MaskData(context.customMaskDataReader.Read(MaskData.WidthToDataWidth(rect.Width) * rect.Height), rect);
+		    }
+		    else
+		    {
+			    data = new MaskData(context.br, context.fastReadHack);
+		    }
+	    }
+
+	    #endregion
+	}
 }

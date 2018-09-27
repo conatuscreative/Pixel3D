@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
@@ -23,24 +22,21 @@ namespace Pixel3D
 		// Due to a limitation in the serializer generator, this needs to be in a different class to TagLookup<T>
 		// because the generic parameters need to be on the Method and NOT on the Type. (Maybe we should fix this so they can be on either.)
 
-		public class CustomSerializerForTagLookup
+		// At last count, TagLookup and its TagSet rules and their strings were taking up ~70% of definition objects.
+		// These are definition-only objects that the game state should never even store references to.
+		// Only thing the game state may care about is the contents of the lookup (values) - so we store that.
+
+		[CustomFieldSerializer]
+		public static void Serialize<T>(SerializeContext context, BinaryWriter bw, TagLookup<T> value)
 		{
-			// At last count, TagLookup and its TagSet rules and their strings were taking up ~70% of definition objects.
-			// These are definition-only objects that the game state should never even store references to.
-			// Only thing the game state may care about is the contents of the lookup (values) - so we store that.
+			for (var i = 0; i < value.Count; i++)
+				Field.Serialize(context, bw, ref value.values[i]);
+		}
 
-			[CustomFieldSerializer]
-			public static void Serialize<T>(SerializeContext context, BinaryWriter bw, TagLookup<T> value)
-			{
-				for (var i = 0; i < value.Count; i++)
-					Field.Serialize(context, bw, ref value.values[i]);
-			}
-
-			[CustomFieldSerializer]
-			public static void Deserialize<T>(DeserializeContext context, BinaryReader br, ref TagLookup<T> value)
-			{
-				throw new InvalidOperationException();
-			}
+		[CustomFieldSerializer]
+		public static void Deserialize<T>(DeserializeContext context, BinaryReader br, ref TagLookup<T> value)
+		{
+			throw new InvalidOperationException();
 		}
 
 		#endregion
@@ -49,9 +45,7 @@ namespace Pixel3D
 
 		// Definition-only at the field level (don't even bother storing it) - see TagLookup
 		[CustomFieldSerializer]
-		public static void Serialize(SerializeContext context, BinaryWriter bw, TagSet value)
-		{
-		}
+		public static void Serialize(SerializeContext context, BinaryWriter bw, TagSet value) { }
 
 		[CustomFieldSerializer]
 		public static void Deserialize(DeserializeContext context, BinaryReader br, ref TagSet value)
@@ -97,54 +91,14 @@ namespace Pixel3D
 
 		// Definition-only (TODO: Maybe we should care that the sprite references match up between players?)
 		[CustomSerializer]
-		public static void Serialize(SerializeContext context, BinaryWriter bw, ref SpriteRef value)
-		{
-		}
+		public static void Serialize(SerializeContext context, BinaryWriter bw, ref SpriteRef value) { }
 
 		[CustomSerializer]
 		public static void Deserialize(DeserializeContext context, BinaryReader br, ref SpriteRef value)
 		{
 			throw new InvalidOperationException();
 		}
-
-		#region Animation Serialization
-
-		public static void Serialize(this SpriteRef spriteRef, AnimationSerializeContext context)
-		{
-			// Bundling is handled by registering images, keyed on the sprite itself, so we just pass-through:
-			spriteRef.ResolveRequire().Serialize(context);
-		}
-
-		public static SpriteRef DeserializeSpriteRef(this AnimationDeserializeContext context)
-		{
-			// IMPORTANT: This method is compatible with Sprite's deserializer
-			var spriteRef = new SpriteRef();
-
-			if (context.imageBundle != null)
-			{
-				spriteRef.bundle = context.imageBundle;
-				// NOTE: AssetTool depends on us not actually resolving the sprite during load
-
-				spriteRef.index = context.br.ReadInt32();
-				if (spriteRef.index != -1)
-					spriteRef.origin = context.br.ReadPoint();
-				else
-					spriteRef.origin = default(Point);
-			}
-			else // In place sprite
-			{
-				var sprite = context.DeserializeSprite(); // Pass through
-
-				spriteRef.bundle = new ImageBundle(sprite);
-				spriteRef.index = 0;
-				spriteRef.origin = sprite.origin;
-			}
-
-			return spriteRef;
-		}
-
-		#endregion
-
+		
 		#endregion
 
 		#region Sprite
@@ -160,92 +114,6 @@ namespace Pixel3D
 		{
 			Debug.Assert(false); // Shouldn't happen! (Can't store Sprite in game state)
 			throw new InvalidOperationException();
-		}
-
-		public static void Serialize(this Sprite sprite, AnimationSerializeContext context)
-		{
-			if (sprite.sourceRectangle.Width > 2048 || sprite.sourceRectangle.Height > 2048)
-				throw new InvalidOperationException("Cannot handle textures larger than 2048"); // Due to Reach support
-
-			if (context.imageWriter != null)
-			{
-				int index = context.imageWriter.GetImageIndex(sprite.texture, sprite.sourceRectangle);
-				context.bw.Write(index);
-
-				if (index >= 0)
-					context.bw.Write(sprite.origin);
-			}
-			else // In-place sprite
-			{
-				if (sprite.texture == null || sprite.sourceRectangle.Width == 0 || sprite.sourceRectangle.Height == 0)
-				{
-					context.bw.Write(0); // Writing 0 width indicates blank texture (no need to write height)
-				}
-				else
-				{
-					var data = new byte[sprite.sourceRectangle.Width * sprite.sourceRectangle.Height * 4];
-					sprite.texture.GetData<byte>(0, sprite.sourceRectangle, data, 0, data.Length);
-
-					// Only write the size (we intentionally lose the source rectangle's position)
-					context.bw.Write(sprite.sourceRectangle.Width);
-					context.bw.Write(sprite.sourceRectangle.Height);
-
-					context.bw.Write(data);
-
-					context.bw.Write(sprite.origin);
-				}
-			}
-		}
-
-		public static Sprite DeserializeSprite(this AnimationDeserializeContext context)
-		{
-			// IMPORTANT: This method is compatible with SpriteRef's deserializer
-			var sprite = new Sprite();
-
-			if (context.imageBundle != null)
-			{
-				int index = context.br.ReadInt32();
-				if (index == -1)
-				{
-					sprite.texture = null;
-					sprite.sourceRectangle = default(Rectangle);
-					sprite.origin = default(Point);
-				}
-				else
-				{
-					sprite = context.imageBundle.GetSprite(index, context.br.ReadPoint());
-				}
-			}
-			else // In place sprite
-			{
-				int width = context.br.ReadInt32();
-				if (width == 0) // A blank texture
-				{
-					sprite.sourceRectangle = Rectangle.Empty;
-					sprite.texture = null;
-					sprite.origin = default(Point);
-				}
-				else
-				{
-					int height = context.br.ReadInt32();
-					sprite.sourceRectangle = new Rectangle(0, 0, width, height);
-					byte[] data = context.br.ReadBytes(width * height * 4);
-
-					if (context.GraphicsDevice != null) // <- Allow loading headless
-					{
-						sprite.texture = new Texture2D(context.GraphicsDevice, width, height);
-						((Texture2D) sprite.texture).SetData(data);
-					}
-					else
-					{
-						sprite.texture = null;
-					}
-
-					sprite.origin = context.br.ReadPoint();
-				}
-			}
-
-			return sprite;
 		}
 
 		#endregion
@@ -375,26 +243,25 @@ namespace Pixel3D
 			if (layersCount > 0)
 			{
 				Cel currentCel;
-				animationFrame.firstLayer = currentCel = context.DeserializeCel();
+				animationFrame.firstLayer = currentCel = new Cel(context);
 				for (var i = 1; i < layersCount; i++)
 				{
-					currentCel.next = context.DeserializeCel();
+					currentCel.next = new Cel(context);
 					currentCel = currentCel.next;
 				}
 			}
 
 			if (context.Version >= 39)
 			{
-                animationFrame.masks = context.DeserializeOrderedDictionary(() => context.DeserializeMask());
-				animationFrame.outgoingAttachments =
-					context.DeserializeOrderedDictionary(() => context.DeserializeOutgoingAttachment());
+                animationFrame.masks = context.DeserializeOrderedDictionary(() => new Mask(context));
+				animationFrame.outgoingAttachments = context.DeserializeOrderedDictionary(() => context.DeserializeOutgoingAttachment());
 			}
 			else
 			{
 				//
 				// Masks:
 				{
-                    var legacy = context.DeserializeTagLookup(() => context.DeserializeMask());
+                    var legacy = context.DeserializeTagLookup(() => new Mask(context));
 					animationFrame.masks = new OrderedDictionary<string, Mask>();
 					foreach (var mask in legacy)
 					{
@@ -554,7 +421,7 @@ namespace Pixel3D
 			animationSet.behaviour = context.br.ReadNullableString();
 
 			if (context.br.ReadBoolean())
-				animationSet.Heightmap = context.DeserializeHeightmap();
+				animationSet.Heightmap = new Heightmap(context);
 
 			if (animationSet.Heightmap != null)
 			{
@@ -592,7 +459,7 @@ namespace Pixel3D
 				animationSet.doAboveCheck = context.br.ReadBoolean();
 
 			if (context.br.ReadBoolean())
-				animationSet.Ceiling = context.DeserializeHeightmap();
+				animationSet.Ceiling = new Heightmap(context);
 
             animationSet.animations = context.DeserializeTagLookup(() => context.DeserializeAnimation());
 
@@ -620,9 +487,7 @@ namespace Pixel3D
 				{
 					animationSet.shadowLayers = new List<ShadowLayer>();
 					for (var i = 0; i < shadowLayerCount; i++)
-						animationSet.shadowLayers.Add(new ShadowLayer(
-							context.br.ReadInt32(),
-							context.DeserializeSpriteRef()));
+						animationSet.shadowLayers.Add(new ShadowLayer(context.br.ReadInt32(), new SpriteRef(context)));
 
 					animationSet.cachedShadowBounds = context.br.ReadBounds();
 				}
@@ -762,248 +627,6 @@ namespace Pixel3D
 			oa.attachRange = context.br.ReadAABB();
 			oa.facing = (OutgoingAttachment.Facing) context.br.ReadInt32();
 			return oa;
-		}
-
-		#endregion
-
-		#region Mask
-
-		public static void Serialize(this Mask mask, AnimationSerializeContext context)
-		{
-			if (context.Version < 37)
-				context.bw.WriteNullableString(string.Empty); // was friendly name
-
-			context.bw.Write(mask.isGeneratedAlphaMask);
-
-			Debug.Assert(!Asserts.enabled || mask.data.Valid);
-			mask.data.Serialize(context.bw);
-		}
-
-		/// <summary>Deserialize into new object instance</summary>
-		public static Mask DeserializeMask(this AnimationDeserializeContext context)
-		{
-			var mask = new Mask();
-
-			if (context.Version < 37)
-				context.br.ReadNullableString(); // was friendly name
-
-			mask.isGeneratedAlphaMask = context.br.ReadBoolean();
-
-			if (context.customMaskDataReader != null)
-			{
-				// NOTE: Matches MaskData deserializing constructor:
-				var rect = context.br.ReadRectangle();
-				mask.data = new MaskData(
-					context.customMaskDataReader.Read(MaskData.WidthToDataWidth(rect.Width) * rect.Height), rect);
-			}
-			else
-			{
-				mask.data = context.br.DeserializeMaskData(context.fastReadHack);
-			}
-
-			return mask;
-		}
-
-		#endregion
-
-		#region MaskData
-
-		// IMPORTANT: Because both levels and animation sets can serialize these, we don't have a version number!
-		//            (Could pass a custom one as a parameter, or use multiple methods, if the need arises...)
-
-		public static void Serialize(this MaskData maskData, BinaryWriter bw)
-		{
-			bw.Write(maskData.Bounds);
-
-			if (maskData.packedData != null)
-				for (var i = 0; i < maskData.packedData.Length; i++)
-					bw.Write(maskData.packedData[i]);
-		}
-
-		public static MaskData DeserializeMaskData(this BinaryReader br, bool fastReadHack)
-		{
-			var maskData = new MaskData(br.ReadRectangle());
-
-			if (maskData.packedData != null)
-			{
-				if (!fastReadHack)
-				{
-					for (var i = 0; i < maskData.packedData.Length; i++) maskData.packedData[i] = br.ReadUInt32();
-				}
-				else // FAST READ!
-				{
-					var bytesToRead = maskData.packedData.Length * 4;
-					br.ReadBytes(bytesToRead);
-				}
-			}
-
-			Debug.Assert(maskData.Valid);
-
-			return maskData;
-		}
-
-		#endregion
-
-		#region HeightmapInstruction
-
-		// NOTE: Because heightmap instructions will eventually only be stored in the unoptimised data
-		//       we can be a little bit lazy and just serialize all arguments, even if they are not actually
-		//       used by the given op-code.
-
-		// NOTE: Masks are not shared for HeightmapInstruction (otherwise we get a nasty circular dependency through ShadowReceiver)
-
-		public static void Serialize(this HeightmapInstruction instruction, AnimationSerializeContext context)
-		{
-			context.bw.Write((int) instruction.Operation);
-
-			context.bw.Write(instruction.Height);
-			context.bw.Write(instruction.ObliqueDirection);
-			context.bw.Write(instruction.FrontEdgeDepth);
-			context.bw.Write(instruction.Depth);
-			context.bw.Write(instruction.Slope);
-			context.bw.Write(instruction.Offset);
-
-			context.bw.Write(instruction.Mask != null);
-
-            if(instruction.Mask != null)
-			    instruction.Mask.Serialize(context);
-		}
-
-		/// <summary>Deserialize into a new object instance</summary>
-		public static HeightmapInstruction DeserializeHeightmapInstruction(this AnimationDeserializeContext context)
-		{
-			var instruction = new HeightmapInstruction
-			{
-				Operation = (HeightmapOp) context.br.ReadInt32(),
-				Height = context.br.ReadByte(),
-				ObliqueDirection = context.br.ReadOblique(),
-				FrontEdgeDepth = context.br.ReadInt32(),
-				Depth = context.br.ReadInt32(),
-				Slope = context.br.ReadInt32(),
-				Offset = context.br.ReadInt32()
-			};
-
-			instruction.Mask = context.br.ReadBoolean() ? context.DeserializeMask() : null;
-			return instruction;
-		}
-
-		#endregion
-
-		#region List<HeightmapInstruction>
-
-		public static void Serialize(this List<HeightmapInstruction> instructions, AnimationSerializeContext context)
-		{
-			context.bw.Write(instructions != null);
-			if (instructions != null)
-			{
-				context.bw.Write(instructions.Count);
-				for (var i = 0; i < instructions.Count; i++) instructions[i].Serialize(context);
-			}
-		}
-
-		public static List<HeightmapInstruction> DeserializeHeightmapInstructions(
-			this AnimationDeserializeContext context)
-		{
-			if (context.br.ReadBoolean())
-			{
-				int count = context.br.ReadInt32();
-				var instructions = new List<HeightmapInstruction>(count);
-				for (var i = 0; i < count; i++) instructions.Add(context.DeserializeHeightmapInstruction());
-				return instructions;
-			}
-
-			return null;
-		}
-
-		#endregion
-
-		#region Heightmap
-
-		public static void Serialize(this Heightmap heightmap, AnimationSerializeContext context)
-		{
-			context.bw.Write(heightmap.DefaultHeight);
-
-			context.bw.Write(heightmap.OneWay);
-			context.bw.Write(heightmap.OneWayThickness);
-
-			if (context.bw.WriteBoolean(heightmap.HasData))
-			{
-				context.bw.Write(heightmap.heightmapData.Bounds);
-				context.bw.Write(heightmap.heightmapData.Data, 0,
-					heightmap.heightmapData.Width * heightmap.heightmapData.Height);
-			}
-
-			heightmap.instructions.Serialize(context);
-		}
-
-		public static Heightmap DeserializeHeightmap(this AnimationDeserializeContext context)
-		{
-			var heightmap = new Heightmap();
-
-			heightmap.DefaultHeight = context.br.ReadByte();
-
-			heightmap.OneWay = context.br.ReadBoolean();
-			heightmap.OneWayThickness = context.br.ReadByte();
-
-			if (context.br.ReadBoolean())
-			{
-				Rectangle bounds = context.br.ReadRectangle();
-				byte[] data = context.br.ReadBytes(bounds.Width * bounds.Height);
-				heightmap.heightmapData = new Data2D<byte>(data, bounds);
-			}
-			else
-			{
-				heightmap.heightmapData = default(Data2D<byte>);
-			}
-
-			heightmap.instructions = context.DeserializeHeightmapInstructions();
-			return heightmap;
-		}
-
-		#endregion
-
-		#region ShadowReceiver
-
-		public static void Serialize(this ShadowReceiver receiver, AnimationSerializeContext context)
-		{
-			receiver.heightmap.Serialize(context);
-			context.bw.Write(receiver.heightmapExtendDirection);
-		}
-
-		/// <summary>Deserialize into new object instance</summary>
-		public static ShadowReceiver DeserializeShadowReceiver(this AnimationDeserializeContext context)
-		{
-			var heightmap = context.DeserializeHeightmap();
-			var heightmapExtendDirection = context.br.ReadOblique();
-
-			var receiver = new ShadowReceiver(heightmap, heightmapExtendDirection);
-			return receiver;
-		}
-
-		#endregion
-
-		#region Cel
-
-		public static void Serialize(this Cel cel, AnimationSerializeContext context)
-		{
-			context.bw.WriteNullableString(cel.friendlyName);
-			cel.spriteRef.Serialize(context);
-
-		    if (context.bw.WriteBoolean(cel.shadowReceiver != null))
-		    {
-		        cel.shadowReceiver.Serialize(context);
-		    }
-		}
-
-		/// <summary>Deserialize into new object instance</summary>
-		public static Cel DeserializeCel(this AnimationDeserializeContext context)
-		{
-			var cel = new Cel();
-			cel.friendlyName = context.br.ReadNullableString();
-			cel.spriteRef = context.DeserializeSpriteRef();
-			if (context.br.ReadBoolean())
-				cel.shadowReceiver = context.DeserializeShadowReceiver();
-			return cel;
 		}
 
 		#endregion

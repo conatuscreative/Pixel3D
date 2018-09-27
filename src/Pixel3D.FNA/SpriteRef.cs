@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Pixel3D.Animations;
 using Pixel3D.Animations.Serialization;
+using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D
 {
@@ -51,5 +53,40 @@ namespace Pixel3D
 
             return bundle.GetSprite(index, origin);
         }
-    }
+
+	    #region Serialization
+
+	    public void Serialize(AnimationSerializeContext context)
+	    {
+		    // Bundling is handled by registering images, keyed on the sprite itself, so we just pass-through:
+		    ResolveRequire().Serialize(context);
+	    }
+
+	    public SpriteRef(AnimationDeserializeContext context)
+	    {
+		    // IMPORTANT: This method is compatible with Sprite's deserializer
+		    
+		    if (context.imageBundle != null)
+		    {
+			    bundle = context.imageBundle;
+			    // NOTE: AssetTool depends on us not actually resolving the sprite during load
+
+			    index = context.br.ReadInt32();
+			    if (index != -1)
+				    origin = context.br.ReadPoint();
+			    else
+				    origin = default(Point);
+		    }
+		    else // In place sprite
+		    {
+			    var sprite = new Sprite(context); // Pass through
+
+			    bundle = new ImageBundle(sprite);
+			    index = 0;
+			    origin = sprite.origin;
+		    }
+	    }
+
+	    #endregion
+	}
 }

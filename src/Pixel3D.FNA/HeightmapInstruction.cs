@@ -1,48 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using Pixel3D.Animations;
-using System.Diagnostics;
 
 namespace Pixel3D
 {
-    /// <summary>Heightmap operations (these match methods in Heightmap)</summary>
-    /// <remarks>Values are serialization sensitive!</remarks>
-    public enum HeightmapOp
-    {
-        ClearToHeight = 0,
-        SetFromFlatBaseMask = 1,
-        SetFromFlatTopMask = 2,
-        SetFromObliqueTopMask = 3,
-        SetFromRailingMask = 4,
-        SetFromFrontEdge = 5,
-        SetFlatRelative = 12, // New in version 8
-        SetFromSideOblique = 13, // New in version 9
-
-        // ShadowReceiver-related instructions:
-
-        /// <summary>For ShadowReceiver, creates from the AnimationSet heightmap</summary>
-        CreateExtendedObliqueFromBase = 6,
-        ExtendOblique = 7,
-        FillLeft = 8,
-        FillLeftFixedHeight = 9,
-        FillRight = 10,
-        FillRightFixedHeight = 11,
-    }
-
-    public static class HeightmapOpExtensions
-    {
-        public static bool IsShadowReceiverOperation(this HeightmapOp op)
-        {
-            return op == HeightmapOp.CreateExtendedObliqueFromBase ||
-                   op == HeightmapOp.ExtendOblique ||
-                   op == HeightmapOp.FillLeft ||
-                   op == HeightmapOp.FillLeftFixedHeight ||
-                   op == HeightmapOp.FillRight ||
-                   op == HeightmapOp.FillRightFixedHeight;
-        }
-    }
-
-    public class HeightmapInstruction
+	public class HeightmapInstruction
     {
         public HeightmapInstruction()
         {
@@ -220,11 +181,47 @@ namespace Pixel3D
             }
         }
 
-        #endregion
-    }
+		#endregion
 
-	public static class HeightmapInstructionExtensions
-    {
-		
-    }
+	    #region Serialization
+
+	    // NOTE: Because heightmap instructions will eventually only be stored in the unoptimised data
+	    //       we can be a little bit lazy and just serialize all arguments, even if they are not actually
+	    //       used by the given op-code.
+
+	    // NOTE: Masks are not shared for HeightmapInstruction (otherwise we get a nasty circular dependency through ShadowReceiver)
+
+	    public void Serialize(AnimationSerializeContext context)
+	    {
+		    context.bw.Write((int)Operation);
+
+		    context.bw.Write(Height);
+		    context.bw.Write(ObliqueDirection);
+		    context.bw.Write(FrontEdgeDepth);
+		    context.bw.Write(Depth);
+		    context.bw.Write(Slope);
+		    context.bw.Write(Offset);
+
+		    context.bw.Write(Mask != null);
+
+		    if (Mask != null)
+			    Mask.Serialize(context);
+	    }
+
+	    /// <summary>Deserialize into a new object instance</summary>
+	    public HeightmapInstruction(AnimationDeserializeContext context)
+	    {
+		    Operation = (HeightmapOp) context.br.ReadInt32();
+		    Height = context.br.ReadByte();
+		    ObliqueDirection = context.br.ReadOblique();
+		    FrontEdgeDepth = context.br.ReadInt32();
+		    Depth = context.br.ReadInt32();
+		    Slope = context.br.ReadInt32();
+		    Offset = context.br.ReadInt32();
+
+			Mask = context.br.ReadBoolean() ? new Mask(context) : null;
+	    }
+
+	    #endregion
+	}
 }

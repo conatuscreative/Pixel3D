@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D.Animations
 {
@@ -60,5 +61,29 @@ namespace Pixel3D.Animations
                 drawContext.DrawWorld(sprite, position, color, flipX);
             }
         }
-    }
+
+		#region Serialization
+
+		public void Serialize(AnimationSerializeContext context)
+		{
+			context.bw.WriteNullableString(friendlyName);
+			spriteRef.Serialize(context);
+
+			if (context.bw.WriteBoolean(shadowReceiver != null))
+			{
+				shadowReceiver.Serialize(context);
+			}
+		}
+
+		/// <summary>Deserialize into new object instance</summary>
+		public Cel (AnimationDeserializeContext context)
+		{
+			friendlyName = context.br.ReadNullableString();
+			spriteRef = new SpriteRef(context);
+			if (context.br.ReadBoolean())
+				shadowReceiver = new ShadowReceiver(context);
+		}
+
+		#endregion
+	}
 }

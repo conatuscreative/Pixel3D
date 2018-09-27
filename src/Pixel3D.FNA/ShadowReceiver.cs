@@ -1,4 +1,5 @@
 using System;
+using Pixel3D.Animations;
 
 namespace Pixel3D
 {
@@ -29,5 +30,17 @@ namespace Pixel3D
         {
             return new ShadowReceiver(heightmap.Clone(), heightmapExtendDirection);
         }
-    }
+
+	    #region ShadowReceiver
+
+	    public void Serialize(AnimationSerializeContext context)
+	    {
+		    heightmap.Serialize(context);
+		    context.bw.Write(heightmapExtendDirection);
+	    }
+
+	    public ShadowReceiver(AnimationDeserializeContext context) : this(new Heightmap(context), context.br.ReadOblique()) { }
+
+	    #endregion
+	}
 }

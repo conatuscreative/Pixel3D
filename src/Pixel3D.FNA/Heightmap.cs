@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using Pixel3D.Animations;
+using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D
 {
@@ -648,6 +649,48 @@ namespace Pixel3D
             return maxHeight;
         }
 
-        #endregion
-    }
+		#endregion
+
+		#region Heightmap
+
+	    public void Serialize(AnimationSerializeContext context)
+	    {
+		    context.bw.Write(DefaultHeight);
+
+		    context.bw.Write(OneWay);
+		    context.bw.Write(OneWayThickness);
+
+		    if (context.bw.WriteBoolean(HasData))
+		    {
+			    context.bw.Write(heightmapData.Bounds);
+			    context.bw.Write(heightmapData.Data, 0,
+				    heightmapData.Width * heightmapData.Height);
+		    }
+
+		    instructions.Serialize(context);
+	    }
+
+	    public Heightmap(AnimationDeserializeContext context)
+	    {
+		    DefaultHeight = context.br.ReadByte();
+
+		    OneWay = context.br.ReadBoolean();
+		    OneWayThickness = context.br.ReadByte();
+
+		    if (context.br.ReadBoolean())
+		    {
+			    Rectangle bounds = context.br.ReadRectangle();
+			    byte[] data = context.br.ReadBytes(bounds.Width * bounds.Height);
+			    heightmapData = new Data2D<byte>(data, bounds);
+		    }
+		    else
+		    {
+			    heightmapData = default(Data2D<byte>);
+		    }
+
+		    instructions = context.DeserializeHeightmapInstructions();
+	    }
+
+	    #endregion
+	}
 }

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
 using System.Diagnostics;
 using Pixel3D.Extensions;
+using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D
 {
@@ -80,6 +81,89 @@ namespace Pixel3D
             return !(a == b);
         }
 
-        
-    }
+		#region Serialization
+
+		public void Serialize(AnimationSerializeContext context)
+		{
+			if (sourceRectangle.Width > 2048 || sourceRectangle.Height > 2048)
+				throw new InvalidOperationException("Cannot handle textures larger than 2048"); // Due to Reach support
+
+			if (context.imageWriter != null)
+			{
+				int index = context.imageWriter.GetImageIndex(texture, sourceRectangle);
+				context.bw.Write(index);
+
+				if (index >= 0)
+					context.bw.Write(origin);
+			}
+			else // In-place sprite
+			{
+				if (texture == null || sourceRectangle.Width == 0 || sourceRectangle.Height == 0)
+				{
+					context.bw.Write(0); // Writing 0 width indicates blank texture (no need to write height)
+				}
+				else
+				{
+					var data = new byte[sourceRectangle.Width * sourceRectangle.Height * 4];
+					texture.GetData<byte>(0, sourceRectangle, data, 0, data.Length);
+
+					// Only write the size (we intentionally lose the source rectangle's position)
+					context.bw.Write(sourceRectangle.Width);
+					context.bw.Write(sourceRectangle.Height);
+
+					context.bw.Write(data);
+
+					context.bw.Write(origin);
+				}
+			}
+		}
+
+		public Sprite(AnimationDeserializeContext context) : this()
+		{
+			// IMPORTANT: This method is compatible with SpriteRef's deserializer
+			if (context.imageBundle != null)
+			{
+				int index = context.br.ReadInt32();
+				if (index == -1)
+				{
+					texture = null;
+					sourceRectangle = default(Rectangle);
+					origin = default(Point);
+				}
+				else
+				{
+					context.imageBundle.GetSprite(index, context.br.ReadPoint());
+				}
+			}
+			else // In place sprite
+			{
+				int width = context.br.ReadInt32();
+				if (width == 0) // A blank texture
+				{
+					sourceRectangle = Rectangle.Empty;
+					texture = null;
+					origin = default(Point);
+				}
+				else
+				{
+					int height = context.br.ReadInt32();
+					sourceRectangle = new Rectangle(0, 0, width, height);
+					byte[] data = context.br.ReadBytes(width * height * 4);
+
+					if (context.GraphicsDevice != null) // <- Allow loading headless
+					{
+						texture = new Texture2D(context.GraphicsDevice, width, height);
+						((Texture2D)texture).SetData(data);
+					}
+					else
+					{
+						texture = null;
+					}
+					origin = context.br.ReadPoint();
+				}
+			}
+		}
+
+		#endregion
+	}
 }

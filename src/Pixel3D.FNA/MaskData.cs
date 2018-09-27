@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using System.IO;
 using Pixel3D.Extensions;
 using Pixel3D.FrameworkExtensions;
 
@@ -440,6 +441,40 @@ namespace Pixel3D
             }
         }
 
-        #endregion
-    }
+		#endregion
+
+		#region Serialization
+
+	    // IMPORTANT: Because both levels and animation sets can serialize these, we don't have a version number!
+	    //            (Could pass a custom one as a parameter, or use multiple methods, if the need arises...)
+
+	    public void Serialize(BinaryWriter bw)
+	    {
+		    bw.Write(Bounds);
+
+		    if (packedData != null)
+			    for (var i = 0; i < packedData.Length; i++)
+				    bw.Write(packedData[i]);
+	    }
+
+	    public MaskData(BinaryReader br, bool fastReadHack) : this(br.ReadRectangle())
+	    {
+		    if (packedData != null)
+		    {
+			    if (!fastReadHack)
+			    {
+				    for (var i = 0; i < packedData.Length; i++) packedData[i] = br.ReadUInt32();
+			    }
+			    else // FAST READ!
+			    {
+				    var bytesToRead = packedData.Length * 4;
+				    br.ReadBytes(bytesToRead);
+			    }
+		    }
+
+		    Debug.Assert(Valid);
+	    }
+
+		#endregion
+	}
 }

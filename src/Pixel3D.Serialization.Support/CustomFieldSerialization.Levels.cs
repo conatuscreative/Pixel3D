@@ -54,7 +54,7 @@ namespace Pixel3D
 
 		private static Region DeserializeRegion(LevelDeserializeContext context, Region region)
 		{
-			region.mask = context.br.DeserializeMaskData(context.FastReadHack);
+			region.mask = new MaskData(context.br, context.FastReadHack);
 
 			if (context.Version >= 15)
 			{
