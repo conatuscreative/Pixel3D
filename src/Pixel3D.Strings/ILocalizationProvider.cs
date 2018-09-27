@@ -12,11 +12,11 @@ namespace Pixel3D.Strings
 		string GetRandomString(TagSet tagSet);
 		string GetRandomStringUppercase(TagSet tagSet);
 
-		string GetSingleString(string tagSet);
-		string GetSingleStringUppercase(string tagSet);
-		StringList GetStrings(string tagSet);
+		string GetSingleString(string symbol);
+		string GetSingleStringUppercase(string symbol);
+		StringList GetStrings(string symbol);
 
-		string GetRandomString(string tagSet);
-		string GetRandomStringUppercase(string tagSet);
+		string GetRandomString(string symbol);
+		string GetRandomStringUppercase(string symbol);
 	}
 }
