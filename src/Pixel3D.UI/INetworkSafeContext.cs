@@ -10,11 +10,12 @@ namespace Pixel3D.UI
 	/// <summary>
 	/// Defines context methods that are safe to call from a networked game.
 	/// This typically means read-only access, or the possible write operations do not touch the simulation.
+	/// If the implementation cannot satisfy these requirements, then it should throw.
 	/// </summary>
 	public interface INetworkSafeContext
 	{
-		TimeSpan Uptime { get; }
-		IPostProcessProvider PostProcessProvider { get; }
+		TimeSpan Uptime { get; } // todo remove me?
+		IPostProcessProvider PostProcessProvider { get; } // todo remove me?
 		bool TryGetAudioPlayer(out IAudioPlayer audioPlayer);
 	}
 }
