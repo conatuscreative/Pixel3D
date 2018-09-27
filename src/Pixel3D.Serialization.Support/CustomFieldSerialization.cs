@@ -18,7 +18,7 @@ namespace Pixel3D
 {
 	public static partial class CustomFieldSerialization
 	{
-		#region Tag Lookup
+		#region TagLookup
 
 		// Due to a limitation in the serializer generator, this needs to be in a different class to TagLookup<T>
 		// because the generic parameters need to be on the Method and NOT on the Type. (Maybe we should fix this so they can be on either.)
@@ -45,7 +45,7 @@ namespace Pixel3D
 
 		#endregion
 
-		#region Tag Set
+		#region TagSet
 
 		// Definition-only at the field level (don't even bother storing it) - see TagLookup
 		[CustomFieldSerializer]
@@ -566,7 +566,7 @@ namespace Pixel3D
 				// Assume that reading is faster than walking the heightmap:
 				animationSet.physicsHeight = context.br.ReadInt32();
 				if (animationSet.physicsHeight > 0)
-					animationSet.depthBounds = context.DeserializeDepthBounds();
+					animationSet.depthBounds = new DepthBounds(context);
 				animationSet.flatDirection =
 					context.br.ReadOblique(); // <- for the sake of editing, keep this value around
 			}
@@ -1004,67 +1004,6 @@ namespace Pixel3D
 			if (context.br.ReadBoolean())
 				cel.shadowReceiver = context.DeserializeShadowReceiver();
 			return cel;
-		}
-
-		#endregion
-		
-		#region DepthBounds
-
-		public static void Serialize(this DepthBounds bounds, AnimationSerializeContext context)
-		{
-			Debug.Assert(bounds.slices != null); // <- should never serialize an empty depth bound (check in caller)
-
-			if (bounds.heights == null)
-			{
-				context.bw.Write((int)0);
-			}
-			else
-			{
-				context.bw.Write(bounds.heights.Length);
-				context.bw.Write(bounds.heights);
-			}
-
-			// NOTE: slices.Length is implicit
-			for (int i = 0; i < bounds.slices.Length; i++)
-			{
-				context.bw.Write(bounds.slices[i].xOffset);
-				context.bw.Write(bounds.slices[i].zOffset);
-
-				context.bw.Write(bounds.slices[i].depths.Length);
-				for (int j = 0; j < bounds.slices[i].depths.Length; j++)
-				{
-					context.bw.Write(bounds.slices[i].depths[j].front);
-					context.bw.Write(bounds.slices[i].depths[j].back);
-				}
-			}
-		}
-
-		/// <summary>Deserialize.</summary>
-		public static DepthBounds DeserializeDepthBounds(this AnimationDeserializeContext context)
-		{
-			var bounds = new DepthBounds();
-
-			int heightCount = context.br.ReadInt32();
-			bounds.heights = (heightCount == 0) ? null : context.br.ReadBytes(heightCount);
-
-			bounds.slices = new DepthSlice[heightCount + 1];
-			for (int i = 0; i < bounds.slices.Length; i++)
-			{
-				bounds.slices[i] = new DepthSlice()
-				{
-					xOffset = context.br.ReadInt32(),
-					zOffset = context.br.ReadInt32(),
-					depths = new FrontBack[context.br.ReadInt32()],
-				};
-
-				for (int j = 0; j < bounds.slices[i].depths.Length; j++)
-				{
-					bounds.slices[i].depths[j].front = context.br.ReadByte();
-					bounds.slices[i].depths[j].back = context.br.ReadByte();
-				}
-			}
-
-			return bounds;
 		}
 
 		#endregion

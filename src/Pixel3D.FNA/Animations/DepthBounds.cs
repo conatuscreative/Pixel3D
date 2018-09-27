@@ -1,52 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Pixel3D.Animations
 {
-    public struct FrontBack
-    {
-        public byte front, back;
-
-        // NOTE: Hacky mechanisim for storing "on top" status without requiring more data (we're nicely 16-bits)
-        //       If we are "on top", then only the back bounds contains usable data
-        bool IsOnTop { get { return front > back; } }
-    }
-
-    public class DepthSlice : IEquatable<DepthSlice>
-    {
-        public int xOffset;
-        public int zOffset;
-        public FrontBack[] depths;
-
-        public int Width { get { return depths.Length; } }
-
-        public static DepthSlice CreateBlank(int xOffset, int zOffset)
-        {
-            return new DepthSlice { xOffset = xOffset, zOffset = zOffset, depths = new FrontBack[1] };
-        }
-
-
-        public bool Equals(DepthSlice other)
-        {
-            if(xOffset != other.xOffset || zOffset != other.zOffset || depths.Length != other.depths.Length)
-            {
-                return false;
-            }
-
-            // Too lazy to import memcmp...
-            for(int i = 0; i < depths.Length; i++)
-                if(depths[i].front != other.depths[i].front || depths[i].back != other.depths[i].back)
-                    return false;
-
-            return true;
-        }
-
-    }
-
-    public struct DepthBounds
+	public struct DepthBounds
     {
         // Heights is the split-points (has one less item than slices)
         public byte[] heights;
@@ -450,6 +407,67 @@ namespace Pixel3D.Animations
             return depthSlice;
         }
 
-        #endregion
-    }
+		#endregion
+
+		#region Serialization
+
+	    #region DepthBounds
+
+	    public void Serialize(AnimationSerializeContext context)
+	    {
+		    Debug.Assert(slices != null); // <- should never serialize an empty depth bound (check in caller)
+
+		    if (heights == null)
+		    {
+			    context.bw.Write(0);
+		    }
+		    else
+		    {
+			    context.bw.Write(heights.Length);
+			    context.bw.Write(heights);
+		    }
+
+		    // NOTE: slices.Length is implicit
+		    for (int i = 0; i < slices.Length; i++)
+		    {
+			    context.bw.Write(slices[i].xOffset);
+			    context.bw.Write(slices[i].zOffset);
+
+			    context.bw.Write(slices[i].depths.Length);
+			    for (int j = 0; j < slices[i].depths.Length; j++)
+			    {
+				    context.bw.Write(slices[i].depths[j].front);
+				    context.bw.Write(slices[i].depths[j].back);
+			    }
+		    }
+	    }
+
+	    /// <summary>Deserialize.</summary>
+	    public DepthBounds(AnimationDeserializeContext context)
+	    {
+		    int heightCount = context.br.ReadInt32();
+		    heights = (heightCount == 0) ? null : context.br.ReadBytes(heightCount);
+
+		    slices = new DepthSlice[heightCount + 1];
+		    for (int i = 0; i < slices.Length; i++)
+		    {
+			    slices[i] = new DepthSlice
+			    {
+				    xOffset = context.br.ReadInt32(),
+				    zOffset = context.br.ReadInt32(),
+				    depths = new FrontBack[context.br.ReadInt32()],
+			    };
+
+			    for (int j = 0; j < slices[i].depths.Length; j++)
+			    {
+				    slices[i].depths[j].front = context.br.ReadByte();
+				    slices[i].depths[j].back = context.br.ReadByte();
+			    }
+		    }
+	    }
+
+	    #endregion
+
+		#endregion
+	}
 }
