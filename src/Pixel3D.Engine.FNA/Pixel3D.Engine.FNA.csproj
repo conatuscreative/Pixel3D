@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net40</TargetFrameworks>
+    <RootNamespace>Pixel3D.Engine</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

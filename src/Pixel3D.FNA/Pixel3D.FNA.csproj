@@ -14,6 +14,7 @@
     <PackageProjectUrl>https://github.com/conatuscreative/Pixel3D</PackageProjectUrl>
     <RepositoryUrl>https://github.com/conatuscreative/Pixel3D</RepositoryUrl>
     <PackageReleaseNotes>- add .net standard 2.0 support</PackageReleaseNotes>
+    <RootNamespace>Pixel3D</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
