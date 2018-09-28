@@ -11,7 +11,7 @@ namespace Pixel3D.Serialization.BuiltIn
 		[CustomFieldSerializer]
 		public static void SerializeField(SerializeContext context, BinaryWriter bw, string value)
 		{
-			if (!context.Walk(value)) // null check
+			if (context.WalkString(value) == null) // null check
 				return;
 
 			context.VisitObject(value);

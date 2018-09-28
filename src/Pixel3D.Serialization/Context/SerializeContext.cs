@@ -42,6 +42,8 @@ namespace Pixel3D.Serialization.Context
 
 			visitedObjectIndices = new Dictionary<object, int>(ReferenceEqualityComparer<object>.Instance);
 
+			visitedStrings = new Dictionary<string, string>();
+
 			// Only create this if asked:
 			visitedObjectTable = fillObjectTable ? new List<object>() : null;
 		}
@@ -94,6 +96,45 @@ namespace Pixel3D.Serialization.Context
 		public virtual void LeaveObject()
 		{
 			// Do nothing (derived types might want to gather statistics)
+		}
+
+		Dictionary<string, string> visitedStrings;
+
+		public string WalkString(string str)
+		{
+#if DEBUG
+			Debug.Assert(str == null || !uniqueObjects.Contains(str));
+#endif
+
+			int key;
+			if (str == null)
+			{
+				BinaryWriter.Write(Constants.VisitNull);
+				return null;
+			}
+
+			if (definitionVisitedObjectIndices.TryGetValue(str, out key))
+			{
+				DidLinkDefinitionObject(key);
+				BinaryWriter.Write((uint)key | Constants.DefinitionVisitFlag);
+				return null;
+			}
+
+			string sameString;
+			if (visitedStrings.TryGetValue(str, out sameString))
+				str = sameString;
+			else
+				visitedStrings.Add(str, str);
+
+			if (visitedObjectIndices.TryGetValue(str, out key))
+			{
+				DidLinkObject(key);
+				BinaryWriter.Write((uint)key);
+				return null;
+			}
+
+			BinaryWriter.Write(Constants.FirstVisit);
+			return str; // Caller should walk into the object
 		}
 
 
