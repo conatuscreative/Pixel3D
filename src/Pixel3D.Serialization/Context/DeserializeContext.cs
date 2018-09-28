@@ -9,8 +9,6 @@ namespace Pixel3D.Serialization.Context
 	public class DeserializeContext
 	{
 		private readonly List<object> definitionObjectTable;
-
-
 		private readonly List<object> visitedObjectTable;
 
 		public DeserializeContext(BinaryReader reader, DefinitionObjectTable definitions = null)
@@ -34,7 +32,7 @@ namespace Pixel3D.Serialization.Context
 		}
 
 		/// <summary>
-		///     Call at the beginning of deserialization of the basemost type (note: this is different to what
+		///     Call at the beginning of deserialization of the base-most type (note: this is different to what
 		///     SerializeContext requires)
 		/// </summary>
 		public void VisitObject(object obj)

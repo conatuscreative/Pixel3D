@@ -18,7 +18,8 @@ namespace Pixel3D.Serialization.BuiltIn
 			context.VisitObject(stringBuilder);
 
 			bw.WriteSmallInt32(stringBuilder.Length);
-			for (var i = 0; i < stringBuilder.Length; i++) bw.Write(stringBuilder[i]);
+			for (var i = 0; i < stringBuilder.Length; i++)
+				bw.Write(stringBuilder[i]);
 
 			context.LeaveObject();
 		}
@@ -34,7 +35,8 @@ namespace Pixel3D.Serialization.BuiltIn
 			stringBuilder = new StringBuilder(length);
 			stringBuilder.Length = length;
 			context.VisitObject(stringBuilder);
-			for (var i = 0; i < length; i++) stringBuilder[i] = br.ReadChar();
+			for (var i = 0; i < length; i++)
+				stringBuilder[i] = br.ReadChar();
 		}
 	}
 }

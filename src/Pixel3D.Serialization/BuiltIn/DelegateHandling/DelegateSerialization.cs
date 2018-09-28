@@ -90,7 +90,8 @@ namespace Pixel3D.Serialization.BuiltIn.DelegateHandling
 			if (delegateMethodInfo.canHaveTarget)
 			{
 				var target = d.Target;
-				if (context.Walk(target)) StaticDispatchTable.SerializationDispatcher(context, bw, target);
+				if (context.Walk(target))
+					StaticDispatchTable.SerializationDispatcher(context, bw, target);
 			}
 			else
 			{
