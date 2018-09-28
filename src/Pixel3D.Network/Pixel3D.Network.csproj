@@ -17,6 +17,10 @@
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
     <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.Common\Pixel3D.Common.csproj" />
