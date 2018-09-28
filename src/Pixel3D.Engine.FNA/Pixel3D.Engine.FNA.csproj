@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net40</TargetFrameworks>
     <RootNamespace>Pixel3D.Engine</RootNamespace>
+    <Configurations>Debug;Release;Retail</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">

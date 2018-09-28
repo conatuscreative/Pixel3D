@@ -14,6 +14,7 @@
     <Authors>Conatus Creative Inc.</Authors>
     <Company>Conatus Creative Inc.</Company>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Configurations>Debug;Release;Retail</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">

@@ -15,6 +15,7 @@
     <RepositoryUrl>https://github.com/conatuscreative/Pixel3D</RepositoryUrl>
     <PackageReleaseNotes>- add .net standard 2.0 support</PackageReleaseNotes>
     <RootNamespace>Pixel3D</RootNamespace>
+    <Configurations>Debug;Release;Retail</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,6 +27,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Retail|net40|AnyCPU'">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 

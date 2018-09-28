@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Pixel3D.Pipeline.FNA</AssemblyName>
     <RootNamespace>Pixel3D.Pipeline</RootNamespace>
+    <Configurations>Debug;Release;Retail</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
