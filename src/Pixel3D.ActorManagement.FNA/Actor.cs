@@ -320,6 +320,13 @@ namespace Pixel3D.ActorManagement
 			AnimationDidChange(updateContext);
 		}
 
+		public void ResetAnimation(string animationTags, UpdateContext updateContext)
+		{
+			var animation = animationSet[AddContextTo(animationTags)];
+			currentAnimation = new AnimationPlayer(animation);
+			AnimationDidChange(updateContext);
+		}
+
 		public void ResetAnimation(UpdateContext updateContext, string symbol)
 		{
 			ResetAnimation(new TagSet(symbol), updateContext);
