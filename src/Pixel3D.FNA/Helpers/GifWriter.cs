@@ -31,11 +31,11 @@ namespace Pixel3D.Helpers
 
         public void CloseStream()
         {
-            if(this.stream == null)
+            if(stream == null)
                 throw new InvalidOperationException("No stream set");
 
-            this.stream.Close();
-            this.stream = null;
+            stream.Close();
+            stream = null;
         }
 
 
@@ -125,7 +125,7 @@ namespace Pixel3D.Helpers
                 int delayTime = (frame.delay * 100) / 60; // Convert ticks at 60FPS to ticks at 100FPS (the GIF standard)
                 // NOTE: Browsers do retarded things with timings of 0 or 1. Some even do stupid things with 2-5.
                 //       See http://nullsleep.tumblr.com/post/16524517190/animated-gif-minimum-frame-delay-browser for details
-                delayTime = System.Math.Max(2, System.Math.Min(delayTime, ushort.MaxValue)); 
+                delayTime = Math.Max(2, Math.Min(delayTime, ushort.MaxValue)); 
 
                 // GIF: Graphic Control Extension
                 {
@@ -396,7 +396,7 @@ namespace Pixel3D.Helpers
 
             while(bits > 0)
             {
-                int takeBits = System.Math.Min(bits, 8-pending.bits);
+                int takeBits = Math.Min(bits, 8-pending.bits);
                 uint takeMask = (1u << takeBits) - 1u;
 
                 pending.value |= ((value & takeMask) << pending.bits);

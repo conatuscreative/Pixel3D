@@ -44,8 +44,8 @@ namespace Pixel3D.Physics
 
         public void SetLevel(AnimationSet animationSet)
         {
-            this.levelHeightmap = animationSet.Heightmap;
-            this.levelCeiling = animationSet.Ceiling;
+            levelHeightmap = animationSet.Heightmap;
+            levelCeiling = animationSet.Ceiling;
         }
 
         public Heightmap levelHeightmap, levelCeiling;
@@ -215,13 +215,13 @@ namespace Pixel3D.Physics
         {
             int maxHeight = levelHeightmap[x, z];
             if(maxHeight == Heightmap.Infinity)
-                return WorldPhysics.MaximumHeight;
+                return MaximumHeight;
 
             if(levelCeiling != null)
             {
                 int c = levelCeiling[x, z];
                 if(c != 0 && c < endY)
-                    return WorldPhysics.MaximumHeight; // not really the ground, but we can't move here
+                    return MaximumHeight; // not really the ground, but we can't move here
             }
 
 
@@ -263,7 +263,7 @@ namespace Pixel3D.Physics
                 if(h != 0)
                 {
                     if(h == Heightmap.Infinity)
-                        return WorldPhysics.MaximumHeight;
+                        return MaximumHeight;
 
                     if(heightmapView.heightmap.OneWay && h - heightmapView.heightmap.OneWayThickness > transformedReferenceY)
                         continue; // <- one-way platform is above us
@@ -295,7 +295,7 @@ namespace Pixel3D.Physics
             }
 
             if(maxHeight == Heightmap.Infinity)
-                return WorldPhysics.MaximumHeight;
+                return MaximumHeight;
 
             // Handle level ceiling
             if(levelCeiling != null)
@@ -304,7 +304,7 @@ namespace Pixel3D.Physics
                 {
                     int c = levelCeiling[x, z];
                     if(c != 0 && c < endY)
-                        return WorldPhysics.MaximumHeight; // not really the ground, but we can't move here
+                        return MaximumHeight; // not really the ground, but we can't move here
                 }
             }
 
@@ -360,7 +360,7 @@ namespace Pixel3D.Physics
                     if(h != 0)
                     {
                         if(h == Heightmap.Infinity)
-                            return WorldPhysics.MaximumHeight;
+                            return MaximumHeight;
 
                         if(heightmapView.heightmap.OneWay && h - heightmapView.heightmap.OneWayThickness > transformedReferenceY)
                             continue; // <- one-way platform is above us
@@ -707,7 +707,7 @@ namespace Pixel3D.Physics
                 if(height == 0)
                     continue; // No solidity at this position
                 if(!isCeiling && height == Heightmap.Infinity)
-                    height = WorldPhysics.MaximumHeight;
+                    height = MaximumHeight;
 
                 // Handle one-way-ness, by ignoring if we are too far below
                 if(heightmapView.heightmap.OneWay && height - heightmapView.heightmap.OneWayThickness > transformedReferenceY)

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Pixel3D.Extensions;
 using Pixel3D.FrameworkExtensions;
 
@@ -16,10 +16,10 @@ namespace Pixel3D
         public MaskData(uint[] packedData, int offsetX, int offsetY, int width, int height)
         {
             this.packedData = packedData;
-            this.OffsetX = offsetX;
-            this.OffsetY = offsetY;
-            this.Width = width;
-            this.Height = height;
+            OffsetX = offsetX;
+            OffsetY = offsetY;
+            Width = width;
+            Height = height;
 
             Debug.Assert(width == 0 || height == 0 || packedData.Length == DataWidth * height);
         }
@@ -30,14 +30,14 @@ namespace Pixel3D
         public MaskData(int offsetX, int offsetY, int width, int height)
         {
             if(width == 0 || height == 0)
-                this.packedData = null;
+                packedData = null;
             else
-                this.packedData = new uint[WidthToDataWidth(width) * height];
+                packedData = new uint[WidthToDataWidth(width) * height];
 
-            this.OffsetX = offsetX;
-            this.OffsetY = offsetY;
-            this.Width = width;
-            this.Height = height;
+            OffsetX = offsetX;
+            OffsetY = offsetY;
+            Width = width;
+            Height = height;
             
         }
 
@@ -142,8 +142,8 @@ namespace Pixel3D
                 return false;
 
             Debug.Assert(xStart <= xEnd);
-            xStart = System.Math.Max(0, xStart - OffsetX);
-            xEnd = System.Math.Min(Width, xEnd - OffsetX);
+            xStart = Math.Max(0, xStart - OffsetX);
+            xEnd = Math.Min(Width, xEnd - OffsetX);
 
             // PERF: Consider doing this with bitmasks to save some cycles
             for(int x = xStart; x < xEnd; x++)
@@ -169,10 +169,10 @@ namespace Pixel3D
 
         public void SetBitwiseOrFrom(MaskData other)
         {
-            int localStartX = System.Math.Max(this.StartX, other.StartX);
-            int localStartY = System.Math.Max(this.StartY, other.StartY);
-            int localEndX = System.Math.Min(this.EndX, other.EndX);
-            int localEndY = System.Math.Min(this.EndY, other.EndY);
+            int localStartX = Math.Max(StartX, other.StartX);
+            int localStartY = Math.Max(StartY, other.StartY);
+            int localEndX = Math.Min(EndX, other.EndX);
+            int localEndY = Math.Min(EndY, other.EndY);
             
             for(int y = localStartY; y < localEndY; y++) for(int x = localStartX; x < localEndX; x++)
             {
@@ -182,7 +182,7 @@ namespace Pixel3D
 
         public void SetBitwiseAndFromMustBeContained(MaskData other)
         {
-            Debug.Assert(other.Bounds.Contains(this.Bounds));
+            Debug.Assert(other.Bounds.Contains(Bounds));
 
             int localStartX = StartX;
             int localStartY = StartY;
@@ -197,7 +197,7 @@ namespace Pixel3D
 
         public MaskData BitwiseAnd(MaskData other)
         {
-            Rectangle bounds = Rectangle.Intersect(this.Bounds, other.Bounds);
+            Rectangle bounds = Rectangle.Intersect(Bounds, other.Bounds);
             if(bounds.Width == 0 || bounds.Height == 0)
                 return new MaskData();
 
@@ -256,7 +256,7 @@ namespace Pixel3D
                 // In this case we need to expand because we will eventually shift into a new 32-bit column:
                 int dataWidth = DataWidth;
                 int newDataWidth = dataWidth + 1;
-                Debug.Assert(newDataWidth == MaskData.WidthToDataWidth(Width + 31));
+                Debug.Assert(newDataWidth == WidthToDataWidth(Width + 31));
                 uint[] copyData = new uint[newDataWidth * Height];
 
                 for(int y = 0; y < Height; y++)
@@ -271,7 +271,7 @@ namespace Pixel3D
         /// <summary>This does not affect the position of the logical image data (although it does shift the packed data to the right, spatially)</summary>
         public void BitShiftLeftInPlace()
         {
-            int dataWidth = this.DataWidth;
+            int dataWidth = DataWidth;
             for(int y = Height - 1; y >= 0; y--)
             {
                 packedData[(y+1)*dataWidth - 1] <<= 1;
@@ -299,10 +299,10 @@ namespace Pixel3D
         {
             MaskData copy = new MaskData(newBounds);
 
-            int startX = System.Math.Max(copy.StartX, this.StartX);
-            int startY = System.Math.Max(copy.StartY, this.StartY);
-            int endX = System.Math.Min(copy.EndX, this.EndX);
-            int endY = System.Math.Min(copy.EndY, this.EndY);
+            int startX = Math.Max(copy.StartX, StartX);
+            int startY = Math.Max(copy.StartY, StartY);
+            int endX = Math.Min(copy.EndX, EndX);
+            int endY = Math.Min(copy.EndY, EndY);
 
             for(int y = startY; y < endY; y++) for(int x = startX; x < endX; x++)
             {
@@ -369,9 +369,9 @@ namespace Pixel3D
             int dx = x2 - x1;
             int dy = y2 - y1;
             int x_inc = (dx < 0) ? -1 : 1;
-            int l = System.Math.Abs(dx);
+            int l = Math.Abs(dx);
             int y_inc = (dy < 0) ? -1 : 1;
-            int m = System.Math.Abs(dy);
+            int m = Math.Abs(dy);
             int dx2 = l << 1;
             int dy2 = m << 1;
 

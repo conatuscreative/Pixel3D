@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
 using Pixel3D.Extensions;
 using Pixel3D.FrameworkExtensions;
 

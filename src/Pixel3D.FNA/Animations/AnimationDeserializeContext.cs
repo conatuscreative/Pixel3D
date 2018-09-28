@@ -21,7 +21,7 @@ namespace Pixel3D.Animations
             if(br.ReadBoolean() != (imageBundle != null))
                 throw new Exception("External image state mismatch");
 
-            this.GraphicsDevice = graphicsDevice;
+            GraphicsDevice = graphicsDevice;
         }
 
         public readonly BinaryReader br;

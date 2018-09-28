@@ -20,7 +20,7 @@ namespace Pixel3D.Animations
 
 		public Cel(Sprite sprite)
 		{
-			this.spriteRef = new SpriteRef(sprite);
+			spriteRef = new SpriteRef(sprite);
 		}
 
 		public Cel() { }

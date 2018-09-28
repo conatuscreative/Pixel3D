@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Pixel3D.Animations.Serialization
 {
@@ -13,7 +13,7 @@ namespace Pixel3D.Animations.Serialization
 
         public SimpleTextureLoadHelper(GraphicsDevice graphicsDevice)
         {
-            this.sharedLoadBuffer = new byte[ImageBundleManager.LoadBufferSize];
+            sharedLoadBuffer = new byte[ImageBundleManager.LoadBufferSize];
             this.graphicsDevice = graphicsDevice;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -316,7 +317,7 @@ namespace Pixel3D.Animations
         {
             public Enumerator(Cel next)
             {
-                this.current = null;
+                current = null;
                 this.next = next;
             }
 
@@ -324,7 +325,7 @@ namespace Pixel3D.Animations
             Cel next;
 
             public Cel Current { get { return current; } }
-            object System.Collections.IEnumerator.Current { get { return current; } }
+            object IEnumerator.Current { get { return current; } }
 
             public bool MoveNext()
             {
@@ -346,7 +347,7 @@ namespace Pixel3D.Animations
             return new Enumerator(owner.firstLayer);
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return new Enumerator(owner.firstLayer);
         }

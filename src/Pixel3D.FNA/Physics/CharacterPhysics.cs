@@ -16,10 +16,10 @@ namespace Pixel3D.Physics
         {
             // TODO: BUG: This does not take into account facing direction!!
             // TODO: Consider putting this as configurable data on AnimationSet (eg: crates with different CP vs solid physics)
-            this.startX = animationSet.physicsStartX;
-            this.endX = animationSet.physicsEndX;
-            this.height = animationSet.physicsHeight;
-            this.stairStepMaxHeight = CharacterPhysics.globalStairStepMaxHeight;
+            startX = animationSet.physicsStartX;
+            endX = animationSet.physicsEndX;
+            height = animationSet.physicsHeight;
+            stairStepMaxHeight = CharacterPhysics.globalStairStepMaxHeight;
             this.owner = owner;
         }
     }

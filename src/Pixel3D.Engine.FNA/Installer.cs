@@ -15,7 +15,7 @@ using Pixel3D.Serialization;
 using Pixel3D.Serialization.Context;
 using SoundState = Pixel3D.Audio.SoundState;
 
-namespace Pixel3D.Engine.FNA
+namespace Pixel3D.Engine
 {
 	/// <summary>
 	/// Links independent Pixel3D engine components to FNA. Should be called once from an external game project.

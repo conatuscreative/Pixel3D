@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 
 namespace Pixel3D
 {
@@ -19,10 +19,10 @@ namespace Pixel3D
 
         public Bounds(Rectangle rectangle)
         {
-            this.startX = rectangle.X;
-            this.startY = rectangle.Y;
-            this.endX = rectangle.X + rectangle.Width;
-            this.endY = rectangle.Y + rectangle.Height;
+            startX = rectangle.X;
+            startY = rectangle.Y;
+            endX = rectangle.X + rectangle.Width;
+            endY = rectangle.Y + rectangle.Height;
         }
 
         public Rectangle AsXNARectangle()
@@ -80,7 +80,7 @@ namespace Pixel3D
 
 		public bool Intersects(Bounds other)
         {
-            return !(this.endX <= other.startX || this.startX >= other.endX || this.endY <= other.startY || this.startY >= other.endY); 
+            return !(endX <= other.startX || startX >= other.endX || endY <= other.startY || startY >= other.endY); 
         }
 
         public static Bounds operator+(Bounds bounds, Point p)

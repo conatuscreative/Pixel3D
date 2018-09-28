@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
+using Microsoft.Xna.Framework;
 
 namespace Pixel3D.Animations.Serialization
 {
@@ -10,9 +10,9 @@ namespace Pixel3D.Animations.Serialization
     {
         public ComparableImageData(Data2D<Color> source)
         {
-            this.data = source.Data;
-            this.width = source.Width;
-            this.height = source.Height;
+            data = source.Data;
+            width = source.Width;
+            height = source.Height;
 
             if(data == null)
             {
@@ -82,18 +82,18 @@ namespace Pixel3D.Animations.Serialization
 
         public bool Equals(ComparableImageData other) // from IEquatable<ComparableImageData>
         {
-            if(this.hash != other.hash || this.width != other.width || this.height != other.height)
+            if(hash != other.hash || width != other.width || height != other.height)
                 return false;
 
-            if(this.data == null && other.data == null)
+            if(data == null && other.data == null)
                 return true;
-            if(this.data == null || other.data == null)
+            if(data == null || other.data == null)
                 return false;
 
-            if(this.data.Length != other.data.Length)
+            if(data.Length != other.data.Length)
                 return false; // Hopefully the width/height check catches this...
 
-            return 0 == memcmp(this.data, other.data, (UIntPtr)(this.data.Length * System.Runtime.InteropServices.Marshal.SizeOf(typeof(Color))));
+            return 0 == memcmp(data, other.data, (UIntPtr)(data.Length * Marshal.SizeOf(typeof(Color))));
         }
     }
 

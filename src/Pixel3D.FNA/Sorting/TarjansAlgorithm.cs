@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
 
 namespace Pixel3D.Sorting
@@ -27,10 +24,10 @@ namespace Pixel3D.Sorting
         /// <summary>Constructor intended for simple testing (allocates new arrays)</summary>
         public TarjanOutput(int vertexCapacity)
         {
-            this.sccCount = 0;
-            this.vertexCount = 0;
-            this.sccList = new SCC[vertexCapacity/2]; // <- NOTE: worst-case is all vertices are pairs (if we allow for bidirectional graphs in the input)
-            this.vertexList = new int[vertexCapacity];
+            sccCount = 0;
+            vertexCount = 0;
+            sccList = new SCC[vertexCapacity/2]; // <- NOTE: worst-case is all vertices are pairs (if we allow for bidirectional graphs in the input)
+            vertexList = new int[vertexCapacity];
         }
     }
     
@@ -118,12 +115,12 @@ namespace Pixel3D.Sorting
                 {
                     // Successor w has not yet been visited; recurse on it
                     StrongConnect(w, vertexCount, edgeBits, ref output);
-                    vertexLowLink[v] = System.Math.Min(vertexLowLink[v], vertexLowLink[w]);
+                    vertexLowLink[v] = Math.Min(vertexLowLink[v], vertexLowLink[w]);
                 }
                 else if((vertexIndex[w] & OnStackBit) != 0)
                 {
                     // Successor w is in the stack and hence in the current strongly-connected-component
-                    vertexLowLink[v] = System.Math.Min(vertexLowLink[v], vertexIndex[w] & ~OnStackBit);
+                    vertexLowLink[v] = Math.Min(vertexLowLink[v], vertexIndex[w] & ~OnStackBit);
                 }
             }
 

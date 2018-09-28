@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
 using System.Threading;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Pixel3D.Helpers;
 
 namespace Pixel3D.Animations.Serialization

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Diagnostics;
-using System;
 
 namespace Pixel3D.Animations
 {
@@ -18,8 +17,8 @@ namespace Pixel3D.Animations
             Debug.Assert(animation != null && animation.FrameCount > 0); // <- catch easy-to-make "blank animation" error
 
             this.animation = animation;
-            this.frame = 0;
-            this.tick = 0;
+            frame = 0;
+            tick = 0;
         }
 
 

@@ -27,7 +27,7 @@ namespace Pixel3D.Sorting
 
             public bool Equals(DrawingInfo other)
             {
-                return ReferenceEquals(this.drawObject, other.drawObject) && (this.tag == other.tag);
+                return ReferenceEquals(drawObject, other.drawObject) && (tag == other.tag);
             }
         }
 
@@ -194,7 +194,7 @@ namespace Pixel3D.Sorting
             ProcesseDeferredForcedDrawOrders();
 
 
-            int vertexCount = this.Count;
+            int vertexCount = Count;
 
             // INITIALISE
             {
@@ -308,7 +308,7 @@ namespace Pixel3D.Sorting
         {
             Debug.Assert(IsSorted); // <- Expect our caller to have sorted!
 
-            int vertexCount = this.Count;
+            int vertexCount = Count;
             
             for(int i = vertexCount - 1; i >= 0; i--) // The topological sort returns in front-to-back order
             {
@@ -378,7 +378,7 @@ namespace Pixel3D.Sorting
 
             public void Dispose() { }
             public DrawingInfo Current { get { return sortedDrawList.drawingInfo[current]; } }
-            object IEnumerator.Current { get { return this.Current; } }
+            object IEnumerator.Current { get { return Current; } }
 
             public bool MoveNext()
             {
@@ -445,7 +445,7 @@ namespace Pixel3D.Sorting
 
             public void Dispose() { }
             public DrawingInfo Current { get { return sortedDrawList.drawingInfo[current]; } }
-            object IEnumerator.Current { get { return this.Current; } }
+            object IEnumerator.Current { get { return Current; } }
 
             public bool MoveNext()
             {

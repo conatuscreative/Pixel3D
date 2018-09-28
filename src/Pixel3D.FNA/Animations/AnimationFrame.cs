@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 using Pixel3D.Extensions;
 
 namespace Pixel3D.Animations
@@ -68,13 +68,13 @@ namespace Pixel3D.Animations
 		
         public AnimationFrame(Texture2D texture, Rectangle sourceRectangle, Point origin, int delay) : this()
         {
-            this.layers.Add(new Cel(new Sprite(texture, sourceRectangle, origin)));
+            layers.Add(new Cel(new Sprite(texture, sourceRectangle, origin)));
             this.delay = delay;
         }
 
         public AnimationFrame(Cel cel, int delay) : this()
         {
-            this.layers.Add(cel);
+            layers.Add(cel);
             this.delay = delay;
         }
 

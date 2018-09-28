@@ -67,7 +67,7 @@ namespace Pixel3D
         /// </summary>
         public Range ExpandForMinkowski(int addStart, int addEnd)
         {
-            return new Range(this.start + addStart, this.end + addEnd - 1); // -1 because we're adding two exclusive ranges that effectivly overlap
+            return new Range(start + addStart, end + addEnd - 1); // -1 because we're adding two exclusive ranges that effectivly overlap
         }
 
     }

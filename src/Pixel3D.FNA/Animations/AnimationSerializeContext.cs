@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using Pixel3D.Animations.Serialization;
 
 namespace Pixel3D.Animations
@@ -12,11 +12,11 @@ namespace Pixel3D.Animations
 
         public AnimationSerializeContext(BinaryWriter bw, ImageWriter imageWriter, int version)
         {
-            this.Version = version;
+            Version = version;
             this.bw = bw;
             this.imageWriter = imageWriter;
 
-            if(Version > AnimationSerializeContext.formatVersion)
+            if(Version > formatVersion)
                 throw new Exception("Tried to save AnimationSet with a version that is too new");
             if(Version < 34)
                 throw new Exception("Cannot serialize old version");

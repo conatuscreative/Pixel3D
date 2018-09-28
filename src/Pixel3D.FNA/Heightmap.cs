@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Pixel3D.Animations;
 using Pixel3D.FrameworkExtensions;
 
@@ -11,8 +11,8 @@ namespace Pixel3D
     {
         public Heightmap(byte defaultHeight = 0)
         {
-            this.DefaultHeight = defaultHeight;
-            this.heightmapData = default(Data2D<byte>); // Does not include buffer (but that's ok because zero-sized bounds ensure it won't be accessed)
+            DefaultHeight = defaultHeight;
+            heightmapData = default(Data2D<byte>); // Does not include buffer (but that's ok because zero-sized bounds ensure it won't be accessed)
         }
 
         public Data2D<byte> heightmapData;
@@ -31,7 +31,7 @@ namespace Pixel3D
 
         public Heightmap Clone()
         {
-            return new Heightmap() { DefaultHeight = this.DefaultHeight, heightmapData = this.heightmapData.Clone() };
+            return new Heightmap() { DefaultHeight = DefaultHeight, heightmapData = heightmapData.Clone() };
         }
 
         public Heightmap CloneAndFlipX()
@@ -451,7 +451,7 @@ namespace Pixel3D
                         {
                             sourceZ += 1;
                             sourceX += (int)oblique;
-                            if(sourceZ >= this.EndZ)
+                            if(sourceZ >= EndZ)
                                 goto searchForward;
                             if(this[sourceX, sourceZ] != DefaultHeight)
                                 goto done;
@@ -464,7 +464,7 @@ namespace Pixel3D
                         {
                             sourceZ -= 1;
                             sourceX -= (int)oblique;
-                            if(sourceZ < this.StartZ)
+                            if(sourceZ < StartZ)
                                 goto fail;
                             if(this[sourceX, sourceZ] != DefaultHeight)
                                 goto done;

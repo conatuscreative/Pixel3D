@@ -1,6 +1,6 @@
 using System;
-using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Pixel3D.Extensions;
 
 namespace Pixel3D
@@ -10,11 +10,11 @@ namespace Pixel3D
     {
         public Data2D(T[] data, int offsetX, int offsetY, int width, int height)
         {
-            this.Data = data;
-            this.OffsetX = offsetX;
-            this.OffsetY = offsetY;
-            this.Width = width;
-            this.Height = height;
+            Data = data;
+            OffsetX = offsetX;
+            OffsetY = offsetY;
+            Width = width;
+            Height = height;
 
             Debug.Assert((width * height == 0 && data == null) || data.Length == width * height);
         }
@@ -27,11 +27,11 @@ namespace Pixel3D
         {
             Debug.Assert(width >= 0 && height >= 0);
 
-            this.Data = (width != 0 && height != 0) ? new T[width * height] : null;
-            this.OffsetX = offsetX;
-            this.OffsetY = offsetY;
-            this.Width = width;
-            this.Height = height;
+            Data = (width != 0 && height != 0) ? new T[width * height] : null;
+            OffsetX = offsetX;
+            OffsetY = offsetY;
+            Width = width;
+            Height = height;
         }
 
         public Data2D(Rectangle bounds) : this(bounds.X, bounds.Y, bounds.Width, bounds.Height) { }
@@ -254,10 +254,10 @@ namespace Pixel3D
             Point cornerD = matrix.Transform(BR);
 
             // Convert to rectangle:
-            int minX = System.Math.Min(System.Math.Min(cornerA.X, cornerB.X), System.Math.Min(cornerC.X, cornerD.X));
-            int minY = System.Math.Min(System.Math.Min(cornerA.Y, cornerB.Y), System.Math.Min(cornerC.Y, cornerD.Y));
-            int maxX = System.Math.Max(System.Math.Max(cornerA.X, cornerB.X), System.Math.Max(cornerC.X, cornerD.X));
-            int maxY = System.Math.Max(System.Math.Max(cornerA.Y, cornerB.Y), System.Math.Max(cornerC.Y, cornerD.Y));
+            int minX = Math.Min(Math.Min(cornerA.X, cornerB.X), Math.Min(cornerC.X, cornerD.X));
+            int minY = Math.Min(Math.Min(cornerA.Y, cornerB.Y), Math.Min(cornerC.Y, cornerD.Y));
+            int maxX = Math.Max(Math.Max(cornerA.X, cornerB.X), Math.Max(cornerC.X, cornerD.X));
+            int maxY = Math.Max(Math.Max(cornerA.Y, cornerB.Y), Math.Max(cornerC.Y, cornerD.Y));
             Rectangle outputBounds = new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
 
             // Now transform the data:
@@ -271,7 +271,7 @@ namespace Pixel3D
 
                 // INLINED: indexer operator (x2)
                 transformed.Data[(outX-transformed.OffsetX) + (outY-transformed.OffsetY) * transformed.Width]
-                        = this.Data[(x-OffsetX) + (y-OffsetY) * Width];
+                        = Data[(x-OffsetX) + (y-OffsetY) * Width];
             }
 
             return transformed;

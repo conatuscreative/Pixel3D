@@ -20,7 +20,7 @@ namespace Pixel3D
         {
             this.device = device;
             this.content = content;
-            this.sb = spriteBatch;
+            sb = spriteBatch;
             this.fadeEffect = fadeEffect;
         }
 

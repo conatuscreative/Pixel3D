@@ -46,7 +46,7 @@ namespace Pixel3D
             Array.Sort(allTags, StringComparer.InvariantCulture); // PERF: Should be Ordinal, but requires a complex data rewrite
             Array.Reverse(allTags);
 
-            this.tags = allTags;
+            tags = allTags;
         }
 
         // Non-params version for performance:
@@ -59,7 +59,7 @@ namespace Pixel3D
             Array.Sort(allTags, StringComparer.InvariantCulture); // PERF: Should be Ordinal, but requires a complex data rewrite
             Array.Reverse(allTags);
 
-            this.tags = allTags;
+            tags = allTags;
         }
 		
         private string[] tags;
@@ -111,7 +111,7 @@ namespace Pixel3D
                     if (left.Length <= right.Length)
                         right = right.Substring(0, left.Length);
 
-                    var comparison = String.Compare(left, right, StringComparison.InvariantCulture); // PERF: Should be Ordinal, but requires a complex data rewrite
+                    var comparison = string.Compare(left, right, StringComparison.InvariantCulture); // PERF: Should be Ordinal, but requires a complex data rewrite
                     thisIndex++;
 
                     if (comparison == 0)
@@ -137,9 +137,9 @@ namespace Pixel3D
             int subsetIndex = 0, thisIndex = 0;
             while(subsetIndex < subset.Count)
             {
-                while(thisIndex < this.Count)
+                while(thisIndex < Count)
                 {
-                    int comparison = String.Compare(subset.tags[subsetIndex], this.tags[thisIndex], StringComparison.InvariantCulture); // PERF: Should be Ordinal, but requires a complex data rewrite
+                    int comparison = string.Compare(subset.tags[subsetIndex], tags[thisIndex], StringComparison.InvariantCulture); // PERF: Should be Ordinal, but requires a complex data rewrite
                     thisIndex++;
 
                     if(comparison == 0)
@@ -163,11 +163,11 @@ namespace Pixel3D
         {
             if (other == null)
                 return false;
-            if(this.Count != other.Count)
+            if(Count != other.Count)
                 return false;
             for(int i = 0; i < Count; i++)
             {
-                if(this.tags[i] != other.tags[i])
+                if(tags[i] != other.tags[i])
                     return false;
             }
 

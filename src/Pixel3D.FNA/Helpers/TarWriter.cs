@@ -112,14 +112,14 @@ namespace Pixel3D.Helpers
             Encoding.UTF8.GetBytes(owner, 0, owner.Length, header, 116);
 
             // Write the file size (no trailing nul)
-            string sizeString = String.Format("{0, 11} ", Convert.ToString(size, 8));
+            string sizeString = string.Format("{0, 11} ", Convert.ToString(size, 8));
             if(sizeString.Length != 12)
                 throw new ArgumentException("File size is too large to encode");
             Encoding.UTF8.GetBytes(sizeString, 0, sizeString.Length, header, 124);
 
             // Write the time stamp (no trailing nul)
             var unixTime = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
-            string unixTimeString = String.Format("{0, 11} ", Convert.ToString(unixTime, 8));
+            string unixTimeString = string.Format("{0, 11} ", Convert.ToString(unixTime, 8));
             if(unixTimeString.Length != 12)
                 throw new ArgumentException("File time is too large to encode");
             Encoding.UTF8.GetBytes(unixTimeString, 0, unixTimeString.Length, header, 136);
@@ -135,7 +135,7 @@ namespace Pixel3D.Helpers
             for(int i = 0; i < header.Length; i++)
                 checksum += header[i];
             checksum &= ((1u << 17)-1); // <- checksum precision is 17 bits
-            string checksumString = String.Format("{0, 6} ", Convert.ToString((int)checksum, 8));
+            string checksumString = string.Format("{0, 6} ", Convert.ToString((int)checksum, 8));
             Debug.Assert(checksumString.Length == 7); // <- precision limit should prevent this from overflowing
             Encoding.UTF8.GetBytes(checksumString, 0, checksumString.Length, header, 148);
 

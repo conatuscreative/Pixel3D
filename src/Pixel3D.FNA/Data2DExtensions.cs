@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D

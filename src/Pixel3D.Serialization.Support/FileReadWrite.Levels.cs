@@ -61,7 +61,7 @@ namespace Pixel3D
 			// Write out textures...
 			ImageWriter imageWriter = new ImageWriter();
 			level.RegisterImages(imageWriter, assetPathProvider);
-			string texturePath = System.IO.Path.ChangeExtension(path, ".tex");
+			string texturePath = Path.ChangeExtension(path, ".tex");
 
 #if false // OLD FORMAT
             using(var stream = File.Create(texturePath))

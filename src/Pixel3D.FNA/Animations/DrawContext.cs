@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Text;
-using System.Collections.Generic;
 using Pixel3D.Extensions;
 
 namespace Pixel3D.Animations
@@ -11,7 +11,7 @@ namespace Pixel3D.Animations
     {
         public DrawContext(SpriteBatch spriteBatch, Effect spriteEffect, Effect shadowMaskEffect, FadeEffect fadeEffect, Effect doctorEffect, SpriteFont standardFont, SpriteFont thinFontJP, Texture2D whitePixel)
         {
-            this.sb = spriteBatch;
+            sb = spriteBatch;
             this.spriteEffect = spriteEffect;
             this.shadowMaskEffect = shadowMaskEffect;
             this.fadeEffect = fadeEffect;
@@ -110,10 +110,10 @@ namespace Pixel3D.Animations
         {
             if(fadeLevelStack.Count > 0)
                 throw new InvalidOperationException("Cannot begin batch while still in fade block");
-            if(this.Camera != null)
+            if(Camera != null)
                 throw new InvalidOperationException("Cannot begin while already in batch");
 
-            this.Camera = camera;
+            Camera = camera;
             this.shadowCasterList = shadowCasterList;
 
             CommonBeginSpriteBatch();
@@ -123,11 +123,11 @@ namespace Pixel3D.Animations
         {
             if(fadeLevelStack.Count > 0)
                 throw new InvalidOperationException("Cannot end batch while still in fade block");
-            if(this.Camera == null)
+            if(Camera == null)
                 throw new InvalidOperationException("Cannot end if not in batch");
 
-            this.Camera = null;
-            this.shadowCasterList = null;
+            Camera = null;
+            shadowCasterList = null;
 
             sb.End();
         }
@@ -200,7 +200,7 @@ namespace Pixel3D.Animations
 
         public void BeginFade(int fadeLevel)
         {
-            if(this.Camera == null)
+            if(Camera == null)
                 throw new InvalidOperationException("Cannot begin a fade block while not in a batch");
 
             fadeLevelStack.Push(fadeLevel);

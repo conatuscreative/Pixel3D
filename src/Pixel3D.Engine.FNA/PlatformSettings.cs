@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using SDL2;
 
-namespace Pixel3D.Engine.FNA
+namespace Pixel3D.Engine
 {
 	public static class PlatformSettings
 	{
@@ -61,7 +61,7 @@ namespace Pixel3D.Engine.FNA
 
 		public static string GetLoggingDir()
 		{
-			string os = SDL2.SDL.SDL_GetPlatform();
+			string os = SDL.SDL_GetPlatform();
 			if (os.Equals("Linux"))
 			{
 				string osDir = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME");
@@ -72,9 +72,9 @@ namespace Pixel3D.Engine.FNA
 					{
 						return @"."; // Oh well.
 					}
-					return PlatformSettings.CreateAndReturnDir(Path.Combine(osDir, ".config/RiverCityRansomUnderground"));
+					return CreateAndReturnDir(Path.Combine(osDir, ".config/RiverCityRansomUnderground"));
 				}
-				return PlatformSettings.CreateAndReturnDir(Path.Combine(osDir, "RiverCityRansomUnderground"));
+				return CreateAndReturnDir(Path.Combine(osDir, "RiverCityRansomUnderground"));
 			}
 			if (os.Equals("Mac OS X"))
 			{
@@ -83,7 +83,7 @@ namespace Pixel3D.Engine.FNA
 				{
 					return @"."; // Oh well.
 				}
-				return PlatformSettings.CreateAndReturnDir(Path.Combine(osDir, "Library/Application Support/RiverCityRansomUnderground"));
+				return CreateAndReturnDir(Path.Combine(osDir, "Library/Application Support/RiverCityRansomUnderground"));
 			}
 			if (!os.Equals("Windows"))
 			{

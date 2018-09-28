@@ -1,29 +1,27 @@
-﻿using System.Diagnostics;
-
-namespace Pixel3D.Animations
+﻿namespace Pixel3D.Animations
 {
     public struct OutgoingAttachmentView
     {
         public OutgoingAttachmentView(OutgoingAttachment sourceAttachment, Position sourcePosition, bool sourceFlipX)
         {
-            this.attachment = sourceAttachment;
-            this.facingLeft = sourceFlipX;
-            this.position = sourcePosition;
+            attachment = sourceAttachment;
+            facingLeft = sourceFlipX;
+            position = sourcePosition;
 
             if(sourceAttachment != null)
             {
-                this.position += sourceAttachment.position.MaybeFlipX(sourceFlipX);
+                position += sourceAttachment.position.MaybeFlipX(sourceFlipX);
 
-                this.attachRange = sourceAttachment.attachRange;
+                attachRange = sourceAttachment.attachRange;
                 if(sourceFlipX)
-                    this.attachRange.FlipXInPlace();
+                    attachRange.FlipXInPlace();
             }
             else
             {
-                this.attachRange = default(AABB);
+                attachRange = default(AABB);
             }
 
-            this.attachRange += this.position;
+            attachRange += position;
         }
 
         public bool IsValid { get { return attachment != null; } }

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
-using System.Diagnostics;
 using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D.Animations.Serialization
@@ -50,8 +51,8 @@ namespace Pixel3D.Animations.Serialization
         public ImageBundle(ImageBundleManager manager, int managedIndex)
         {
             this.manager = manager;
-            this.bundleIndex = managedIndex;
-            this.liveIndex = -1; // <- not loaded
+            bundleIndex = managedIndex;
+            liveIndex = -1; // <- not loaded
         }
 		
         public void ReadAllImagesOLD(BinaryReader br, GraphicsDevice graphicsDevice, List<TextureData> texturesData = null)
@@ -160,7 +161,7 @@ namespace Pixel3D.Animations.Serialization
                 {
                     if (textures.Length > 1) // <- we have texture indicies to load:
                     {
-                        System.Runtime.InteropServices.Marshal.Copy((IntPtr)d, imageTextureIndicies, 0, imageTextureIndicies.Length);
+                        Marshal.Copy((IntPtr)d, imageTextureIndicies, 0, imageTextureIndicies.Length);
                         d += imageTextureIndicies.Length;
                     }
 

@@ -1,8 +1,8 @@
 using System;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Pixel3D.Animations;
 using System.Diagnostics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Pixel3D.Animations;
 using Pixel3D.Extensions;
 using Pixel3D.FrameworkExtensions;
 

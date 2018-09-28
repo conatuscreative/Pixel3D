@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Pixel3D.Extensions;
 
 namespace Pixel3D
@@ -62,32 +63,32 @@ namespace Pixel3D
 
 
             // Set the content size, rounding up (overflow to bottom-left if not on a pixel boundary of the contained content)
-            this.ContentSize = new Point(
+            ContentSize = new Point(
                     (contentArea.Width  + contentZoom - 1) / contentZoom,
                     (contentArea.Height + contentZoom - 1) / contentZoom);
 
 
-            this.ScreenSize = parent.ScreenSize;
-            this.ScreenClipParent = parent.ScreenClippedArea;
-            this.ScreenContentArea = parent.ContentToScreen(contentArea);
-            this.ScreenContentZoom = parent.ScreenContentZoom * contentZoom;
+            ScreenSize = parent.ScreenSize;
+            ScreenClipParent = parent.ScreenClippedArea;
+            ScreenContentArea = parent.ContentToScreen(contentArea);
+            ScreenContentZoom = parent.ScreenContentZoom * contentZoom;
 
             if(!childIsRenderTarget)
             {
-                this.RenderSize = parent.RenderSize;
-                this.RenderClipParent = parent.RenderClippedArea;
-                this.RenderContentArea = parent.ContentToRender(contentArea);
-                this.RenderContentZoom = parent.RenderContentZoom * contentZoom;
+                RenderSize = parent.RenderSize;
+                RenderClipParent = parent.RenderClippedArea;
+                RenderContentArea = parent.ContentToRender(contentArea);
+                RenderContentZoom = parent.RenderContentZoom * contentZoom;
             }
             else // Alternate setup where the child is a render target surface
             {
-                this.RenderSize = this.ContentSize;
-                this.RenderClipParent = new Rectangle(0, 0, this.ContentSize.X, this.ContentSize.Y);
-                this.RenderContentArea = new Rectangle(0, 0, this.ContentSize.X, this.ContentSize.Y);
-                this.RenderContentZoom = 1;
+                RenderSize = ContentSize;
+                RenderClipParent = new Rectangle(0, 0, ContentSize.X, ContentSize.Y);
+                RenderContentArea = new Rectangle(0, 0, ContentSize.X, ContentSize.Y);
+                RenderContentZoom = 1;
             }
 
-            this.RecalculateWindow();
+            RecalculateWindow();
         }
 
         /// <summary>Updates a child content window that has the same layout as its parent (useful for adding render target)</summary>
@@ -100,21 +101,21 @@ namespace Pixel3D
         public void CopyTargetingFrom(Camera other)
         {
             // These automatically call recalculate:
-            this.WorldTarget = other.WorldTarget;
-            this.ContentTargetProportional = other.ContentTargetProportional;
+            WorldTarget = other.WorldTarget;
+            ContentTargetProportional = other.ContentTargetProportional;
         }
 
 
         /// <summary>Note: also copies this camera's targeting information</summary>
         public void CopyAndRemoveRenderTarget(Camera parent)
         {
-            this.ContentSize = parent.ContentSize;
-            this.RenderSize = this.ScreenSize = parent.ScreenSize;
-            this.RenderClipParent = this.ScreenClipParent = parent.ScreenClipParent;
-            this.RenderContentArea = this.ScreenContentArea = parent.ScreenContentArea;
-            this.RenderContentZoom = this.ScreenContentZoom = parent.ScreenContentZoom;
+            ContentSize = parent.ContentSize;
+            RenderSize = ScreenSize = parent.ScreenSize;
+            RenderClipParent = ScreenClipParent = parent.ScreenClipParent;
+            RenderContentArea = ScreenContentArea = parent.ScreenContentArea;
+            RenderContentZoom = ScreenContentZoom = parent.ScreenContentZoom;
 
-            this.RecalculateWindow();
+            RecalculateWindow();
 
             CopyTargetingFrom(parent);
         }
@@ -129,7 +130,7 @@ namespace Pixel3D
         public Rectangle RenderClippedArea { get; private set; }
 
 
-        public Microsoft.Xna.Framework.Graphics.Viewport Viewport { get { return new Microsoft.Xna.Framework.Graphics.Viewport(RenderClippedArea); } }
+        public Viewport Viewport { get { return new Viewport(RenderClippedArea); } }
 
         public bool IsViewportValid
         {
@@ -306,8 +307,8 @@ namespace Pixel3D
         private void RecalculateCamera()
         {
             ContentTargetInPixels = new Point(
-                    (int)System.Math.Floor(ContentSize.X * ContentTargetProportional.X),
-                    (int)System.Math.Floor(ContentSize.Y * ContentTargetProportional.Y));
+                    (int)Math.Floor(ContentSize.X * ContentTargetProportional.X),
+                    (int)Math.Floor(ContentSize.Y * ContentTargetProportional.Y));
 
             // Change the targeting calculation to put the world target at the top-left of the content area
             // (Historically, when we were in floating-point, we did this to keep the world pixel-aligned at the top left)

@@ -95,7 +95,7 @@ namespace Pixel3D.Animations
 
             Position pos = new Position(p.X, p.Y, 0);
 
-            if(frameNumber != 0 || this.isLooped) // <- This is almost always what we want...
+            if(frameNumber != 0 || isLooped) // <- This is almost always what we want...
                 frame.positionDelta += pos;
 
             frame.shadowOffset.X -= p.X;
@@ -136,14 +136,14 @@ namespace Pixel3D.Animations
 
 
             int nextFrame = frameNumber + 1;
-            if(nextFrame >= this.FrameCount && this.isLooped)
+            if(nextFrame >= FrameCount && isLooped)
             {
                 nextFrame = 0;
             }
-            if(nextFrame < this.FrameCount)
+            if(nextFrame < FrameCount)
             {
                 // Adjust the next frame to make it line up...
-                this.Frames[nextFrame].positionDelta -= pos;
+                Frames[nextFrame].positionDelta -= pos;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Pixel3D.Animations
         {
             HashSet<Cel> cels = new HashSet<Cel>(ReferenceEqualityComparer<Cel>.Instance);
 
-            foreach (var frame in this.Frames)
+            foreach (var frame in Frames)
             {
                 foreach (var cel in frame.layers)
                 {

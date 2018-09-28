@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Pixel3D.Extensions;
 using Pixel3D.FrameworkExtensions;
 

@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Pixel3D
 {
@@ -39,10 +39,10 @@ namespace Pixel3D
                 darkred = LoadFadePalette(device, @"Palettes\darkred.bin");
 
                 goofyPalettes = new[] {
-                        FadeEffect.LoadFadePalette(device, @"Palettes\eight.bin"),
-                        FadeEffect.LoadFadePalette(device, @"Palettes\cga.bin"),
-                        FadeEffect.LoadFadePalette(device, @"Palettes\ega.bin"),
-                        FadeEffect.LoadFadePalette(device, @"Palettes\gb.bin") };
+                        LoadFadePalette(device, @"Palettes\eight.bin"),
+                        LoadFadePalette(device, @"Palettes\cga.bin"),
+                        LoadFadePalette(device, @"Palettes\ega.bin"),
+                        LoadFadePalette(device, @"Palettes\gb.bin") };
             }
             else
             {

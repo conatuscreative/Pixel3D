@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Pixel3D.Animations;
+﻿using Pixel3D.Animations;
 
 namespace Pixel3D
 {
