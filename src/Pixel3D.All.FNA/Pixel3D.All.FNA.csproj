@@ -6,6 +6,10 @@
     <RootNamespace>Pixel3D</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\Pixel3D.ActorManagement.FNA\Actor.cs" Link="AssetManagement\Actor.cs" />
     <Compile Include="..\Pixel3D.ActorManagement.FNA\AttachmentTracking.cs" Link="AssetManagement\AttachmentTracking.cs" />
