@@ -1,4 +1,6 @@
-﻿namespace Pixel3D
+﻿// Copyright © Conatus Creative, Inc. All rights reserved.
+// Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+namespace Pixel3D
 {
     // TODO BUG: Pretty much everything that is using this is disregarding the fact that an item may be in the draw list multiple times
     //           with different "tag" for drawing differently. Relates to following todo item...
