@@ -90,7 +90,9 @@
     <Compile Include="..\Pixel3D.FNA\Animations\Asserts.cs" Link="_Main\Animations\Asserts.cs" />
     <Compile Include="..\Pixel3D.FNA\Animations\Cel.cs" Link="_Main\Animations\Cel.cs" />
     <Compile Include="..\Pixel3D.FNA\Animations\DepthBounds.cs" Link="_Main\Animations\DepthBounds.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\DepthSlice.cs" Link="_Main\Animations\DepthSlice.cs" />
     <Compile Include="..\Pixel3D.FNA\Animations\DrawContext.cs" Link="_Main\Animations\DrawContext.cs" />
+    <Compile Include="..\Pixel3D.FNA\Animations\FrontBack.cs" Link="_Main\Animations\FrontBack.cs" />
     <Compile Include="..\Pixel3D.FNA\Animations\ICustomMaskDataReader.cs" Link="_Main\Animations\ICustomMaskDataReader.cs" />
     <Compile Include="..\Pixel3D.FNA\Animations\LayersList.cs" Link="_Main\Animations\LayersList.cs" />
     <Compile Include="..\Pixel3D.FNA\Animations\Mask.cs" Link="_Main\Animations\Mask.cs" />
@@ -134,6 +136,9 @@
     <Compile Include="..\Pixel3D.FNA\FunctionalTweening\FloatMapXNAExtensions.cs" Link="_Main\FunctionalTweening\FloatMapXNAExtensions.cs" />
     <Compile Include="..\Pixel3D.FNA\Heightmap.cs" Link="_Main\Heightmap.cs" />
     <Compile Include="..\Pixel3D.FNA\HeightmapInstruction.cs" Link="_Main\HeightmapInstruction.cs" />
+    <Compile Include="..\Pixel3D.FNA\HeightmapInstructionExtensions.cs" Link="_Main\HeightmapInstructionExtensions.cs" />
+    <Compile Include="..\Pixel3D.FNA\HeightmapOp.cs" Link="_Main\HeightmapOp.cs" />
+    <Compile Include="..\Pixel3D.FNA\HeightmapOpExtensions.cs" Link="_Main\HeightmapOpExtensions.cs" />
     <Compile Include="..\Pixel3D.FNA\HeightmapView.cs" Link="_Main\HeightmapView.cs" />
     <Compile Include="..\Pixel3D.FNA\Helpers\GifWriter.cs" Link="_Main\Helpers\GifWriter.cs" />
     <Compile Include="..\Pixel3D.FNA\Helpers\TarWriter.cs" Link="_Main\Helpers\TarWriter.cs" />
@@ -149,6 +154,7 @@
     <Compile Include="..\Pixel3D.FNA\PanCamera.cs" Link="_Main\PanCamera.cs" />
     <Compile Include="..\Pixel3D.FNA\Physics\CharacterPhysics.cs" Link="_Main\Physics\CharacterPhysics.cs" />
     <Compile Include="..\Pixel3D.FNA\Physics\WorldPhysics.cs" Link="_Main\Physics\WorldPhysics.cs" />
+    <Compile Include="..\Pixel3D.FNA\PostProcessing\IPostProcessProvider.cs" Link="_Main\PostProcessing\IPostProcessProvider.cs" />
     <Compile Include="..\Pixel3D.FNA\Range.cs" Link="_Main\Range.cs" />
     <Compile Include="..\Pixel3D.FNA\ShadowReceiver.cs" Link="_Main\ShadowReceiver.cs" />
     <Compile Include="..\Pixel3D.FNA\Sorting\DrawOrdering.cs" Link="_Main\Sorting\DrawOrdering.cs" />
@@ -205,7 +211,6 @@
     <Compile Include="..\Pixel3D.Pipeline.FNA\MaskReadAndDeduplicate.cs" Link="Pipeline\MaskReadAndDeduplicate.cs" />
     <Compile Include="..\Pixel3D.Pipeline.FNA\PathGatheringAssetProvider.cs" Link="Pipeline\PathGatheringAssetProvider.cs" />
     <Compile Include="..\Pixel3D.Pipeline.FNA\ThreadWriteStream.cs" Link="Pipeline\ThreadWriteStream.cs" />
-    <Compile Include="..\Pixel3D.Serialization.Support\AABBExtensions.cs" Link="Serialization.Support\AABBExtensions.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeDictionary.cs" Link="Serialization.Support\BuiltIn\SerializeDictionary.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeIgnoreAudio.cs" Link="Serialization.Support\SerializeIgnoreAudio.cs" />
     <Compile Include="..\Pixel3D.Serialization.Support\BuiltIn\SerializeIgnoreStateManagement.cs" Link="Serialization.Support\SerializeIgnoreStateManagement.cs" />
@@ -311,7 +316,7 @@
     <Compile Include="..\Pixel3D.UI\IAbandonChanges.cs" Link="UI\IAbandonChanges.cs" />
     <Compile Include="..\Pixel3D.UI\IDrawableGameMenuHost.cs" Link="UI\IDrawableGameMenuHost.cs" />
     <Compile Include="..\Pixel3D.UI\IGameMenuHost.cs" Link="UI\IGameMenuHost.cs" />
-    <Compile Include="..\Pixel3D.UI\IReadOnlyContext.cs" Link="UI\IReadOnlyContext.cs" />
+    <Compile Include="..\Pixel3D.UI\INetworkSafeContext.cs" Link="UI\INetworkSafeContext.cs" />
     <Compile Include="..\Pixel3D.UI\IResetToDefaults.cs" Link="UI\IResetToDefaults.cs" />
     <Compile Include="..\Pixel3D.UI\ISubMenu.cs" Link="UI\ISubMenu.cs" />
     <Compile Include="..\Pixel3D.UI\TransitionDirection.cs" Link="UI\TransitionDirection.cs" />
@@ -328,9 +333,9 @@
     <Folder Include="_Main\FrameworkExtensions\" />
     <Folder Include="_Main\FunctionalTweening\" />
     <Folder Include="_Main\Helpers\" />
-    <Folder Include="_Main\" />
     <Folder Include="Pipeline\Audio\" />
     <Folder Include="Serialization.Support\BuiltIn\" />
+    <Folder Include="_Main\PostProcessing\" />
     <Folder Include="_Main\Sorting\" />
     <Folder Include="_Main\Physics\" />
     <Folder Include="Serialization\BuiltIn\DelegateHandling\" />

@@ -3,7 +3,7 @@
 
 using System;
 using Pixel3D.Audio;
-using Pixel3D.FNA.PostProcessing;
+using Pixel3D.PostProcessing;
 
 namespace Pixel3D.UI
 {
