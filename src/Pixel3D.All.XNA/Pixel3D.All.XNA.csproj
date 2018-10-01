@@ -55,6 +55,30 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CRTSim\DisplayPostProcessConfiguration.cs">
+      <Link>CRTSim\DisplayPostProcessConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\CRTSim\FadeEffect.cs">
+      <Link>CRTSim\FadeEffect.cs</Link>
+    </Compile>
+    <Compile Include="..\CRTSim\GraphicsDeviceExtensions.cs">
+      <Link>CRTSim\GraphicsDeviceExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CRTSim\IntegerExtensions.cs">
+      <Link>CRTSim\IntegerExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CRTSim\IPostProcessor.cs">
+      <Link>CRTSim\IPostProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\CRTSim\Palette.cs">
+      <Link>CRTSim\Palette.cs</Link>
+    </Compile>
+    <Compile Include="..\CRTSim\PostProcessing.cs">
+      <Link>CRTSim\PostProcessing.cs</Link>
+    </Compile>
+    <Compile Include="..\CRTSim\ScreenEffect.cs">
+      <Link>CRTSim\ScreenEffect.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.ActorManagement.FNA\Actor.cs">
       <Link>ActorManagement\Actor.cs</Link>
     </Compile>
@@ -484,12 +508,6 @@
     <Compile Include="..\Pixel3D.FNA\Extensions\WorldSpriteExtensions.cs">
       <Link>_Main\Extensions\WorldSpriteExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.FNA\FadeEffect.cs">
-      <Link>_Main\FadeEffect.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.FNA\Fader.cs">
-      <Link>_Main\Fader.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.FNA\FrameworkExtensions\BinaryReadWriteExtensions.cs">
       <Link>_Main\FrameworkExtensions\BinaryReadWriteExtensions.cs</Link>
     </Compile>
@@ -556,9 +574,6 @@
     <Compile Include="..\Pixel3D.FNA\Oblique.cs">
       <Link>_Main\Oblique.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.FNA\Palette.cs">
-      <Link>_Main\Palette.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.FNA\PanCamera.cs">
       <Link>_Main\PanCamera.cs</Link>
     </Compile>
@@ -567,9 +582,6 @@
     </Compile>
     <Compile Include="..\Pixel3D.FNA\Physics\WorldPhysics.cs">
       <Link>_Main\Physics\WorldPhysics.cs</Link>
-    </Compile>
-    <Compile Include="..\Pixel3D.FNA\PostProcessing\IPostProcessProvider.cs">
-      <Link>_Main\PostProcessing\IPostProcessProvider.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.FNA\Range.cs">
       <Link>_Main\Range.cs</Link>
