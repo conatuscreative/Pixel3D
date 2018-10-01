@@ -1,12 +1,13 @@
 ﻿// Copyright © Conatus Creative, Inc. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
 using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pixel3D
+namespace CRTSim
 {
     public class FadeEffect
     {
@@ -15,14 +16,11 @@ namespace Pixel3D
         public readonly Vector4[] approximationValues;
 
         public readonly Texture3D red, darkred;
-
         public readonly Texture3D[] goofyPalettes;
-
-
+		
         // Fade levels start at 1 and go to MaxFadeLevel (0 is no fading)
         public const int MaxFadeLevel = 5; 
-
-
+		
         public FadeEffect(GraphicsDevice device, ContentManager content)
         {
             // Oh so many hard-coded paths...

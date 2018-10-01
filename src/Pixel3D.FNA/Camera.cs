@@ -147,19 +147,11 @@ namespace Pixel3D
         private void RecalculateWindow()
         {
             ScreenClippedArea = Rectangle.Intersect(ScreenClipParent, ScreenContentArea);
+			RenderClippedArea = Rectangle.Intersect(RenderClipParent, RenderContentArea);
+			SpriteBatchProjectMatrix = Matrix.CreateOrthographicOffCenter(0, RenderClippedArea.Width, RenderClippedArea.Height, 0, 0, 1);
 
-            RenderClippedArea = Rectangle.Intersect(RenderClipParent, RenderContentArea); 
-            SpriteBatchProjectMatrix = CreateSpriteBatchProjectMatrix(RenderClippedArea.Width, RenderClippedArea.Height);
-
-            // Changing the window can change shared transforms as well as camera targeting
-            RecalculateCamera();
-        }
-
-        public static Matrix CreateSpriteBatchProjectMatrix(int width, int height)
-        {
-            // TODO: Can we do this without the matrix multiply? Just call CreateOrthographicOffCenter with the offset built-in?
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, width, height, 0, 0, 1);
-            return projection;
+			// Changing the window can change shared transforms as well as camera targeting
+			RecalculateCamera();
         }
 
         #endregion

@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
+    <ProjectReference Include="..\CRTSim\CRTSim.csproj" />
     <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj" />
   </ItemGroup>
 
