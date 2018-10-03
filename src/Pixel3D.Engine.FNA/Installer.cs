@@ -71,6 +71,7 @@ namespace Pixel3D.Engine
 				AudioSystem.createSoundEffectInstance = owner => ((SoundEffect) owner)?.CreateInstance();
 
 				AudioSystem.playSoundEffectInstance = owner => ((SoundEffectInstance) owner).Play();
+				AudioSystem.pauseSoundEffectInstance = owner => ((SoundEffectInstance) owner).Pause();
 				AudioSystem.stopSoundEffectInstance = owner => ((SoundEffectInstance) owner).Stop();
 
 				AudioSystem.getIsLooped = owner => ((SoundEffectInstance) owner).IsLooped;
