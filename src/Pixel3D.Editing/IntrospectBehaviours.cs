@@ -15,10 +15,10 @@ namespace Pixel3D.Editing
 
         public void Execute(string introspectionDir, Func<Assembly, bool> introspectAssemblyFilter)
         {
-            BehaviourTypes = Introspection.GetExportedTypes(introspectionDir, introspectAssemblyFilter);
+            BehaviourTypes = Introspection.GetExportedTypes(introspectionDir, introspectAssemblyFilter) ?? Enumerable.Empty<Type>();
             IEnumerable<string> names;
             Emit(out names);
-            Behaviours = names;
+            Behaviours = names ?? Enumerable.Empty<string>();
         }
 
         private void Emit(out IEnumerable<string> n)
