@@ -7,16 +7,24 @@ using System.IO.Compression;
 
 namespace Pixel3D.Audio
 {
-	public static class ReadAudioPackage
+	public struct AudioPackage
 	{
+		public byte[] audioPackageBytes;
+		public int vorbisOffset;
+		public int[] offsets;
+		public OrderedDictionary<string, int> lookup;
+
+		public int Count { get { return lookup.Count; } }
+
+
 		private static void ThrowError()
 		{
 			throw new Exception("Audio Package Corrupt");
 		}
 
-		public static Result ReadHeader(string path, byte[] header)
+		public static AudioPackage Read(string path, byte[] header)
 		{
-			Result result;
+			AudioPackage result;
 
 #if !WINDOWS
 			path = path.Replace('\\', '/');
@@ -44,11 +52,10 @@ namespace Pixel3D.Audio
 			{
 				var count = br.ReadInt32();
 				result.offsets = new int[count + 1]; // <- For simplicity, offsets[0] = 0 (start of first sound)
-				result.sounds = new SafeSoundEffect[count];
-				result.lookup = new OrderedDictionary<string, SafeSoundEffect>(count);
+				result.lookup = new OrderedDictionary<string, int>(count);
 				for (var i = 0; i < count; i++)
 				{
-					result.lookup.Add(br.ReadString(), result.sounds[i] = new SafeSoundEffect());
+					result.lookup.Add(br.ReadString(), i);
 					result.offsets[i + 1] = br.ReadInt32();
 				}
 			}
@@ -56,14 +63,5 @@ namespace Pixel3D.Audio
 			return result;
 		}
 
-		public struct Result
-		{
-			public IDictionary<string, SafeSoundEffect> lookup;
-
-			public byte[] audioPackageBytes;
-			public int vorbisOffset;
-			public int[] offsets;
-			public SafeSoundEffect[] sounds;
-		}
 	}
 }

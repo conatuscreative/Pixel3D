@@ -2,28 +2,14 @@
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Audio;
-using Pixel3D.Audio;
 
-namespace Pixel3D.Pipeline.Audio
+namespace Pixel3D.Engine
 {
-	// TODO: Move out of Pipeline (this is used at runtime, not asset build time)
-	// TODO: Once these are fixed, don't reference this assembly from engine
-	// TODO: Fix up usage of DLLs relating to Vorbisfile
-
-	public static class VorbisfileDecoder
+	static class VorbisDecoder
 	{
-		public static unsafe SoundEffect DecodePackageVorbis(byte* start, byte* end)
+		public static unsafe SoundEffect DecodeVorbis(byte* start, byte* end, int expectedSampleCount, int loopStart, int loopLength)
 		{
-			var expectedSampleCount = *(int*)start; // <- Encoded ourselves, to save a vorbis seek (stb_vorbis_stream_length_in_samples)
-			start += 4;
-			var loopStart = *(int*)start;
-			start += 4;
-			var loopLength = *(int*)start;
-			start += 4;
-
 			int error;
 			var vorbis = FAudio.stb_vorbis_open_memory((IntPtr)start, (int)(end - start), out error, IntPtr.Zero);
 
@@ -54,7 +40,7 @@ namespace Pixel3D.Pipeline.Audio
 				{
 					float* source = sourcePinned;
 					short* destination = (short*)destinationPinnedBytes;
-					
+
 					int length = readSamples * info.channels;
 					for(int i = 0; i < length; i++)
 					{
@@ -71,29 +57,6 @@ namespace Pixel3D.Pipeline.Audio
 
 			return new SoundEffect(audioDataShort, 0, audioDataShort.Length, (int)info.sample_rate, (AudioChannels)info.channels,
 					loopStart, loopLength);
-		}
-
-
-		// This is split out so that it can run late in the loading process (because it saturates the CPU)
-		public static unsafe void DecodeVorbisData(ReadAudioPackage.Result input)
-		{
-			if (!AudioDevice.Available)
-				return; // <- No sound!
-
-			// IMPORTANT: This is lock-free, because each entry only writes to its own slot (everything else is read-only)
-			fixed (byte* data = input.audioPackageBytes)
-			{
-				var vorbisStart = data + input.vorbisOffset;
-
-				var count = input.sounds.Length;
-				//for (int i = 0; i < count; i++)
-				Parallel.ForEach(Enumerable.Range(0, count),
-					i =>
-					{
-						input.sounds[i].owner =
-							DecodePackageVorbis(vorbisStart + input.offsets[i], vorbisStart + input.offsets[i + 1]);
-					});
-			}
 		}
 	}
 }

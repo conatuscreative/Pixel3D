@@ -18,7 +18,7 @@ namespace Pixel3D.ActorManagement
 
 		#region Sound Effects
 
-		protected OrderedDictionary<string, SafeSoundEffect> soundBank;
+		protected SoundBank soundBank;
 
 		/// <summary>Return a sound effect for the given cue</summary>
 		public SafeSoundEffect GetSound(Cue cue, int index)
@@ -30,11 +30,7 @@ namespace Pixel3D.ActorManagement
 			if (path == null)
 				return null;
 
-			SafeSoundEffect result;
-			if (soundBank.TryGetValue(path, out result))
-				return result;
-
-			return null;
+			return soundBank[path];
 		}
 
 		/// <summary>Return the sound for a given music cue. Not to be used in the simulation (play it immediately).</summary>
@@ -55,13 +51,6 @@ namespace Pixel3D.ActorManagement
 			}
 
 			return music;
-		}
-
-
-		protected static ReadAudioPackage.Result LoadSoundEffects(byte[] header, string filename)
-		{
-			var audioPackagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
-			return ReadAudioPackage.ReadHeader(audioPackagePath, header);
 		}
 
 		#endregion

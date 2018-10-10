@@ -14,7 +14,7 @@ namespace Pixel3D.Audio
 	public class SafeSoundEffect : IDisposable
 	{
 		/// <summary>The underlying sound effect (can be null)</summary>
-		public IDisposable owner;
+		public IDisposable owner; // <- TODO: RENAME: "owner" is a misnomer (we own the underlying sound effect)
 
 	    static SafeSoundEffect()
 	    {

@@ -112,6 +112,11 @@ namespace Pixel3D.Engine
 				}
 			};
 
+			unsafe
+			{
+				AudioSystem.createSoundEffectFromVorbisMemory = VorbisDecoder.DecodeVorbis;
+			}
+			
 			//
 			// Audio Diagnostics:
 			AudioSystem.reportMissingCue = (name, debugContext) =>
