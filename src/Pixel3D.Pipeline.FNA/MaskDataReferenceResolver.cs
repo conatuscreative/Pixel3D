@@ -7,7 +7,10 @@ using Pixel3D.Animations;
 
 namespace Pixel3D.Pipeline
 {
-    public class MaskDataReferenceResolver : ICustomMaskDataReader
+	// TODO: Move out of Pipeline (this is used at runtime, not asset build time)
+	// TODO: Once these are fixed, don't reference this assembly from engine
+
+	public class MaskDataReferenceResolver : ICustomMaskDataReader
     {
         public MaskDataReferenceResolver(List<uint[]> packedDataArrays, BinaryReader br)
         {

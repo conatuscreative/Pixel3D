@@ -3,106 +3,76 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Audio;
 using Pixel3D.Audio;
 
 namespace Pixel3D.Pipeline.Audio
 {
-	// TODO switch to stb_vorbis or audio streaming
-	// https://github.com/FNA-XNA/FAudio/blob/master/csharp/FAudio.cs#L2097
-
-	// Having to use vorbisfile instead of libvorbis directly makes me sad. -AR
+	// TODO: Move out of Pipeline (this is used at runtime, not asset build time)
+	// TODO: Once these are fixed, don't reference this assembly from engine
+	// TODO: Fix up usage of DLLs relating to Vorbisfile
 
 	public static class VorbisfileDecoder
 	{
-		private static readonly Vorbisfile.ov_callbacks StaticCallbacks = new Vorbisfile.ov_callbacks
+		public static unsafe SoundEffect DecodePackageVorbis(byte* start, byte* end)
 		{
-			read_func = BufferReadFunc,
-			seek_func = null,
-			close_func = null,
-			tell_func = null
-		};
+			var expectedSampleCount = *(int*)start; // <- Encoded ourselves, to save a vorbis seek (stb_vorbis_stream_length_in_samples)
+			start += 4;
+			var loopStart = *(int*)start;
+			start += 4;
+			var loopLength = *(int*)start;
+			start += 4;
 
-		[DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl,
-			SetLastError = false)]
-		[SuppressUnmanagedCodeSecurity]
-		private static extern unsafe void* memcpy(void* dest, void* src, UIntPtr byteCount);
+			int error;
+			var vorbis = FAudio.stb_vorbis_open_memory((IntPtr)start, (int)(end - start), out error, IntPtr.Zero);
 
-		private static unsafe IntPtr BufferReadFunc(IntPtr ptr, IntPtr size, IntPtr elements, IntPtr datasource)
-		{
-			var file = (FakeFile*)datasource;
+			Debug.Assert(vorbis != IntPtr.Zero);
+			if(vorbis == IntPtr.Zero)
+				return null;
 
-			var s = size.ToInt64();
-			var e = elements.ToInt64();
+			var info = FAudio.stb_vorbis_get_info(vorbis);
+			var audioDataFloat = new float[expectedSampleCount * info.channels];
 
-			var bytesToRead = e * s;
-			var remainingBytes = file->end - file->position;
-			if (bytesToRead > remainingBytes)
-				bytesToRead = remainingBytes;
+			// A cusory read of stb_vorbis suggests that it will never partially fill our buffer
+			int readSamples = FAudio.stb_vorbis_get_samples_float_interleaved(vorbis, info.channels, audioDataFloat, audioDataFloat.Length);
+			Debug.Assert(readSamples == expectedSampleCount); // <- If this fires, the package is corrupt somehow (in release builds, just silently fail)
 
-			e = bytesToRead / s;
-			bytesToRead = e * s;
 
-			Debug.Assert(bytesToRead >= 0);
+			// Annoying conversion:
+			var audioDataShort = new byte[readSamples * info.channels * 2]; // *2 for 16-bit audio
 
-			memcpy(ptr.ToPointer(), file->position, (UIntPtr)bytesToRead);
-			file->position += bytesToRead;
+			// This is taken from stb_vorbis FAST_SCALED_FLOAT_TO_INT / copy_samples
+			// (Because the FAudio version of stb_vorbis is compiled without an integer conversion, we'll do it ourselves)
+			const int shift = 15;
+			const float magic = (1.5f * (1 << (23-shift)) + 0.5f/(1 << shift));
+			const int addend = (((150-shift) << 23) + (1 << 22));
 
-			return (IntPtr)e;
-		}
-
-		public static unsafe SoundEffect Decode(byte* start, byte* end)
-		{
-			var file = new FakeFile { start = start, position = start, end = end };
-
-			var sampleCount =
-				*(int*)file
-					.position; // <- We encoded this, before the packets start, because Vorbis doesn't know [not sure if this is still true for Ogg, haven't checked -AR]
-			file.position += 4;
-			var loopStart = *(int*)file.position;
-			file.position += 4;
-			var loopLength = *(int*)file.position;
-			file.position += 4;
-
-			// TODO: Consider modifying vorbisfile binding so we can stackalloc `vf`
-			IntPtr vf;
-			Vorbisfile.ov_open_callbacks((IntPtr)(&file), out vf, IntPtr.Zero, IntPtr.Zero, StaticCallbacks);
-
-			var info = Vorbisfile.ov_info(vf, 0);
-
-			var audioData = new byte[sampleCount * info.channels * 2]; // *2 for 16-bit audio (as required by XNA)
-
-			fixed (byte* writeStart = audioData)
+			fixed (float* sourcePinned = audioDataFloat)
 			{
-				var writePosition = writeStart;
-				var writeEnd = writePosition + audioData.Length;
-
-				while (true)
+				fixed (byte* destinationPinnedBytes = audioDataShort)
 				{
-					int currentSection;
-					var result = (int)Vorbisfile.ov_read(vf, (IntPtr)writePosition, (int)(writeEnd - writePosition),
-						0, 2, 1, out currentSection);
+					float* source = sourcePinned;
+					short* destination = (short*)destinationPinnedBytes;
+					
+					int length = readSamples * info.channels;
+					for(int i = 0; i < length; i++)
+					{
+						int temp;
+						*(float*)&temp = source[i] + magic;
+						temp -= addend;
+						if((uint)(temp + 32768) > 65535) // <- Clamp
+							temp = (temp < 0) ? -32768 : 32767;
 
-					if (result == 0) // End of file
-						break;
-					if (result > 0)
-						writePosition += result;
-					if (writePosition >= writeEnd)
-						break;
+						destination[i] = (short)temp;
+					}
 				}
-
-				Debug.Assert(writePosition ==
-							 writeEnd); // <- If this fires, something went terribly wrong. (TODO: Throw exception?)
 			}
 
-			Vorbisfile.ov_clear(ref vf);
-
-			return new SoundEffect(audioData, 0, audioData.Length, (int)info.rate, (AudioChannels)info.channels,
-				loopStart, loopLength);
+			return new SoundEffect(audioDataShort, 0, audioDataShort.Length, (int)info.sample_rate, (AudioChannels)info.channels,
+					loopStart, loopLength);
 		}
+
 
 		// This is split out so that it can run late in the loading process (because it saturates the CPU)
 		public static unsafe void DecodeVorbisData(ReadAudioPackage.Result input)
@@ -121,16 +91,9 @@ namespace Pixel3D.Pipeline.Audio
 					i =>
 					{
 						input.sounds[i].owner =
-							Decode(vorbisStart + input.offsets[i], vorbisStart + input.offsets[i + 1]);
+							DecodePackageVorbis(vorbisStart + input.offsets[i], vorbisStart + input.offsets[i + 1]);
 					});
 			}
-		}
-
-		private unsafe struct FakeFile
-		{
-			public byte* start;
-			public byte* position;
-			public byte* end;
 		}
 	}
 }
