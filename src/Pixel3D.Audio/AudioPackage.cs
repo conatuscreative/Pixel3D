@@ -77,6 +77,7 @@ namespace Pixel3D.Audio
 					if(filePointer != null)
 						view.SafeMemoryMappedViewHandle.ReleasePointer();
 					filePointer = null;
+					vorbisPointer = null;
 
 					view.Dispose();
 				}
@@ -93,6 +94,9 @@ namespace Pixel3D.Audio
 		{
 			if(!AudioDevice.Available)
 				return;
+
+			if(vorbisPointer == null)
+				throw new ObjectDisposedException(typeof(AudioPackage).Name);
 			
 			// IMPORTANT: This is lock-free, because each entry only writes to its own slot (everything else is read-only)
 			int count = sounds.Length;
