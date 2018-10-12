@@ -4,12 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.IO.MemoryMappedFiles;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pixel3D.Audio
 {
-	public struct AudioPackage
+	public unsafe sealed class AudioPackage : IDisposable
 	{
-		public byte[] audioPackageBytes;
+		MemoryMappedFile file;
+		MemoryMappedViewAccessor view;
+		byte* filePointer;
+		byte* vorbisPointer;
+		
 		public int vorbisOffset;
 		public int[] offsets;
 		public OrderedDictionary<string, int> lookup;
@@ -22,46 +29,90 @@ namespace Pixel3D.Audio
 			throw new Exception("Audio Package Corrupt");
 		}
 
-		public static AudioPackage Read(string path, byte[] header)
-		{
-			AudioPackage result;
 
+
+		public AudioPackage(string path, byte[] magicNumber)
+		{
 #if !WINDOWS
 			path = path.Replace('\\', '/');
 #endif
-			result.audioPackageBytes = File.ReadAllBytes(path);
-			var ms = new MemoryStream(result.audioPackageBytes);
+			file = MemoryMappedFile.CreateFromFile(path, FileMode.Open);
+			view = file.CreateViewAccessor();
+			view.SafeMemoryMappedViewHandle.AcquirePointer(ref filePointer);
 
 			//
 			// Magic Number:
-			if (result.audioPackageBytes.Length < header.Length)
-				ThrowError();
-			for (var i = 0; i < header.Length; i++)
-				if (ms.ReadByte() != header[i])
+			for(int i = 0; i < magicNumber.Length; i++)
+				if(filePointer[i] != magicNumber[i])
 					ThrowError();
 
 			//
 			// Audio File Table:
-			var integerReadBuffer = new byte[4];
-			if (ms.Read(integerReadBuffer, 0, 4) != 4)
-				ThrowError();
-			var indexLength = BitConverter.ToInt32(integerReadBuffer, 0);
-			result.vorbisOffset = indexLength + (int) ms.Position;
+			int tableLength = *(int*)(filePointer + magicNumber.Length);
+			int tableStart = magicNumber.Length + 4;
+			vorbisPointer = filePointer + tableStart + tableLength;
 
-			using (var br = new BinaryReader(new GZipStream(ms, CompressionMode.Decompress, true)))
+			using(var stream = file.CreateViewStream(tableStart, tableLength))
 			{
-				var count = br.ReadInt32();
-				result.offsets = new int[count + 1]; // <- For simplicity, offsets[0] = 0 (start of first sound)
-				result.lookup = new OrderedDictionary<string, int>(count);
-				for (var i = 0; i < count; i++)
+				using(BinaryReader br = new BinaryReader(new GZipStream(stream, CompressionMode.Decompress, true)))
 				{
-					result.lookup.Add(br.ReadString(), i);
-					result.offsets[i + 1] = br.ReadInt32();
+					int count = br.ReadInt32();
+					offsets = new int[count+1]; // <- For simplicity, offsets[0] = 0 (start of first sound)
+					lookup = new OrderedDictionary<string, int>(count);
+					for(int i = 0; i < count; i++)
+					{
+						lookup.Add(br.ReadString(), i);
+						offsets[i+1] = br.ReadInt32();
+					}
 				}
 			}
-
-			return result;
 		}
+		
+		public void Dispose()
+		{
+			if(file != null)
+			{
+				if(view != null)
+				{
+					if(filePointer != null)
+						view.SafeMemoryMappedViewHandle.ReleasePointer();
+					filePointer = null;
+
+					view.Dispose();
+				}
+				view = null;
+
+				file.Dispose();
+			}
+			file = null;
+		}
+
+
+		// This is split out so that it can run late in the loading process (because it saturates the CPU)
+		public void FillSoundEffectArray(SafeSoundEffect[] sounds)
+		{
+			if(!AudioDevice.Available)
+				return;
+			
+			// IMPORTANT: This is lock-free, because each entry only writes to its own slot (everything else is read-only)
+			int count = sounds.Length;
+			//for (int i = 0; i < count; i++)
+			Parallel.ForEach(Enumerable.Range(0, count), i =>
+			{
+				byte* start = vorbisPointer + offsets[i];
+				byte* end = vorbisPointer + offsets[i+1];
+
+				var expectedSampleCount = *(int*)start; // <- Encoded ourselves, to save a vorbis seek (stb_vorbis_stream_length_in_samples)
+				start += 4;
+				var loopStart = *(int*)start;
+				start += 4;
+				var loopLength = *(int*)start;
+				start += 4;
+
+				sounds[i].owner = AudioSystem.createSoundEffectFromVorbisMemory(start, end, expectedSampleCount, loopStart, loopLength);
+			});
+		}
+
 
 	}
 }

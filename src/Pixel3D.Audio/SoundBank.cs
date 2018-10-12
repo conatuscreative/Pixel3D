@@ -42,38 +42,12 @@ namespace Pixel3D.Audio
 			return result;
 		}
 
-
-		// This is split out so that it can run late in the loading process (because it saturates the CPU)
-		public static unsafe void DecodeVorbisData(AudioPackage source, SoundBank destination)
+		public unsafe void FillFrom(AudioPackage source)
 		{
-			Debug.Assert(source.Count == destination.Count);
-			Debug.Assert(ReferenceEquals(source.lookup, destination.lookup));
+			Debug.Assert(source.Count == Count);
+			Debug.Assert(ReferenceEquals(source.lookup, lookup));
 
-			if(!AudioDevice.Available)
-				return;
-
-			// IMPORTANT: This is lock-free, because each entry only writes to its own slot (everything else is read-only)
-			fixed (byte* data = source.audioPackageBytes)
-			{
-				byte* vorbisStart = data + source.vorbisOffset;
-
-				int count = destination.sounds.Length;
-				//for (int i = 0; i < count; i++)
-				Parallel.ForEach(Enumerable.Range(0, count), i =>
-				{
-					byte* start = vorbisStart + source.offsets[i];
-					byte* end = vorbisStart + source.offsets[i+1];
-
-					var expectedSampleCount = *(int*)start; // <- Encoded ourselves, to save a vorbis seek (stb_vorbis_stream_length_in_samples)
-					start += 4;
-					var loopStart = *(int*)start;
-					start += 4;
-					var loopLength = *(int*)start;
-					start += 4;
-
-					destination.sounds[i].owner = AudioSystem.createSoundEffectFromVorbisMemory(start, end, expectedSampleCount, loopStart, loopLength);
-				});
-			}
+			source.FillSoundEffectArray(sounds);
 		}
 		
 	}
