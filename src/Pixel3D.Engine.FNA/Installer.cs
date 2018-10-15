@@ -116,6 +116,10 @@ namespace Pixel3D.Engine
 			{
 				AudioSystem.createSoundEffectFromVorbisMemory = VorbisDecoder.DecodeVorbis;
 			}
+
+			//
+			// Streaming Audio
+			AudioSystem.createEmptyStreamingAudio = () => new StreamingAudio();
 			
 			//
 			// Audio Diagnostics:

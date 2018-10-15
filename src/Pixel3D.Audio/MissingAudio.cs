@@ -135,7 +135,8 @@ namespace Pixel3D.Audio
 #endif
 		}
 
-		private static SafeSoundEffect missingSoundEffect, missingMusic;
+		private static SafeSoundEffect missingSoundEffect;
+		private static string missingMusic;
 
 		public static void TriedToPlayMissingCue(FadePitchPan fpp)
 		{
@@ -149,7 +150,7 @@ namespace Pixel3D.Audio
 			    sound.Play(fpp.fade, fpp.pitch, fpp.pan);
 		}
 
-		public static SafeSoundEffect GetMissingMusicSound()
+		public static string GetMissingMusicPath()
 		{
 			lock (LockObject)
 			{

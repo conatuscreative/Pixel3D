@@ -191,7 +191,7 @@ namespace Pixel3D.ActorManagement
 			if (soundRollbackManager == null) // <- Don't try to play music if we're muted!
 				return;
 
-			var music = Definitions.LocalGetSoundForMusicCue(Definitions.GetCue(symbol, "PlayMenuMusic"));
+			var music = Definitions.LocalGetPathForMusicCue(Definitions.GetCue(symbol, "PlayMenuMusic"));
 			MusicManager.SetMenuMusic(music, loop, synchronise);
 		}
 

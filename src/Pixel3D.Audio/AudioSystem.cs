@@ -30,6 +30,7 @@ namespace Pixel3D.Audio
 		public static CreateSoundEffectFromStream createSoundEffectFromStream;
 		public static CreateSoundEffectFromFile createSoundEffectFromFile;
 		public static CreateSoundEffectFromVorbisMemory createSoundEffectFromVorbisMemory;
+		public static CreateEmptyStreamingAudio createEmptyStreamingAudio;
 		public static PlaySoundEffect playSoundEffect;
 		public static IsAudioDeviceAvailable audioDeviceCheck;
 		public static ReportExpectedCue reportExpectedCue;

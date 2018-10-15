@@ -23,8 +23,7 @@ namespace Pixel3D.Engine
 			// A cusory read of stb_vorbis suggests that it will never partially fill our buffer
 			int readSamples = FAudio.stb_vorbis_get_samples_float_interleaved(vorbis, info.channels, audioDataFloat, audioDataFloat.Length);
 			Debug.Assert(readSamples == expectedSampleCount); // <- If this fires, the package is corrupt somehow (in release builds, just silently fail)
-
-
+			
 			// Annoying conversion:
 			var audioDataShort = new byte[readSamples * info.channels * 2]; // *2 for 16-bit audio
 
@@ -54,6 +53,8 @@ namespace Pixel3D.Engine
 					}
 				}
 			}
+
+			FAudio.stb_vorbis_close(vorbis);
 
 			return new SoundEffect(audioDataShort, 0, audioDataShort.Length, (int)info.sample_rate, (AudioChannels)info.channels,
 					loopStart, loopLength);

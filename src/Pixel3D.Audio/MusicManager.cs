@@ -2,6 +2,7 @@
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Pixel3D.Audio
 {
@@ -34,11 +35,32 @@ namespace Pixel3D.Audio
 					if (!AudioDevice.Available)
 						return;
 
-					foreach (var a in activeMusic)
-						if (a.instance != null)
-							AudioSystem.setVolume(a.instance, a.fade.StepNES() * _volume);
+					foreach(var a in activeMusic)
+						if(a.instance != null)
+							a.instance.Volume = a.fade.StepNES() * _volume;
 
-					foreach (var f in fadingOutMusic) AudioSystem.setVolume(f.instance, f.fade.StepNES() * _volume);
+					foreach (var f in fadingOutMusic)
+						f.instance.Volume = f.fade.StepNES() * _volume;
+				}
+			}
+		}
+
+
+		private static AudioPackage _musicSource;
+		public static AudioPackage MusicSource
+		{
+			get
+			{
+				lock(lockObject)
+				{
+					return _musicSource;
+				}
+			}
+			set
+			{
+				lock(lockObject)
+				{
+					_musicSource = value;
 				}
 			}
 		}
@@ -51,30 +73,53 @@ namespace Pixel3D.Audio
 		}
 
 
+		#region Audio Stream Pool
+
+		private static Stack<IStreamingAudio> streamingAudioPool = new Stack<IStreamingAudio>();
+
+		private static void StopAndReturnToPool(IStreamingAudio instance)
+		{
+			instance.Close();
+			streamingAudioPool.Push(instance);
+		}
+
+		private static IStreamingAudio CreateEmptyStreamingAudio()
+		{
+			IStreamingAudio instance;
+			if(streamingAudioPool.Count > 0)
+				instance = streamingAudioPool.Pop();
+			else
+				instance = AudioSystem.createEmptyStreamingAudio();
+			return instance;
+		}
+
+		#endregion
+
+
 		#region Active Music
 
 		/// <param name="synchronise">Start music immediately, don't wait for fade</param>
-		public static void SetMenuMusic(SafeSoundEffect music, bool loop = true, bool synchronise = false)
+		public static void SetMenuMusic(string musicPath, bool loop = true, bool synchronise = false)
 		{
 			lock (lockObject)
 			{
-				SetMusic(music, 0, loop, synchronise);
+				SetMusic(musicPath, 0, loop, synchronise);
 			}
 		}
 
 		/// <param name="synchronise">Start music immediately, don't wait for fade</param>
-		public static void SetGameMusic(SafeSoundEffect music, bool loop = true, bool synchronise = false)
+		public static void SetGameMusic(string musicPath, bool loop = true, bool synchronise = false)
 		{
 			lock (lockObject)
 			{
-				SetMusic(music, 1, loop, synchronise);
+				SetMusic(musicPath, 1, loop, synchronise);
 			}
 		}
 
 		private struct ActiveMusic
 		{
-			public IDisposable music; // <- used to indicate "exists" ("has value")
-			public IDisposable instance;
+			public string musicPath; // <- used to indicate "exists" ("has value")
+			public IStreamingAudio instance;
 			public float fade;
 			public bool loop;
 			public bool synchronise;
@@ -89,32 +134,28 @@ namespace Pixel3D.Audio
 			{
 				int i;
 				for (i = 0; i < activeMusic.Length; i++)
-					if (activeMusic[i].music != null)
+					if (activeMusic[i].musicPath != null)
 						break;
 				return i;
 			}
 		}
 
-		private static void SetMusic(SafeSoundEffect safeMusic, int priority, bool loop, bool synchronise)
+		private static void SetMusic(string musicPath, int priority, bool loop, bool synchronise)
 		{
 			if (!AudioDevice.Available)
 				return;
 
-		    IDisposable music = null;
-            if(safeMusic != null)
-			    music = safeMusic.owner;
-
 			// ReSharper disable once PossibleUnintendedReferenceComparison
-			if (activeMusic[priority].music == music)
+			if (activeMusic[priority].musicPath == musicPath)
 				return; // Already playing this song
 
 			// Get rid of music currently set at this level (possibly with a fade-out, if it is still playing)
-			if (activeMusic[priority].music != null)
+			if (activeMusic[priority].musicPath != null)
 			{
 				if (activeMusic[priority].instance != null)
 				{
 					if (activeMusic[priority].fade == 0)
-						activeMusic[priority].instance.Dispose();
+						StopAndReturnToPool(activeMusic[priority].instance);
 					else
 						fadingOutMusic.Add(new FadingOutMusic
 						{
@@ -125,11 +166,17 @@ namespace Pixel3D.Audio
 
 				activeMusic[priority] = default(ActiveMusic);
 			}
-
-			if (music == null)
+			
+			if (musicPath == null)
 				return; // Nothing to play
 
-			activeMusic[priority].music = music;
+			if(!_musicSource.Contains(musicPath))
+			{
+				Debug.Assert(false, "Music package is missing this path: " + musicPath);
+				return;
+			}
+
+			activeMusic[priority].musicPath = musicPath;
 			activeMusic[priority].loop = loop;
 			activeMusic[priority].synchronise = synchronise;
 
@@ -145,17 +192,21 @@ namespace Pixel3D.Audio
 				StartPlaying(priority);
 		}
 
-		private static void StartPlaying(int priority, float fade = 1f)
+		private static unsafe void StartPlaying(int priority, float fade = 1f)
 		{
-			var instance = AudioSystem.createSoundEffectInstance(activeMusic[priority].music);
-
-			var sei = new SafeSoundEffectInstance(instance);
+			var entry = _musicSource.GetEntryByPath(activeMusic[priority].musicPath);
+			if(!entry.Valid)
+				return;
+			
+			var instance = CreateEmptyStreamingAudio();
+			instance.Open(entry.VorbisStart, entry.VorbisEnd, entry.LoopStart);
+			
 			activeMusic[priority].instance = instance;
 			activeMusic[priority].fade = fade;
 
-			sei.Volume = _volume * fade;
-			sei.IsLooped = activeMusic[priority].loop;
-			sei.Play();
+			instance.Volume = _volume * fade;
+			instance.IsLooped = activeMusic[priority].loop;
+			instance.Play();
 		}
 
 		private static bool CanStartSong(int priority, float sufficientFade)
@@ -164,7 +215,7 @@ namespace Pixel3D.Audio
 				return false;
 
 			for (var i = 0; i < activeMusic.Length; i++)
-				if (activeMusic[i].music != null)
+				if (activeMusic[i].musicPath != null)
 				{
 					if (i < priority)
 						return false; // never start playing something when we have a higher priority to play
@@ -190,7 +241,7 @@ namespace Pixel3D.Audio
 				// Fade in/out the active music:
 				var bestPriority = activeMusic.Length;
 				for (var i = 0; i < activeMusic.Length; i++) // highest to lowest priority
-					if (activeMusic[i].music != null)
+					if (activeMusic[i].musicPath != null)
 					{
 						if (i < bestPriority)
 							bestPriority = i;
@@ -211,7 +262,7 @@ namespace Pixel3D.Audio
 									if (CanStartSong(i, sufficientFadeOutToFadeIn))
 									{
 										if (activeMusic[i].loop) // NOTE: only looping music gets paused when silent
-											AudioSystem.playSoundEffectInstance(activeMusic[i].instance); // unpause
+											activeMusic[i].instance.Play(); // unpause
 									}
 									else
 									{
@@ -223,8 +274,7 @@ namespace Pixel3D.Audio
 								if (activeMusic[i].fade > 1f)
 									activeMusic[i].fade = 1f;
 
-								AudioSystem.setVolume(activeMusic[i].instance,
-									_volume * activeMusic[i].fade.StepNES());
+								activeMusic[i].instance.Volume = _volume * activeMusic[i].fade.StepNES();
 							}
 						}
 
@@ -238,15 +288,14 @@ namespace Pixel3D.Audio
 									{
 										activeMusic[i].fade = 0f;
 
-										AudioSystem.setVolume(activeMusic[i].instance, 0f);
+										activeMusic[i].instance.Volume = 0f;
 
 										if (activeMusic[i].loop) // NOTE: only looping music gets paused when silent
-											AudioSystem.pauseSoundEffectInstance(activeMusic[i].instance);
+											activeMusic[i].instance.Pause();
 									}
 									else
 									{
-										AudioSystem.setVolume(activeMusic[i].instance,
-											_volume * activeMusic[i].fade.StepNES());
+										activeMusic[i].instance.Volume = _volume * activeMusic[i].fade.StepNES();
 									}
 								}
 					}
@@ -255,12 +304,13 @@ namespace Pixel3D.Audio
 
 		#endregion
 
+
 		#region Fading Out Music
 
 		private struct FadingOutMusic
 		{
 			public float fade;
-			public IDisposable instance;
+			public IStreamingAudio instance;
 			public bool fastFade;
 		}
 
@@ -290,12 +340,12 @@ namespace Pixel3D.Audio
 
 				if (f.fade <= 0)
 				{
-					f.instance.Dispose(); // stops the sound
+					StopAndReturnToPool(f.instance);
 					fadingOutMusic.RemoveAt(i);
 					continue;
 				}
 
-				AudioSystem.setVolume(f.instance, _volume * f.fade.StepNES());
+				f.instance.Volume = _volume * f.fade.StepNES();
 				fadingOutMusic[i] = f;
 
 				i++;
@@ -303,5 +353,6 @@ namespace Pixel3D.Audio
 		}
 
 		#endregion
+
 	}
 }

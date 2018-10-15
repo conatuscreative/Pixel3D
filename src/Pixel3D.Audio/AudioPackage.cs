@@ -2,6 +2,7 @@
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.IO.MemoryMappedFiles;
@@ -16,7 +17,7 @@ namespace Pixel3D.Audio
 		MemoryMappedViewAccessor view;
 		byte* filePointer;
 		byte* vorbisPointer;
-		
+
 		public int vorbisOffset;
 		public int[] offsets;
 		public OrderedDictionary<string, int> lookup;
@@ -67,7 +68,7 @@ namespace Pixel3D.Audio
 				}
 			}
 		}
-		
+
 		public void Dispose()
 		{
 			if(file != null)
@@ -89,6 +90,41 @@ namespace Pixel3D.Audio
 		}
 
 
+		internal unsafe struct Entry
+		{
+			public byte* start;
+			public byte* end;
+
+			public bool Valid { get { return start != null; } }
+
+			public int ExpectedSamples { get { return *(int*)start; } } // <- Encoded ourselves, to save a vorbis seek (stb_vorbis_stream_length_in_samples)
+			public int LoopStart { get { return *(int*)(start+4); } }
+			public int LoopLength { get { return *(int*)(start+8); } }
+			public byte* VorbisStart { get { return start + 12; } }
+
+			public byte* VorbisEnd { get { return end; } }
+		}
+
+		internal Entry GetEntryByIndex(int i)
+		{
+			Debug.Assert((uint)i < Count);
+
+			Entry entry;
+			entry.start = vorbisPointer + offsets[i];
+			entry.end = vorbisPointer + offsets[i+1];
+			return entry;
+		}
+
+		internal Entry GetEntryByPath(string path)
+		{
+			int index;
+			if(!lookup.TryGetValue(path, out index))
+				return default(Entry);
+			else
+				return GetEntryByIndex(index);
+		}
+
+
 		// This is split out so that it can run late in the loading process (because it saturates the CPU)
 		public void FillSoundEffectArray(SafeSoundEffect[] sounds)
 		{
@@ -103,20 +139,17 @@ namespace Pixel3D.Audio
 			//for (int i = 0; i < count; i++)
 			Parallel.ForEach(Enumerable.Range(0, count), i =>
 			{
-				byte* start = vorbisPointer + offsets[i];
-				byte* end = vorbisPointer + offsets[i+1];
+				var entry = GetEntryByIndex(i);
 
-				var expectedSampleCount = *(int*)start; // <- Encoded ourselves, to save a vorbis seek (stb_vorbis_stream_length_in_samples)
-				start += 4;
-				var loopStart = *(int*)start;
-				start += 4;
-				var loopLength = *(int*)start;
-				start += 4;
-
-				sounds[i].owner = AudioSystem.createSoundEffectFromVorbisMemory(start, end, expectedSampleCount, loopStart, loopLength);
+				sounds[i].owner = AudioSystem.createSoundEffectFromVorbisMemory(entry.VorbisStart, entry.VorbisEnd,
+						entry.ExpectedSamples, entry.LoopStart, entry.LoopLength);
 			});
 		}
 
 
+		public bool Contains(string musicPath)
+		{
+			return lookup.ContainsKey(musicPath);
+		}
 	}
 }

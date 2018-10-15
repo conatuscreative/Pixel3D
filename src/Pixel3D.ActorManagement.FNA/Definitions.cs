@@ -33,24 +33,25 @@ namespace Pixel3D.ActorManagement
 			return soundBank[path];
 		}
 
+		// TODO: Cleanup: Get rid of or move this method?
 		/// <summary>Return the sound for a given music cue. Not to be used in the simulation (play it immediately).</summary>
-		public SafeSoundEffect LocalGetSoundForMusicCue(Cue cue)
+		public string LocalGetPathForMusicCue(Cue cue)
 		{
-			SafeSoundEffect music = null;
+			string musicPath = null;
 			if (ReferenceEquals(cue, missingCue))
 			{
 #if DEVELOPER
-                music = MissingAudio.GetMissingMusicSound();
+				musicPath = MissingAudio.GetMissingMusicPath(); // <- TODO: Put me back?
 #endif
 			}
 			else if (cue != null && cue.SoundCount > 0)
 			{
 				// Assumption: Music Cue is just a single sound with no variations!
 				Debug.Assert(cue.SoundCount == 1);
-				music = GetSound(cue, 0);
+				musicPath = cue.sounds[0].path;
 			}
 
-			return music;
+			return musicPath;
 		}
 
 		#endregion
