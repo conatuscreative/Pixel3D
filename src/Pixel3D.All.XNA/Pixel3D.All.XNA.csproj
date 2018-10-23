@@ -154,6 +154,9 @@
     <Compile Include="..\Pixel3D.Audio\AudioMath.cs">
       <Link>Audio\AudioMath.cs</Link>
     </Compile>
+    <Compile Include="..\Pixel3D.Audio\AudioPackage.cs">
+      <Link>Audio\AudioPackage.cs</Link>
+    </Compile>
     <Compile Include="..\Pixel3D.Audio\AudioRectangle.cs">
       <Link>Audio\AudioRectangle.cs</Link>
     </Compile>
@@ -168,6 +171,9 @@
     </Compile>
     <Compile Include="..\Pixel3D.Audio\CreateSoundEffectFromStream.cs">
       <Link>Audio\CreateSoundEffectFromStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\CreateSoundEffectFromVorbisMemory.cs">
+      <Link>Audio\CreateSoundEffectFromVorbisMemory.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.Audio\CreateSoundEffectInstance.cs">
       <Link>Audio\CreateSoundEffectInstance.cs</Link>
@@ -247,9 +253,6 @@
     <Compile Include="..\Pixel3D.Audio\PlaySoundEffectInstance.cs">
       <Link>Audio\PlaySoundEffectInstance.cs</Link>
     </Compile>
-    <Compile Include="..\Pixel3D.Audio\ReadAudioPackage.cs">
-      <Link>Audio\ReadAudioPackage.cs</Link>
-    </Compile>
     <Compile Include="..\Pixel3D.Audio\ReportExpectedCue.cs">
       <Link>Audio\ReportExpectedCue.cs</Link>
     </Compile>
@@ -282,6 +285,9 @@
     </Compile>
     <Compile Include="..\Pixel3D.Audio\Sound.cs">
       <Link>Audio\Sound.cs</Link>
+    </Compile>
+    <Compile Include="..\Pixel3D.Audio\SoundBank.cs">
+      <Link>Audio\SoundBank.cs</Link>
     </Compile>
     <Compile Include="..\Pixel3D.Audio\SoundEffectManager.cs">
       <Link>Audio\SoundEffectManager.cs</Link>
