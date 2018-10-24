@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Pixel3D.Audio
 {
@@ -14,7 +15,7 @@ namespace Pixel3D.Audio
 	public class SafeSoundEffect : IDisposable
 	{
 		/// <summary>The underlying sound effect (can be null)</summary>
-		public IDisposable owner; // <- TODO: RENAME: "owner" is a misnomer (we own the underlying sound effect)
+		public SoundEffect inner;
 
 	    static SafeSoundEffect()
 	    {
@@ -25,25 +26,25 @@ namespace Pixel3D.Audio
 		{
 		}
 
-		public SafeSoundEffect(IDisposable owner)
+		public SafeSoundEffect(SoundEffect inner)
 		{
-			this.owner = owner;
+			this.inner = inner;
 		}
 
 		public void Dispose()
 		{
-            if(owner != null)
-			   owner.Dispose();
+            if(inner != null)
+			   inner.Dispose();
 		}
 
 		/// <summary>How long is this sound effect in frames at a given pitch (NOTE: this value is not network-safe)</summary>
 		public int DurationInFrames(float pitch)
 		{
-			if (owner == null)
+			if (inner == null)
 				return 1; // <- oh well;
 
 			// Making a reasonably safe assumption about how XNA pitch-bending works here:
-			var seconds = AudioSystem.getDuration(owner).TotalSeconds;
+			var seconds = inner.Duration.TotalSeconds;
 			seconds = seconds / Math.Pow(2.0, pitch); // <- pitch bend changes duration
 
 			return (int) Math.Ceiling(seconds * 60);
@@ -53,14 +54,8 @@ namespace Pixel3D.Audio
 
 		public string Name
 		{
-		    get
-		    {
-                return AudioSystem.getName(owner);
-		    }
-		    set
-		    {
-		        AudioSystem.setName(owner, value);
-		    }
+		    get { return inner.Name; }
+		    set { inner.Name = value; }
 		}
 
 		public bool Play()
@@ -68,38 +63,41 @@ namespace Pixel3D.Audio
 			// float volume, float pitch, float pan
 			// soundEffect.Play(_sfxVolume, 0, 0);
 
-			return owner != null && AudioSystem.playSoundEffect(owner, SoundEffectVolume, 0f, 0f);
+			return inner != null && inner.Play(SoundEffectVolume, 0f, 0f);
 		}
 
 		public bool Play(float volume, float pitch, float pan)
 		{
-			return owner != null && AudioSystem.playSoundEffect(owner, volume * SoundEffectVolume, pitch, pan);
+			return inner != null && inner.Play(volume * SoundEffectVolume, pitch, pan);
 		}
 
 		public bool Play(FadePitchPan fpp)
 		{
-			return owner != null &&
-			       AudioSystem.playSoundEffect(owner, fpp.fade * SoundEffectVolume, fpp.pitch, fpp.pan);
+			return inner != null && inner.Play(fpp.fade * SoundEffectVolume, fpp.pitch, fpp.pan);
 		}
 
 		/// <summary>Create an instance of the sound effect (can return null)</summary>
 		public SafeSoundEffectInstance CreateInstance()
 		{
-			return new SafeSoundEffectInstance(AudioSystem.createSoundEffectInstance(owner));
+			return new SafeSoundEffectInstance(inner.CreateInstance());
 		}
 
 		public static SafeSoundEffect FromStream(Stream stream)
 		{
 			if (!AudioDevice.Available)
 				return new SafeSoundEffect();
-			return AudioSystem.createSoundEffectFromStream(stream);
+			return new SafeSoundEffect(SoundEffect.FromStream(stream));
 		}
 
 		public static SafeSoundEffect FromFile(string path)
 		{
 			if (!AudioDevice.Available)
 				return new SafeSoundEffect();
-			return AudioSystem.createSoundEffectFromFile(path);
+
+			using (var fs = File.OpenRead(path))
+			{
+				return new SafeSoundEffect(SoundEffect.FromStream(fs));
+			}
 		}
 
 		#endregion
@@ -145,13 +143,12 @@ namespace Pixel3D.Audio
 		{
 		    get
 		    {
-                return AudioDevice.Available ? AudioSystem.getMasterVolume(null) : 0f;
+                return AudioDevice.Available ? SoundEffect.MasterVolume : 0f;
 		    }
 			set
 			{
-				if (AudioDevice.Available && AudioSystem.getMasterVolume(null) != value
-				) // <- avoid touching native sound engine if we'd just set the same value
-					AudioSystem.setMasterVolume(null, value);
+				if (AudioDevice.Available && Math.Abs(SoundEffect.MasterVolume - value) > 0.0f) // <- avoid touching native sound engine if we'd just set the same value
+					SoundEffect.MasterVolume = value;
 			}
 		}
 

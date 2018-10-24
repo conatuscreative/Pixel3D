@@ -1,17 +1,17 @@
 ﻿// Copyright © Conatus Creative, Inc. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Threading.Tasks;
+using Pixel3D.Engine;
 
 namespace Pixel3D.Audio
 {
-	public unsafe sealed class AudioPackage : IDisposable
+	public sealed unsafe class AudioPackage : IDisposable
 	{
 		MemoryMappedFile file;
 		MemoryMappedViewAccessor view;
@@ -29,9 +29,7 @@ namespace Pixel3D.Audio
 		{
 			throw new Exception("Audio Package Corrupt");
 		}
-
-
-
+		
 		public AudioPackage(string path, byte[] magicNumber)
 		{
 #if !WINDOWS
@@ -89,7 +87,6 @@ namespace Pixel3D.Audio
 			file = null;
 		}
 
-
 		internal unsafe struct Entry
 		{
 			public byte* start;
@@ -141,7 +138,7 @@ namespace Pixel3D.Audio
 			{
 				var entry = GetEntryByIndex(i);
 
-				sounds[i].owner = AudioSystem.createSoundEffectFromVorbisMemory(entry.VorbisStart, entry.VorbisEnd,
+				sounds[i].inner = VorbisDecoder.DecodeVorbis(entry.VorbisStart, entry.VorbisEnd,
 						entry.ExpectedSamples, entry.LoopStart, entry.LoopLength);
 			});
 		}

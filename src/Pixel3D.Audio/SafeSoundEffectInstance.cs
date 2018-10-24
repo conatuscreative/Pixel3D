@@ -1,98 +1,75 @@
 ﻿// Copyright © Conatus Creative, Inc. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
 using System;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Pixel3D.Audio
 {
 	public class SafeSoundEffectInstance : IDisposable
 	{
 		/// <summary>The underlying sound effect instance (cannot be null)</summary>
-		private readonly IDisposable owner;
+		private readonly SoundEffectInstance inner;
 
-		public SafeSoundEffectInstance(IDisposable owner)
+		public SafeSoundEffectInstance(SoundEffectInstance inner)
 		{
-			this.owner = owner;
+			this.inner = inner;
 		}
 
-	    public SoundState State { get { return AudioSystem.getSoundState(owner); } }
+	    public SoundState State
+	    {
+		    get { return inner.State; }
+	    }
 
 		#region Wrapper
 
 		public float Volume
 		{
-		    get
-		    {
-		        return AudioSystem.getVolume(owner);
-		    }
-		    set
-		    {
-		        AudioSystem.setVolume(owner, value);
-		    }
+		    get { return inner.Volume; }
+		    set { inner.Volume = value; }
 		}
 
 		public float Pitch
 		{
-		    get
-		    {
-                return AudioSystem.getPitch(owner);
-		    }
-		    set
-		    {
-		        AudioSystem.setPitch(owner, value);
-		    }
+		    get { return inner.Pitch; }
+		    set { inner.Pitch = value; }
 		}
 
 		public float Pan
 		{
-		    get
-		    {
-                return AudioSystem.getPan(owner);
-		    }
-		    set
-		    {
-		        AudioSystem.setPan(owner, value);
-		    }
+		    get { return inner.Pan; }
+		    set { inner.Pan = value; }
 		}
 
 		public bool IsLooped
 		{
-		    get
-		    {
-                return AudioSystem.getIsLooped(owner);
-		    }
-		    set
-		    {
-		        AudioSystem.setIsLooped(owner, value);
-		    }
+		    get { return inner.IsLooped; }
+		    set { inner.IsLooped = value; }
 		}
 
 		public bool IsDisposed
 		{
-		    get
-		    {
-                return AudioSystem.getIsDisposed(owner);
-		    }
+		    get { return inner.IsDisposed; }
 		}
 
 		public void Play()
 		{
-			AudioSystem.playSoundEffectInstance(owner);
+			inner.Play();
 		}
 
 		public void Stop()
 		{
-			AudioSystem.stopSoundEffectInstance(owner);
+			inner.Stop();
 		}
 
 		public void Pause()
 		{
-			AudioSystem.pauseSoundEffectInstance(owner);
+			inner.Pause();
 		}
 
 		public void Dispose()
 		{
-            if(owner != null)
-               owner.Dispose();
+            if(inner != null)
+               inner.Dispose();
 		}
 
 		#endregion

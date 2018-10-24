@@ -19,7 +19,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
     <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj" />
+    <ProjectReference Include="..\Pixel3D.FNA\Pixel3D.FNA.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Pixel3D.Engine;
 
 namespace Pixel3D.Audio
 {
@@ -89,7 +90,7 @@ namespace Pixel3D.Audio
 			if(streamingAudioPool.Count > 0)
 				instance = streamingAudioPool.Pop();
 			else
-				instance = AudioSystem.createEmptyStreamingAudio();
+				instance = new StreamingAudio();
 			return instance;
 		}
 

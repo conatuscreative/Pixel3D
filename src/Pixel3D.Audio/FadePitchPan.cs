@@ -9,9 +9,7 @@ namespace Pixel3D.Audio
 	{
 		public float fade, pitch, pan;
 
-		public FadePitchPan(PitchPan pitchPan) : this(pitchPan.pitch, pitchPan.pitch)
-		{
-		}
+		public FadePitchPan(PitchPan pitchPan) : this(pitchPan.pitch, pitchPan.pitch) { }
 
 		public FadePitchPan(float pitch, float pan)
 		{
@@ -19,8 +17,7 @@ namespace Pixel3D.Audio
 			var yFade = Math.Abs(pan).MapFrom(1.2f, 1.6f).Clamp();
 			fade = ((float) Math.Sqrt(xFade * xFade + yFade * yFade)).Clamp().MapTo(1f, 0f); // <- circular edges
 
-			this.pitch =
-				fade.MapFrom(0f, 0.3f).Clamp().MapTo(-0.15f, 0f); // <- subtle pitch-down effect at the edges :)
+			this.pitch = fade.MapFrom(0f, 0.3f).Clamp().MapTo(-0.15f, 0f); // <- subtle pitch-down effect at the edges :)
 
 			if (pitch < 0)
 				this.pan = -pan.MapFrom(-0.4f, -1.2f).Clamp();
@@ -37,7 +34,9 @@ namespace Pixel3D.Audio
 
 		public void ApplyTo(SafeSoundEffectInstance soundEffectInstance, float mixVolume)
 		{
-			AudioSystem.setFadePitchPan(soundEffectInstance, fade * mixVolume, pitch, pan);
+			soundEffectInstance.Volume = fade * mixVolume;
+			soundEffectInstance.Pitch = pitch;
+			soundEffectInstance.Pan = pan;
 		}
 	}
 }

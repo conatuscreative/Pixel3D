@@ -1,9 +1,11 @@
 ﻿// Copyright © Conatus Creative, Inc. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Pixel3D.Animations;
 
 namespace Pixel3D.Audio
 {
@@ -22,8 +24,22 @@ namespace Pixel3D.Audio
 				added = MissingCues.Add(name);
 			}
 
-			if (added && AudioSystem.reportMissingCue != null)
-			    AudioSystem.reportMissingCue.Invoke(name, debugContext);
+			if (added)
+			{
+				string c;
+				if (debugContext is string s)
+					c = s;
+				else if (debugContext is IEditorNameProvider provider)
+					c = $"{provider.GetType().Name}: {provider.EditorName}";
+				else if (debugContext != null)
+					c = debugContext.ToString();
+				else
+					c = "[no context]";
+
+				string message = $"Missing cue \"{name}\" (context: {c})";
+				Debug.WriteLine(message);
+				Log.Current.Warn(message);
+			}
 		}
 
 		private class ExpectedCueInfo
@@ -71,8 +87,25 @@ namespace Pixel3D.Audio
 				added = ExpectedCues.Add(eci);
 			}
 
-			if (added && AudioSystem.reportExpectedCue != null)
-				AudioSystem.reportExpectedCue.Invoke(context, args);
+			if (added)
+			{
+				AnimationSet animationSet = args[0] as AnimationSet;
+				Animation animation = args[1] as Animation;
+				int frame = (int)args[2];
+
+				string format;
+				if (animation == null)
+					format = "Expected cue for \"{0}\" on AnimationSet = {1}";
+				else if (frame == -1)
+					format = "Expected cue for \"{0}\" on Animation = {2} (AnimationSet = {1})";
+				else
+					format = "Expected cue for \"{0}\" on Frame = {3} (AnimationSet = {1}, Animation = {2})";
+
+				string message = string.Format(format, context, animationSet == null ? "???" : animationSet.friendlyName,
+					animation == null ? "???" : animation.friendlyName, frame);
+				Debug.WriteLine(message);
+				Log.Current.Warn(message);
+			}
 		}
 
 		#endregion
