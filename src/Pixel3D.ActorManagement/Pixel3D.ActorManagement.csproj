@@ -15,6 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ThirdParty\FNA\FNA.csproj" />
     <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj" />
     <ProjectReference Include="..\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj" />
     <ProjectReference Include="..\Pixel3D.Strings\Pixel3D.Strings.csproj" />

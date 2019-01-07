@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
+    <ProjectReference Include="..\..\ThirdParty\FNA\FNA.csproj" />
   </ItemGroup>
 
 </Project>

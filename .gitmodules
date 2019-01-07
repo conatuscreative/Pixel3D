@@ -1,0 +1,6 @@
+[submodule "ThirdParty/FNA"]
+	path = ThirdParty/FNA
+	url = git@github.com:FNA-XNA/FNA.git
+[submodule "ThirdParty/fnalibs"]
+	path = ThirdParty/fnalibs
+	url = git@github.com:conatuscreative/fnalibs.git
