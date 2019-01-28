@@ -22,11 +22,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
     <ProjectReference Include="..\..\..\Pixel3D\src\Pixel3D.Common\Pixel3D.Common.csproj" />
     <ProjectReference Include="..\Lidgren.Network\Lidgren.Network.csproj" />
     <ProjectReference Include="..\Pixel3D.Network.Rollback\Pixel3D.Network.Rollback.csproj" />
     <ProjectReference Include="..\Pixel3D.P2P\Pixel3D.P2P.csproj" />
+    <ProjectReference Include="..\Pixel3D\Pixel3D.csproj" />
   </ItemGroup>
 
 </Project>
