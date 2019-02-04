@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <RootNamespace>Pixel3D.ActorManagement</RootNamespace>
     <Configurations>Debug;Release;Retail</Configurations>
   </PropertyGroup>
@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ThirdParty\FNA\FNA.csproj" />
+    <ProjectReference Include="..\..\ThirdParty\FNA\FNA.Core.csproj" />
     <ProjectReference Include="..\Pixel3D.Audio\Pixel3D.Audio.csproj" />
     <ProjectReference Include="..\Pixel3D.StateManagement\Pixel3D.StateManagement.csproj" />
     <ProjectReference Include="..\Pixel3D.Strings\Pixel3D.Strings.csproj" />

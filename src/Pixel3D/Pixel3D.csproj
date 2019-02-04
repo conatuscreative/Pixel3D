@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;netstandard20</TargetFrameworks>
+    <TargetFrameworks>netstandard20</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Version>1.0.13</Version>
     <Authors>Conatus Creative Inc.</Authors>
@@ -36,7 +36,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ThirdParty\FNA\FNA.csproj" />
+    <ProjectReference Include="..\..\ThirdParty\FNA\FNA.Core.csproj" />
     <ProjectReference Include="..\CRTSim\CRTSim.csproj" />
     <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj" />
   </ItemGroup>
