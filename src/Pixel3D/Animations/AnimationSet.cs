@@ -4,10 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Pixel3D.Animations.Serialization;
 using Pixel3D.Extensions;
+using Pixel3D.FrameworkExtensions;
+using Pixel3D.Serialization;
 
 namespace Pixel3D.Animations
 {
@@ -571,6 +575,254 @@ namespace Pixel3D.Animations
             RegenerateAlphaMasks();
             RegeneratePhysicsAndDepthBounds();
         }
+
+        #region Serialization
+
+        [SerializationIgnoreDelegates]
+        public void Serialize(AnimationSerializeContext context)
+        {
+            if (Asserts.enabled && !ValidateAlphaMasks())
+                throw new InvalidOperationException(
+                    "Attempting to save animation set with missing or invalid alpha masks");
+
+            context.bw.WriteNullableString(friendlyName);
+            context.bw.Write(importOrigin);
+            context.bw.WriteNullableString(behaviour);
+
+            if (context.bw.WriteBoolean(Heightmap != null))
+                Heightmap.Serialize(context);
+
+
+            // If you don't seem to have set any physics bounds, I will just generate them...
+            if (physicsStartX == 0 && physicsEndX == 1 && physicsStartZ == 0 &&
+                physicsEndZ == 1 && physicsHeight == 0 ||
+                physicsEndX - physicsStartX <= 0)
+                AutoGeneratePhysicsAndDepthBounds();
+
+
+            // NOTE: only writing out values that cannot be auto-generated
+            if (Heightmap != null)
+            {
+                Debug.Assert(!Asserts.enabled || Heightmap.IsObjectHeightmap ||
+                             physicsHeight == 0);
+                context.bw.Write(physicsHeight);
+                if (physicsHeight > 0)
+                    depthBounds.Serialize(context);
+                context.bw.Write(flatDirection); // <- for the sake of editing, keep this value around
+            }
+            else
+            {
+                context.bw.Write(physicsStartX);
+                context.bw.Write(physicsEndX);
+                context.bw.Write(physicsStartZ);
+                context.bw.Write(physicsHeight);
+                context.bw.Write(flatDirection);
+
+                if (physicsHeight == 0)
+                    context.bw.Write(physicsEndZ);
+            }
+
+            if (context.Version >= 38)
+                context.bw.Write(coplanarPriority);
+
+            if (context.Version >= 36)
+                context.bw.Write(doAboveCheck);
+
+            if (context.bw.WriteBoolean(Ceiling != null))
+                Ceiling.Serialize(context);
+
+            animations.SerializeTagLookup(context, a => a.Serialize(context));
+
+            // Unused Animations
+            {
+                if (unusedAnimations == null)
+                {
+                    context.bw.Write(0); // unused animations is lazy-initialized
+                }
+                else
+                {
+                    context.bw.Write(unusedAnimations.Count);
+                    foreach (var animation in unusedAnimations)
+                        animation.Serialize(context);
+                }
+            }
+
+            context.bw.WriteNullableString(cue);
+            
+            // Shadow layers:
+            {
+                if (shadowLayers == null)
+                {
+                    context.bw.Write(0);
+                }
+                else
+                {
+                    context.bw.Write(shadowLayers.Count);
+                    foreach (var sl in shadowLayers)
+                    {
+                        context.bw.Write(sl.startHeight);
+                        sl.shadowSpriteRef.Serialize(context);
+                    }
+
+                    RecalculateCachedShadowBounds();
+                    context.bw.Write(cachedShadowBounds);
+                }
+            }
+
+            // Properties:
+            if (context.Version >= 40)
+            {
+                context.bw.Write(properties.Count);
+                foreach (var kvp in properties)
+                {
+                    context.bw.Write(kvp.Key);
+                    context.bw.Write(kvp.Value ?? string.Empty); // (null value should probably be blocked by editor, but being safe...)
+                }
+            }
+        }
+
+        /// <summary>Deserialize into new object instance</summary>
+        [SerializationIgnoreDelegates]
+        public AnimationSet(AnimationDeserializeContext context)
+        {
+            friendlyName = context.br.ReadNullableString();
+            importOrigin = context.br.ReadPoint();
+            behaviour = context.br.ReadNullableString();
+
+            if (context.br.ReadBoolean())
+                Heightmap = new Heightmap(context);
+
+            if (Heightmap != null)
+            {
+                physicsStartX = Heightmap.StartX;
+                physicsEndX = Heightmap.EndX;
+                physicsStartZ = Heightmap.StartZ;
+                physicsEndZ = Heightmap.EndZ;
+
+                // Assume that reading is faster than walking the heightmap:
+                physicsHeight = context.br.ReadInt32();
+                if (physicsHeight > 0)
+                    depthBounds = new DepthBounds(context);
+                flatDirection =
+                    context.br.ReadOblique(); // <- for the sake of editing, keep this value around
+            }
+            else
+            {
+                physicsStartX = context.br.ReadInt32();
+                physicsEndX = context.br.ReadInt32();
+                physicsStartZ = context.br.ReadInt32();
+                physicsHeight = context.br.ReadInt32();
+                flatDirection = context.br.ReadOblique();
+
+                if (physicsHeight == 0)
+                    physicsEndZ =
+                        context.br.ReadInt32(); // physicsEndZ gets auto-set during regen, except for carpets
+
+                RegenerateDepthBounds(); // <- Know this is reasonably fast to generate
+            }
+
+            if (context.Version >= 38)
+                coplanarPriority = context.br.ReadInt32();
+
+            if (context.Version >= 36)
+                doAboveCheck = context.br.ReadBoolean();
+
+            if (context.br.ReadBoolean())
+                Ceiling = new Heightmap(context);
+
+            animations = context.DeserializeTagLookup(() => new Animation(context));
+
+            // Unused Animations
+            {
+                int count = context.br.ReadInt32();
+                if (count > 0) // unusedAnimations is lazy-initialized
+                {
+                    unusedAnimations = new List<Animation>(count);
+                    for (var i = 0; i < count; i++)
+                        unusedAnimations.Add(new Animation(context));
+                }
+            }
+
+            cue = context.br.ReadNullableString();
+
+            // Shadow layers
+            {
+                int shadowLayerCount = context.br.ReadInt32();
+                if (shadowLayerCount <= 0)
+                {
+                    shadowLayers = null;
+                }
+                else
+                {
+                    shadowLayers = new List<ShadowLayer>();
+                    for (var i = 0; i < shadowLayerCount; i++)
+                        shadowLayers.Add(new ShadowLayer(context.br.ReadInt32(), new SpriteRef(context)));
+
+                    cachedShadowBounds = context.br.ReadBounds();
+                }
+            }
+
+            // Properties:
+            if (context.Version >= 40)
+            {
+                int count = context.br.ReadInt32();
+                for (int i = 0; i < count; i++)
+                    properties.Add(context.br.ReadString(), context.br.ReadString());
+            }
+        }
+
+        /// <summary>Check that an AnimationSet round-trips through serialization cleanly</summary>
+        public void RoundTripCheck(GraphicsDevice graphicsDevice, bool useExternalImages)
+        {
+            // Serialize a first time
+            var firstMemoryStream = new MemoryStream();
+            var firstBinaryWriter = new BinaryWriter(firstMemoryStream);
+            ImageWriter firstImageWriter = null;
+            if (useExternalImages)
+            {
+                firstImageWriter = new ImageWriter();
+                RegisterImages(firstImageWriter);
+                firstImageWriter.WriteOutAllImages(firstMemoryStream);
+            }
+
+            var firstSerializeContext = new AnimationSerializeContext(firstBinaryWriter, firstImageWriter);
+            Serialize(firstSerializeContext);
+            var originalData = firstMemoryStream.ToArray();
+
+            // Then deserialize that data
+            var br = new BinaryReader(new MemoryStream(originalData));
+            ImageBundle imageBundle = null;
+            if (useExternalImages)
+            {
+                var helper = new SimpleTextureLoadHelper(graphicsDevice);
+                imageBundle = new ImageBundle();
+                br.BaseStream.Position = imageBundle.ReadAllImages(originalData, (int)br.BaseStream.Position, helper);
+            }
+
+            var deserializeContext = new AnimationDeserializeContext(br, imageBundle, graphicsDevice);
+            var deserialized = new AnimationSet(deserializeContext);
+
+            // Then serialize that deserialized data and see if it matches
+            // (Ideally we'd recursivly check the AnimationSet to figure out if it matches, but that's a bit too hard)
+            var secondMemoryStream = new MemoryCompareStream(originalData);
+            var secondBinaryWriter = new BinaryWriter(secondMemoryStream);
+            ImageWriter secondImageWriter = null;
+            if (useExternalImages)
+            {
+                secondImageWriter = new ImageWriter();
+                deserialized.RegisterImages(secondImageWriter);
+                secondImageWriter.WriteOutAllImages(secondMemoryStream);
+            }
+
+            var secondSerializeContext = new AnimationSerializeContext(secondBinaryWriter, secondImageWriter);
+            deserialized.Serialize(secondSerializeContext);
+
+            // Clean-up:
+            if (imageBundle != null)
+                imageBundle.Dispose();
+        }
+
+        #endregion
     }
 }
 

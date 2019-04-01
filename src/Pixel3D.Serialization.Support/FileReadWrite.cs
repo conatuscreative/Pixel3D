@@ -88,7 +88,7 @@ namespace Pixel3D
 					using (var br = new BinaryReader(unzip))
 					{
 						var deserializeContext = new AnimationDeserializeContext(br, imageBundle, graphicsDevice);
-						return deserializeContext.DeserializeAnimationSet();
+						return new AnimationSet(deserializeContext);
 					}
 				}
 			}

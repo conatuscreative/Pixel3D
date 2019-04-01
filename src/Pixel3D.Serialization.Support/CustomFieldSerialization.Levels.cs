@@ -550,17 +550,10 @@ namespace Pixel3D
 		}
 
 		public static AnimationSet ReadAnimationSet(this LevelDeserializeContext context)
-		{
-			bool externalReference = context.br.ReadBoolean();
-			if (externalReference)
-			{
-				return context.assetProvider.Load<AnimationSet>(context.br.ReadString());
-			}
-			else
-			{
-				return context.animationDeserializeContext.DeserializeAnimationSet();
-			}
-		}
+        {
+            bool externalReference = context.br.ReadBoolean();
+            return externalReference ? context.assetProvider.Load<AnimationSet>(context.br.ReadString()) : new AnimationSet(context.animationDeserializeContext);
+        }
 
 		#endregion
 	}

@@ -5,6 +5,8 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pixel3D.Extensions;
+using Pixel3D.FrameworkExtensions;
+using Pixel3D.Serialization;
 
 namespace Pixel3D.Animations
 {
@@ -316,6 +318,118 @@ namespace Pixel3D.Animations
 				return masks.Remove(key);
 			}
             return false;
+        }
+
+        #endregion
+
+        #region Serialization
+
+        [SerializationIgnoreDelegates]
+        public void Serialize(AnimationSerializeContext context)
+        {
+            context.bw.Write(delay);
+            context.bw.Write(positionDelta);
+            context.bw.Write(shadowOffset);
+
+            context.bw.Write(SnapToGround);
+
+            // NOTE: This walks the layer linked list twice, but is only O(n), so no biggie
+            int layerCount = layers.Count;
+            context.bw.Write(layerCount);
+            foreach (var cel in layers)
+                cel.Serialize(context);
+
+            masks.SerializeOrderedDictionary(context, m => m.Serialize(context));
+
+            outgoingAttachments.SerializeOrderedDictionary(context, oa => oa.Serialize(context));
+            incomingAttachments.SerializeTagLookup(context, p => context.bw.Write(p));
+
+            if (triggers == null)
+            {
+                context.bw.Write(0);
+            }
+            else
+            {
+                context.bw.Write(triggers.Count);
+                for (var i = 0; i < triggers.Count; i++)
+                    context.bw.Write(triggers[i]);
+            }
+
+            context.bw.Write(attachAtLayer.Clamp(0, layers.Count));
+            context.bw.Write(canDrawLayersAboveSortedAttachees);
+
+            context.bw.WriteNullableString(cue);
+        }
+
+        /// <summary>Deserialize into new object instance</summary>
+        [SerializationIgnoreDelegates]
+        public AnimationFrame(AnimationDeserializeContext context)
+        {
+            delay = context.br.ReadInt32();
+            positionDelta = context.br.ReadPosition();
+            shadowOffset = context.br.ReadPosition();
+
+            SnapToGround = context.br.ReadBoolean();
+
+            int layersCount = context.br.ReadInt32();
+            if (layersCount > 0)
+            {
+                Cel currentCel;
+                firstLayer = currentCel = new Cel(context);
+                for (var i = 1; i < layersCount; i++)
+                {
+                    currentCel.next = new Cel(context);
+                    currentCel = currentCel.next;
+                }
+            }
+
+            if (context.Version >= 39)
+            {
+                masks = context.DeserializeOrderedDictionary(() => new Mask(context));
+                outgoingAttachments = context.DeserializeOrderedDictionary(() => new OutgoingAttachment(context));
+            }
+            else
+            {
+                //
+                // Masks:
+                {
+                    var legacy = context.DeserializeTagLookup(() => new Mask(context));
+                    masks = new OrderedDictionary<string, Mask>();
+                    foreach (var mask in legacy)
+                    {
+                        Debug.Assert(mask.Key.Count < 2, "we don't support multi-tags yet");
+                        masks.Add(mask.Key.ToString(), mask.Value);
+                    }
+                }
+
+                //
+                // Outgoing Attachments:
+                {
+                    var legacy = context.DeserializeTagLookup(() => new OutgoingAttachment(context));
+                    outgoingAttachments = new OrderedDictionary<string, OutgoingAttachment>();
+                    foreach (var outgoingAttachment in legacy)
+                    {
+                        Debug.Assert(outgoingAttachment.Key.Count < 2, "we don't support multi-tags yet");
+                        outgoingAttachments.Add(outgoingAttachment.Key.ToString(),
+                            outgoingAttachment.Value);
+                    }
+                }
+            }
+
+            incomingAttachments = context.DeserializeTagLookup(() => context.br.ReadPosition());
+
+            int triggerCount = context.br.ReadInt32();
+            if (triggerCount > 0)
+            {
+                triggers = new List<string>(triggerCount);
+                for (var i = 0; i < triggerCount; i++)
+                    triggers.Add(context.br.ReadString());
+            }
+
+            attachAtLayer = context.br.ReadInt32();
+            canDrawLayersAboveSortedAttachees = context.br.ReadBoolean();
+
+            cue = context.br.ReadNullableString();
         }
 
         #endregion

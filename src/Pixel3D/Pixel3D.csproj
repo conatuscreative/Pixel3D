@@ -39,6 +39,7 @@
     <ProjectReference Include="..\..\ThirdParty\FNA\FNA.Core.csproj" />
     <ProjectReference Include="..\CRTSim\CRTSim.csproj" />
     <ProjectReference Include="..\Pixel3D.Common\Pixel3D.Common.csproj" />
+    <ProjectReference Include="..\Pixel3D.Serialization\Pixel3D.Serialization.csproj" />
   </ItemGroup>
 
 </Project>
