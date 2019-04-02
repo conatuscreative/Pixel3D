@@ -19,4 +19,8 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ThirdParty\FNA\FNA.Core.csproj" />
+  </ItemGroup>
+
 </Project>
