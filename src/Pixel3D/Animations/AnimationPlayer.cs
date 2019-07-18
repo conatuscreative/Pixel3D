@@ -1,5 +1,7 @@
 // Copyright © Conatus Creative, Inc. All rights reserved.
 // Licensed under the Apache 2.0 License. See LICENSE.md in the project root for license terms.
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -8,7 +10,7 @@ namespace Pixel3D.Animations
     /// <summary>
     /// An animation "play head" (warning: mutable struct)
     /// </summary>
-    public struct AnimationPlayer
+    public struct AnimationPlayer : IEquatable<AnimationPlayer>
     {
         public Animation animation;
         public int frame;
@@ -34,7 +36,26 @@ namespace Pixel3D.Animations
             return !(a == b);
         }
 
+        public bool Equals(AnimationPlayer other)
+        {
+            return ReferenceEquals(animation, other.animation) && frame == other.frame && tick == other.tick;
+        }
 
+        public override bool Equals(object obj)
+        {
+            return obj is AnimationPlayer other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (animation != null ? animation.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ frame;
+                hashCode = (hashCode * 397) ^ tick;
+                return hashCode;
+            }
+        }
 
         public AnimationFrame CurrentFrame
         {

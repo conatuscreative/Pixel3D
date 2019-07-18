@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -103,7 +104,7 @@ namespace CRTSim
 					}
 					catch (Exception e)
 					{
-						//Log.Current.ErrorException("Failed to load palette", e);
+						Trace.TraceError("Failed to load palette: " + e);
 					}
 				}
 			}

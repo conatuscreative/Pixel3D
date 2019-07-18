@@ -5,19 +5,24 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>Pixel3D networking xna monogame fna</PackageTags>
-    <Copyright>(c) 2014 - 2018 Conatus Creative Inc.</Copyright>
+    <Copyright>(c) 2014 - 2019 Conatus Creative Inc.</Copyright>
     <PackageProjectUrl>https://github.com/conatuscreative/Pixel3D.Network</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/conatuscreative/Pixel3D.Network/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <Description>Efficient peer-to-peer, rollback-based networking with host migration for up to 4 players.</Description>
     <Company>Conatus Creative Inc.</Company>
     <Authors>Conatus Creative Inc.</Authors>
-    <Version>1.0.5</Version>
+    <Version>1.0.13</Version>
     <PackageReleaseNotes>- add .net standard 2.0 support</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/conatuscreative/Pixel3D.Network</RepositoryUrl>
-    <Platforms>AnyCPU;x86</Platforms>
+    <Platforms>AnyCPU;x86;x64</Platforms>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|x64'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 

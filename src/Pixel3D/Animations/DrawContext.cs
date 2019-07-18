@@ -41,7 +41,6 @@ namespace Pixel3D.Animations
         Effect spriteEffect, shadowMaskEffect;
         FadeEffect fadeEffect;
         Effect doctorEffect;
-        Effect ntscEffect;
 
         public RasterizerState rasterizerState;
 
@@ -96,7 +95,6 @@ namespace Pixel3D.Animations
         public SpriteFont thinFontJP;
 
         public readonly Texture2D whitePixel;
-        private readonly Texture2D ntscPaletteLut;
 
 
         // Debugging:

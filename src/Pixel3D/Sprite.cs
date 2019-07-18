@@ -10,8 +10,29 @@ using Pixel3D.FrameworkExtensions;
 
 namespace Pixel3D
 {
-    public struct Sprite
+    public struct Sprite : IEquatable<Sprite>
     {
+        public bool Equals(Sprite other)
+        {
+            return ReferenceEquals(texture, other.texture) && sourceRectangle.Equals(other.sourceRectangle) && origin.Equals(other.origin);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Sprite other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (texture != null ? texture.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ sourceRectangle.GetHashCode();
+                hashCode = (hashCode * 397) ^ origin.GetHashCode();
+                return hashCode;
+            }
+        }
+
         public Sprite(Texture2D texture) : this(texture, texture.Bounds, new Point(0, texture.Height-1)) { }
         public Sprite(Texture2D texture, Rectangle sourceRectangle) : this(texture, sourceRectangle, new Point(0, texture.Height - 1)) { }
         public Sprite(Texture2D texture, Point origin) : this(texture, texture.Bounds, origin) { }

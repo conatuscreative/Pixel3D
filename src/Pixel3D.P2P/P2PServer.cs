@@ -56,8 +56,12 @@ namespace Pixel3D.P2P
 		private void OpenToConnections(bool openToInternet, bool sideChannelAuth)
 		{
 			// Note: the following settings will be cleared when the server is shutdown:
-			if (openToInternet)
-				StartUPnP();
+            if (openToInternet)
+            {
+#if UPNP
+                StartUPnP();
+#endif
+            }
 			if (sideChannelAuth)
 			{
 				NetPeer.Configuration.EnableMessageType(NetIncomingMessageType.UnconnectedData);
@@ -70,9 +74,8 @@ namespace Pixel3D.P2P
 
 			NetPeer.Configuration.AcceptIncomingConnections = true;
 		}
-
-
-		#region Network Data Errors
+        
+#region Network Data Errors
 
 		private void NetworkDataError(RemotePeer remotePeer, Exception exception)
 		{
@@ -83,39 +86,34 @@ namespace Pixel3D.P2P
 				Kick(remotePeer); // buh-bye
 		}
 
-		#endregion
+#endregion
 
-
-		#region UPnP
-
+#region UPnP
+#if UPNP
 		/// <summary>True if UPnP was *attempted* (because Lidgren and UPnP and routers are all janky)</summary>
 		private bool usingUPnP;
 
 		private void StartUPnP()
 		{
-#if UPNP
             if(NetPeer.UPnP != null)
             {
                 usingUPnP = true;
                 NetPeer.UPnP.ForwardPort(owner.PortNumber, owner.appConfig.AppId);
             }
-#endif
-		}
+        }   
 
-		private void EndUPnP()
+        private void EndUPnP()
 		{
-#if UPNP
             if(usingUPnP && NetPeer.UPnP != null)
                 NetPeer.UPnP.DeleteForwardingRule(owner.PortNumber);
-#endif
 		}
+#endif
+#endregion
 
-		#endregion
 
+#region IPeerManager
 
-		#region IPeerManager
-
-		public void HandleMessage(NetIncomingMessage message, ref bool recycle)
+        public void HandleMessage(NetIncomingMessage message, ref bool recycle)
 		{
 			Debug.Assert(!didDisconnect);
 
@@ -214,7 +212,10 @@ namespace Pixel3D.P2P
 			NetPeer.Configuration.DisableMessageType(NetIncomingMessageType.DiscoveryRequest);
 			NetPeer.Configuration.DisableMessageType(NetIncomingMessageType.UnconnectedData);
 			NetPeer.Configuration.AcceptIncomingConnections = false;
-			EndUPnP();
+
+#if UPNP
+            EndUPnP();
+#endif
 
 			foreach (var connection in locallyConnected)
 				connection.Disconnect(DisconnectStrings.Shutdown);
@@ -227,10 +228,10 @@ namespace Pixel3D.P2P
 			Kick(remotePeer); // buh-bye
 		}
 
-		#endregion
+#endregion
 
 
-		#region Side-Channel Auth
+#region Side-Channel Auth
 
 		// NOTE: zero represents an invalid token (connection has been spent, prevent replay)
 		private Dictionary<ulong, int> authTokens;
@@ -334,10 +335,10 @@ namespace Pixel3D.P2P
 			}
 		}
 
-		#endregion
+#endregion
 
 
-		#region Local Connections
+#region Local Connections
 
 		private int nextConnectionId;
 
@@ -582,10 +583,10 @@ namespace Pixel3D.P2P
 			ReadyCheckAll();
 		}
 
-		#endregion
+#endregion
 
 
-		#region Input Assignment
+#region Input Assignment
 
 		private InputAssignment assignedInputs;
 
@@ -604,10 +605,10 @@ namespace Pixel3D.P2P
 			assignedInputs &= ~assignment;
 		}
 
-		#endregion
+#endregion
 
 
-		#region Network Management (from client)
+#region Network Management (from client)
 
 		private void HandleNetworkManagementFromClient(NetIncomingMessage message)
 		{
@@ -758,10 +759,10 @@ namespace Pixel3D.P2P
 			// If we get to here, there was no matching pending disconnect. But this could be because they were already disconnected.
 		}
 
-		#endregion
+#endregion
 
 
-		#region Disconnect Resolution
+#region Disconnect Resolution
 
 		private struct PendingDisconnect
 		{
@@ -820,10 +821,10 @@ namespace Pixel3D.P2P
 			}
 		}
 
-		#endregion
+#endregion
 
 
-		#region Connection Tracking
+#region Connection Tracking
 
 		private class PendingConnection
 		{
@@ -968,10 +969,10 @@ namespace Pixel3D.P2P
 			}
 		}
 
-		#endregion
+#endregion
 
 
-		#region Application Connected Peers
+#region Application Connected Peers
 
 		// Used to send different join/leave messages to different connections based on their state
 		private readonly List<NetConnection> broadcastTemp = new List<NetConnection>();
@@ -1071,10 +1072,10 @@ namespace Pixel3D.P2P
 				NetDeliveryMethod.ReliableOrdered, 0);
 		}
 
-		#endregion
+#endregion
 
 
-		#region Host Migration - Transition from Client
+#region Host Migration - Transition from Client
 
 		/// <summary>Construct for host migration only!</summary>
 		internal P2PServer(P2PNetwork owner, bool hostMigrationValidatedByServer, int maxConnectionId)
@@ -1154,10 +1155,10 @@ namespace Pixel3D.P2P
 				RemoveFromNetwork(leavingPeer);
 		}
 
-		#endregion
+#endregion
 
 
-		#region Host Migration - Validation
+#region Host Migration - Validation
 
 		/// <summary>Non-null if a host migration has not yet been validated</summary>
 		private ClientDisconnections clientDisconnections;
@@ -1219,6 +1220,6 @@ namespace Pixel3D.P2P
 			}
 		}
 
-		#endregion
+#endregion
 	}
 }

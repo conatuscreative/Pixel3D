@@ -6,19 +6,25 @@
     <Version>1.0.13</Version>
     <Authors>Conatus Creative Inc.</Authors>
     <Description>2.5D pixel game engine built on FNA</Description>
-    <Copyright>(c) 2015-2018 Conatus Creative Inc.</Copyright>
+    <Copyright>(c) 2015-2019 Conatus Creative Inc.</Copyright>
     <PackageTags>pixel3d xna monogame fna</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseUrl>https://github.com/conatuscreative/Pixel3D/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/conatuscreative/Pixel3D</PackageProjectUrl>
     <RepositoryUrl>https://github.com/conatuscreative/Pixel3D</RepositoryUrl>
-    <PackageReleaseNotes>- add .net standard 2.0 support</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <RootNamespace>Pixel3D</RootNamespace>
     <Configurations>Debug;Release;Retail</Configurations>
+    <Platforms>AnyCPU;x64</Platforms>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
@@ -26,11 +32,24 @@
     <DefineConstants>TRACE;DEBUG;DEVELOPER</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|x64'">
+    <DefineConstants>TRACE;DEBUG;DEVELOPER</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
     <DefineConstants>TRACE;DEVELOPER</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|x64'">
+    <DefineConstants>TRACE;DEVELOPER</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Retail|net40|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Retail|net40|x64'">
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
   </PropertyGroup>

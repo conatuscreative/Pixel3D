@@ -4,13 +4,22 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <RootNamespace>Pixel3D.ActorManagement</RootNamespace>
     <Configurations>Debug;Release;Retail</Configurations>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;DEVELOPER</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|x64'">
+    <DefineConstants>TRACE;DEBUG;DEVELOPER</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+    <DefineConstants>TRACE;DEVELOPER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|x64'">
     <DefineConstants>TRACE;DEVELOPER</DefineConstants>
   </PropertyGroup>
 
