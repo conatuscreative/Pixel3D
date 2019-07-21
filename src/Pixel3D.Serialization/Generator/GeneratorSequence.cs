@@ -7,15 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using Microsoft.CodeAnalysis.CSharp;
 using Pixel3D.Serialization.BuiltIn;
 using Pixel3D.Serialization.BuiltIn.DelegateHandling;
 using Pixel3D.Serialization.Discovery;
-
-#if NET40 || NET45 || NET462
-#else
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-#endif
 
 namespace Pixel3D.Serialization.Generator
 {
