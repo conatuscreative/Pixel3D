@@ -45,49 +45,56 @@ namespace Pixel3D.Levels
 
 			foreach (var assembly in assemblies)
 			{
-				foreach (var type in assembly.GetTypes())
-				{
-					var validInterface = typeof(ILevelSubBehaviour).IsAssignableFrom(type) &&
-					                     type != typeof(LevelSubBehaviour) && !type.IsAbstract;
+                try
+                {
+                    foreach (var type in assembly.GetTypes())
+                    {
+                        var validInterface = typeof(ILevelSubBehaviour).IsAssignableFrom(type) &&
+                                             type != typeof(LevelSubBehaviour) && !type.IsAbstract;
 
-					if (validInterface && typeof(IGlobalLevelSubBehaviour).IsAssignableFrom(type))
-						RegisterSubBehaviourType(globalSubCache, type, delegateArgumentTypes, parameterTypeSets);
-					else if (validInterface)
-						RegisterSubBehaviourType(levelSubCache, type, delegateArgumentTypes, parameterTypeSets);
+                        if (validInterface && typeof(IGlobalLevelSubBehaviour).IsAssignableFrom(type))
+                            RegisterSubBehaviourType(globalSubCache, type, delegateArgumentTypes, parameterTypeSets);
+                        else if (validInterface)
+                            RegisterSubBehaviourType(levelSubCache, type, delegateArgumentTypes, parameterTypeSets);
 
-					if (typeof(LevelBehaviour).IsAssignableFrom(type) && type != typeof(LevelBehaviour) && !type.IsAbstract)
-					{
-						foreach (var parameterTypes in parameterTypeSets)
-						{
-							var constructor = type.GetConstructor(parameterTypes);
-							if (constructor != null)
-							{
-								// No way to convert a constructor to a delegate directly. And we want to select parameters. To IL we go!
-								var dm = new DynamicMethod("Create_" + type.Name, typeof(LevelBehaviour), delegateArgumentTypes, type);
-								var il = dm.GetILGenerator();
+                        if (typeof(LevelBehaviour).IsAssignableFrom(type) && type != typeof(LevelBehaviour) && !type.IsAbstract)
+                        {
+                            foreach (var parameterTypes in parameterTypeSets)
+                            {
+                                var constructor = type.GetConstructor(parameterTypes);
+                                if (constructor != null)
+                                {
+                                    // No way to convert a constructor to a delegate directly. And we want to select parameters. To IL we go!
+                                    var dm = new DynamicMethod("Create_" + type.Name, typeof(LevelBehaviour), delegateArgumentTypes, type);
+                                    var il = dm.GetILGenerator();
 
-								// Map delegate parameters to constructor parameters
-								foreach (var parameterType in parameterTypes)
-									if (parameterType == typeof(Level))
-										il.Emit(OpCodes.Ldarg_0); // <- depends on order of delegate arguments!
-									else if (parameterType == typeof(UpdateContext))
-										il.Emit(OpCodes.Ldarg_1); // <- depends on order of delegate arguments!
-									else
-										throw new InvalidOperationException(); // <- should be impossible
+                                    // Map delegate parameters to constructor parameters
+                                    foreach (var parameterType in parameterTypes)
+                                        if (parameterType == typeof(Level))
+                                            il.Emit(OpCodes.Ldarg_0); // <- depends on order of delegate arguments!
+                                        else if (parameterType == typeof(UpdateContext))
+                                            il.Emit(OpCodes.Ldarg_1); // <- depends on order of delegate arguments!
+                                        else
+                                            throw new InvalidOperationException(); // <- should be impossible
 
-								il.Emit(OpCodes.Newobj, constructor);
-								il.Emit(OpCodes.Ret);
+                                    il.Emit(OpCodes.Newobj, constructor);
+                                    il.Emit(OpCodes.Ret);
 
-								levelCache[type.Name] = (CreateLevelBehaviourDelegate) dm.CreateDelegate(typeof(CreateLevelBehaviourDelegate));
-								goto foundValidConstructor;
-							}
-						}
+                                    levelCache[type.Name] = (CreateLevelBehaviourDelegate)dm.CreateDelegate(typeof(CreateLevelBehaviourDelegate));
+                                    goto foundValidConstructor;
+                                }
+                            }
 
-						Debug.WriteLine("WARNING: No valid constructor to create level behaviour: " + type);
+                            Debug.WriteLine("WARNING: No valid constructor to create level behaviour: " + type);
 
-						foundValidConstructor: ; // done
-					}
-				}
+                            foundValidConstructor:; // done
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Trace.TraceError(e.ToString());
+                }
 			}
 		}
 

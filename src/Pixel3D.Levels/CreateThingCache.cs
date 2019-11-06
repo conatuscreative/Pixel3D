@@ -21,32 +21,39 @@ namespace Pixel3D.Levels
 
 			foreach (var assembly in assemblies)
 			{
-				foreach (var type in assembly.GetTypes())
-				{
-					if (typeof(Actor).IsAssignableFrom(type))
-					{
-						var constructor = type.GetConstructor(constructorTypes);
-						if (constructor != null)
-						{
-							// No way to convert a constructor to a delegate directly. To IL we go!
-							var dm = new DynamicMethod("Create_" + type.Name, typeof(Actor), constructorTypes, type);
-							var il = dm.GetILGenerator();
-							il.Emit(OpCodes.Ldarg_0); // Thing
-							il.Emit(OpCodes.Ldarg_1); // UpdateContext
-							il.Emit(OpCodes.Newobj, constructor);
-							il.Emit(OpCodes.Ret);
+                try
+                {
+                    foreach (var type in assembly.GetTypes())
+                    {
+                        if (typeof(Actor).IsAssignableFrom(type))
+                        {
+                            var constructor = type.GetConstructor(constructorTypes);
+                            if (constructor != null)
+                            {
+                                // No way to convert a constructor to a delegate directly. To IL we go!
+                                var dm = new DynamicMethod("Create_" + type.Name, typeof(Actor), constructorTypes, type);
+                                var il = dm.GetILGenerator();
+                                il.Emit(OpCodes.Ldarg_0); // Thing
+                                il.Emit(OpCodes.Ldarg_1); // UpdateContext
+                                il.Emit(OpCodes.Newobj, constructor);
+                                il.Emit(OpCodes.Ret);
 
-							cache[type.Name] = (CreateThingDelegate) dm.CreateDelegate(typeof(CreateThingDelegate));
-						}
-						else
-						{
-							if (type.IsAbstract || typeof(ISuppressThingWarning).IsAssignableFrom(type))
-								continue;
+                                cache[type.Name] = (CreateThingDelegate)dm.CreateDelegate(typeof(CreateThingDelegate));
+                            }
+                            else
+                            {
+                                if (type.IsAbstract || typeof(ISuppressThingWarning).IsAssignableFrom(type))
+                                    continue;
 
-							Debug.WriteLine("Warning: No 'Thing' constructor for " + type);
-						}
-					}
-				}
+                                Debug.WriteLine("Warning: No 'Thing' constructor for " + type);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Trace.TraceError(e.ToString());
+                }
 			}
 		}
 
